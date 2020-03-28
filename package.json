@@ -5,15 +5,30 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql/",
+    "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat"
   },
   "dependencies": {
+    "apollo": "^2.25.0",
+    "apollo-cache-hermes": "^0.8.10",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-cache-persist": "^0.1.1",
+    "apollo-upload-client": "^12.1.0",
+    "axios": "^0.19.2",
+    "eslint-cli": "^1.1.1",
     "expo": "~36.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-screens": "2.0.0-alpha.12",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "react-navigation": "^4.3.4",
+    "react-navigation-animated-switch": "^0.5.7",
+    "react-navigation-drawer": "^2.4.8",
+    "react-navigation-stack": "^2.3.8",
+    "react-navigation-tabs": "^2.8.8",
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
