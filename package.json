@@ -10,6 +10,7 @@
     "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat"
   },
   "dependencies": {
+    "@react-native-community/masked-view": "^0.1.7",
     "apollo": "^2.25.0",
     "apollo-cache-hermes": "^0.8.10",
     "apollo-cache-inmemory": "^1.6.5",
@@ -24,7 +25,11 @@
     "react-apollo-hooks": "^0.5.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-elements": "^1.2.7",
+    "react-native-gesture-handler": "^1.6.1",
     "react-native-paper": "^3.6.0",
+    "react-native-reanimated": "^1.7.1",
+    "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.4",
