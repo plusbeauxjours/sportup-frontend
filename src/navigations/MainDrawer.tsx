@@ -1,6 +1,6 @@
 import React from "react";
 import { createDrawerNavigator } from "react-navigation-drawer";
-import MyProfileNavigation from "../navigations/MyProfileNavigation";
+import MyProfileNavigation from "./MyProfileNavigation";
 import { Icon } from "react-native-elements";
 
 const MainDrawer = createDrawerNavigator(

@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import TabNavigation from "./TabNavigation";
+import MainDrawer from "./MainDrawer";
 
 const MainNavigation = createStackNavigator(
-  { TabNavigation },
+  { MainDrawer },
   { headerMode: "none" }
 );
 

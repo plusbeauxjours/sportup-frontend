@@ -1,10 +1,12 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
 import MyProfile from "../screens/MyProfile";
+import EditProfile from "../screens/EditProfile/EditProfile";
 
 const MyProfileNavigation = createStackNavigator(
   {
-    MyProfile: MyProfile
+    MyProfile: MyProfile,
+    EditProfile: EditProfile
   },
   {
     initialRouteName: "MyProfile",

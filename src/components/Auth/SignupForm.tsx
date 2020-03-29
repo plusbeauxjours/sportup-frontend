@@ -4,12 +4,12 @@ import styled from "styled-components";
 const View = styled.View``;
 const Text = styled.Text``;
 
-const EditProfile = ({ navigation }) => {
+const SignupForm = () => {
   return (
     <View>
-      <Text>EditProfile??</Text>
+      <Text>Signup</Text>
     </View>
   );
 };
 
-export default EditProfile;
+export default SignupForm;

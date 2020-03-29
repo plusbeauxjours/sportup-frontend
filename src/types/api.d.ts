@@ -4,8 +4,48 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UpdateUser
+// ====================================================
+
+export interface UpdateUser_updateUser_user {
+  __typename: "UserType";
+  firstName: string;
+  lastName: string;
+  bio: string;
+  userImg: string | null;
+}
+
+export interface UpdateUser_updateUser {
+  __typename: "UpdateUserResponse";
+  user: UpdateUser_updateUser_user | null;
+}
+
+export interface UpdateUser {
+  updateUser: UpdateUser_updateUser;
+}
+
+export interface UpdateUserVariables {
+  firstName: string;
+  lastName: string;
+  bio: string;
+  password: string;
+  userImg?: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Me
 // ====================================================
+
+export interface Me_me_user_sports {
+  __typename: "UserPlaysSportType";
+  sportId: number | null;
+  name: string | null;
+}
 
 export interface Me_me_user {
   __typename: "UserType";
@@ -16,6 +56,12 @@ export interface Me_me_user {
   username: string;
   firstName: string;
   lastName: string;
+  bio: string;
+  userImg: string | null;
+  sports: (Me_me_user_sports | null)[] | null;
+  teamsCount: number | null;
+  followersCount: number | null;
+  followingCount: number | null;
 }
 
 export interface Me_me {

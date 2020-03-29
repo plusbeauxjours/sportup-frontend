@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { AsyncStorage } from "react-native";
 import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -16,7 +16,6 @@ import { setContext } from "apollo-link-context";
 
 import { MAIN_URL } from "./src/constants/urls";
 import NavController from "./src/components/NavController";
-import { AuthProvider } from "./src/context/AuthContext";
 
 export default function App() {
   const [client, setClient] = useState<any>(null);
@@ -59,7 +58,8 @@ export default function App() {
   };
   const loadResourcesAsync = async () => {
     await Font.loadAsync({
-      ...Ionicons.font
+      ...Ionicons.font,
+      ...MaterialIcons.font
     });
     await Asset.loadAsync([]);
   };
@@ -75,11 +75,9 @@ export default function App() {
   if (isLoadingComplete && client !== null && isLoggedIn !== null) {
     return (
       <ApolloHooksProvider client={client}>
-        <AuthProvider isLoggedIn={isLoggedIn} client={client}>
-          <PaperProvider>
-            <NavController />
-          </PaperProvider>
-        </AuthProvider>
+        <PaperProvider>
+          <NavController />
+        </PaperProvider>
       </ApolloHooksProvider>
     );
   } else {

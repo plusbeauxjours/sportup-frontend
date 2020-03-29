@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Appbar, ActivityIndicator } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import { AsyncStorage } from "react-native";
-import { Me } from "../../types/api";
+import Loader from "../../components/Loader";
+import { withNavigation } from "react-navigation";
 import { useQuery } from "react-apollo-hooks";
-import { ME } from "../../sharedQueries";
+import { Me } from "../../types/api";
+import { ME } from "./MyProfileQueries";
+import MyProfileHeader from "../../components/MyProfileHeader";
 
-const View = styled.View``;
-const Text = styled.Text``;
+const LoaderContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 const Container = styled.View`
   flex-direction: row;
 `;
 
 const MyProfile = ({ navigation }) => {
-  const { data, loading, error } = useQuery<Me>(ME);
+  const { data: { me: { user: me = null } = {} } = {}, loading } = useQuery<Me>(
+    ME
+  );
+
   const handleLogout = async () => {
     await AsyncStorage.clear();
     navigation.navigate("Auth");
@@ -28,25 +37,52 @@ const MyProfile = ({ navigation }) => {
       uuid
     });
   };
-  const onFollowersPress = (uuid: string) => {
+  const onFollowingPress = (uuid: string) => {
     navigation.push("Following", { uuid });
   };
-
+  const renderUserInfoArea = () => {
+    const connections = {
+      teams: me.teamsCount,
+      followers: me.followersCount,
+      following: me.followingCount
+    };
+    return (
+      <MyProfileHeader
+        avatar={me.userImg}
+        name={`${me.firstName} ${me.lastName}`}
+        handle={me.username}
+        bio={me.bio}
+        sports={me.sports}
+        connections={connections}
+        onTeamsPress={() => {
+          onTeamsPress(me.id);
+        }}
+        onFollowersPress={() => {
+          onFollowersPress(me.id);
+        }}
+        onFollowingPress={() => {
+          onFollowingPress(me.id);
+        }}
+      />
+    );
+  };
   useEffect(() => {
     navigation.setParams({
       logout: handleLogout
     });
   }, []);
-  return (
-    <Query query={Me}>
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <ActivityIndicator size="large" style={{ margin: 20 }} />;
-        }
-      }}
-      <Text>MyProfile??</Text>
-    </Query>
-  );
+  if (loading) {
+    return (
+      <LoaderContainer>
+        <Loader />
+      </LoaderContainer>
+    );
+  } else {
+    let pageNum = 1;
+    return (
+
+    )
+  }
 };
 MyProfile.navigationOptions = ({ navigation }) => ({
   title: "Me",
@@ -74,4 +110,4 @@ MyProfile.navigationOptions = ({ navigation }) => ({
   )
 });
 
-export default MyProfile;
+export default withNavigation(MyProfile);

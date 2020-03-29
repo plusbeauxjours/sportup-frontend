@@ -1,0 +1,51 @@
+import React from "react";
+import { Paragraph, Caption, Headline } from "react-native-paper";
+import { Avatar } from "react-native-elements";
+import { MEDIA_URL } from "../constants/urls";
+import styled from "styled-components";
+
+const UserInfoContainer = styled.View`
+  align-items: "center";
+  margin: 5px, 0;
+  background-color: "#fff";
+`;
+
+interface IProps {
+  avatar?: string;
+  name: string;
+  handle: string;
+  bio?: string;
+  sports: any;
+  connections?: any;
+  onTeamsPress: (uuid: string) => void;
+  onFollowersPress: (uuid: string) => void;
+  onFollowingPress: (uuid: string) => void;
+}
+
+const MyProfileHeader: React.FC<IProps> = ({
+  avatar = null,
+  name,
+  handle,
+  bio = "",
+  sports,
+  connections = { team: 0, followers: 0, following: 0 },
+  onTeamsPress = null,
+  onFollowersPress = null,
+  onFollowingPress = null
+}) => {
+  return (
+    <UserInfoContainer>
+      <Avatar
+        size="large"
+        rounded
+        containerStyle={{ marginVertical: 5 }}
+        source={avatar && { uri: MEDIA_URL + avatar }}
+      />
+      <Headline>{name}</Headline>
+      <Caption>{`@${handle}`}</Caption>
+      <Paragraph>{bio}</Paragraph>
+    </UserInfoContainer>
+  );
+};
+
+export default MyProfileHeader;

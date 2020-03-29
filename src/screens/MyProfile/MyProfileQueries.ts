@@ -9,7 +9,7 @@ export const ME = gql`
         firstName
         lastName
         bio
-        profileImg
+        userImg
         sports {
           sportId
           name

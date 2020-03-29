@@ -1295,6 +1295,18 @@
             "deprecationReason": null
           },
           {
+            "name": "teamsCount",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "followersCount",
             "description": null,
             "args": [],
@@ -2937,7 +2949,7 @@
                 "defaultValue": null
               },
               {
-                "name": "profileImg",
+                "name": "userImg",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
