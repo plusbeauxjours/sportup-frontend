@@ -21,3 +21,24 @@ export const ME = gql`
     }
   }
 `;
+
+
+export const MY_FEED = gql`
+  query MyFeed($pageNum: Int) {
+    myFeed(pageNum: $pageNum) {
+      posts{
+      id
+      text
+      postImg
+      createdAt
+      score
+      interaction
+      postedBy {
+        id
+        username
+        userImg
+      }
+      }
+    }
+  }
+`;

@@ -78,6 +78,52 @@ export interface Me {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: MyFeed
+// ====================================================
+
+export interface MyFeed_myFeed_posts_postedBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface MyFeed_myFeed_posts {
+  __typename: "PostType";
+  /**
+   * The ID of the object.
+   */
+  id: string;
+  text: string | null;
+  postImg: string | null;
+  createdAt: any;
+  score: number;
+  interaction: string | null;
+  postedBy: MyFeed_myFeed_posts_postedBy;
+}
+
+export interface MyFeed_myFeed {
+  __typename: "MyFeedResponse";
+  posts: (MyFeed_myFeed_posts | null)[] | null;
+}
+
+export interface MyFeed {
+  myFeed: MyFeed_myFeed;
+}
+
+export interface MyFeedVariables {
+  pageNum?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

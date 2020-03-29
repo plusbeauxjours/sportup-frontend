@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Appbar } from "react-native-paper";
-import { AsyncStorage } from "react-native";
-import Loader from "../../components/Loader";
+import { AsyncStorage, Platform, View, Text } from "react-native";
 import { withNavigation } from "react-navigation";
 import { useQuery } from "react-apollo-hooks";
-import { Me } from "../../types/api";
-import { ME } from "./MyProfileQueries";
+
+import { ME, MY_FEED } from "./MyProfileQueries";
+import { Me, MyFeed } from "../../types/api";
+
+import Loader from "../../components/Loader";
+import FeedList from "../../components/FeedList";
 import MyProfileHeader from "../../components/MyProfileHeader";
+import ListFooterComponent from "../../components/ListFooterComponent";
 
 const LoaderContainer = styled.View`
   flex: 1;
@@ -19,10 +23,17 @@ const Container = styled.View`
 `;
 
 const MyProfile = ({ navigation }) => {
-  const { data: { me: { user: me = null } = {} } = {}, loading } = useQuery<Me>(
-    ME
-  );
-
+  const {
+    data: { me: { user: me = null } = {} } = {},
+    loading: meLoading
+  } = useQuery<Me>(ME);
+  const {
+    data: { myFeed = null } = {},
+    fetchMore,
+    loading: feedLoading,
+    networkStatus,
+    refetch
+  } = useQuery<MyFeed>(MY_FEED);
   const handleLogout = async () => {
     await AsyncStorage.clear();
     navigation.navigate("Auth");
@@ -42,9 +53,9 @@ const MyProfile = ({ navigation }) => {
   };
   const renderUserInfoArea = () => {
     const connections = {
-      teams: me.teamsCount,
-      followers: me.followersCount,
-      following: me.followingCount
+      teams: me.teamsCount && me.teamsCount,
+      followers: me.followersCount && me.followersCount,
+      following: me.followingCount && me.followingCount
     };
     return (
       <MyProfileHeader
@@ -71,22 +82,61 @@ const MyProfile = ({ navigation }) => {
       logout: handleLogout
     });
   }, []);
-  if (loading) {
+  if (meLoading || feedLoading) {
     return (
       <LoaderContainer>
         <Loader />
       </LoaderContainer>
     );
   } else {
+    console.log("myFeed", myFeed);
+    console.log("me", me);
     let pageNum = 1;
+    let onEndReachedCalledDuringMomentum = true;
     return (
-
-    )
+      <FeedList
+        feed={myFeed}
+        refreshing={networkStatus === 4}
+        onRefresh={() => {
+          pageNum = 1;
+          refetch({
+            pageNum
+          });
+        }}
+        ListHeaderComponent={renderUserInfoArea}
+        ListFooterComponent={() => (
+          <ListFooterComponent loading={feedLoading} />
+        )}
+        onEndReached={() => {
+          if (!onEndReachedCalledDuringMomentum) {
+            pageNum += 1;
+            fetchMore({
+              variables: {
+                pageNum
+              },
+              updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if (!fetchMoreResult.myFeed) return prev;
+                return Object.assign({}, prev, {
+                  myFeed: [...prev.myFeed, ...fetchMoreResult.myFeed]
+                });
+              }
+            });
+            onEndReachedCalledDuringMomentum = true;
+          }
+        }}
+        onEndReachedThreshold={0.2}
+        onMomentumScrollBegin={() => {
+          onEndReachedCalledDuringMomentum = false;
+        }}
+        disableNavigation
+      />
+    );
   }
 };
 MyProfile.navigationOptions = ({ navigation }) => ({
   title: "Me",
-  headerLeft: (
+  headerLeft: () => (
     <Appbar.Action
       icon="menu"
       onPress={() => {
@@ -94,7 +144,7 @@ MyProfile.navigationOptions = ({ navigation }) => ({
       }}
     />
   ),
-  headerRight: (
+  headerRight: () => (
     <Container>
       <Appbar.Action
         icon="square-edit-outline"

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
-import * as Font from "expo-font";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { AsyncStorage } from "react-native";
 import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -19,7 +17,7 @@ import NavController from "./src/components/NavController";
 
 export default function App() {
   const [client, setClient] = useState<any>(null);
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(null);
   const makeClient = async () => {
     try {
@@ -57,10 +55,6 @@ export default function App() {
     }
   };
   const loadResourcesAsync = async () => {
-    await Font.loadAsync({
-      ...Ionicons.font,
-      ...MaterialIcons.font
-    });
     await Asset.loadAsync([]);
   };
   const handleLoadingError = error => {

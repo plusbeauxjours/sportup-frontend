@@ -7,7 +7,6 @@ const MainDrawer = createDrawerNavigator(
   {
     MyProfile: {
       screen: MyProfileNavigation,
-
       navigationOptions: {
         drawerLabel: "Me",
         drawerIcon: ({ tintColor }) => <Icon name="person" color={tintColor} />
