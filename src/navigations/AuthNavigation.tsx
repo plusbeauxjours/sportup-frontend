@@ -1,11 +1,11 @@
 import { createStackNavigator } from "react-navigation-stack";
 
-import LoginForm from "../components/Auth/LoginForm";
-import SignupForm from "../components/Auth/SignupForm";
+import LoginForm from "../screens/Auth/LoginForm";
+import SignupForm from "../screens/Auth/SignupForm";
 
 import { PRIMARY_COLOR } from "../constants/colors";
 
-const AuthStack = createStackNavigator(
+const AuthNavigation = createStackNavigator(
   {
     Login: { screen: LoginForm },
     SignUp: { screen: SignupForm }
@@ -21,4 +21,4 @@ const AuthStack = createStackNavigator(
   }
 );
 
-export default AuthStack;
+export default AuthNavigation;

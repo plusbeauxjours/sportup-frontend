@@ -1,10 +1,17 @@
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import MainDrawer from "./MainDrawer";
+import AuthLoadingContainer from "../components/AuthLoadingContainer";
+import AuthNavigation from "./AuthNavigation";
 
-const MainNavigation = createStackNavigator(
-  { MainDrawer },
-  { headerMode: "none" }
+const MainNavigation = createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingContainer,
+    Auth: AuthNavigation,
+    Main: MainDrawer
+  },
+  {
+    initialRouteName: "Auth"
+  }
 );
 
 export default createAppContainer(MainNavigation);

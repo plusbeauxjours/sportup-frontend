@@ -88,7 +88,7 @@ const MyProfile = ({ navigation }) => {
         <Loader />
       </LoaderContainer>
     );
-  } else {
+  } else if (!meLoading && !feedLoading && me && myFeed) {
     console.log("myFeed", myFeed);
     console.log("me", me);
     let pageNum = 1;
@@ -132,6 +132,8 @@ const MyProfile = ({ navigation }) => {
         disableNavigation
       />
     );
+  } else {
+    return null;
   }
 };
 MyProfile.navigationOptions = ({ navigation }) => ({

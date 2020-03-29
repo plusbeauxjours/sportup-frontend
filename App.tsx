@@ -5,6 +5,7 @@ import { AsyncStorage } from "react-native";
 import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
+import { ApolloProvider } from "react-apollo";
 
 import apolloClientOptions from "./apollo";
 import { ApolloClient } from "apollo-client";
@@ -68,11 +69,13 @@ export default function App() {
   }, []);
   if (isLoadingComplete && client !== null && isLoggedIn !== null) {
     return (
-      <ApolloHooksProvider client={client}>
-        <PaperProvider>
-          <NavController />
-        </PaperProvider>
-      </ApolloHooksProvider>
+      <ApolloProvider client={client}>
+        <ApolloHooksProvider client={client}>
+          <PaperProvider>
+            <NavController />
+          </PaperProvider>
+        </ApolloHooksProvider>
+      </ApolloProvider>
     );
   } else {
     return (

@@ -4,6 +4,63 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: Login
+// ====================================================
+
+export interface Login_tokenAuth {
+  __typename: "ObtainJSONWebToken";
+  token: string | null;
+}
+
+export interface Login {
+  /**
+   * Obtain JSON Web Token mutation
+   */
+  tokenAuth: Login_tokenAuth | null;
+}
+
+export interface LoginVariables {
+  username: string;
+  password: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: Signup
+// ====================================================
+
+export interface Signup_createUser_user {
+  __typename: "UserType";
+  id: string;
+}
+
+export interface Signup_createUser {
+  __typename: "CreateUserReponse";
+  user: Signup_createUser_user | null;
+}
+
+export interface Signup {
+  createUser: Signup_createUser;
+}
+
+export interface SignupVariables {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpdateUser
 // ====================================================
 
