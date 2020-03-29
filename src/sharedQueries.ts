@@ -8,6 +8,15 @@ export const ME = gql`
         username
         firstName
         lastName
+        bio
+        profileImg
+        sports {
+          sportId
+          name
+        }
+        teamsCount
+        followersCount
+        followingCount
       }
     }
   }

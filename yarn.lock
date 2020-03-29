@@ -914,7 +914,7 @@
     ts-node "^8"
     tslib "^1"
 
-"@expo/vector-icons@^10.0.2":
+"@expo/vector-icons@^10.0.2", "@expo/vector-icons@^10.0.6":
   version "10.0.6"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.0.6.tgz#5718953ff0b97827d11dae5787976fa8ce5caaed"
   dependencies:
@@ -2916,6 +2916,12 @@ expo-file-system@~8.0.0:
   resolved "https://registry.yarnpkg.com/expo-file-system/-/expo-file-system-8.0.0.tgz#60b90c8a375308dc85922592a77531a8e0cde6f7"
   dependencies:
     uuid-js "^0.7.5"
+
+expo-font@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-8.1.0.tgz#62e6e2a1579a9b239bdeb9e8e5976de22a45fc8a"
+  dependencies:
+    fontfaceobserver "^2.1.0"
 
 expo-font@~8.0.0:
   version "8.0.0"
