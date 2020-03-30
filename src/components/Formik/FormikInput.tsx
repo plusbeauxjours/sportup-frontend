@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { TextInput, HelperText } from "react-native-paper";
+import { KeyboardTypeOptions } from "react-native";
 
 const Container = styled.View`
   width: 90%;
@@ -13,6 +14,7 @@ interface IProps {
   value: string;
   name: string;
   secureTextEntry?: boolean;
+  keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
   onChange: (name: string, value: string) => void;
   onTouch: (name: string) => void;
@@ -21,7 +23,6 @@ interface IProps {
 const FormikInput: React.FC<IProps> = ({
   label,
   error,
-  value,
   name,
   onChange,
   onTouch,

@@ -23,7 +23,6 @@ const Button = styled.Button`
   margin-top: 10px;
   width: 90%;
 `;
-const Text = styled.Text``;
 
 const initialValues = { username: "", password: "" };
 const validationSchema = Yup.object().shape({
