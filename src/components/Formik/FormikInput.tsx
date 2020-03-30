@@ -21,6 +21,8 @@ interface IProps {
 const FormikInput: React.FC<IProps> = ({
   label,
   error,
+  value,
+  name,
   onChange,
   onTouch,
   autoCapitalize,

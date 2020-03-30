@@ -35,6 +35,7 @@ export const MY_FEED = gql`
       interaction
       postedBy {
         id
+        name
         username
         userImg
       }

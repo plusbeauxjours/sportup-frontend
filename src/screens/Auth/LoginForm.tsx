@@ -41,7 +41,7 @@ const validationSchema = Yup.object().shape({
 export default class LoginForm extends Component<IProps> {
   public tokenAuth: MutationFunction;
   static navigationOptions = {
-    title: "baeplay"
+    title: "sportup"
   };
 
   public handleLoginComplete = async ({ tokenAuth }) => {

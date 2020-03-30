@@ -142,6 +142,7 @@ export interface Me {
 export interface MyFeed_myFeed_posts_postedBy {
   __typename: "UserType";
   id: string;
+  name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */

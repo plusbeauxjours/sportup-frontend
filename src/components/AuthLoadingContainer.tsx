@@ -4,7 +4,6 @@ import { View, ActivityIndicator, AsyncStorage } from "react-native";
 export default class AuthLoadingContainer extends Component {
   constructor(props) {
     super(props);
-
     this.checkAuthentication();
   }
 
