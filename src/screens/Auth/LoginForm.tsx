@@ -46,7 +46,7 @@ export default class LoginForm extends Component<IProps> {
 
   public handleLoginComplete = async ({ tokenAuth }) => {
     const { token } = tokenAuth;
-    await AsyncStorage.setItem("token", token);
+    await AsyncStorage.setItem("jwt", token);
     this.props.navigation.navigate("Main");
   };
 

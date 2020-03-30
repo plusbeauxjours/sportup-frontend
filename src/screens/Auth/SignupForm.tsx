@@ -29,7 +29,7 @@ export default class SignupForm extends Component<IProps> {
   };
 
   handleSignupComplete = async data => {
-    await AsyncStorage.setItem("token", data.tokenAuth.token);
+    await AsyncStorage.setItem("jwt", data.tokenAuth.token);
     this.props.navigation.navigate("Main");
   };
 

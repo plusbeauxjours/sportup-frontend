@@ -93,6 +93,7 @@ const MyProfile = ({ navigation }) => {
     console.log("me", me);
     let pageNum = 1;
     let onEndReachedCalledDuringMomentum = true;
+    console.log("im here");
     return (
       <FeedList
         feed={myFeed}

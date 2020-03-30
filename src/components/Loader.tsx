@@ -4,7 +4,7 @@ import constants from "../constants/dimensions";
 import styled from "styled-components";
 
 const Container = styled.View`
-  width: ${constants.width};
+  width: ${constants.width}px;
   justify-content: center;
   align-items: center;
 `;

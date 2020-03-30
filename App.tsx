@@ -19,7 +19,6 @@ import AppContainer from "./src/components/AppContainer";
 export default function App() {
   const [client, setClient] = useState<any>(null);
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(null);
   const makeClient = async () => {
     try {
       const cache = new InMemoryCache();
@@ -44,12 +43,6 @@ export default function App() {
         cache,
         ...apolloClientOptions
       });
-      const isLoggedIn = await AsyncStorage.getItem("isLoggedIn");
-      if (isLoggedIn === null || isLoggedIn === "false") {
-        setIsLoggedIn(false);
-      } else {
-        setIsLoggedIn(true);
-      }
       setClient(client);
     } catch (e) {
       console.log(e);
@@ -67,7 +60,7 @@ export default function App() {
   useEffect(() => {
     makeClient();
   }, []);
-  if (isLoadingComplete && client !== null && isLoggedIn !== null) {
+  if (isLoadingComplete && client !== null) {
     return (
       <ApolloProvider client={client}>
         <ApolloHooksProvider client={client}>

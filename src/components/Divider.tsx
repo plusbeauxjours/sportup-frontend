@@ -8,7 +8,7 @@ const View = styled.View`
 `;
 const Container = styled.View`
   background-color: #3f51b5;
-  height: 1;
+  height: 1px;
   flex: 1;
   opacity: 0.4;
   align-self: center;
