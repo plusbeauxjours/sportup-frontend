@@ -4,9 +4,9 @@ import { Headline } from "react-native-paper";
 import styled from "styled-components";
 
 const View = styled.View`
-  margin: 6px, 0;
-  justify-content: "center";
-  align-items: "center";
+  margin: 6px 0;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface IProps {

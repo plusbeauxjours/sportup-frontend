@@ -1,163 +1,181 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import React, { Component } from "react";
+import { Query } from "react-apollo";
+import { ActivityIndicator, AsyncStorage } from "react-native";
 import { Appbar } from "react-native-paper";
-import { AsyncStorage, Platform, View, Text } from "react-native";
-import { withNavigation } from "react-navigation";
-import { useQuery } from "react-apollo-hooks";
 
 import { ME, MY_FEED } from "./MyProfileQueries";
-import { Me, MyFeed } from "../../types/api";
-
-import Loader from "../../components/Loader";
-import FeedList from "../../components/FeedList";
+import { Me, MyFeed, MyFeedVariables } from "../../types/api";
 import MyProfileHeader from "../../components/MyProfileHeader";
+import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
+import styled from "styled-components";
 
-const LoaderContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-const Container = styled.View`
+const View = styled.View`
   flex-direction: row;
 `;
 
-const MyProfile = ({ navigation }) => {
-  const {
-    data: { me: { user: me = null } = {} } = {},
-    loading: meLoading
-  } = useQuery<Me>(ME);
-  const {
-    data: { myFeed = null } = {},
-    fetchMore,
-    loading: feedLoading,
-    networkStatus,
-    refetch
-  } = useQuery<MyFeed>(MY_FEED);
-  const handleLogout = async () => {
-    await AsyncStorage.clear();
-    navigation.navigate("Auth");
-  };
-  const onTeamsPress = (uuid: string) => {
-    navigation.push("UserTeams", {
-      uuid
-    });
-  };
-  const onFollowersPress = (uuid: string) => {
-    navigation.push("Followers", {
-      uuid
-    });
-  };
-  const onFollowingPress = (uuid: string) => {
-    navigation.push("Following", { uuid });
-  };
-  const renderUserInfoArea = () => {
-    const connections = {
-      teams: me.teamsCount && me.teamsCount,
-      followers: me.followersCount && me.followersCount,
-      following: me.followingCount && me.followingCount
-    };
-    return (
-      <MyProfileHeader
-        avatar={me.userImg}
-        name={`${me.firstName} ${me.lastName}`}
-        handle={me.username}
-        bio={me.bio}
-        sports={me.sports}
-        connections={connections}
-        onTeamsPress={() => {
-          onTeamsPress(me.id);
-        }}
-        onFollowersPress={() => {
-          onFollowersPress(me.id);
-        }}
-        onFollowingPress={() => {
-          onFollowingPress(me.id);
-        }}
-      />
-    );
-  };
-  useEffect(() => {
-    navigation.setParams({
-      logout: handleLogout
-    });
-  }, []);
-  if (meLoading || feedLoading) {
-    return (
-      <LoaderContainer>
-        <Loader />
-      </LoaderContainer>
-    );
-  } else if (!meLoading && !feedLoading && me && myFeed) {
-    let pageNum = 1;
-    let onEndReachedCalledDuringMomentum = true;
-    return (
-      <FeedList
-        feed={myFeed}
-        refreshing={networkStatus === 4}
-        onRefresh={() => {
-          pageNum = 1;
-          refetch({
-            pageNum
-          });
-        }}
-        ListHeaderComponent={renderUserInfoArea}
-        ListFooterComponent={() => (
-          <ListFooterComponent loading={feedLoading} />
-        )}
-        onEndReached={() => {
-          if (!onEndReachedCalledDuringMomentum) {
-            pageNum += 1;
-            fetchMore({
-              variables: {
-                pageNum
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                if (!fetchMoreResult.myFeed) return prev;
-                return Object.assign({}, prev, {
-                  myFeed: [...prev.myFeed, ...fetchMoreResult.myFeed]
-                });
-              }
-            });
-            onEndReachedCalledDuringMomentum = true;
-          }
-        }}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => {
-          onEndReachedCalledDuringMomentum = false;
-        }}
-        disableNavigation
-      />
-    );
-  } else {
-    return null;
-  }
-};
-MyProfile.navigationOptions = ({ navigation }) => ({
-  title: "Me",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-  headerRight: () => (
-    <Container>
+export default class MyProfileScreen extends Component {
+  public onEndReachedCalledDuringMomentum;
+  static navigationOptions = ({ navigation }) => ({
+    title: "Me",
+    headerLeft: () => (
       <Appbar.Action
-        icon="square-edit-outline"
+        icon="menu"
         onPress={() => {
-          navigation.navigate("EditProfile");
+          navigation.toggleDrawer();
         }}
       />
-      <Appbar.Action
-        icon="exit-to-app"
-        onPress={navigation.getParam("logout")}
-      />
-    </Container>
-  )
-});
+    ),
+    headerRight: () => (
+      <View>
+        <Appbar.Action
+          icon="square-edit-outline"
+          onPress={() => {
+            navigation.navigate("EditProfile");
+          }}
+        />
+        <Appbar.Action
+          icon="exit-to-app"
+          onPress={navigation.getParam("logout")}
+        />
+      </View>
+    )
+  });
 
-export default withNavigation(MyProfile);
+  componentDidMount = () => {
+    this.props.navigation.setParams({
+      logout: this.handleLogout
+    });
+  };
+
+  onTeamsPress = uuid => {
+    this.props.navigation.push("UserTeams", {
+      uuid
+    });
+  };
+
+  onFollowersPress = uuid => {
+    this.props.navigation.push("Followers", {
+      uuid
+    });
+  };
+
+  onFollowingPress = uuid => {
+    this.props.navigation.push("Following", {
+      uuid
+    });
+  };
+
+  handleLogout = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate("Auth");
+  };
+
+  renderUserInfoArea = () => {
+    return (
+      <Query<Me> query={ME}>
+        {({ data, loading }) => {
+          if (loading) {
+            return (
+              <ActivityIndicator
+                size="large"
+                style={{
+                  margin: 20
+                }}
+              />
+            );
+          }
+          const { me: { user: me = null } = {} } = ({} = data);
+          const connections = {
+            teams: me.teamsCount,
+            followers: me.followersCount,
+            following: me.followingCount
+          };
+          return (
+            <MyProfileHeader
+              avatar={me.userImg}
+              name={`${me.firstName} ${me.lastName}`}
+              handle={me.username}
+              bio={me.bio}
+              sports={me.sports}
+              connections={connections}
+              onTeamsPress={() => {
+                this.onTeamsPress(me.id);
+              }}
+              onFollowersPress={() => {
+                this.onFollowersPress(me.id);
+              }}
+              onFollowingPress={() => {
+                this.onFollowingPress(me.id);
+              }}
+            />
+          );
+        }}
+      </Query>
+    );
+  };
+
+  render() {
+    let pageNum = 1;
+
+    return (
+      <Query<MyFeed, MyFeedVariables>
+        query={MY_FEED}
+        variables={{
+          pageNum
+        }}
+        // fetchPolicy={"network-only"}
+      >
+        {({ data, fetchMore, loading, networkStatus, refetch }) => {
+          const { myFeed: { posts = null } = {} } = ({} = data);
+          console.log(data);
+          return (
+            <FeedList
+              feed={posts}
+              refreshing={networkStatus === 4}
+              onRefresh={() => {
+                pageNum = 1;
+                refetch({
+                  pageNum
+                });
+              }}
+              ListHeaderComponent={this.renderUserInfoArea}
+              ListFooterComponent={() => (
+                <ListFooterComponent loading={loading} />
+              )}
+              onEndReached={() => {
+                if (!this.onEndReachedCalledDuringMomentum) {
+                  pageNum += 1;
+                  fetchMore({
+                    variables: {
+                      pageNum
+                    },
+                    updateQuery: (prev, { fetchMoreResult }) => {
+                      if (!fetchMoreResult) return prev;
+                      if (!fetchMoreResult.myFeed) return prev;
+                      return Object.assign({}, prev, {
+                        myFeed: {
+                          ...prev.myFeed,
+                          posts: [
+                            ...prev.myFeed.posts,
+                            ...fetchMoreResult.myFeed.posts
+                          ]
+                        }
+                      });
+                    }
+                  });
+                  this.onEndReachedCalledDuringMomentum = true;
+                }
+              }}
+              onEndReachedThreshold={0.2}
+              onMomentumScrollBegin={() => {
+                this.onEndReachedCalledDuringMomentum = false;
+              }}
+              disableNavigation
+            />
+          );
+        }}
+      </Query>
+    );
+  }
+}

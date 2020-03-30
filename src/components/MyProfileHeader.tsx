@@ -5,9 +5,9 @@ import { MEDIA_URL } from "../constants/urls";
 import styled from "styled-components";
 
 const UserInfoContainer = styled.View`
-  align-items: "center";
-  margin: 5px, 0;
-  background-color: "#fff";
+  align-items: center;
+  margin: 5px 0;
+  background-color: #fff;
 `;
 
 interface IProps {
@@ -39,7 +39,11 @@ const MyProfileHeader: React.FC<IProps> = ({
         size="large"
         rounded
         containerStyle={{ marginVertical: 5 }}
-        source={avatar && { uri: MEDIA_URL + avatar }}
+        source={{
+          uri: avatar
+            ? MEDIA_URL + avatar
+            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
+        }}
       />
       <Headline>{name}</Headline>
       <Caption>{`@${handle}`}</Caption>
