@@ -8,7 +8,7 @@ const Text = styled.Text`
 `;
 
 interface IProps {
-  feed: any;
+  data: any;
   refreshing: boolean;
   disableNavigation: boolean;
   onRefresh: () => void;
@@ -20,13 +20,13 @@ interface IProps {
 }
 
 const FeedList: React.FC<IProps> = ({
-  feed = [],
+  data: { myFeed: { posts = null } = {} } = {},
   refreshing,
   disableNavigation = false,
   ...rest
 }) => (
   <FlatList
-    data={feed}
+    data={posts}
     refreshing={refreshing}
     renderItem={({ item, index }) => (
       <View key={index}>

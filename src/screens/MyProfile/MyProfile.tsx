@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Query } from "react-apollo";
-import { ActivityIndicator, AsyncStorage } from "react-native";
+import { ActivityIndicator, AsyncStorage, Text } from "react-native";
 import { Appbar } from "react-native-paper";
 
 import { ME, MY_FEED } from "./MyProfileQueries";
@@ -124,14 +124,12 @@ export default class MyProfileScreen extends Component {
         variables={{
           pageNum
         }}
-        // fetchPolicy={"network-only"}
+        fetchPolicy={"cache-and-network"}
       >
         {({ data, fetchMore, loading, networkStatus, refetch }) => {
-          const { myFeed: { posts = null } = {} } = ({} = data);
-          console.log(data);
           return (
             <FeedList
-              feed={posts}
+              data={data}
               refreshing={networkStatus === 4}
               onRefresh={() => {
                 pageNum = 1;
