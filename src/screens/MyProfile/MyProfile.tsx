@@ -1,6 +1,6 @@
 import React from "react";
 import { Query } from "react-apollo";
-import { ActivityIndicator, AsyncStorage, Text } from "react-native";
+import { ActivityIndicator, AsyncStorage } from "react-native";
 import { Appbar } from "react-native-paper";
 
 import { ME, MY_FEED } from "./MyProfileQueries";
@@ -42,36 +42,36 @@ export default class MyProfileScreen extends React.Component {
     )
   });
 
-  componentDidMount = () => {
+  public componentDidMount = () => {
     this.props.navigation.setParams({
       logout: this.handleLogout
     });
   };
 
-  onTeamsPress = uuid => {
+  public onTeamsPress = uuid => {
     this.props.navigation.push("UserTeams", {
       uuid
     });
   };
 
-  onFollowersPress = uuid => {
+  public onFollowersPress = uuid => {
     this.props.navigation.push("Followers", {
       uuid
     });
   };
 
-  onFollowingPress = uuid => {
+  public onFollowingPress = uuid => {
     this.props.navigation.push("Following", {
       uuid
     });
   };
 
-  handleLogout = async () => {
+  public handleLogout = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate("Auth");
   };
 
-  renderUserInfoArea = () => {
+  public renderUserInfoArea = () => {
     return (
       <Query<Me> query={ME}>
         {({ data, loading }) => {
@@ -115,7 +115,7 @@ export default class MyProfileScreen extends React.Component {
     );
   };
 
-  render() {
+  public render() {
     let pageNum = 1;
 
     return (
@@ -126,16 +126,20 @@ export default class MyProfileScreen extends React.Component {
         }}
         fetchPolicy={"cache-and-network"}
       >
-        {({ data, fetchMore, loading, networkStatus, refetch }) => {
+        {({
+          data: { getMyFeed: { posts = null } = {} } = {},
+          fetchMore,
+          loading,
+          networkStatus,
+          refetch
+        }) => {
           return (
             <FeedList
-              data={data}
+              posts={posts}
               refreshing={networkStatus === 4}
               onRefresh={() => {
                 pageNum = 1;
-                refetch({
-                  pageNum
-                });
+                refetch({ pageNum });
               }}
               ListHeaderComponent={this.renderUserInfoArea}
               ListFooterComponent={() => (

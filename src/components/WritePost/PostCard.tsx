@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Avatar } from "react-native-elements";
 import { Card, Subheading, Caption, Paragraph } from "react-native-paper";
-import { MEDIA_URL } from "../constants/urls";
+import { MEDIA_URL } from "../../constants/urls";
 import {
   NavigationScreenProp,
   NavigationState,
@@ -10,9 +10,9 @@ import {
   withNavigation
 } from "react-navigation";
 
-import { timeSince } from "../utils/time";
-import { GetMyFeed_getMyFeed_posts_postedBy } from "../types/api";
-import VoteBtn from "./VoteBtn";
+import { timeSince } from "../../utils/time";
+import { GetMyFeed_getMyFeed_posts_postedBy } from "../../types/api";
+import VoteBtn from "../VoteBtn/VoteBtn";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;

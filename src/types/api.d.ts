@@ -70,6 +70,50 @@ export interface RemovePostInteractionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreatePost
+// ====================================================
+
+export interface CreatePost_createPost_post_postedBy {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface CreatePost_createPost_post {
+  __typename: "PostType";
+  uuid: any | null;
+  text: string | null;
+  postImg: string | null;
+  createdAt: any;
+  score: number;
+  interaction: string | null;
+  postedBy: CreatePost_createPost_post_postedBy;
+}
+
+export interface CreatePost_createPost {
+  __typename: "CreatePostReponse";
+  post: CreatePost_createPost_post | null;
+}
+
+export interface CreatePost {
+  createPost: CreatePost_createPost;
+}
+
+export interface CreatePostVariables {
+  text: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: Login
 // ====================================================
 
@@ -326,7 +370,7 @@ export interface GetUser {
 }
 
 export interface GetUserVariables {
-  uuid?: string | null;
+  uuid: string;
 }
 
 /* tslint:disable */

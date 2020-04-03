@@ -3,7 +3,7 @@ import { FlatList } from "react-native";
 import PostCard from "./PostCard";
 
 interface IProps {
-  data: any;
+  posts: any;
   refreshing: boolean;
   disableNavigation: boolean;
   onRefresh: () => void;
@@ -15,22 +15,20 @@ interface IProps {
 }
 
 const FeedList: React.FC<IProps> = ({
-  data: { getMyFeed: { posts = null } = {} } = {},
+  posts,
   refreshing,
   disableNavigation = false,
   ...rest
 }) => (
-  <>
-    <FlatList
-      data={posts}
-      refreshing={refreshing}
-      renderItem={({ item }) => (
-        <PostCard {...item} disableNavigation={disableNavigation} />
-      )}
-      keyExtractor={post => post.uuid.toString()}
-      {...rest}
-    />
-  </>
+  <FlatList
+    data={posts}
+    refreshing={refreshing}
+    renderItem={({ item }) => (
+      <PostCard {...item} disableNavigation={disableNavigation} />
+    )}
+    keyExtractor={post => post.uuid.toString()}
+    {...rest}
+  />
 );
 
 export default FeedList;
