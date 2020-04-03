@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { View, ActivityIndicator, AsyncStorage } from "react-native";
 
-export default class AuthLoadingContainer extends Component {
+export default class AuthLoadingContainer extends React.Component {
   constructor(props) {
     super(props);
     this.checkAuthentication();

@@ -11,7 +11,7 @@ const UserInfoContainer = styled.View`
 `;
 
 interface IProps {
-  avatar?: string;
+  userImg?: string;
   name: string;
   handle: string;
   bio?: string;
@@ -23,7 +23,7 @@ interface IProps {
 }
 
 const MyProfileHeader: React.FC<IProps> = ({
-  avatar = null,
+  userImg = null,
   name,
   handle,
   bio = "",
@@ -40,8 +40,8 @@ const MyProfileHeader: React.FC<IProps> = ({
         rounded
         containerStyle={{ marginVertical: 5 }}
         source={{
-          uri: avatar
-            ? MEDIA_URL + avatar
+          uri: userImg
+            ? MEDIA_URL + userImg
             : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
         }}
       />

@@ -1,11 +1,6 @@
 import React from "react";
 import { FlatList } from "react-native";
-import styled from "styled-components";
-
-const View = styled.View``;
-const Text = styled.Text`
-  font-size: 100px;
-`;
+import PostCard from "./PostCard";
 
 interface IProps {
   data: any;
@@ -20,26 +15,22 @@ interface IProps {
 }
 
 const FeedList: React.FC<IProps> = ({
-  data: { myFeed: { posts = null } = {} } = {},
+  data: { getMyFeed: { posts = null } = {} } = {},
   refreshing,
   disableNavigation = false,
   ...rest
 }) => (
-  <FlatList
-    data={posts}
-    refreshing={refreshing}
-    renderItem={({ item, index }) => (
-      <View key={index}>
-        <Text>{item.id}</Text>
-        <Text>{item.id}</Text>
-        <Text>{item.id}</Text>
-        <Text>{item.id}</Text>
-        <Text>{item.id}</Text>
-      </View>
-    )}
-    keyExtractor={psot => psot.id}
-    {...rest}
-  />
+  <>
+    <FlatList
+      data={posts}
+      refreshing={refreshing}
+      renderItem={({ item }) => (
+        <PostCard {...item} disableNavigation={disableNavigation} />
+      )}
+      keyExtractor={post => post.uuid.toString()}
+      {...rest}
+    />
+  </>
 );
 
 export default FeedList;

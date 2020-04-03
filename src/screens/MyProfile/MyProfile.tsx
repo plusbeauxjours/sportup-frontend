@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { Query } from "react-apollo";
 import { ActivityIndicator, AsyncStorage, Text } from "react-native";
 import { Appbar } from "react-native-paper";
 
 import { ME, MY_FEED } from "./MyProfileQueries";
-import { Me, MyFeed, MyFeedVariables } from "../../types/api";
+import { Me, GetMyFeed, GetMyFeedVariables } from "../../types/api";
 import MyProfileHeader from "../../components/MyProfileHeader";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
@@ -14,7 +14,7 @@ const View = styled.View`
   flex-direction: row;
 `;
 
-export default class MyProfileScreen extends Component {
+export default class MyProfileScreen extends React.Component {
   public onEndReachedCalledDuringMomentum;
   static navigationOptions = ({ navigation }) => ({
     title: "Me",
@@ -91,9 +91,10 @@ export default class MyProfileScreen extends Component {
             followers: me.followersCount,
             following: me.followingCount
           };
+          console.log("me", me);
           return (
             <MyProfileHeader
-              avatar={me.userImg}
+              userImg={me.userImg}
               name={`${me.firstName} ${me.lastName}`}
               handle={me.username}
               bio={me.bio}
@@ -119,7 +120,7 @@ export default class MyProfileScreen extends Component {
     let pageNum = 1;
 
     return (
-      <Query<MyFeed, MyFeedVariables>
+      <Query<GetMyFeed, GetMyFeedVariables>
         query={MY_FEED}
         variables={{
           pageNum
@@ -150,13 +151,13 @@ export default class MyProfileScreen extends Component {
                     },
                     updateQuery: (prev, { fetchMoreResult }) => {
                       if (!fetchMoreResult) return prev;
-                      if (!fetchMoreResult.myFeed) return prev;
+                      if (!fetchMoreResult.getMyFeed) return prev;
                       return Object.assign({}, prev, {
-                        myFeed: {
-                          ...prev.myFeed,
+                        getMyFeed: {
+                          ...prev.getMyFeed,
                           posts: [
-                            ...prev.myFeed.posts,
-                            ...fetchMoreResult.myFeed.posts
+                            ...prev.getMyFeed.posts,
+                            ...fetchMoreResult.getMyFeed.posts
                           ]
                         }
                       });

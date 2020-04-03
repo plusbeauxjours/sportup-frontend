@@ -11,7 +11,7 @@ export const ME = gql`
         bio
         userImg
         sports {
-          sportId
+          sportUuid
           name
         }
         teamsCount
@@ -24,10 +24,11 @@ export const ME = gql`
 
 
 export const MY_FEED = gql`
-  query MyFeed($pageNum: Int) {
-    myFeed(pageNum: $pageNum) {
+  query GetMyFeed($pageNum: Int) {
+    getMyFeed(pageNum: $pageNum) {
       posts{
         id
+        uuid
         text
         postImg
         createdAt

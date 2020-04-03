@@ -4,6 +4,72 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UpvotePost
+// ====================================================
+
+export interface UpvotePost_upvotePost {
+  __typename: "UpvotePostResponse";
+  ok: boolean | null;
+}
+
+export interface UpvotePost {
+  upvotePost: UpvotePost_upvotePost;
+}
+
+export interface UpvotePostVariables {
+  postUuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DownvotePost
+// ====================================================
+
+export interface DownvotePost_downvotePost {
+  __typename: "DownvotePostResponse";
+  ok: boolean | null;
+}
+
+export interface DownvotePost {
+  downvotePost: DownvotePost_downvotePost;
+}
+
+export interface DownvotePostVariables {
+  postUuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: RemovePostInteraction
+// ====================================================
+
+export interface RemovePostInteraction_removePostInteraction {
+  __typename: "RemovePostInteractionResponse";
+  ok: boolean | null;
+}
+
+export interface RemovePostInteraction {
+  removePostInteraction: RemovePostInteraction_removePostInteraction;
+}
+
+export interface RemovePostInteractionVariables {
+  postUuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: Login
 // ====================================================
 
@@ -100,7 +166,7 @@ export interface UpdateUserVariables {
 
 export interface Me_me_user_sports {
   __typename: "UserPlaysSportType";
-  sportId: number | null;
+  sportUuid: string | null;
   name: string | null;
 }
 
@@ -136,10 +202,10 @@ export interface Me {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: MyFeed
+// GraphQL query operation: GetMyFeed
 // ====================================================
 
-export interface MyFeed_myFeed_posts_postedBy {
+export interface GetMyFeed_getMyFeed_posts_postedBy {
   __typename: "UserType";
   id: string;
   name: string | null;
@@ -150,30 +216,31 @@ export interface MyFeed_myFeed_posts_postedBy {
   userImg: string | null;
 }
 
-export interface MyFeed_myFeed_posts {
+export interface GetMyFeed_getMyFeed_posts {
   __typename: "PostType";
   /**
    * The ID of the object.
    */
   id: string;
+  uuid: any | null;
   text: string | null;
   postImg: string | null;
   createdAt: any;
   score: number;
   interaction: string | null;
-  postedBy: MyFeed_myFeed_posts_postedBy;
+  postedBy: GetMyFeed_getMyFeed_posts_postedBy;
 }
 
-export interface MyFeed_myFeed {
-  __typename: "MyFeedResponse";
-  posts: (MyFeed_myFeed_posts | null)[] | null;
+export interface GetMyFeed_getMyFeed {
+  __typename: "GetMyFeedResponse";
+  posts: (GetMyFeed_getMyFeed_posts | null)[] | null;
 }
 
-export interface MyFeed {
-  myFeed: MyFeed_myFeed;
+export interface GetMyFeed {
+  getMyFeed: GetMyFeed_getMyFeed;
 }
 
-export interface MyFeedVariables {
+export interface GetMyFeedVariables {
   pageNum?: number | null;
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Mutation, MutationFunction } from "react-apollo";
@@ -37,7 +37,7 @@ const validationSchema = Yup.object().shape({
     .required("Password is required")
 });
 
-export default class LoginForm extends Component<IProps> {
+export default class LoginForm extends React.Component<IProps> {
   public tokenAuth: MutationFunction;
   static navigationOptions = {
     title: "sportup"
