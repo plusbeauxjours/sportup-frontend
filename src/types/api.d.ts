@@ -249,6 +249,88 @@ export interface GetMainFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetUserFollowers
+// ====================================================
+
+export interface GetUserFollowers_getUser_user_followers {
+  __typename: "FollowType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
+export interface GetUserFollowers_getUser_user {
+  __typename: "UserType";
+  uuid: any | null;
+  followers: (GetUserFollowers_getUser_user_followers | null)[] | null;
+}
+
+export interface GetUserFollowers_getUser {
+  __typename: "GetUserReponse";
+  user: GetUserFollowers_getUser_user | null;
+}
+
+export interface GetUserFollowers {
+  getUser: GetUserFollowers_getUser;
+}
+
+export interface GetUserFollowersVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUserFollowing
+// ====================================================
+
+export interface GetUserFollowing_getUser_user_following {
+  __typename: "FollowType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
+export interface GetUserFollowing_getUser_user {
+  __typename: "UserType";
+  uuid: any | null;
+  following: (GetUserFollowing_getUser_user_following | null)[] | null;
+}
+
+export interface GetUserFollowing_getUser {
+  __typename: "GetUserReponse";
+  user: GetUserFollowing_getUser_user | null;
+}
+
+export interface GetUserFollowing {
+  getUser: GetUserFollowing_getUser;
+}
+
+export interface GetUserFollowingVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Me
 // ====================================================
 

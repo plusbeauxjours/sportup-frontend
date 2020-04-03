@@ -2,14 +2,18 @@ import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
 import Feed from "../screens/Feed";
 import UserProfile from "../screens/UserProfile";
+import Followers from "../screens/Followers/Followers";
+import Following from "../screens/Following/index";
 
 const FeedStack = createStackNavigator(
   {
     Feed: Feed,
-    UserProfile: UserProfile
+    UserProfile: UserProfile,
+    Followers: Followers,
+    Following: Following
   },
   {
-    initialRouteName: "Feed",
+    initialRouteName: "Following",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR
