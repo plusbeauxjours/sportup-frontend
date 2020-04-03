@@ -91,7 +91,6 @@ export default class MyProfileScreen extends React.Component {
             followers: me.followersCount,
             following: me.followingCount
           };
-          console.log("me", me);
           return (
             <MyProfileHeader
               userImg={me.userImg}
@@ -101,13 +100,13 @@ export default class MyProfileScreen extends React.Component {
               sports={me.sports}
               connections={connections}
               onTeamsPress={() => {
-                this.onTeamsPress(me.id);
+                this.onTeamsPress(me.uuid);
               }}
               onFollowersPress={() => {
-                this.onFollowersPress(me.id);
+                this.onFollowersPress(me.uuid);
               }}
               onFollowingPress={() => {
-                this.onFollowingPress(me.id);
+                this.onFollowingPress(me.uuid);
               }}
             />
           );

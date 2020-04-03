@@ -101,7 +101,7 @@ export interface LoginVariables {
 
 export interface Signup_createUser_user {
   __typename: "UserType";
-  id: string;
+  uuid: any | null;
 }
 
 export interface Signup_createUser {
@@ -161,6 +161,50 @@ export interface UpdateUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetMainFeed
+// ====================================================
+
+export interface GetMainFeed_getMainFeed_posts_postedBy {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface GetMainFeed_getMainFeed_posts {
+  __typename: "PostType";
+  uuid: any | null;
+  text: string | null;
+  postImg: string | null;
+  createdAt: any;
+  score: number;
+  interaction: string | null;
+  postedBy: GetMainFeed_getMainFeed_posts_postedBy;
+}
+
+export interface GetMainFeed_getMainFeed {
+  __typename: "GetMainFeedResponse";
+  posts: (GetMainFeed_getMainFeed_posts | null)[] | null;
+}
+
+export interface GetMainFeed {
+  getMainFeed: GetMainFeed_getMainFeed;
+}
+
+export interface GetMainFeedVariables {
+  pageNum?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: Me
 // ====================================================
 
@@ -172,7 +216,7 @@ export interface Me_me_user_sports {
 
 export interface Me_me_user {
   __typename: "UserType";
-  id: string;
+  uuid: any | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -207,7 +251,7 @@ export interface Me {
 
 export interface GetMyFeed_getMyFeed_posts_postedBy {
   __typename: "UserType";
-  id: string;
+  uuid: any | null;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -218,10 +262,6 @@ export interface GetMyFeed_getMyFeed_posts_postedBy {
 
 export interface GetMyFeed_getMyFeed_posts {
   __typename: "PostType";
-  /**
-   * The ID of the object.
-   */
-  id: string;
   uuid: any | null;
   text: string | null;
   postImg: string | null;
@@ -242,6 +282,51 @@ export interface GetMyFeed {
 
 export interface GetMyFeedVariables {
   pageNum?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUser
+// ====================================================
+
+export interface GetUser_getUser_user_sports {
+  __typename: "UserPlaysSportType";
+  sportUuid: string | null;
+  name: string | null;
+}
+
+export interface GetUser_getUser_user {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  bio: string;
+  userImg: string | null;
+  isFollowing: boolean | null;
+  sports: (GetUser_getUser_user_sports | null)[] | null;
+  teamsCount: number | null;
+  followersCount: number | null;
+  followingCount: number | null;
+}
+
+export interface GetUser_getUser {
+  __typename: "GetUserReponse";
+  user: GetUser_getUser_user | null;
+}
+
+export interface GetUser {
+  getUser: GetUser_getUser;
+}
+
+export interface GetUserVariables {
+  uuid?: string | null;
 }
 
 /* tslint:disable */

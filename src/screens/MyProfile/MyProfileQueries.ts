@@ -4,7 +4,7 @@ export const ME = gql`
   query Me {
     me {
       user {
-        id
+        uuid
         username
         firstName
         lastName
@@ -27,7 +27,6 @@ export const MY_FEED = gql`
   query GetMyFeed($pageNum: Int) {
     getMyFeed(pageNum: $pageNum) {
       posts{
-        id
         uuid
         text
         postImg
@@ -35,7 +34,7 @@ export const MY_FEED = gql`
         score
         interaction
         postedBy {
-          id
+          uuid
           name
           username
           userImg

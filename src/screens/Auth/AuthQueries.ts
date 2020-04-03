@@ -24,7 +24,7 @@ export const SIGNUP = gql`
       lastName: $lastName
     ) {
       user {
-        id
+        uuid
       }
     }
   }
