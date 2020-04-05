@@ -4,6 +4,50 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: FollowUser
+// ====================================================
+
+export interface FollowUser_followUser {
+  __typename: "FollowUserResponse";
+  ok: boolean | null;
+}
+
+export interface FollowUser {
+  followUser: FollowUser_followUser;
+}
+
+export interface FollowUserVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: UnfollowUser
+// ====================================================
+
+export interface UnfollowUser_unfollowUser {
+  __typename: "UnfollowUserResponse";
+  ok: boolean | null;
+}
+
+export interface UnfollowUser {
+  unfollowUser: UnfollowUser_unfollowUser;
+}
+
+export interface UnfollowUserVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpvotePost
 // ====================================================
 

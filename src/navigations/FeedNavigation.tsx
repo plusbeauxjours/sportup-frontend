@@ -2,7 +2,7 @@ import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
 import Feed from "../screens/Feed";
 import UserProfile from "../screens/UserProfile";
-import Followers from "../screens/Followers/Followers";
+import Followers from "../screens/Followers";
 import Following from "../screens/Following/index";
 
 const FeedStack = createStackNavigator(
