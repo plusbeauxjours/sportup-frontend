@@ -20,6 +20,15 @@ const OuterUserInfoContainer = styled.View`
   margin: 10px 0 10px 0;
   padding: 0 5px 0 5px;
 `;
+const InnerUserInfoContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
+const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 const TouchableOpacity = styled.View`
   flex: 1;
   padding-left: 15px;
@@ -58,12 +67,12 @@ const UserCard: React.FC<IProps> = withNavigation(
           }}
           onPress={() => {
             me.user.uuid === uuid
-              ? navigation.push("MyProfile")
-              : navigation.push("UserProfile", { uuid });
+              ? navigation.navigate("MyProfile")
+              : navigation.navigate("UserProfile", { uuid });
           }}
         />
-        <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <InnerUserInfoContainer>
+          <Header>
             <TouchableOpacity onPress={() => navigation.push("MyProfile")}>
               <Subheading numberOfLines={1}>{name}</Subheading>
               <Caption numberOfLines={1}>{`@${username}`}</Caption>
@@ -71,11 +80,11 @@ const UserCard: React.FC<IProps> = withNavigation(
             {me.user.uuid !== uuid && (
               <FollowBtn isFollowing={isFollowing} uuid={uuid} />
             )}
-          </View>
+          </Header>
           <Paragraph numberOfLines={2} style={{ padding: 5 }}>
             {bio}
           </Paragraph>
-        </View>
+        </InnerUserInfoContainer>
       </OuterUserInfoContainer>
     );
   }

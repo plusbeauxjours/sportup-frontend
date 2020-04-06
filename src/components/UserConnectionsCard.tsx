@@ -2,6 +2,13 @@ import React from "react";
 import { Title, Caption } from "react-native-paper";
 import styled from "styled-components";
 
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  height: 70px;
+`;
 const TouchableOpacity = styled.TouchableOpacity`
   flex: 1;
   height: 70px;
@@ -30,16 +37,7 @@ const UserConnectionsCard: React.FC<IProps> = ({
   onFollowersPress = null,
   onFollowingPress = null
 }) => (
-  <View
-    style={{
-      flex: 1,
-      width: "100%",
-      flexDirection: "row",
-      alignItems: "center",
-      elevation: 2,
-      height: 70
-    }}
-  >
+  <Container>
     <TouchableOpacity onPress={onTeamsPress}>
       <View>
         <Title>{teams}</Title>
@@ -58,6 +56,6 @@ const UserConnectionsCard: React.FC<IProps> = ({
         <Caption>Following</Caption>
       </View>
     </TouchableOpacity>
-  </View>
+  </Container>
 );
 export default UserConnectionsCard;

@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Reac from "react";
 
 const View = styled.View`
   flex-direction: row;
@@ -25,9 +24,9 @@ interface IProps {
   text: string;
 }
 
-const Divider: Reac.FC<IProps> = ({ text }) => {
+const Divider: React.FC<IProps> = ({ text }) => {
   return (
-    <View style={{ flexDirection: "row", padding: 15 }}>
+    <View>
       <Container />
       <Text>{text}</Text>
       <Container />
