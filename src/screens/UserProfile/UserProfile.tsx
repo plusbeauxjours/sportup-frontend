@@ -29,6 +29,10 @@ class UserProfile extends React.Component<any, IState> {
     };
   }
 
+  public onTeamsPress = uuid => {
+    this.props.navigation.push("Teams", { uuid });
+  };
+
   public onFollowersPress = uuid => {
     this.props.navigation.push("Followers", { uuid });
   };
@@ -36,20 +40,6 @@ class UserProfile extends React.Component<any, IState> {
   public onFollowingPress = uuid => {
     this.props.navigation.push("Following", { uuid });
   };
-
-  // @action
-  // public showDialog = sportId => {
-  //   this.ratingSportWithId = sportId;
-  //   // this.rating = sports.find(sport => sport.sportId === sportId).rated || 0;
-  //   this.dialogVisible = true;
-  // };
-
-  // @action
-  // public closeDialog = () => {
-  //   this.ratingSportWithId = null;
-  //   this.rating = 0;
-  //   this.dialogVisible = false;
-  // };
 
   public renderUserInfoArea = () => {
     const { uuid } = this.state;
@@ -80,7 +70,7 @@ class UserProfile extends React.Component<any, IState> {
               sports={user.sports}
               connections={connections}
               onTeamsPress={() => {
-                console.log("team press");
+                this.onTeamsPress(user.uuid);
               }}
               onFollowersPress={() => {
                 this.onFollowersPress(user.uuid);
@@ -98,6 +88,7 @@ class UserProfile extends React.Component<any, IState> {
 
   render() {
     let pageNum = 1;
+
     const { uuid } = this.state;
     return (
       <Query<GetUserFeed, GetUserFeedVariables>

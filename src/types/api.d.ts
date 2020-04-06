@@ -486,6 +486,48 @@ export interface GetMyFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetUserTeams
+// ====================================================
+
+export interface GetUserTeams_getUser_user_teamSet_sport {
+  __typename: "SportType";
+  sportUuid: string | null;
+  name: string;
+}
+
+export interface GetUserTeams_getUser_user_teamSet {
+  __typename: "TeamType";
+  id: string;
+  name: string;
+  coverImg: string | null;
+  sport: GetUserTeams_getUser_user_teamSet_sport;
+}
+
+export interface GetUserTeams_getUser_user {
+  __typename: "UserType";
+  uuid: any | null;
+  teamSet: GetUserTeams_getUser_user_teamSet[];
+}
+
+export interface GetUserTeams_getUser {
+  __typename: "GetUserReponse";
+  user: GetUserTeams_getUser_user | null;
+}
+
+export interface GetUserTeams {
+  getUser: GetUserTeams_getUser;
+}
+
+export interface GetUserTeamsVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetUser
 // ====================================================
 

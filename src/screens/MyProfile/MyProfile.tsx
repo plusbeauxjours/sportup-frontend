@@ -49,7 +49,7 @@ export default class MyProfileScreen extends React.Component {
   };
 
   public onTeamsPress = uuid => {
-    this.props.navigation.push("UserTeams", {
+    this.props.navigation.push("Teams", {
       uuid
     });
   };
