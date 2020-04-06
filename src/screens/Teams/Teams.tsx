@@ -2,7 +2,8 @@ import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { GetUserTeams, GetUserTeamsVariables } from "../../types/api";
 import { GET_USER_TEAMS } from "./TeamsQueries";
-import { ActivityIndicator, FlatList, View, Text } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
+import TeamCard from "../../components/TeamCard";
 import {
   NavigationStackScreenComponent,
   NavigationStackScreenProps
@@ -22,15 +23,12 @@ const Teams: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
     fetchPolicy: "network-only"
   });
   if (!loading) {
+    console.log("user", user);
     return (
       <FlatList
         data={user.teamSet}
-        renderItem={({ item }) => (
-          <View>
-            <Text>teams</Text>
-          </View>
-        )}
-        keyExtractor={team => team.id.toString()}
+        renderItem={({ item }) => <TeamCard {...item} />}
+        keyExtractor={team => team.uuid.toString()}
       />
     );
   }

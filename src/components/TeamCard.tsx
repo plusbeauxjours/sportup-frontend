@@ -19,48 +19,92 @@ interface IProps extends NavigationStackScreenProps {
   name: string;
   coverImg?: string;
   sport: Array<any>;
-  enableMessage: boolean;
+  enableMessage?: boolean;
 }
 
-const TeamCard: NavigationStackScreenComponent<IProps> = withNavigation(
-  ({ id, name, coverImg, enableMessage, sport, navigation }) => {
-    return (
-      <Card>
-        {coverImg && <Card.Cover source={{ uri: coverImg }} />}
-        <Card.Content>
-          <Container>
-            <TouchableOpacity
+const TeamCardWithCover: NavigationStackScreenComponent<IProps> = withNavigation(
+  ({ uuid, name, coverImg, enableMessage, sport, navigation }) => (
+    <Card>
+      {coverImg && <Card.Cover source={{ uri: coverImg }} />}
+      <Card.Content>
+        <Container>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.push("Team", { uuid });
+            }}
+          >
+            <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
+              {name}
+            </Title>
+          </TouchableOpacity>
+          {enableMessage && (
+            <Button
+              primary
+              raised
+              icon="message"
               onPress={() => {
-                navigation.push("Team", { teamId: id });
+                console.log("go to chat");
               }}
             >
-              <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-                {name}
-              </Title>
-            </TouchableOpacity>
-            {enableMessage && (
-              <Button
-                primary
-                raised
-                icon="message"
-                onPress={() => {
-                  console.log("go to chat");
-                }}
-              >
-                Message
-              </Button>
-            )}
-          </Container>
-          <RatingChip
-            sportId={sport.sportId}
-            name={sport.name}
-            rating={sport.team}
-            onPress={() => {}}
-          />
-        </Card.Content>
-      </Card>
-    );
-  }
+              Message
+            </Button>
+          )}
+        </Container>
+        <RatingChip
+          sportUuid={sport.sportUuid}
+          name={sport.name}
+          rating={sport.team}
+          onPress={() => {}}
+        />
+      </Card.Content>
+    </Card>
+  )
 );
+const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigation(
+  ({ uuid, name, enableMessage, sport, navigation }) => (
+    <Card>
+      <Card.Content>
+        <Container>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.push("Team", { uuid });
+            }}
+          >
+            <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
+              {name}
+            </Title>
+          </TouchableOpacity>
+          {enableMessage && (
+            <Button
+              primary
+              raised
+              icon="message"
+              onPress={() => {
+                console.log("go to chat");
+              }}
+            >
+              Message
+            </Button>
+          )}
+        </Container>
+        {console.log(sport)}
+        <RatingChip
+          sportUuid={sport.sportUuid}
+          name={sport.name}
+          rating={sport.team}
+          onPress={() => {}}
+        />
+      </Card.Content>
+    </Card>
+  )
+);
+
+const TeamCard = props => {
+  return props.coverImg ? (
+    <TeamCardWithCover {...props} />
+  ) : (
+    <TeamCardWithoutCover {...props} />
+  );
+};
 
 export default TeamCard;
