@@ -7,9 +7,22 @@
 // GraphQL mutation operation: FollowUser
 // ====================================================
 
+export interface FollowUser_followUser_following {
+  __typename: "FollowType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
 export interface FollowUser_followUser {
   __typename: "FollowUserResponse";
-  ok: boolean | null;
+  following: FollowUser_followUser_following | null;
 }
 
 export interface FollowUser {
@@ -29,9 +42,22 @@ export interface FollowUserVariables {
 // GraphQL mutation operation: UnfollowUser
 // ====================================================
 
+export interface UnfollowUser_unfollowUser_following {
+  __typename: "FollowType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
 export interface UnfollowUser_unfollowUser {
   __typename: "UnfollowUserResponse";
-  ok: boolean | null;
+  following: UnfollowUser_unfollowUser_following | null;
 }
 
 export interface UnfollowUser {

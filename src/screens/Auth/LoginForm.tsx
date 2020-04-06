@@ -124,8 +124,9 @@ export default class LoginForm extends React.Component<IProps> {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={() => {}}
-          render={this.renderForm}
-        />
+        >
+          {this.renderForm}
+        </Formik>
       </KeyboardAwareScrollView>
     );
   }

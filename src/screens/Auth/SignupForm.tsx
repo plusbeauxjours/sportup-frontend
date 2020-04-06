@@ -191,8 +191,9 @@ export default class SignupForm extends React.Component<IProps> {
           initialValues={initialValues}
           onSubmit={() => {}}
           validationSchema={validationSchema}
-          render={this.renderForm}
-        />
+        >
+          {this.renderForm}
+        </Formik>
       </KeyboardAwareScrollView>
     );
   }

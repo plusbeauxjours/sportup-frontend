@@ -22,8 +22,7 @@ const Followers: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
   } = useQuery<GetUserFollowers, GetUserFollowersVariables>(
     GET_USER_FOLLOWERS,
     {
-      //   variables: { uuid: navigation.getParam("uuid") }
-      variables: { uuid: "9b4dd8e7-51e2-4738-b8c1-a1472d4cfa4a" }
+      variables: { uuid: navigation.getParam("uuid") }
     }
   );
   console.log(followers);
@@ -35,9 +34,9 @@ const Followers: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
       renderItem={({ item }) => (
         <UserCard
           uuid={item.uuid}
-          avatar={item.userImg}
+          userImg={item.userImg}
           name={item.name}
-          handle={item.username}
+          username={item.username}
           bio={item.bio}
           following={item.isFollowing}
         />

@@ -24,7 +24,7 @@ const MainDrawer = createDrawerNavigator(
     }
   },
   {
-    initialRouteName: "Feed"
+    initialRouteName: "MyProfile"
   }
 );
 

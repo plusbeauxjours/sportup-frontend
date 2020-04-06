@@ -5206,12 +5206,12 @@
         "description": null,
         "fields": [
           {
-            "name": "ok",
+            "name": "following",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
+              "kind": "OBJECT",
+              "name": "FollowType",
               "ofType": null
             },
             "isDeprecated": false,
@@ -5229,12 +5229,12 @@
         "description": null,
         "fields": [
           {
-            "name": "ok",
+            "name": "following",
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Boolean",
+              "kind": "OBJECT",
+              "name": "FollowType",
               "ofType": null
             },
             "isDeprecated": false,

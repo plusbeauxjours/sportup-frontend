@@ -95,7 +95,7 @@ export default class MyProfileScreen extends React.Component {
             <MyProfileHeader
               userImg={me.userImg}
               name={`${me.firstName} ${me.lastName}`}
-              handle={me.username}
+              username={me.username}
               bio={me.bio}
               sports={me.sports}
               connections={connections}

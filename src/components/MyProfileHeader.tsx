@@ -3,6 +3,7 @@ import { Paragraph, Caption, Headline } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { MEDIA_URL } from "../constants/urls";
 import styled from "styled-components";
+import UserConnectionsCard from "./UserConnectionsCard";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -13,7 +14,7 @@ const UserInfoContainer = styled.View`
 interface IProps {
   userImg?: string;
   name: string;
-  handle: string;
+  username: string;
   bio?: string;
   sports: any;
   connections?: any;
@@ -25,7 +26,7 @@ interface IProps {
 const MyProfileHeader: React.FC<IProps> = ({
   userImg = null,
   name,
-  handle,
+  username,
   bio = "",
   sports,
   connections = { team: 0, followers: 0, following: 0 },
@@ -46,8 +47,14 @@ const MyProfileHeader: React.FC<IProps> = ({
         }}
       />
       <Headline>{name}</Headline>
-      <Caption>{`@${handle}`}</Caption>
+      <Caption>{`@${username}`}</Caption>
       <Paragraph>{bio}</Paragraph>
+      <UserConnectionsCard
+        {...connections}
+        onTeamsPress={onTeamsPress}
+        onFollowersPress={onFollowersPress}
+        onFollowingPress={onFollowingPress}
+      />
     </UserInfoContainer>
   );
 };
