@@ -76,8 +76,8 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
           disabled={disableNavigation}
           onPress={() => {
             me.user.uuid === uuid
-              ? navigation.navigate("MyProfile")
-              : navigation.navigate("UserProfile", { uuid });
+              ? navigation.push("MyProfile")
+              : navigation.push("UserProfile", { uuid });
           }}
         >
           <Avatar

@@ -27,7 +27,6 @@ class UserProfile extends React.Component<any, IState> {
     this.state = {
       uuid: this.props.navigation.getParam("uuid")
     };
-    console.log("jijijii");
   }
 
   public onFollowersPress = uuid => {

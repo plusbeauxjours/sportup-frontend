@@ -58,17 +58,19 @@ const UserCard: React.FC<IProps> = withNavigation(
           }}
           onPress={() => {
             me.user.uuid === uuid
-              ? navigation.navigate("MyProfile")
-              : navigation.navigate("UserProfile", { uuid });
+              ? navigation.push("MyProfile")
+              : navigation.push("UserProfile", { uuid });
           }}
         />
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <TouchableOpacity onPress={() => navigation.navigate("MyProfile")}>
+            <TouchableOpacity onPress={() => navigation.push("MyProfile")}>
               <Subheading numberOfLines={1}>{name}</Subheading>
               <Caption numberOfLines={1}>{`@${username}`}</Caption>
             </TouchableOpacity>
-            <FollowBtn isFollowing={isFollowing} uuid={uuid} />
+            {me.user.uuid !== uuid && (
+              <FollowBtn isFollowing={isFollowing} uuid={uuid} />
+            )}
           </View>
           <Paragraph numberOfLines={2} style={{ padding: 5 }}>
             {bio}
