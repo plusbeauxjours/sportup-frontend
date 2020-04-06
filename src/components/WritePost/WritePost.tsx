@@ -52,9 +52,7 @@ const WritePost: React.FC = () => {
         value={text}
         autoCorrect={false}
         autoCapitalize="none"
-        onChangeText={text => {
-          setText(text), console.log(text);
-        }}
+        onChangeText={text => setText(text)}
         multiline
       />
       <Button

@@ -13,7 +13,7 @@ const FeedStack = createStackNavigator(
     Following: Following
   },
   {
-    initialRouteName: "Following",
+    initialRouteName: "Feed",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR

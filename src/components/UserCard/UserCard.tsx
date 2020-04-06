@@ -57,7 +57,6 @@ const UserCard: React.FC<IProps> = withNavigation(
     navigation
   }) => {
     const { me, loading: meLoading } = useMe();
-    console.log(me);
     const [isFollowing, setIsFollowing] = useState<boolean>(isFollowingProp);
     const [followUserFn, { loading: followUserLoading }] = useMutation<
       FollowUser,
@@ -124,9 +123,6 @@ const UserCard: React.FC<IProps> = withNavigation(
           console.log(e);
         }
         try {
-          const { me } = cache.readQuery<Me>({
-            query: ME
-          });
           const data = cache.readQuery<
             GetUserFollowing,
             GetUserFollowingVariables
@@ -162,7 +158,11 @@ const UserCard: React.FC<IProps> = withNavigation(
               ? MEDIA_URL + userImg
               : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
           }}
-          onPress={() => navigation.navigate("MyProfile")}
+          onPress={() => {
+            me.user.uuid === uuid
+              ? navigation.navigate("MyProfile")
+              : navigation.navigate("UserProfile", { uuid });
+          }}
         />
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>

@@ -55,7 +55,7 @@ const UserConnectionsCard: React.FC<IProps> = ({
     <TouchableOpacity onPress={onFollowingPress}>
       <View>
         <Title>{following}</Title>
-        <Caption>Folloing</Caption>
+        <Caption>Following</Caption>
       </View>
     </TouchableOpacity>
   </View>

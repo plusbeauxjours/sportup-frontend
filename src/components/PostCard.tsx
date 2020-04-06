@@ -13,6 +13,7 @@ import {
 import { timeSince } from "../utils/time";
 import { GetMyFeed_getMyFeed_posts_postedBy } from "../types/api";
 import VoteBtn from "./VoteBtn";
+import { useMe } from "../context/meContext";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -68,11 +69,16 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
     navigation,
     disableNavigation
   }) => {
+    const { me, loading: meLoading } = useMe();
     return (
       <OuterUserInfoContainerStyle>
         <TouchableOpacity
           disabled={disableNavigation}
-          onPress={() => navigation.navigate("MyProfile")}
+          onPress={() => {
+            me.user.uuid === uuid
+              ? navigation.navigate("MyProfile")
+              : navigation.navigate("UserProfile", { uuid });
+          }}
         >
           <Avatar
             rounded
