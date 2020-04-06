@@ -74,7 +74,7 @@ export default class MyProfileScreen extends React.Component {
   public renderUserInfoArea = () => {
     return (
       <Query<Me> query={ME}>
-        {({ data, loading }) => {
+        {({ data: { me: { user: me = null } = {} } = {}, loading }) => {
           if (loading) {
             return (
               <ActivityIndicator
@@ -85,7 +85,6 @@ export default class MyProfileScreen extends React.Component {
               />
             );
           }
-          const { me: { user: me = null } = {} } = ({} = data);
           const connections = {
             teams: me.teamsCount,
             followers: me.followersCount,

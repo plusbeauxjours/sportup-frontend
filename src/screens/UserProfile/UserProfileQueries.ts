@@ -6,6 +6,8 @@ export const GET_USER = gql`
       user {
         uuid
         name
+        firstName
+        lastName
         username
         bio
         userImg
@@ -17,6 +19,27 @@ export const GET_USER = gql`
         teamsCount
         followersCount
         followingCount
+      }
+    }
+  }
+`;
+
+export const GET_USER_FEED = gql`
+  query GetUserFeed($uuid: String!, $pageNum: Int) {
+    getUserFeed(uuid: $uuid, pageNum: $pageNum) {
+      posts {
+        uuid
+        text
+        postImg
+        createdAt
+        score
+        interaction
+        postedBy {
+          id
+          name
+          username
+          userImg
+        }
       }
     }
   }

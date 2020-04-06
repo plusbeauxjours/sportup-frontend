@@ -499,6 +499,8 @@ export interface GetUser_getUser_user {
   __typename: "UserType";
   uuid: any | null;
   name: string | null;
+  firstName: string;
+  lastName: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -523,6 +525,51 @@ export interface GetUser {
 
 export interface GetUserVariables {
   uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUserFeed
+// ====================================================
+
+export interface GetUserFeed_getUserFeed_posts_postedBy {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface GetUserFeed_getUserFeed_posts {
+  __typename: "PostType";
+  uuid: any | null;
+  text: string | null;
+  postImg: string | null;
+  createdAt: any;
+  score: number;
+  interaction: string | null;
+  postedBy: GetUserFeed_getUserFeed_posts_postedBy;
+}
+
+export interface GetUserFeed_getUserFeed {
+  __typename: "GetUserFeedResponse";
+  posts: (GetUserFeed_getUserFeed_posts | null)[] | null;
+}
+
+export interface GetUserFeed {
+  getUserFeed: GetUserFeed_getUserFeed;
+}
+
+export interface GetUserFeedVariables {
+  uuid: string;
+  pageNum?: number | null;
 }
 
 /* tslint:disable */
