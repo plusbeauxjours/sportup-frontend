@@ -4,9 +4,10 @@ import { TouchableOpacity } from "react-native";
 import { Title, Card, Button } from "react-native-paper";
 import RatingChip from "./RatingChip";
 import styled from "styled-components";
+import { GetUser_getUser_user_sports } from "../types/api";
 import {
   NavigationStackScreenComponent,
-  NavigationStackScreenProps
+  NavigationStackScreenProps,
 } from "react-navigation-stack";
 
 const Container = styled.View`
@@ -18,7 +19,7 @@ interface IProps extends NavigationStackScreenProps {
   uuid: string;
   name: string;
   coverImg?: string;
-  sport: Array<any>;
+  sport: GetUser_getUser_user_sports;
   enableMessage?: boolean;
 }
 
@@ -30,7 +31,7 @@ const TeamCardWithCover: NavigationStackScreenComponent<IProps> = withNavigation
         <Container>
           <TouchableOpacity
             onPress={() => {
-              navigation.push("Team", { uuid });
+              navigation.push("TeamProfile", { uuid });
             }}
           >
             <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
@@ -67,7 +68,7 @@ const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigat
         <Container>
           <TouchableOpacity
             onPress={() => {
-              navigation.push("Team", { uuid });
+              navigation.push("TeamProfile", { uuid });
             }}
           >
             <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
@@ -87,7 +88,6 @@ const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigat
             </Button>
           )}
         </Container>
-        {console.log(sport)}
         <RatingChip
           sportUuid={sport.sportUuid}
           name={sport.name}
@@ -99,7 +99,7 @@ const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigat
   )
 );
 
-const TeamCard = props => {
+const TeamCard = (props) => {
   return props.coverImg ? (
     <TeamCardWithCover {...props} />
   ) : (

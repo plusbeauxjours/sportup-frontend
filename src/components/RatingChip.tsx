@@ -16,7 +16,7 @@ const RatingChip: React.FC<IProps> = ({
   icon,
   rating = null,
   selected = false,
-  onPress = null
+  onPress = null,
 }) => {
   return (
     <Chip
@@ -24,7 +24,6 @@ const RatingChip: React.FC<IProps> = ({
       onPress={() => {
         if (onPress !== null) {
           onPress();
-          console.log(sportUuid);
         }
       }}
       style={selected && { backgroundColor: PRIMARY_COLOR }}

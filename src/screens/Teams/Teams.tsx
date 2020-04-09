@@ -6,7 +6,7 @@ import { ActivityIndicator, FlatList } from "react-native";
 import TeamCard from "../../components/TeamCard";
 import {
   NavigationStackScreenComponent,
-  NavigationStackScreenProps
+  NavigationStackScreenProps,
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
@@ -20,22 +20,21 @@ const Teams: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
     GetUserTeamsVariables
   >(GET_USER_TEAMS, {
     variables: { uuid },
-    fetchPolicy: "network-only"
+    fetchPolicy: "network-only",
   });
   if (!loading) {
-    console.log("user", user);
     return (
       <FlatList
         data={user.teamSet}
         renderItem={({ item }) => <TeamCard {...item} />}
-        keyExtractor={team => team.uuid.toString()}
+        keyExtractor={(team) => team.uuid.toString()}
       />
     );
   }
   return <ActivityIndicator size="large" />;
 };
 Teams.navigationOptions = {
-  title: "Teams"
+  title: "Teams",
 };
 
 export default Teams;

@@ -486,6 +486,58 @@ export interface GetMyFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetTeam
+// ====================================================
+
+export interface GetTeam_getTeam_team_sport {
+  __typename: "SportType";
+  sportUuid: string | null;
+  name: string;
+}
+
+export interface GetTeam_getTeam_team_members {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
+export interface GetTeam_getTeam_team {
+  __typename: "TeamType";
+  uuid: any | null;
+  name: string;
+  coverImg: string | null;
+  isAdmin: boolean | null;
+  sport: GetTeam_getTeam_team_sport;
+  rating: number | null;
+  members: GetTeam_getTeam_team_members[];
+}
+
+export interface GetTeam_getTeam {
+  __typename: "GetTeamResponse";
+  team: GetTeam_getTeam_team | null;
+}
+
+export interface GetTeam {
+  getTeam: GetTeam_getTeam;
+}
+
+export interface GetTeamVariables {
+  uuid: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetUserTeams
 // ====================================================
 
@@ -497,7 +549,7 @@ export interface GetUserTeams_getUser_user_teamSet_sport {
 
 export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
-  id: string;
+  uuid: any | null;
   name: string;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;

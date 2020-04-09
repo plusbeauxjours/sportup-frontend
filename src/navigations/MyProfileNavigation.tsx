@@ -6,25 +6,27 @@ import EditProfile from "../screens/EditProfile";
 import UserProfile from "../screens/UserProfile";
 import Followers from "../screens/Followers";
 import Following from "../screens/Following";
-import Teams from "../screens/Teams/Teams";
+import Teams from "../screens/Teams";
+import TeamProfile from "../screens/TeamProfile";
 
 const MyProfileNavigation = createStackNavigator(
   {
-    MyProfile: MyProfile,
-    EditProfile: EditProfile,
-    UserProfile: UserProfile,
-    Followers: Followers,
-    Following: Following,
-    Teams: Teams
+    MyProfile,
+    EditProfile,
+    UserProfile,
+    Followers,
+    Following,
+    Teams,
+    TeamProfile,
   },
   {
     initialRouteName: "MyProfile",
     navigationOptions: {
       headerStyle: {
-        backgroundColor: PRIMARY_COLOR
+        backgroundColor: PRIMARY_COLOR,
       },
-      headerTintColor: "#fff"
-    }
+      headerTintColor: "#fff",
+    },
   }
 );
 
