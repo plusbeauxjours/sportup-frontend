@@ -5,7 +5,7 @@ import {
   GET_USER_FROM_USERNAME,
   GET_ALL_SPORTS,
   CREATE_TEAM,
-} from "./CreateTeamQueries";
+} from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput, Button, Subheading } from "react-native-paper";
 import { ListItem } from "react-native-elements";
@@ -43,14 +43,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
       sportUuid,
       memberUuids: membersList.map(({ uuid }) => uuid),
     },
-    update(
-      cache,
-      {
-        data: {
-          createTeam: { user },
-        },
-      }
-    ) {
+    update(cache, { data: { createTeam } }) {
+      console.log(createTeam);
       try {
         const { me } = cache.readQuery<Me>({
           query: ME,
@@ -60,7 +54,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
           data: {
             me: {
               ...me,
-              teamsCount: user.teamsCount,
+              user: { ...me.user, teamsCount: createTeam.user.teamsCount },
             },
           },
         });
@@ -114,6 +108,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               selectedValue={sportUuid}
               style={{ width: 200 }}
               onValueChange={(value) => {
+                console.log(value);
                 setSportUuid(value);
               }}
             >

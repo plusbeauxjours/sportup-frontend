@@ -31,7 +31,7 @@ export default class MyProfileScreen extends React.Component {
         <Appbar.Action
           icon="square-edit-outline"
           onPress={() => {
-            navigation.navigate("CreateTeam");
+            navigation.navigate("CreateTeamScreen");
           }}
         />
         <Appbar.Action
