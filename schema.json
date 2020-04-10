@@ -370,6 +370,37 @@
             "deprecationReason": null
           },
           {
+            "name": "getUserFromUsername",
+            "description": null,
+            "args": [
+              {
+                "name": "username",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GetUserFromUsernameReponse",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getUsersForGames",
             "description": null,
             "args": [
@@ -1076,7 +1107,7 @@
             "deprecationReason": null
           },
           {
-            "name": "name",
+            "name": "teamName",
             "description": "",
             "args": [],
             "type": {
@@ -3671,6 +3702,29 @@
       },
       {
         "kind": "OBJECT",
+        "name": "GetUserFromUsernameReponse",
+        "description": null,
+        "fields": [
+          {
+            "name": "user",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "UserType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "GetUsersForGamesResponse",
         "description": null,
         "fields": [
@@ -4155,7 +4209,7 @@
                 "defaultValue": null
               },
               {
-                "name": "name",
+                "name": "sportUuid",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4169,7 +4223,7 @@
                 "defaultValue": null
               },
               {
-                "name": "sportUuid",
+                "name": "teamName",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

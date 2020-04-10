@@ -241,6 +241,92 @@ export interface SignupVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateTeam
+// ====================================================
+
+export interface CreateTeam_createTeam_user {
+  __typename: "UserType";
+  teamsCount: number | null;
+}
+
+export interface CreateTeam_createTeam {
+  __typename: "CreateTeamResponse";
+  user: CreateTeam_createTeam_user | null;
+}
+
+export interface CreateTeam {
+  createTeam: CreateTeam_createTeam;
+}
+
+export interface CreateTeamVariables {
+  teamName: string;
+  sportUuid: string;
+  memberUuids?: (string | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUserFromUsername
+// ====================================================
+
+export interface GetUserFromUsername_getUserFromUsername_user {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface GetUserFromUsername_getUserFromUsername {
+  __typename: "GetUserFromUsernameReponse";
+  user: GetUserFromUsername_getUserFromUsername_user | null;
+}
+
+export interface GetUserFromUsername {
+  getUserFromUsername: GetUserFromUsername_getUserFromUsername;
+}
+
+export interface GetUserFromUsernameVariables {
+  username: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetAllSports
+// ====================================================
+
+export interface GetAllSports_getAllSports_sports {
+  __typename: "SportType";
+  sportUuid: string | null;
+  name: string;
+}
+
+export interface GetAllSports_getAllSports {
+  __typename: "GetAllSportReponse";
+  sports: (GetAllSports_getAllSports_sports | null)[] | null;
+}
+
+export interface GetAllSports {
+  getAllSports: GetAllSports_getAllSports;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpdateUser
 // ====================================================
 
@@ -511,7 +597,7 @@ export interface GetTeam_getTeam_team_members {
 export interface GetTeam_getTeam_team {
   __typename: "TeamType";
   uuid: any | null;
-  name: string;
+  teamName: string;
   coverImg: string | null;
   isAdmin: boolean | null;
   sport: GetTeam_getTeam_team_sport;
@@ -550,7 +636,7 @@ export interface GetUserTeams_getUser_user_teamSet_sport {
 export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   uuid: any | null;
-  name: string;
+  teamName: string;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
 }

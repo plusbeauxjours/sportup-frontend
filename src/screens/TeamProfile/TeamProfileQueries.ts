@@ -5,7 +5,7 @@ export const GET_TEAM = gql`
     getTeam(uuid: $uuid) {
       team {
         uuid
-        name
+        teamName
         coverImg
         isAdmin
         sport {

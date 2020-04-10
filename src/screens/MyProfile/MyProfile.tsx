@@ -31,7 +31,7 @@ export default class MyProfileScreen extends React.Component {
         <Appbar.Action
           icon="square-edit-outline"
           onPress={() => {
-            navigation.navigate("EditProfile");
+            navigation.navigate("CreateTeam");
           }}
         />
         <Appbar.Action
@@ -39,30 +39,30 @@ export default class MyProfileScreen extends React.Component {
           onPress={navigation.getParam("logout")}
         />
       </View>
-    )
+    ),
   });
 
   public componentDidMount = () => {
     this.props.navigation.setParams({
-      logout: this.handleLogout
+      logout: this.handleLogout,
     });
   };
 
-  public onTeamsPress = uuid => {
+  public onTeamsPress = (uuid) => {
     this.props.navigation.push("Teams", {
-      uuid
+      uuid,
     });
   };
 
-  public onFollowersPress = uuid => {
+  public onFollowersPress = (uuid) => {
     this.props.navigation.push("Followers", {
-      uuid
+      uuid,
     });
   };
 
-  public onFollowingPress = uuid => {
+  public onFollowingPress = (uuid) => {
     this.props.navigation.push("Following", {
-      uuid
+      uuid,
     });
   };
 
@@ -80,7 +80,7 @@ export default class MyProfileScreen extends React.Component {
               <ActivityIndicator
                 size="large"
                 style={{
-                  margin: 20
+                  margin: 20,
                 }}
               />
             );
@@ -88,7 +88,7 @@ export default class MyProfileScreen extends React.Component {
           const connections = {
             teams: me.teamsCount,
             followers: me.followersCount,
-            following: me.followingCount
+            following: me.followingCount,
           };
           return (
             <MyProfileHeader
@@ -121,7 +121,7 @@ export default class MyProfileScreen extends React.Component {
       <Query<GetMyFeed, GetMyFeedVariables>
         query={MY_FEED}
         variables={{
-          pageNum
+          pageNum,
         }}
         fetchPolicy={"cache-and-network"}
       >
@@ -130,7 +130,7 @@ export default class MyProfileScreen extends React.Component {
           fetchMore,
           loading,
           networkStatus,
-          refetch
+          refetch,
         }) => {
           return (
             <FeedList
@@ -149,7 +149,7 @@ export default class MyProfileScreen extends React.Component {
                   pageNum += 1;
                   fetchMore({
                     variables: {
-                      pageNum
+                      pageNum,
                     },
                     updateQuery: (prev, { fetchMoreResult }) => {
                       if (!fetchMoreResult) return prev;
@@ -159,11 +159,11 @@ export default class MyProfileScreen extends React.Component {
                           ...prev.getMyFeed,
                           posts: [
                             ...prev.getMyFeed.posts,
-                            ...fetchMoreResult.getMyFeed.posts
-                          ]
-                        }
+                            ...fetchMoreResult.getMyFeed.posts,
+                          ],
+                        },
                       });
-                    }
+                    },
                   });
                   this.onEndReachedCalledDuringMomentum = true;
                 }

@@ -8,6 +8,7 @@ import Followers from "../screens/Followers";
 import Following from "../screens/Following";
 import Teams from "../screens/Teams";
 import TeamProfile from "../screens/TeamProfile";
+import CreateTeamScreen from "../screens/CreateTeamScreen";
 
 const MyProfileNavigation = createStackNavigator(
   {
@@ -18,6 +19,7 @@ const MyProfileNavigation = createStackNavigator(
     Following,
     Teams,
     TeamProfile,
+    CreateTeamScreen,
   },
   {
     initialRouteName: "MyProfile",
