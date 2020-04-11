@@ -8,7 +8,7 @@ import {
 import styled from "styled-components";
 import { Subheading, Caption, Paragraph } from "react-native-paper";
 import { Avatar } from "react-native-elements";
-import { MEDIA_URL } from "../constants/urls";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { useMe } from "../context/meContext";
 import FollowBtn from "../components/FollowBtn";
 
@@ -61,9 +61,7 @@ const UserCard: React.FC<IProps> = withNavigation(
           rounded
           containerStyle={{ marginTop: 5, marginLeft: 5 }}
           source={{
-            uri: userImg
-              ? MEDIA_URL + userImg
-              : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
+            uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
           }}
           onPress={() => {
             me.user.uuid === uuid

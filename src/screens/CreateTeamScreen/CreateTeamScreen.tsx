@@ -13,7 +13,7 @@ import { ActivityIndicator, Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation } from "react-apollo";
 import styled from "styled-components";
-import { MEDIA_URL } from "../../constants/urls";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { Me } from "../../types/api";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
 
@@ -145,9 +145,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               leftAvatar={{
                 rounded: true,
                 source: {
-                  uri: userImg
-                    ? MEDIA_URL + userImg
-                    : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
+                  uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
                 },
               }}
               title={name}
