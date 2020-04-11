@@ -9,7 +9,7 @@ import {
   GetTeamVariables,
 } from "../../types/api";
 import { useQuery } from "react-apollo";
-import { GET_TEAM } from "./TeamProfileQueries";
+import { GET_TEAM } from "./TeamProfileScreenQueries";
 import { ActivityIndicator, FlatList } from "react-native";
 import UserCard from "../../components/UserCard";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
@@ -25,7 +25,7 @@ const Image = styled.Image`
 
 interface IProps {
   coverImg?: string;
-  name: string;
+  teamName: string;
   sport: GetTeam_getTeam_team_sport;
   dialogVisible: boolean;
   rating: number;
@@ -37,7 +37,7 @@ interface IProps {
 
 const TeamInfo: React.FC<IProps> = ({
   coverImg,
-  name,
+  teamName,
   sport,
   dialogVisible,
   rating,
@@ -49,7 +49,7 @@ const TeamInfo: React.FC<IProps> = ({
   return (
     <View>
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
-      <Headline>{name}</Headline>
+      <Headline>{teamName}</Headline>
       <RatingChip
         sportUuid={sport.sportUuid}
         name={sport.name}
@@ -59,7 +59,7 @@ const TeamInfo: React.FC<IProps> = ({
   );
 };
 
-const TeamProfile: NavigationStackScreenComponent = ({ navigation }) => {
+const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const uuid = navigation.getParam("uuid");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -104,7 +104,7 @@ const TeamProfile: NavigationStackScreenComponent = ({ navigation }) => {
         ListHeaderComponent={() => (
           <TeamInfo
             coverImg={team.coverImg}
-            name={team.name}
+            teamName={team.teamName}
             sport={team.sport}
             dialogVisible={dialogVisible}
             rating={rating}
@@ -129,8 +129,8 @@ const TeamProfile: NavigationStackScreenComponent = ({ navigation }) => {
     );
   }
 };
-TeamProfile.navigationOptions = {
+TeamProfileScreen.navigationOptions = {
   title: "Team",
 };
 
-export default TeamProfile;
+export default TeamProfileScreen;

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { GET_MAIN_FEED } from "../../screens/Feed/FeedQueries";
+import { GET_MAIN_FEED } from "../../screens/FeedScreen/FeedScreenQueries";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import {
   CreatePost,
   CreatePostVariables,
   GetMainFeed,
-  GetMainFeedVariables
+  GetMainFeedVariables,
 } from "../../types/api";
 import { CREATE_POST } from "./WritePostQueries";
 
@@ -26,7 +26,7 @@ const WritePost: React.FC = () => {
         try {
           const data = cache.readQuery<GetMainFeed, GetMainFeedVariables>({
             query: GET_MAIN_FEED,
-            variables: { pageNum: 1 }
+            variables: { pageNum: 1 },
           });
           cache.writeQuery({
             query: GET_MAIN_FEED,
@@ -34,14 +34,14 @@ const WritePost: React.FC = () => {
             data: {
               getMainFeed: {
                 ...data.getMainFeed,
-                posts: [createPost.post, ...data.getMainFeed.posts]
-              }
-            }
+                posts: [createPost.post, ...data.getMainFeed.posts],
+              },
+            },
           });
         } catch (e) {
           console.log(e);
         }
-      }
+      },
     }
   );
   return (
@@ -52,7 +52,7 @@ const WritePost: React.FC = () => {
         value={text}
         autoCorrect={false}
         autoCapitalize="none"
-        onChangeText={text => setText(text)}
+        onChangeText={(text) => setText(text)}
         multiline
       />
       <Button

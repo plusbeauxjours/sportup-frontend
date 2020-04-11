@@ -1,13 +1,13 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { Appbar } from "react-native-paper";
-import { GET_MAIN_FEED } from "./FeedQueries";
-import { GetMainFeed, GetMainFeedVariables } from "../../../src/types/api";
+import { GET_MAIN_FEED } from "./FeedScreenQueries";
+import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import WritePost from "../../components/WritePost/WritePost";
 
-export default class FeedScreen extends React.Component {
+class FeedScreen extends React.Component {
   public onEndReachedCalledDuringMomentum;
   static navigationOptions = ({ navigation }) => ({
     title: "Feed",
@@ -18,7 +18,7 @@ export default class FeedScreen extends React.Component {
           navigation.toggleDrawer();
         }}
       />
-    )
+    ),
   });
 
   public render() {
@@ -35,7 +35,7 @@ export default class FeedScreen extends React.Component {
           fetchMore,
           loading,
           refetch,
-          networkStatus
+          networkStatus,
         }) => {
           return (
             <FeedList
@@ -54,7 +54,7 @@ export default class FeedScreen extends React.Component {
                   pageNum += 1;
                   fetchMore({
                     variables: {
-                      pageNum
+                      pageNum,
                     },
                     updateQuery: (prev, { fetchMoreResult }) => {
                       if (!fetchMoreResult) return prev;
@@ -64,11 +64,11 @@ export default class FeedScreen extends React.Component {
                           ...prev.getMainFeed,
                           posts: [
                             ...prev.getMainFeed.posts,
-                            ...fetchMoreResult.getMainFeed.posts
-                          ]
-                        }
+                            ...fetchMoreResult.getMainFeed.posts,
+                          ],
+                        },
                       });
-                    }
+                    },
                   });
                   this.onEndReachedCalledDuringMomentum = true;
                 }
@@ -85,3 +85,5 @@ export default class FeedScreen extends React.Component {
     );
   }
 }
+
+export default FeedScreen;

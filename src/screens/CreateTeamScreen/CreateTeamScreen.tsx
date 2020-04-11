@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ME } from "../MyProfile/MyProfileQueries";
+import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import {
   GET_USER_FROM_USERNAME,
@@ -28,7 +28,9 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
-  const [sportUuid, setSportUuid] = useState<string>("");
+  const [sportUuid, setSportUuid] = useState<string>(
+    "46800336-cf54-40d3-8385-78d7d47d2f3c"
+  );
   const [membersList, setMembersList] = useState<any>([]);
   const {
     data: { getAllSports: { sports = null } = {} } = {},
@@ -44,7 +46,6 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
       memberUuids: membersList.map(({ uuid }) => uuid),
     },
     update(cache, { data: { createTeam } }) {
-      console.log(createTeam);
       try {
         const { me } = cache.readQuery<Me>({
           query: ME,
@@ -108,7 +109,6 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               selectedValue={sportUuid}
               style={{ width: 200 }}
               onValueChange={(value) => {
-                console.log(value);
                 setSportUuid(value);
               }}
             >

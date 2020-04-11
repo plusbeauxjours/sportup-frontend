@@ -6,12 +6,12 @@ import { Icon } from "react-native-elements";
 
 const MainDrawer = createDrawerNavigator(
   {
-    MyProfile: {
+    Me: {
       screen: MyProfileNavigation,
       navigationOptions: {
         drawerLabel: "Me",
-        drawerIcon: ({ tintColor }) => <Icon name="person" color={tintColor} />
-      }
+        drawerIcon: ({ tintColor }) => <Icon name="person" color={tintColor} />,
+      },
     },
     Feed: {
       screen: FeedNavigation,
@@ -19,12 +19,12 @@ const MainDrawer = createDrawerNavigator(
         drawerLabel: "Feed",
         drawerIcon: ({ tintColor }) => (
           <Icon name="timeline" color={tintColor} />
-        )
-      }
-    }
+        ),
+      },
+    },
   },
   {
-    initialRouteName: "MyProfile"
+    initialRouteName: "Me",
   }
 );
 

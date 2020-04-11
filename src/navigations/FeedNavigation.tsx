@@ -1,32 +1,32 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
 
-import Feed from "../screens/Feed";
-import UserProfile from "../screens/UserProfile";
-import Followers from "../screens/Followers";
-import Following from "../screens/Following/index";
-import Teams from "../screens/Teams/Teams";
-import MyProfile from "../screens/MyProfile";
-import EditProfile from "../screens/EditProfile";
+import FeedScreen from "../screens/FeedScreen";
+import UserProfileScreen from "../screens/UserProfileScreen";
+import FollowersScreen from "../screens/FollowersScreen";
+import FollowingScreen from "../screens/FollowingScreen";
+import TeamsScreen from "../screens/TeamsScreen";
+import MyProfileScreen from "../screens/MyProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
 
 const FeedStack = createStackNavigator(
   {
-    Feed: Feed,
-    MyProfile: MyProfile,
-    EditProfile: EditProfile,
-    UserProfile: UserProfile,
-    Followers: Followers,
-    Following: Following,
-    Teams: Teams
+    FeedScreen,
+    MyProfileScreen,
+    EditProfileScreen,
+    UserProfileScreen,
+    FollowersScreen,
+    FollowingScreen,
+    TeamsScreen,
   },
   {
-    initialRouteName: "Feed",
+    initialRouteName: "FeedScreen",
     navigationOptions: {
       headerStyle: {
-        backgroundColor: PRIMARY_COLOR
+        backgroundColor: PRIMARY_COLOR,
       },
-      headerTintColor: "#fff"
-    }
+      headerTintColor: "#fff",
+    },
   }
 );
 

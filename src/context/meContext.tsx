@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { Me } from "../types/api";
-import { ME } from "../screens/MyProfile/MyProfileQueries";
+import { ME } from "../screens/MyProfileScreen/MyProfileScreenQueries";
 
 export const MeContext = createContext(null);
 

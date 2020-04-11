@@ -1,28 +1,28 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
 
-import MyProfile from "../screens/MyProfile";
-import EditProfile from "../screens/EditProfile";
-import UserProfile from "../screens/UserProfile";
-import Followers from "../screens/Followers";
-import Following from "../screens/Following";
-import Teams from "../screens/Teams";
-import TeamProfile from "../screens/TeamProfile";
+import MyProfileScreen from "../screens/MyProfileScreen";
+import EditProfileScreen from "../screens/EditProfileScreen";
+import UserProfileScreen from "../screens/UserProfileScreen";
+import FollowersScreen from "../screens/FollowersScreen";
+import FollowingScreen from "../screens/FollowingScreen";
+import TeamsScreen from "../screens/TeamsScreen";
+import TeamProfileScreen from "../screens/TeamProfileScreen";
 import CreateTeamScreen from "../screens/CreateTeamScreen";
 
 const MyProfileNavigation = createStackNavigator(
   {
-    MyProfile,
-    EditProfile,
-    UserProfile,
-    Followers,
-    Following,
-    Teams,
-    TeamProfile,
+    MyProfileScreen,
+    EditProfileScreen,
+    UserProfileScreen,
+    FollowersScreen,
+    FollowingScreen,
+    TeamsScreen,
+    TeamProfileScreen,
     CreateTeamScreen,
   },
   {
-    initialRouteName: "MyProfile",
+    initialRouteName: "MyProfileScreen",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR,

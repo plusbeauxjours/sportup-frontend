@@ -2,7 +2,7 @@ import React from "react";
 import { ActivityIndicator } from "react-native";
 
 import { Query } from "react-apollo";
-import { GET_USER, GET_USER_FEED } from "./UserProfileQueries";
+import { GET_USER, GET_USER_FEED } from "./UserProfileScreenQueries";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserProfileHeader from "../../components/UserProfileHeader";
@@ -10,35 +10,35 @@ import {
   GetUser,
   GetUserVariables,
   GetUserFeed,
-  GetUserFeedVariables
+  GetUserFeedVariables,
 } from "../../types/api";
 
 interface IState {
   uuid: string;
 }
 
-class UserProfile extends React.Component<any, IState> {
+class UserProfileScreen extends React.Component<any, IState> {
   public onEndReachedCalledDuringMomentum;
   static navigationOptions = {
-    title: "Profile"
+    title: "Profile",
   };
   constructor(props) {
     super(props);
     this.state = {
-      uuid: this.props.navigation.getParam("uuid")
+      uuid: this.props.navigation.getParam("uuid"),
     };
   }
 
-  public onTeamsPress = uuid => {
-    this.props.navigation.push("Teams", { uuid });
+  public onTeamsPress = (uuid) => {
+    this.props.navigation.push("TeamsScreen", { uuid });
   };
 
-  public onFollowersPress = uuid => {
-    this.props.navigation.push("Followers", { uuid });
+  public onFollowersPress = (uuid) => {
+    this.props.navigation.push("FollowersScreen", { uuid });
   };
 
-  public onFollowingPress = uuid => {
-    this.props.navigation.push("Following", { uuid });
+  public onFollowingPress = (uuid) => {
+    this.props.navigation.push("FollowingScreen", { uuid });
   };
 
   public renderUserInfoArea = () => {
@@ -57,7 +57,7 @@ class UserProfile extends React.Component<any, IState> {
           const connections = {
             teams: user.teamsCount,
             followers: user.followersCount,
-            following: user.followingCount
+            following: user.followingCount,
           };
 
           return (
@@ -95,7 +95,7 @@ class UserProfile extends React.Component<any, IState> {
         query={GET_USER_FEED}
         variables={{
           uuid,
-          pageNum
+          pageNum,
         }}
         fetchPolicy="network-only"
       >
@@ -104,7 +104,7 @@ class UserProfile extends React.Component<any, IState> {
           loading,
           fetchMore,
           networkStatus,
-          refetch
+          refetch,
         }) => {
           return (
             <FeedList
@@ -123,7 +123,7 @@ class UserProfile extends React.Component<any, IState> {
                   pageNum += 1;
                   fetchMore({
                     variables: {
-                      pageNum
+                      pageNum,
                     },
                     updateQuery: (prev, { fetchMoreResult }) => {
                       if (!fetchMoreResult) return prev;
@@ -133,11 +133,11 @@ class UserProfile extends React.Component<any, IState> {
                           ...prev.getUserFeed,
                           posts: [
                             ...prev.getUserFeed.posts,
-                            ...fetchMoreResult.getUserFeed.posts
-                          ]
-                        }
+                            ...fetchMoreResult.getUserFeed.posts,
+                          ],
+                        },
                       });
-                    }
+                    },
                   });
                   this.onEndReachedCalledDuringMomentum = true;
                 }
@@ -155,4 +155,4 @@ class UserProfile extends React.Component<any, IState> {
   }
 }
 
-export default UserProfile;
+export default UserProfileScreen;

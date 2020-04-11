@@ -17,25 +17,25 @@ const Container = styled.View`
 
 interface IProps extends NavigationStackScreenProps {
   uuid: string;
-  name: string;
+  teamName: string;
   coverImg?: string;
   sport: GetUser_getUser_user_sports;
   enableMessage?: boolean;
 }
 
 const TeamCardWithCover: NavigationStackScreenComponent<IProps> = withNavigation(
-  ({ uuid, name, coverImg, enableMessage, sport, navigation }) => (
+  ({ uuid, teamName, coverImg, enableMessage, sport, navigation }) => (
     <Card>
       {coverImg && <Card.Cover source={{ uri: coverImg }} />}
       <Card.Content>
         <Container>
           <TouchableOpacity
             onPress={() => {
-              navigation.push("TeamProfile", { uuid });
+              navigation.push("TeamProfileScreen", { uuid });
             }}
           >
             <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-              {name}
+              {teamName}
             </Title>
           </TouchableOpacity>
           {enableMessage && (
@@ -62,17 +62,17 @@ const TeamCardWithCover: NavigationStackScreenComponent<IProps> = withNavigation
   )
 );
 const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigation(
-  ({ uuid, name, enableMessage, sport, navigation }) => (
+  ({ uuid, teamName, enableMessage, sport, navigation }) => (
     <Card>
       <Card.Content>
         <Container>
           <TouchableOpacity
             onPress={() => {
-              navigation.push("TeamProfile", { uuid });
+              navigation.push("TeamProfileScreen", { uuid });
             }}
           >
             <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-              {name}
+              {teamName}
             </Title>
           </TouchableOpacity>
           {enableMessage && (

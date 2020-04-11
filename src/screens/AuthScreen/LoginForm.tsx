@@ -5,14 +5,14 @@ import { Mutation, MutationFunction } from "react-apollo";
 import {
   NavigationParams,
   NavigationScreenProp,
-  NavigationState
+  NavigationState,
 } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AsyncStorage } from "react-native";
 import FormikInput from "../../components/Formik/FormikInput";
 import styled from "styled-components";
 import Divider from "../../components/Divider";
-import { LOGIN } from "./AuthQueries";
+import { LOGIN } from "./AuthScreenQueries";
 import { Login, LoginVariables } from "../../types/api";
 
 interface IProps {
@@ -34,13 +34,13 @@ const validationSchema = Yup.object().shape({
     .required("Username is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
-    .required("Password is required")
+    .required("Password is required"),
 });
 
 export default class LoginForm extends React.Component<IProps> {
   public tokenAuth: MutationFunction;
   static navigationOptions = {
-    title: "sportup"
+    title: "sportup",
   };
 
   public handleLoginComplete = async ({ tokenAuth }) => {
@@ -55,7 +55,7 @@ export default class LoginForm extends React.Component<IProps> {
     setFieldTouched,
     touched,
     errors,
-    isValid
+    isValid,
   }) => (
     <React.Fragment>
       <FormikInput
@@ -116,7 +116,7 @@ export default class LoginForm extends React.Component<IProps> {
           flexGrow: 1,
           backgroundColor: "#fff",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
         keyboardShouldPersistTaps="handled"
       >

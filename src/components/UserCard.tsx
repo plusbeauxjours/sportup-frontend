@@ -3,7 +3,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
-  withNavigation
+  withNavigation,
 } from "react-navigation";
 import styled from "styled-components";
 import { Subheading, Caption, Paragraph } from "react-native-paper";
@@ -52,7 +52,7 @@ const UserCard: React.FC<IProps> = withNavigation(
     username,
     bio = "",
     isFollowing,
-    navigation
+    navigation,
   }) => {
     const { me, loading: meLoading } = useMe();
     return (
@@ -63,17 +63,19 @@ const UserCard: React.FC<IProps> = withNavigation(
           source={{
             uri: userImg
               ? MEDIA_URL + userImg
-              : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
+              : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
           }}
           onPress={() => {
             me.user.uuid === uuid
-              ? navigation.navigate("MyProfile")
-              : navigation.navigate("UserProfile", { uuid });
+              ? navigation.navigate("MyProfileScreen")
+              : navigation.navigate("UserProfileScreen", { uuid });
           }}
         />
         <InnerUserInfoContainer>
           <Header>
-            <TouchableOpacity onPress={() => navigation.push("MyProfile")}>
+            <TouchableOpacity
+              onPress={() => navigation.push("MyProfileScreen")}
+            >
               <Subheading numberOfLines={1}>{name}</Subheading>
               <Caption numberOfLines={1}>{`@${username}`}</Caption>
             </TouchableOpacity>

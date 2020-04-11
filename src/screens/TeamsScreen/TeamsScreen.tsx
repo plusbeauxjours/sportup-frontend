@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { GetUserTeams, GetUserTeamsVariables } from "../../types/api";
-import { GET_USER_TEAMS } from "./TeamsQueries";
+import { GET_USER_TEAMS } from "./TeamsScreenQueries";
 import { ActivityIndicator, FlatList } from "react-native";
 import TeamCard from "../../components/TeamCard";
 import {
@@ -13,7 +13,9 @@ interface IProps extends NavigationStackScreenProps {
   uuid: string;
 }
 
-const Teams: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
+const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
+  navigation,
+}) => {
   const uuid = navigation.getParam("uuid");
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserTeams,
@@ -33,8 +35,8 @@ const Teams: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
   }
   return <ActivityIndicator size="large" />;
 };
-Teams.navigationOptions = {
+TeamsScreen.navigationOptions = {
   title: "Teams",
 };
 
-export default Teams;
+export default TeamsScreen;

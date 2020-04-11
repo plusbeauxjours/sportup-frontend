@@ -7,7 +7,7 @@ import {
   NavigationScreenProp,
   NavigationState,
   NavigationParams,
-  withNavigation
+  withNavigation,
 } from "react-navigation";
 
 import { timeSince } from "../../utils/time";
@@ -67,7 +67,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
     userImg,
     createdAt,
     navigation,
-    disableNavigation
+    disableNavigation,
   }) => {
     const { me, loading: meLoading } = useMe();
     return (
@@ -76,8 +76,8 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
           disabled={disableNavigation}
           onPress={() => {
             me.user.uuid === uuid
-              ? navigation.push("MyProfile")
-              : navigation.push("UserProfile", { uuid });
+              ? navigation.push("MyProfileScreen")
+              : navigation.push("UserProfileScreen", { uuid });
           }}
         >
           <Avatar
@@ -85,7 +85,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
             source={{
               uri: userImg
                 ? MEDIA_URL + userImg
-                : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
+                : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
             }}
           />
           <InnerUserInfoContainerStyle>
@@ -109,7 +109,7 @@ const PostCard: React.FC<IProps> = ({
   interaction,
   postImg,
   createdAt,
-  disableNavigation
+  disableNavigation,
 }) => (
   <Card>
     <Card.Content>

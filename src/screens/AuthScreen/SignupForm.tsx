@@ -2,21 +2,21 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { Mutation, MutationFunction } from "react-apollo";
-import { AsyncStorage, View, Text } from "react-native";
+import { AsyncStorage } from "react-native";
 import {
   NavigationParams,
   NavigationScreenProp,
-  NavigationState
+  NavigationState,
 } from "react-navigation";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
 import styled from "styled-components";
-import { LOGIN, SIGNUP } from "./AuthQueries";
+import { LOGIN, SIGNUP } from "./AuthScreenQueries";
 import {
   Login,
   LoginVariables,
   Signup,
-  SignupVariables
+  SignupVariables,
 } from "../../types/api";
 
 interface IProps {
@@ -34,14 +34,12 @@ const initialValues = {
   email: "",
   handle: "",
   password: "",
-  confirmPassword: ""
+  confirmPassword: "",
 };
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
   handle: Yup.string()
     .matches(
       /^[A-Za-z0-9_]{1,15}$/,
@@ -53,17 +51,17 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password" ? "password" : null)], "Passwords do not match")
-    .required("Please re-enter your password")
+    .required("Please re-enter your password"),
 });
 
 export default class SignupForm extends React.Component<IProps> {
   public tokenAuth: MutationFunction;
   public createUser: MutationFunction;
   static navigationOptions = {
-    title: "Sign Up"
+    title: "Sign Up",
   };
 
-  public handleSignupComplete = async data => {
+  public handleSignupComplete = async (data) => {
     await AsyncStorage.setItem("jwt", data.tokenAuth.token);
     this.props.navigation.navigate("Main");
   };
@@ -74,7 +72,7 @@ export default class SignupForm extends React.Component<IProps> {
     setFieldTouched,
     touched,
     errors,
-    isValid
+    isValid,
   }) => (
     <React.Fragment>
       <FormikInput
@@ -136,7 +134,7 @@ export default class SignupForm extends React.Component<IProps> {
         mutation={LOGIN}
         variables={{
           username: values.handle,
-          password: values.password
+          password: values.password,
         }}
         onCompleted={this.handleSignupComplete}
       >
@@ -148,7 +146,7 @@ export default class SignupForm extends React.Component<IProps> {
               lastName: values.lastName,
               email: values.email,
               username: values.handle,
-              password: values.password
+              password: values.password,
             }}
             onCompleted={() => {
               loginResult.client.resetStore();
@@ -183,7 +181,7 @@ export default class SignupForm extends React.Component<IProps> {
           flexGrow: 1,
           backgroundColor: "#fff",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
         keyboardShouldPersistTaps="handled"
       >

@@ -3,7 +3,7 @@ import { Query } from "react-apollo";
 import { ActivityIndicator, AsyncStorage } from "react-native";
 import { Appbar } from "react-native-paper";
 
-import { ME, MY_FEED } from "./MyProfileQueries";
+import { ME, MY_FEED } from "./MyProfileScreenQueries";
 import { Me, GetMyFeed, GetMyFeedVariables } from "../../types/api";
 import MyProfileHeader from "../../components/MyProfileHeader";
 import FeedList from "../../components/FeedList";
@@ -14,7 +14,7 @@ const View = styled.View`
   flex-direction: row;
 `;
 
-export default class MyProfileScreen extends React.Component {
+class MyProfileScreen extends React.Component {
   public onEndReachedCalledDuringMomentum;
   static navigationOptions = ({ navigation }) => ({
     title: "Me",
@@ -31,7 +31,7 @@ export default class MyProfileScreen extends React.Component {
         <Appbar.Action
           icon="square-edit-outline"
           onPress={() => {
-            navigation.navigate("CreateTeamScreen");
+            navigation.navigate("EditProfileScreen");
           }}
         />
         <Appbar.Action
@@ -49,19 +49,19 @@ export default class MyProfileScreen extends React.Component {
   };
 
   public onTeamsPress = (uuid) => {
-    this.props.navigation.push("Teams", {
+    this.props.navigation.push("TeamsScreen", {
       uuid,
     });
   };
 
   public onFollowersPress = (uuid) => {
-    this.props.navigation.push("Followers", {
+    this.props.navigation.push("FollowersScreen", {
       uuid,
     });
   };
 
   public onFollowingPress = (uuid) => {
-    this.props.navigation.push("Following", {
+    this.props.navigation.push("FollowingScreen", {
       uuid,
     });
   };
@@ -180,3 +180,5 @@ export default class MyProfileScreen extends React.Component {
     );
   }
 }
+
+export default MyProfileScreen;

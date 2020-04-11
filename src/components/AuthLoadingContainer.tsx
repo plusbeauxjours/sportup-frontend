@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ActivityIndicator, AsyncStorage } from "react-native";
+import { ActivityIndicator, AsyncStorage } from "react-native";
 import styled from "styled-components";
 
 const Container = styled.View`

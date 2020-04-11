@@ -1,34 +1,36 @@
 import React from "react";
-import { GetUserFollowing, GetUserFollowingVariables } from "../../types/api";
+import { GetUserFollowers, GetUserFollowersVariables } from "../../types/api";
 import { useQuery } from "react-apollo";
-import { GET_USER_FOLLOWING } from "./FollowingQueries";
-import { Divider } from "react-native-paper";
+import { GET_USER_FOLLOWERS } from "./FollowersScreenQueries";
 import UserCardList from "../../components/UserCardList";
 import ListFooterComponent from "../../components/ListFooterComponent";
+import { Divider } from "react-native-paper";
 import UserCard from "../../components/UserCard";
 import {
   NavigationStackScreenComponent,
-  NavigationStackScreenProps
+  NavigationStackScreenProps,
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
   uuid: string;
 }
 
-const Following: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
+const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
+  navigation,
+}) => {
   const {
-    data: { getUser: { user: { following = null } = {} } = {} } = {},
-    loading
-  } = useQuery<GetUserFollowing, GetUserFollowingVariables>(
-    GET_USER_FOLLOWING,
+    data: { getUser: { user: { followers = null } = {} } = {} } = {},
+    loading,
+  } = useQuery<GetUserFollowers, GetUserFollowersVariables>(
+    GET_USER_FOLLOWERS,
     {
-      variables: { uuid: navigation.getParam("uuid") }
+      variables: { uuid: navigation.getParam("uuid") },
     }
   );
   return (
     <UserCardList
-      users={following}
-      keyExtractor={item => item.uuid.toString()}
+      users={followers}
+      keyExtractor={(item) => item.uuid.toString()}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <UserCard
@@ -44,8 +46,8 @@ const Following: NavigationStackScreenComponent<IProps> = ({ navigation }) => {
     />
   );
 };
-Following.navigationOptions = {
-  title: "Following"
+FollowersScreen.navigationOptions = {
+  title: "Followers",
 };
 
-export default Following;
+export default FollowersScreen;
