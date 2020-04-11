@@ -361,6 +361,59 @@ export interface UpdateUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UpdateTeam
+// ====================================================
+
+export interface UpdateTeam_updateTeam_team_sport {
+  __typename: "SportType";
+  sportUuid: string | null;
+  name: string;
+}
+
+export interface UpdateTeam_updateTeam_team_members {
+  __typename: "UserType";
+  uuid: any | null;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+}
+
+export interface UpdateTeam_updateTeam_team {
+  __typename: "TeamType";
+  uuid: any | null;
+  teamName: string;
+  coverImg: string | null;
+  sport: UpdateTeam_updateTeam_team_sport;
+  members: UpdateTeam_updateTeam_team_members[];
+}
+
+export interface UpdateTeam_updateTeam {
+  __typename: "UpdateTeamResponse";
+  team: UpdateTeam_updateTeam_team | null;
+}
+
+export interface UpdateTeam {
+  updateTeam: UpdateTeam_updateTeam;
+}
+
+export interface UpdateTeamVariables {
+  teamUuid: string;
+  teamName: string;
+  sportUuid: string;
+  memberUuids?: (string | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMainFeed
 // ====================================================
 

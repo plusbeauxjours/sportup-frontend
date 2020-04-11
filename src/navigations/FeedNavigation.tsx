@@ -8,6 +8,8 @@ import FollowingScreen from "../screens/FollowingScreen";
 import TeamsScreen from "../screens/TeamsScreen";
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import TeamProfileScreen from "../screens/TeamProfileScreen";
+import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
 
 const FeedStack = createStackNavigator(
   {
@@ -18,6 +20,8 @@ const FeedStack = createStackNavigator(
     FollowersScreen,
     FollowingScreen,
     TeamsScreen,
+    TeamProfileScreen,
+    EditTeamProfileScreen,
   },
   {
     initialRouteName: "FeedScreen",
