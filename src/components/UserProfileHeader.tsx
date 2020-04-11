@@ -6,6 +6,7 @@ import styled from "styled-components";
 import UserConnectionsCard from "./UserConnectionsCard";
 import UserInteractionCard from "./UserInteractionCard";
 import SportsList from "./SportsList";
+import RatingDialog from "./RatingDialog";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -26,6 +27,11 @@ interface IProps {
   onFollowingPress: (uuid: string) => void;
   showDialog: (sportUuid: string) => void;
   isFollowing: boolean;
+  dialogVisible: boolean;
+  rating: number;
+  closeDialog: () => void;
+  onStarRatingPress: (rating: number) => void;
+  onSubmitRating: () => void;
 }
 
 const UserProfileHeader: React.FC<IProps> = ({
@@ -41,6 +47,11 @@ const UserProfileHeader: React.FC<IProps> = ({
   onFollowingPress = null,
   showDialog,
   isFollowing = false,
+  dialogVisible,
+  rating,
+  closeDialog,
+  onStarRatingPress,
+  onSubmitRating,
 }) => {
   return (
     <UserInfoContainer>
@@ -64,6 +75,13 @@ const UserProfileHeader: React.FC<IProps> = ({
         onTeamsPress={onTeamsPress}
         onFollowersPress={onFollowersPress}
         onFollowingPress={onFollowingPress}
+      />
+      <RatingDialog
+        visible={dialogVisible}
+        rating={rating}
+        onStarRatingPress={onStarRatingPress}
+        close={closeDialog}
+        onSubmit={onSubmitRating}
       />
     </UserInfoContainer>
   );

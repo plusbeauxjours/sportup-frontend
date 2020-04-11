@@ -62,9 +62,15 @@ class UserProfileScreen extends React.Component<any, IState> {
       ratingSportWithUuid: null,
     });
   };
+  public onStarRatingPress = (rating: number) => {
+    this.setState({ rating });
+  };
+  public onSubmitRating = () => {
+    this.closeDialog();
+  };
 
   public renderUserInfoArea = () => {
-    const { uuid } = this.state;
+    const { uuid, dialogVisible, rating } = this.state;
 
     return (
       <Query<GetUser, GetUserVariables>
@@ -81,7 +87,6 @@ class UserProfileScreen extends React.Component<any, IState> {
             followers: user.followersCount,
             following: user.followingCount,
           };
-          console.log(user);
           return (
             <UserProfileHeader
               uuid={user.uuid}
@@ -102,6 +107,11 @@ class UserProfileScreen extends React.Component<any, IState> {
               }}
               showDialog={this.showDialog}
               isFollowing={user.isFollowing}
+              dialogVisible={dialogVisible}
+              rating={rating}
+              closeDialog={this.closeDialog}
+              onStarRatingPress={this.onStarRatingPress}
+              onSubmitRating={this.onSubmitRating}
             />
           );
         }}

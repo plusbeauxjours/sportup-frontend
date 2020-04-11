@@ -22,7 +22,7 @@ const SportsList: React.FC<IProps> = ({
         sportUuid={item.sportUuid}
         name={item.name}
         rating={item.rating}
-        onPress={onChipPress}
+        onChipPress={onChipPress}
       />
     )}
     keyExtractor={(sport) => sport.sportUuid.toString()}
