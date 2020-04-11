@@ -1,8 +1,12 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 
-import { Query } from "react-apollo";
-import { GET_USER, GET_USER_FEED } from "./UserProfileScreenQueries";
+import { Query, Mutation, MutationFunction } from "react-apollo";
+import {
+  GET_USER,
+  GET_USER_FEED,
+  RATE_USER_SPORT,
+} from "./UserProfileScreenQueries";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserProfileHeader from "../../components/UserProfileHeader";
@@ -22,6 +26,7 @@ interface IState {
 
 class UserProfileScreen extends React.Component<any, IState> {
   public onEndReachedCalledDuringMomentum;
+  public rateUserSportFn: MutationFunction;
   static navigationOptions = {
     title: "Profile",
   };
@@ -62,10 +67,17 @@ class UserProfileScreen extends React.Component<any, IState> {
       ratingSportWithUuid: null,
     });
   };
+
   public onStarRatingPress = (rating: number) => {
     this.setState({ rating });
   };
-  public onSubmitRating = () => {
+
+  public onSubmit = () => {
+    const { uuid, ratingSportWithUuid, rating } = this.state;
+    console.log(uuid, ratingSportWithUuid, rating);
+    this.rateUserSportFn({
+      variables: { uuid, sportUuid: ratingSportWithUuid, rating },
+    });
     this.closeDialog();
   };
 
@@ -73,49 +85,62 @@ class UserProfileScreen extends React.Component<any, IState> {
     const { uuid, dialogVisible, rating } = this.state;
 
     return (
-      <Query<GetUser, GetUserVariables>
-        query={GET_USER}
-        variables={{ uuid }}
-        fetchPolicy="network-only"
-      >
-        {({ data: { getUser: { user = null } = {} } = {}, loading, error }) => {
-          if (loading) {
-            return <ActivityIndicator size="large" style={{ margin: 20 }} />;
-          }
-          const connections = {
-            teams: user.teamsCount,
-            followers: user.followersCount,
-            following: user.followingCount,
-          };
+      <Mutation mutation={RATE_USER_SPORT}>
+        {(rateUserSportFn, { loading: rateUserSportLoading }) => {
+          this.rateUserSportFn = rateUserSportFn;
           return (
-            <UserProfileHeader
-              uuid={user.uuid}
-              userImg={user.userImg}
-              name={`${user.firstName} ${user.lastName}`}
-              username={user.username}
-              bio={user.bio}
-              sports={user.sports}
-              connections={connections}
-              onTeamsPress={() => {
-                this.onTeamsPress(user.uuid);
+            <Query<GetUser, GetUserVariables>
+              query={GET_USER}
+              variables={{ uuid }}
+              fetchPolicy="network-only"
+            >
+              {({
+                data: { getUser: { user = null } = {} } = {},
+                loading,
+                error,
+              }) => {
+                if (loading) {
+                  return (
+                    <ActivityIndicator size="large" style={{ margin: 20 }} />
+                  );
+                }
+                const connections = {
+                  teams: user.teamsCount,
+                  followers: user.followersCount,
+                  following: user.followingCount,
+                };
+                return (
+                  <UserProfileHeader
+                    uuid={user.uuid}
+                    userImg={user.userImg}
+                    name={`${user.firstName} ${user.lastName}`}
+                    username={user.username}
+                    bio={user.bio}
+                    sports={user.sports}
+                    connections={connections}
+                    onTeamsPress={() => {
+                      this.onTeamsPress(user.uuid);
+                    }}
+                    onFollowersPress={() => {
+                      this.onFollowersPress(user.uuid);
+                    }}
+                    onFollowingPress={() => {
+                      this.onFollowingPress(user.uuid);
+                    }}
+                    showDialog={this.showDialog}
+                    isFollowing={user.isFollowing}
+                    dialogVisible={dialogVisible}
+                    rating={rating}
+                    closeDialog={this.closeDialog}
+                    onStarRatingPress={this.onStarRatingPress}
+                    onSubmit={this.onSubmit}
+                  />
+                );
               }}
-              onFollowersPress={() => {
-                this.onFollowersPress(user.uuid);
-              }}
-              onFollowingPress={() => {
-                this.onFollowingPress(user.uuid);
-              }}
-              showDialog={this.showDialog}
-              isFollowing={user.isFollowing}
-              dialogVisible={dialogVisible}
-              rating={rating}
-              closeDialog={this.closeDialog}
-              onStarRatingPress={this.onStarRatingPress}
-              onSubmitRating={this.onSubmitRating}
-            />
+            </Query>
           );
         }}
-      </Query>
+      </Mutation>
     );
   };
 

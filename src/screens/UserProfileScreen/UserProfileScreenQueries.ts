@@ -44,3 +44,11 @@ export const GET_USER_FEED = gql`
     }
   }
 `;
+
+export const RATE_USER_SPORT = gql`
+  mutation RateUserSport($uuid: String!, $sportUuid: String!, $rating: Int!) {
+    rateUserSport(uuid: $uuid, sportUuid: $sportUuid, rating: $rating) {
+      ok
+    }
+  }
+`;

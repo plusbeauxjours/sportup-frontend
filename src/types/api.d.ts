@@ -757,6 +757,30 @@ export interface GetUserFeedVariables {
 // @generated
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: RateUserSport
+// ====================================================
+
+export interface RateUserSport_rateUserSport {
+  __typename: "RateUserSportResponse";
+  ok: boolean | null;
+}
+
+export interface RateUserSport {
+  rateUserSport: RateUserSport_rateUserSport;
+}
+
+export interface RateUserSportVariables {
+  uuid: string;
+  sportUuid: string;
+  rating: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

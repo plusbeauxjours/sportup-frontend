@@ -31,7 +31,7 @@ interface IProps {
   rating: number;
   closeDialog: () => void;
   onStarRatingPress: (rating: number) => void;
-  onSubmitRating: () => void;
+  onSubmit: () => void;
 }
 
 const UserProfileHeader: React.FC<IProps> = ({
@@ -51,7 +51,7 @@ const UserProfileHeader: React.FC<IProps> = ({
   rating,
   closeDialog,
   onStarRatingPress,
-  onSubmitRating,
+  onSubmit,
 }) => {
   return (
     <UserInfoContainer>
@@ -81,7 +81,7 @@ const UserProfileHeader: React.FC<IProps> = ({
         rating={rating}
         onStarRatingPress={onStarRatingPress}
         close={closeDialog}
-        onSubmit={onSubmitRating}
+        onSubmit={onSubmit}
       />
     </UserInfoContainer>
   );
