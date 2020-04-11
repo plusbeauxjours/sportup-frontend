@@ -15,6 +15,9 @@ import {
 
 interface IState {
   uuid: string;
+  rating: number;
+  dialogVisible: boolean;
+  ratingSportWithUuid: string;
 }
 
 class UserProfileScreen extends React.Component<any, IState> {
@@ -26,6 +29,9 @@ class UserProfileScreen extends React.Component<any, IState> {
     super(props);
     this.state = {
       uuid: this.props.navigation.getParam("uuid"),
+      rating: 0,
+      dialogVisible: false,
+      ratingSportWithUuid: null,
     };
   }
 
@@ -39,6 +45,22 @@ class UserProfileScreen extends React.Component<any, IState> {
 
   public onFollowingPress = (uuid) => {
     this.props.navigation.push("FollowingScreen", { uuid });
+  };
+
+  public showDialog = (sportUuid) => {
+    this.setState({
+      rating: 0,
+      dialogVisible: true,
+      ratingSportWithUuid: sportUuid,
+    });
+  };
+
+  public closeDialog = () => {
+    this.setState({
+      rating: 0,
+      dialogVisible: false,
+      ratingSportWithUuid: null,
+    });
   };
 
   public renderUserInfoArea = () => {
@@ -59,7 +81,7 @@ class UserProfileScreen extends React.Component<any, IState> {
             followers: user.followersCount,
             following: user.followingCount,
           };
-
+          console.log(user);
           return (
             <UserProfileHeader
               uuid={user.uuid}
@@ -78,6 +100,7 @@ class UserProfileScreen extends React.Component<any, IState> {
               onFollowingPress={() => {
                 this.onFollowingPress(user.uuid);
               }}
+              showDialog={this.showDialog}
               isFollowing={user.isFollowing}
             />
           );

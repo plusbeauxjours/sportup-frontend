@@ -5,6 +5,7 @@ import { MEDIA_URL } from "../constants/urls";
 import styled from "styled-components";
 import UserConnectionsCard from "./UserConnectionsCard";
 import UserInteractionCard from "./UserInteractionCard";
+import SportsList from "./SportsList";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -23,6 +24,7 @@ interface IProps {
   onTeamsPress: (uuid: string) => void;
   onFollowersPress: (uuid: string) => void;
   onFollowingPress: (uuid: string) => void;
+  showDialog: (sportUuid: string) => void;
   isFollowing: boolean;
 }
 
@@ -32,11 +34,13 @@ const UserProfileHeader: React.FC<IProps> = ({
   name,
   username,
   bio = "",
+  sports,
   connections = { team: 0, followers: 0, following: 0 },
   onTeamsPress = null,
   onFollowersPress = null,
   onFollowingPress = null,
-  isFollowing = false
+  showDialog,
+  isFollowing = false,
 }) => {
   return (
     <UserInfoContainer>
@@ -47,13 +51,14 @@ const UserProfileHeader: React.FC<IProps> = ({
         source={{
           uri: userImg
             ? MEDIA_URL + userImg
-            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
+            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
         }}
       />
       <Headline>{name}</Headline>
       <Caption>{`@${username}`}</Caption>
       <Paragraph>{bio}</Paragraph>
       <UserInteractionCard uuid={uuid} isFollowing={isFollowing} />
+      <SportsList sports={sports} onChipPress={showDialog} />
       <UserConnectionsCard
         {...connections}
         onTeamsPress={onTeamsPress}

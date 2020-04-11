@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 import { ApolloConsumer, Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Button } from "react-native-paper";
 import { ReactNativeFile } from "apollo-upload-client";
 
 import FormikInput from "../../components/Formik/FormikInput";
@@ -13,8 +12,12 @@ import FormikImagePicker from "../../components/FormikImagePicker";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
 import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
+import styled from "styled-components";
 
-// TODO: Handle navigation to CreateTeamScreen
+const Button = styled.Button`
+  margin-top: 10px;
+  width: 90%;
+`;
 
 export default class EditProfileScreen extends Component {
   static navigationOptions = {
@@ -87,7 +90,12 @@ export default class EditProfileScreen extends Component {
 
           return (
             <KeyboardAwareScrollView
-              contentContainerStyle={styles.container}
+              contentContainerStyle={{
+                flexGrow: 1,
+                backgroundColor: "#fff",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
               keyboardShouldPersistTaps="handled"
             >
               <Formik
@@ -189,25 +197,19 @@ export default class EditProfileScreen extends Component {
                               updateUserProfile();
                               this.props.navigation.goBack();
                             }}
-                            style={styles.button}
-                          >
-                            Save
-                          </Button>
+                            title="Save"
+                          />
                           <Divider text="OR" />
                           <Button
                             disabled={loading}
                             onPress={this.onEditSportsPress}
-                            style={styles.button}
-                          >
-                            Edit sports
-                          </Button>
+                            title="Edit sports"
+                          />
                           <Button
                             disabled={loading}
                             onPress={this.onCreateTeamPress}
-                            style={styles.button}
-                          >
-                            Create team
-                          </Button>
+                            title="Create team"
+                          />
                         </React.Fragment>
                       )}
                     </Mutation>
@@ -221,14 +223,3 @@ export default class EditProfileScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  button: { marginTop: 10, width: "90%" },
-});

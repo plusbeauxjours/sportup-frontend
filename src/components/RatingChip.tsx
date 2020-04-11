@@ -8,7 +8,7 @@ interface IProps {
   icon?: string;
   rating?: number;
   selected?: boolean;
-  onPress: () => void;
+  onPress: (sportUuid: string) => void;
 }
 const RatingChip: React.FC<IProps> = ({
   sportUuid,
@@ -23,7 +23,7 @@ const RatingChip: React.FC<IProps> = ({
       icon={icon && { uri: icon }}
       onPress={() => {
         if (onPress !== null) {
-          onPress();
+          onPress(sportUuid);
         }
       }}
       style={selected && { backgroundColor: PRIMARY_COLOR }}

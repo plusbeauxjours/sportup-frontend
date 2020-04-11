@@ -4,6 +4,7 @@ import { Avatar } from "react-native-elements";
 import { MEDIA_URL } from "../constants/urls";
 import styled from "styled-components";
 import UserConnectionsCard from "./UserConnectionsCard";
+import SportsList from "./SportsList";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -32,7 +33,7 @@ const MyProfileHeader: React.FC<IProps> = ({
   connections = { team: 0, followers: 0, following: 0 },
   onTeamsPress = null,
   onFollowersPress = null,
-  onFollowingPress = null
+  onFollowingPress = null,
 }) => {
   return (
     <UserInfoContainer>
@@ -43,12 +44,13 @@ const MyProfileHeader: React.FC<IProps> = ({
         source={{
           uri: userImg
             ? MEDIA_URL + userImg
-            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media"
+            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
         }}
       />
       <Headline>{name}</Headline>
       <Caption>{`@${username}`}</Caption>
       <Paragraph>{bio}</Paragraph>
+      <SportsList sports={sports} />
       <UserConnectionsCard
         {...connections}
         onTeamsPress={onTeamsPress}
