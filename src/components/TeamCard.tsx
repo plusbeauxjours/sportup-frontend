@@ -55,7 +55,7 @@ const TeamCardWithCover: NavigationStackScreenComponent<IProps> = withNavigation
           sportUuid={sport.sportUuid}
           name={sport.name}
           rating={sport.team}
-          onPress={() => {}}
+          onChipPress={() => {}}
         />
       </Card.Content>
     </Card>
@@ -92,7 +92,7 @@ const TeamCardWithoutCover: NavigationStackScreenComponent<IProps> = withNavigat
           sportUuid={sport.sportUuid}
           name={sport.name}
           rating={sport.team}
-          onPress={() => {}}
+          onChipPress={() => {}}
         />
       </Card.Content>
     </Card>

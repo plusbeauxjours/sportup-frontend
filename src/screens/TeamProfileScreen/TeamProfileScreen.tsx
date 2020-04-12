@@ -53,7 +53,7 @@ const TeamInfo: React.FC<IProps> = ({
       <RatingChip
         sportUuid={sport.sportUuid}
         name={sport.name}
-        onPress={showDialog}
+        onChipPress={showDialog}
       />
     </View>
   );
@@ -118,7 +118,10 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
           team.isAdmin && (
             <Button
               onPress={() => {
-                console.log("EditTeam");
+                navigation.navigate("EditTeamProfileScreen", {
+                  uuid,
+                  client,
+                });
               }}
             >
               Edit team

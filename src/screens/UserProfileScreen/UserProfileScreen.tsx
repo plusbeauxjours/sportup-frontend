@@ -74,7 +74,6 @@ class UserProfileScreen extends React.Component<any, IState> {
 
   public onSubmit = () => {
     const { uuid, ratingSportWithUuid, rating } = this.state;
-    console.log(uuid, ratingSportWithUuid, rating);
     this.rateUserSportFn({
       variables: { uuid, sportUuid: ratingSportWithUuid, rating },
     });

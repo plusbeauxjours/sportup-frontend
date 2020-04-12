@@ -139,9 +139,9 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               </Button>
             )}
           </ApolloConsumer>
-          {membersList.map(({ id, userImg, name, username }, index) => (
+          {membersList.map(({ uuid, userImg, name, username }, index) => (
             <ListItem
-              key={id}
+              key={uuid}
               leftAvatar={{
                 rounded: true,
                 source: {

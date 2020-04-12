@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
+import React, { useState, useEffect } from "react";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
-import {
-  GET_USER_FROM_USERNAME,
-  GET_ALL_SPORTS,
-  CREATE_TEAM,
-} from "./EditTeamProfileScreenQueries";
+
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput, Button, Subheading } from "react-native-paper";
 import { ListItem } from "react-native-elements";
@@ -14,8 +9,19 @@ import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation } from "react-apollo";
 import styled from "styled-components";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
-import { Me } from "../../types/api";
-import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
+import {
+  UpdateTeam,
+  UpdateTeamVariables,
+  GetTeam,
+  GetTeamVariables,
+} from "../../types/api";
+import { GetAllSports } from "../../types/api";
+import {
+  GET_ALL_SPORTS,
+  GET_USER_FROM_USERNAME,
+} from "../CreateTeamScreen/CreateTeamScreenQueries";
+import { GET_TEAM } from "../TeamProfileScreen/TeamProfileScreenQueries";
+import { UPDATE_TEAM } from "./EditTeamProfileScreenQueries";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -27,6 +33,7 @@ const PickerContainer = styled.View`
 const EditTeamProfileScreen: NavigationStackScreenComponent = ({
   navigation,
 }) => {
+  const [teamUuid, setTeamUuid] = useState<string>(navigation.getParam("uuid"));
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
@@ -38,26 +45,34 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
     data: { getAllSports: { sports = null } = {} } = {},
     loading: getAllSportsLoading,
   } = useQuery<GetAllSports>(GET_ALL_SPORTS);
-  const [createTeamFn, { loading: createTeamLoading }] = useMutation<
-    CreateTeam,
-    CreateTeamVariables
-  >(CREATE_TEAM, {
+  const [updateTeamFn, { loading: updateTeamLoading }] = useMutation<
+    UpdateTeam,
+    UpdateTeamVariables
+  >(UPDATE_TEAM, {
     variables: {
+      teamUuid,
       teamName,
       sportUuid,
       memberUuids: membersList.map(({ uuid }) => uuid),
     },
-    update(cache, { data: { createTeam } }) {
+    update(cache, { data: { updateTeam } }) {
       try {
-        const { me } = cache.readQuery<Me>({
-          query: ME,
+        const { getTeam } = cache.readQuery<GetTeam, GetTeamVariables>({
+          query: GET_TEAM,
+          variables: { uuid: navigation.getParam("uuid") },
         });
         cache.writeQuery({
-          query: ME,
+          query: GET_TEAM,
           data: {
-            me: {
-              ...me,
-              user: { ...me.user, teamsCount: createTeam.user.teamsCount },
+            getTeam: {
+              ...getTeam,
+              team: {
+                ...getTeam.team,
+                teamName: updateTeam.team.teamName,
+                coverImg: updateTeam.team.coverImg,
+                sport: updateTeam.team.sport,
+                members: updateTeam.team.members,
+              },
             },
           },
         });
@@ -90,6 +105,26 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
       membersList.filter((_, idx) => idx !== index)
     );
   };
+
+  useEffect(() => {
+    const client = navigation.getParam("client");
+    const { getTeam } = client.readQuery({
+      query: GET_TEAM,
+      variables: { uuid: navigation.getParam("uuid") },
+    });
+    console.log(getTeam);
+    setTeamName(getTeam.team.teamName);
+    setSportUuid(getTeam.team.sport.sportUuid);
+    setMembersList(
+      getTeam.team.members.map((member) => ({
+        uuid: member.uuid,
+        name: member.name,
+        username: member.username,
+        userImg: member.userImg,
+      }))
+    );
+  }, []);
+
   if (getAllSportsLoading) {
     return <ActivityIndicator size="large" />;
   } else {
@@ -141,9 +176,9 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
               </Button>
             )}
           </ApolloConsumer>
-          {membersList.map(({ id, userImg, name, username }, index) => (
+          {membersList.map(({ uuid, userImg, name, username }, index) => (
             <ListItem
-              key={id}
+              key={uuid}
               leftAvatar={{
                 rounded: true,
                 source: {
@@ -161,10 +196,11 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
           <Button
             primary
             raised
-            loading={createTeamLoading}
-            disabled={userLoading || !teamName || createTeamLoading}
+            loading={updateTeamLoading}
+            disabled={userLoading || !teamName || updateTeamLoading}
             onPress={() => {
-              createTeamFn();
+              updateTeamFn();
+              console.log(membersList);
               navigation.goBack();
             }}
             style={{ width: "90%", alignSelf: "center", marginTop: 20 }}
@@ -177,7 +213,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
   }
 };
 EditTeamProfileScreen.navigationOptions = {
-  title: "Craete Team",
+  title: "Edit Team",
 };
 
 export default EditTeamProfileScreen;
