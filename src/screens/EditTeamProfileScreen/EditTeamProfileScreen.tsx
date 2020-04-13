@@ -61,8 +61,11 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
           query: GET_TEAM,
           variables: { uuid: navigation.getParam("uuid") },
         });
+        console.log("getTeam", getTeam);
+        console.log("updateTeam", updateTeam);
         cache.writeQuery({
           query: GET_TEAM,
+          variables: { uuid: navigation.getParam("uuid") },
           data: {
             getTeam: {
               ...getTeam,
@@ -112,7 +115,6 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
       query: GET_TEAM,
       variables: { uuid: navigation.getParam("uuid") },
     });
-    console.log(getTeam);
     setTeamName(getTeam.team.teamName);
     setSportUuid(getTeam.team.sport.sportUuid);
     setMembersList(
@@ -200,7 +202,6 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
             disabled={userLoading || !teamName || updateTeamLoading}
             onPress={() => {
               updateTeamFn();
-              console.log(membersList);
               navigation.goBack();
             }}
             style={{ width: "90%", alignSelf: "center", marginTop: 20 }}
