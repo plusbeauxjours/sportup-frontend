@@ -361,6 +361,40 @@ export interface UpdateUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: UpdateSports
+// ====================================================
+
+export interface UpdateSports_updateSports_user_sports {
+  __typename: "UserPlaysSportType";
+  sportUuid: string | null;
+  name: string | null;
+  rating: number | null;
+}
+
+export interface UpdateSports_updateSports_user {
+  __typename: "UserType";
+  sports: (UpdateSports_updateSports_user_sports | null)[] | null;
+}
+
+export interface UpdateSports_updateSports {
+  __typename: "UpdateSportsResponse";
+  user: UpdateSports_updateSports_user | null;
+}
+
+export interface UpdateSports {
+  updateSports: UpdateSports_updateSports;
+}
+
+export interface UpdateSportsVariables {
+  sportUuids: (string | null)[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpdateTeam
 // ====================================================
 

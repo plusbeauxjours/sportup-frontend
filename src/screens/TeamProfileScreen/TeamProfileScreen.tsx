@@ -13,8 +13,13 @@ import { GET_TEAM } from "./TeamProfileScreenQueries";
 import { ActivityIndicator, FlatList } from "react-native";
 import UserCard from "../../components/UserCard";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import RatingDialog from "../../components/RatingDialog";
 
 const View = styled.View`
+  align-items: center;
+  padding: 5px;
+`;
+const Container = styled.View`
   align-items: center;
   height: 150px;
 `;
@@ -47,15 +52,24 @@ const TeamInfo: React.FC<IProps> = ({
   onSubmitRating,
 }) => {
   return (
-    <View>
+    <Container>
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
-      <Headline>{teamName}</Headline>
-      <RatingChip
-        sportUuid={sport.sportUuid}
-        name={sport.name}
-        onChipPress={showDialog}
+      <View>
+        <Headline>{teamName}</Headline>
+        <RatingChip
+          sportUuid={sport.sportUuid}
+          name={sport.name}
+          onChipPress={showDialog}
+        />
+      </View>
+      <RatingDialog
+        visible={dialogVisible}
+        rating={rating}
+        onStarRatingPress={onStarRatingPress}
+        close={closeDialog}
+        onSubmit={onSubmitRating}
       />
-    </View>
+    </Container>
   );
 };
 

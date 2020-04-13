@@ -25,11 +25,11 @@ export default class EditProfileScreen extends Component {
   };
 
   public onEditSportsPress = () => {
-    this.props.navigation.navigate("EditSports");
+    this.props.navigation.navigate("EditSportsScreen");
   };
 
   public onCreateTeamPress = () => {
-    this.props.navigation.navigate("CreateTeam");
+    this.props.navigation.navigate("CreateTeamScreen");
   };
 
   public updateCache = (cache, { data: { updateUser } }) => {

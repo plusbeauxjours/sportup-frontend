@@ -9,7 +9,8 @@ import FollowingScreen from "../screens/FollowingScreen";
 import TeamsScreen from "../screens/TeamsScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 import CreateTeamScreen from "../screens/CreateTeamScreen";
-import EditTeamProfileScreen from "../screens/EditTeamProfileScreen/EditTeamProfileScreen";
+import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
+import EditSportsScreen from "../screens/EditSportsScreen";
 
 const MyProfileNavigation = createStackNavigator(
   {
@@ -22,6 +23,7 @@ const MyProfileNavigation = createStackNavigator(
     TeamProfileScreen,
     CreateTeamScreen,
     EditTeamProfileScreen,
+    EditSportsScreen,
   },
   {
     initialRouteName: "MyProfileScreen",
