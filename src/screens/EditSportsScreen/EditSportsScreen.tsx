@@ -134,8 +134,7 @@ const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
           }}
           loading={udpateSportsLoading}
           disabled={udpateSportsLoading}
-          Save
-          title=""
+          title="Save"
         />
       </KeyboardAwareScrollView>
     );
