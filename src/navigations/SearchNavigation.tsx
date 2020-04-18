@@ -8,7 +8,7 @@ import TeamsScreen from "../screens/TeamsScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
 
-const FeedStack = createStackNavigator(
+const SearchNavigation = createStackNavigator(
   {
     UserProfileScreen,
     FollowersScreen,
@@ -18,7 +18,7 @@ const FeedStack = createStackNavigator(
     EditTeamProfileScreen,
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: "UserProfileScreen",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR,
@@ -28,4 +28,4 @@ const FeedStack = createStackNavigator(
   }
 );
 
-export default FeedStack;
+export default SearchNavigation;

@@ -26,13 +26,13 @@ const MainDrawer = createDrawerNavigator(
         ),
       },
     },
-    // Find: {
-    //   screen: FindNavigation,
-    //   navigationOptions: {
-    //     drawerLabel: "Play",
-    //     drawerIcon: ({ tintColor }) => <Icon name="games" color={tintColor} />,
-    //   },
-    // },
+    Find: {
+      screen: FindNavigation,
+      navigationOptions: {
+        drawerLabel: "Play",
+        drawerIcon: ({ tintColor }) => <Icon name="games" color={tintColor} />,
+      },
+    },
     // Chat: {
     //   screen: ChatNavigation,
     //   navigationOptions: {
@@ -40,20 +40,20 @@ const MainDrawer = createDrawerNavigator(
     //     drawerIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />,
     //   },
     // },
-    // Events: {
-    //   screen: EventNavigation,
-    //   navigationOptions: {
-    //     drawerLabel: "Events",
-    //     drawerIcon: ({ tintColor }) => <Icon name="event" color={tintColor} />,
-    //   },
-    // },
-    // Search: {
-    //   screen: SearchNavigation,
-    //   navigationOptions: {
-    //     drawerLabel: "Search",
-    //     drawerIcon: ({ tintColor }) => <Icon name="search" color={tintColor} />,
-    //   },
-    // },
+    Events: {
+      screen: EventNavigation,
+      navigationOptions: {
+        drawerLabel: "Events",
+        drawerIcon: ({ tintColor }) => <Icon name="event" color={tintColor} />,
+      },
+    },
+    Search: {
+      screen: SearchNavigation,
+      navigationOptions: {
+        drawerLabel: "Search",
+        drawerIcon: ({ tintColor }) => <Icon name="search" color={tintColor} />,
+      },
+    },
   },
   {
     initialRouteName: "Me",

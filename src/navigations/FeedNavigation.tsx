@@ -11,7 +11,7 @@ import EditProfileScreen from "../screens/EditProfileScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
 
-const FeedStack = createStackNavigator(
+const FeedNavigation = createStackNavigator(
   {
     FeedScreen,
     MyProfileScreen,
@@ -34,4 +34,4 @@ const FeedStack = createStackNavigator(
   }
 );
 
-export default FeedStack;
+export default FeedNavigation;

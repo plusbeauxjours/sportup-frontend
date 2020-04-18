@@ -24,25 +24,25 @@ export default function App() {
       const cache = new InMemoryCache();
       await persistCache({
         cache,
-        storage: AsyncStorage
+        storage: AsyncStorage,
       });
       cache.reset();
       let httpLink = createUploadLink({
-        uri: GRAPHQL_URL as string
+        uri: GRAPHQL_URL as string,
       });
       let authLink = setContext(async (_: any, { headers }: any) => {
         const token = await AsyncStorage.getItem("jwt");
         return {
           headers: {
             ...headers,
-            authorization: token ? `JWT ${token}` : ""
-          }
+            authorization: token ? `JWT ${token}` : "",
+          },
         };
       });
       const client = new ApolloClient({
         link: authLink.concat(httpLink),
         cache,
-        ...apolloClientOptions
+        ...apolloClientOptions,
       });
       setClient(client);
     } catch (e) {
@@ -52,7 +52,7 @@ export default function App() {
   const loadResourcesAsync = async () => {
     await Asset.loadAsync([]);
   };
-  const handleLoadingError = error => {
+  const handleLoadingError = (error) => {
     console.warn(error);
   };
   const handleFinishLoading = () => {

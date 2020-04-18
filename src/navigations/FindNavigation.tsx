@@ -7,7 +7,7 @@ import FollowingScreen from "../screens/FollowingScreen";
 import TeamsScreen from "../screens/TeamsScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 
-const FeedStack = createStackNavigator(
+const FindNavigation = createStackNavigator(
   {
     UserProfileScreen,
     FollowersScreen,
@@ -16,7 +16,7 @@ const FeedStack = createStackNavigator(
     TeamProfileScreen,
   },
   {
-    initialRouteName: "Find Game",
+    initialRouteName: "UserProfileScreen",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR,
@@ -26,4 +26,4 @@ const FeedStack = createStackNavigator(
   }
 );
 
-export default FeedStack;
+export default FindNavigation;
