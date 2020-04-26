@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements";
 import * as ImagePicker from "expo-image-picker";
 
 import { Button } from "react-native-paper";
-import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
 interface IProps {
   initialImg: { uri: any };

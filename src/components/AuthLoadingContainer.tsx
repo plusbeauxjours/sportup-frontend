@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  NavigationScreenProp,
+  NavigationParams,
+  NavigationState,
+} from "react-navigation";
 import { ActivityIndicator, AsyncStorage } from "react-native";
 import styled from "styled-components";
 
@@ -7,7 +12,11 @@ const Container = styled.View`
   align-items: center;
   justify-content: center;
 `;
-export default class AuthLoadingContainer extends React.Component {
+
+interface IProps {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+export default class AuthLoadingContainer extends React.Component<IProps> {
   constructor(props) {
     super(props);
     this.checkAuthentication();

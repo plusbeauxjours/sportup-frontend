@@ -8,18 +8,21 @@ import * as Yup from "yup";
 import { ReactNativeFile } from "apollo-upload-client";
 
 import FormikInput from "../../components/Formik/FormikInput";
-import FormikImagePicker from "../../components/FormikImagePicker";
+import FormikImagePicker from "../../components/Formik/FormikImagePicker";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
 import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import styled from "styled-components";
+import { NavigationStackScreenProps } from 'react-navigation-stack';
 
 const Button = styled.Button`
   margin-top: 10px;
   width: 90%;
 `;
 
-export default class EditProfileScreen extends Component {
+interface IProps extends NavigationStackScreenProps {}
+
+export default class EditProfileScreen extends Component<IProps> {
   static navigationOptions = {
     title: "Edit profile",
   };
