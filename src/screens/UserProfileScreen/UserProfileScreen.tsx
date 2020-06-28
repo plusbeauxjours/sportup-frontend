@@ -102,39 +102,42 @@ class UserProfileScreen extends React.Component<any, IState> {
                   return (
                     <ActivityIndicator size="large" style={{ margin: 20 }} />
                   );
+                } else if (user) {
+                  const connections = {
+                    teams: user.teamsCount,
+                    followers: user.followersCount,
+                    following: user.followingCount,
+                  };
+                  return (
+                    <UserProfileHeader
+                      uuid={user.uuid}
+                      userImg={user.userImg}
+                      name={`${user.firstName} ${user.lastName}`}
+                      username={user.username}
+                      bio={user.bio}
+                      sports={user.sports}
+                      connections={connections}
+                      onTeamsPress={() => {
+                        this.onTeamsPress(user.uuid);
+                      }}
+                      onFollowersPress={() => {
+                        this.onFollowersPress(user.uuid);
+                      }}
+                      onFollowingPress={() => {
+                        this.onFollowingPress(user.uuid);
+                      }}
+                      showDialog={this.showDialog}
+                      isFollowing={user.isFollowing}
+                      dialogVisible={dialogVisible}
+                      rating={rating}
+                      closeDialog={this.closeDialog}
+                      onStarRatingPress={this.onStarRatingPress}
+                      onSubmit={this.onSubmit}
+                    />
+                  );
+                } else {
+                  return null;
                 }
-                const connections = {
-                  teams: user.teamsCount,
-                  followers: user.followersCount,
-                  following: user.followingCount,
-                };
-                return (
-                  <UserProfileHeader
-                    uuid={user.uuid}
-                    userImg={user.userImg}
-                    name={`${user.firstName} ${user.lastName}`}
-                    username={user.username}
-                    bio={user.bio}
-                    sports={user.sports}
-                    connections={connections}
-                    onTeamsPress={() => {
-                      this.onTeamsPress(user.uuid);
-                    }}
-                    onFollowersPress={() => {
-                      this.onFollowersPress(user.uuid);
-                    }}
-                    onFollowingPress={() => {
-                      this.onFollowingPress(user.uuid);
-                    }}
-                    showDialog={this.showDialog}
-                    isFollowing={user.isFollowing}
-                    dialogVisible={dialogVisible}
-                    rating={rating}
-                    closeDialog={this.closeDialog}
-                    onStarRatingPress={this.onStarRatingPress}
-                    onSubmit={this.onSubmit}
-                  />
-                );
               }}
             </Query>
           );

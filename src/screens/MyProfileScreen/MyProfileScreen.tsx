@@ -84,31 +84,34 @@ class MyProfileScreen extends React.Component {
                 }}
               />
             );
+          } else if (me) {
+            const connections = {
+              teams: me?.teamsCount,
+              followers: me?.followersCount,
+              following: me?.followingCount,
+            };
+            return (
+              <MyProfileHeader
+                userImg={me?.userImg}
+                name={`${me?.firstName} ${me?.lastName}`}
+                username={me?.username}
+                bio={me?.bio}
+                sports={me?.sports}
+                connections={connections}
+                onTeamsPress={() => {
+                  this.onTeamsPress(me?.uuid);
+                }}
+                onFollowersPress={() => {
+                  this.onFollowersPress(me?.uuid);
+                }}
+                onFollowingPress={() => {
+                  this.onFollowingPress(me?.uuid);
+                }}
+              />
+            );
+          } else {
+            return null;
           }
-          const connections = {
-            teams: me.teamsCount,
-            followers: me.followersCount,
-            following: me.followingCount,
-          };
-          return (
-            <MyProfileHeader
-              userImg={me.userImg}
-              name={`${me.firstName} ${me.lastName}`}
-              username={me.username}
-              bio={me.bio}
-              sports={me.sports}
-              connections={connections}
-              onTeamsPress={() => {
-                this.onTeamsPress(me.uuid);
-              }}
-              onFollowersPress={() => {
-                this.onFollowersPress(me.uuid);
-              }}
-              onFollowingPress={() => {
-                this.onFollowingPress(me.uuid);
-              }}
-            />
-          );
         }}
       </Query>
     );
