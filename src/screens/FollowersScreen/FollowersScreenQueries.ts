@@ -1,12 +1,12 @@
 import gql from "graphql-tag";
 
 export const GET_USER_FOLLOWERS = gql`
-  query GetUserFollowers($uuid: String!) {
-    getUser(uuid: $uuid) {
+  query GetUserFollowers($id: String!) {
+    getUser(id: $id) {
       user {
-        uuid
+        id
         followers {
-          uuid
+          id
           name
           username
           userImg

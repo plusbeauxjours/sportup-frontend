@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import FollowBtn from "./FollowBtn";
 
 const View = styled.View`
@@ -11,17 +11,17 @@ const View = styled.View`
 `;
 
 interface IProps {
-  uuid: string;
+  id: string;
   isFollowing: boolean;
 }
 
-const UserInteractionCard: React.FC<IProps> = ({ uuid, isFollowing }) => {
+const UserInteractionCard: React.FC<IProps> = ({ id, isFollowing }) => {
   return (
     <View>
       <Button icon="message" onPress={() => console.log("go to chat")}>
         Message
       </Button>
-      <FollowBtn isFollowing={isFollowing} uuid={uuid} />
+      <FollowBtn isFollowing={isFollowing} id={id} />
     </View>
   );
 };

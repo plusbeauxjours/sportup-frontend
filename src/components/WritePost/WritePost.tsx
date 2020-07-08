@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { GET_MAIN_FEED } from "../../screens/FeedScreen/FeedScreenQueries";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
@@ -10,11 +10,9 @@ import {
   GetMainFeedVariables,
 } from "../../types/api";
 import { CREATE_POST } from "./WritePostQueries";
+import { Button } from "react-native-paper";
 
 const View = styled.View``;
-const Button = styled.Button`
-  align-self: flex-end;
-`;
 
 const WritePost: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -56,8 +54,6 @@ const WritePost: React.FC = () => {
         multiline
       />
       <Button
-        raised
-        primary
         loading={loading}
         disabled={text === ""}
         onPress={() => {

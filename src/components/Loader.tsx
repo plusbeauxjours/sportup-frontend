@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import constants from "../constants/dimensions";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   width: ${constants.width}px;

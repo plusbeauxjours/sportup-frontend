@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
 import { Headline } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const View = styled.View`
   margin: 6px 0;

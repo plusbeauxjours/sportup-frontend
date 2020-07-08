@@ -5,7 +5,7 @@ import {
   NavigationState,
 } from "react-navigation";
 import { ActivityIndicator, AsyncStorage } from "react-native";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -14,7 +14,7 @@ const Container = styled.View`
 `;
 
 interface IProps {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation: NavigationScreenProp<any, any>;
 }
 export default class AuthLoadingContainer extends React.Component<IProps> {
   constructor(props) {
@@ -24,8 +24,8 @@ export default class AuthLoadingContainer extends React.Component<IProps> {
 
   checkAuthentication = async () => {
     try {
-      const uuid = await AsyncStorage.getItem("jwt");
-      this.props.navigation.navigate(uuid ? "Main" : "Auth");
+      const id = await AsyncStorage.getItem("jwt");
+      this.props.navigation.navigate(id ? "Main" : "Auth");
     } catch (_) {
       this.props.navigation.navigate("Auth");
     }

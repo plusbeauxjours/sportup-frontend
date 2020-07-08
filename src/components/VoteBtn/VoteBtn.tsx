@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from "react-apollo";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Icon } from "react-native-elements";
 import { Caption } from "react-native-paper";
 import { UPVOTED, DOWNVOTED } from "../../constants/strings";
 import {
   REMOVE_POST_INTERACTION,
   UPVOTE_POST,
-  DOWNVOTE_POST
+  DOWNVOTE_POST,
 } from "../VoteBtn/VoteBtnQueries";
 import {
   UpvotePost,
@@ -15,7 +15,7 @@ import {
   DownvotePost,
   DownvotePostVariables,
   RemovePostInteraction,
-  RemovePostInteractionVariables
+  RemovePostInteractionVariables,
 } from "../../types/api";
 
 const PostVoteContainer = styled.View`
@@ -27,22 +27,22 @@ const PostVoteContainer = styled.View`
 `;
 
 interface IProps {
-  uuid: string;
+  id: string;
   interaction: string;
   score: number;
 }
 
 const VoteBtn: React.FC<IProps> = ({
-  uuid: postUuid,
+  id: postId,
   interaction,
-  score: scoreProp
+  score: scoreProp,
 }) => {
   const [upvoteSelected, setUpvoteSelected] = useState<boolean>(false);
   const [downvoteSelected, setDownvoteSelected] = useState<boolean>(false);
   const [score, setScore] = useState<number>(scoreProp);
   const [
     removePostInteractionFn,
-    { loading: removePostInteractionLoading }
+    { loading: removePostInteractionLoading },
   ] = useMutation<RemovePostInteraction, RemovePostInteractionVariables>(
     REMOVE_POST_INTERACTION
   );
@@ -59,8 +59,8 @@ const VoteBtn: React.FC<IProps> = ({
       toggleDownvote();
     }
     upvoteSelected
-      ? setScore(score => score - 1)
-      : setScore(score => score + 1);
+      ? setScore((score) => score - 1)
+      : setScore((score) => score + 1);
     setUpvoteSelected(!upvoteSelected);
   };
   const toggleDownvote = () => {
@@ -68,8 +68,8 @@ const VoteBtn: React.FC<IProps> = ({
       toggleUpvote();
     }
     downvoteSelected
-      ? setScore(score => score + 1)
-      : setScore(score => score - 1);
+      ? setScore((score) => score + 1)
+      : setScore((score) => score - 1);
     setDownvoteSelected(!downvoteSelected);
   };
 
@@ -93,9 +93,9 @@ const VoteBtn: React.FC<IProps> = ({
         containerStyle={{ paddingHorizontal: 10 }}
         onPress={() => {
           if (upvoteSelected) {
-            removePostInteractionFn({ variables: { postUuid } });
+            removePostInteractionFn({ variables: { postId } });
           } else {
-            upVotePostFn({ variables: { postUuid } });
+            upVotePostFn({ variables: { postId } });
           }
           toggleUpvote();
         }}
@@ -107,9 +107,9 @@ const VoteBtn: React.FC<IProps> = ({
         containerStyle={{ paddingHorizontal: 10 }}
         onPress={() => {
           if (downvoteSelected) {
-            removePostInteractionFn({ variables: { postUuid } });
+            removePostInteractionFn({ variables: { postId } });
           } else {
-            downVotePostFn({ variables: { postUuid } });
+            downVotePostFn({ variables: { postId } });
           }
           toggleDownvote();
         }}

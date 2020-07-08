@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { MEDIA_URL } from "../../constants/urls";
 import { Headline, Divider, Button } from "react-native-paper";
 import RatingChip from "../../components/RatingChip";
@@ -57,7 +57,7 @@ const TeamInfo: React.FC<IProps> = ({
       <View>
         <Headline>{teamName}</Headline>
         <RatingChip
-          sportUuid={sport.sportUuid}
+          sportId={sport.sportId}
           name={sport.name}
           onChipPress={showDialog}
         />
@@ -74,7 +74,7 @@ const TeamInfo: React.FC<IProps> = ({
 };
 
 const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const uuid = navigation.getParam("uuid");
+  const id = navigation.getParam("id");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const {
@@ -82,7 +82,7 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
     loading,
     client,
   } = useQuery<GetTeam, GetTeamVariables>(GET_TEAM, {
-    variables: { uuid },
+    variables: { id },
   });
   const onStarRatingPress = (rating) => {
     setRating(rating);
@@ -103,10 +103,10 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
     return (
       <FlatList
         data={team.members}
-        keyExtractor={(item) => item.uuid.toString()}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <UserCard
-            uuid={item.uuid}
+            id={item.id}
             name={item.name}
             username={item.username}
             userImg={item.userImg}
@@ -133,7 +133,7 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
             <Button
               onPress={() => {
                 navigation.navigate("EditTeamProfileScreen", {
-                  uuid,
+                  id,
                   client,
                 });
               }}

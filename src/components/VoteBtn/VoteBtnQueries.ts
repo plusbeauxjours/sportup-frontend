@@ -1,24 +1,24 @@
 import gql from 'graphql-tag';
 
 export const UPVOTE_POST = gql`
-  mutation UpvotePost($postUuid: String!) {
-    upvotePost(postUuid: $postUuid) {
+  mutation UpvotePost($postId: String!) {
+    upvotePost(postId: $postId) {
       ok
     }
   }
 `;
 
 export const DOWNVOTE_POST = gql`
-  mutation DownvotePost($postUuid: String!) {
-    downvotePost(postUuid: $postUuid) {
+  mutation DownvotePost($postId: String!) {
+    downvotePost(postId: $postId) {
       ok
     }
   }
 `;
 
 export const REMOVE_POST_INTERACTION = gql`
-  mutation RemovePostInteraction($postUuid: String!) {
-    removePostInteraction(postUuid: $postUuid) {
+  mutation RemovePostInteraction($postId: String!) {
+    removePostInteraction(postId: $postId) {
       ok
     }
   }

@@ -4,14 +4,14 @@ export const CREATE_POST = gql`
   mutation CreatePost($text: String!) {
     createPost(text: $text) {
       post {
-        uuid
+        id
         text
         postImg
         createdAt
         score
         interaction
         postedBy {
-          uuid
+          id
           name
           username
           userImg

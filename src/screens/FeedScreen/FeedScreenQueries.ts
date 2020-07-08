@@ -4,14 +4,14 @@ export const GET_MAIN_FEED = gql`
   query GetMainFeed($pageNum: Int) {
     getMainFeed(pageNum: $pageNum) {
       posts {
-        uuid
+        id
         text
         postImg
         createdAt
         score
         interaction
         postedBy {
-          uuid
+          id
           name
           username
           userImg

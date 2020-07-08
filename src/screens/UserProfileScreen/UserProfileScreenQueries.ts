@@ -1,10 +1,10 @@
 import gql from "graphql-tag";
 
 export const GET_USER = gql`
-  query GetUser($uuid: String!) {
-    getUser(uuid: $uuid) {
+  query GetUser($id: String!) {
+    getUser(id: $id) {
       user {
-        uuid
+        id
         name
         firstName
         lastName
@@ -13,7 +13,7 @@ export const GET_USER = gql`
         userImg
         isFollowing
         sports {
-          sportUuid
+          sportId
           name
         }
         teamsCount
@@ -25,10 +25,10 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_FEED = gql`
-  query GetUserFeed($uuid: String!, $pageNum: Int) {
-    getUserFeed(uuid: $uuid, pageNum: $pageNum) {
+  query GetUserFeed($id: String!, $pageNum: Int) {
+    getUserFeed(id: $id, pageNum: $pageNum) {
       posts {
-        uuid
+        id
         text
         postImg
         createdAt
@@ -46,8 +46,8 @@ export const GET_USER_FEED = gql`
 `;
 
 export const RATE_USER_SPORT = gql`
-  mutation RateUserSport($uuid: String!, $sportUuid: String!, $rating: Int!) {
-    rateUserSport(uuid: $uuid, sportUuid: $sportUuid, rating: $rating) {
+  mutation RateUserSport($id: String!, $sportId: String!, $rating: Int!) {
+    rateUserSport(id: $id, sportId: $sportId, rating: $rating) {
       ok
     }
   }

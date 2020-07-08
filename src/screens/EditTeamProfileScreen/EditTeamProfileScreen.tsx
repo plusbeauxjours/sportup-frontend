@@ -7,7 +7,7 @@ import { ListItem } from "react-native-elements";
 import { ActivityIndicator, Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation } from "react-apollo";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import {
   UpdateTeam,
@@ -33,11 +33,11 @@ const PickerContainer = styled.View`
 const EditTeamProfileScreen: NavigationStackScreenComponent = ({
   navigation,
 }) => {
-  const [teamUuid, setTeamUuid] = useState<string>(navigation.getParam("uuid"));
+  const [teamId, setTeamId] = useState<string>(navigation.getParam("id"));
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
-  const [sportUuid, setSportUuid] = useState<string>(
+  const [sportId, setSportId] = useState<string>(
     "46800336-cf54-40d3-8385-78d7d47d2f3c"
   );
   const [membersList, setMembersList] = useState<any>([]);
@@ -50,22 +50,22 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
     UpdateTeamVariables
   >(UPDATE_TEAM, {
     variables: {
-      teamUuid,
+      teamId,
       teamName,
-      sportUuid,
-      memberUuids: membersList.map(({ uuid }) => uuid),
+      sportId,
+      memberIds: membersList.map(({ id }) => id),
     },
     update(cache, { data: { updateTeam } }) {
       try {
         const { getTeam } = cache.readQuery<GetTeam, GetTeamVariables>({
           query: GET_TEAM,
-          variables: { uuid: navigation.getParam("uuid") },
+          variables: { id: navigation.getParam("id") },
         });
         console.log("getTeam", getTeam);
         console.log("updateTeam", updateTeam);
         cache.writeQuery({
           query: GET_TEAM,
-          variables: { uuid: navigation.getParam("uuid") },
+          variables: { id: navigation.getParam("id") },
           data: {
             getTeam: {
               ...getTeam,
@@ -113,13 +113,13 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
     const client = navigation.getParam("client");
     const { getTeam } = client.readQuery({
       query: GET_TEAM,
-      variables: { uuid: navigation.getParam("uuid") },
+      variables: { id: navigation.getParam("id") },
     });
     setTeamName(getTeam.team.teamName);
-    setSportUuid(getTeam.team.sport.sportUuid);
+    setSportId(getTeam.team.sport.sportId);
     setMembersList(
       getTeam.team.members.map((member) => ({
-        uuid: member.uuid,
+        id: member.id,
         name: member.name,
         username: member.username,
         userImg: member.userImg,
@@ -145,14 +145,14 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
           <PickerContainer>
             <Subheading style={{ fontWeight: "bold" }}>Sport</Subheading>
             <Picker
-              selectedValue={sportUuid}
+              selectedValue={sportId}
               style={{ width: 200 }}
               onValueChange={(value) => {
-                setSportUuid(value);
+                setSportId(value);
               }}
             >
-              {sports.map(({ sportUuid, name }) => (
-                <Picker.Item key={sportUuid} label={name} value={sportUuid} />
+              {sports.map(({ sportId, name }) => (
+                <Picker.Item key={sportId} label={name} value={sportId} />
               ))}
             </Picker>
           </PickerContainer>
@@ -178,9 +178,9 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
               </Button>
             )}
           </ApolloConsumer>
-          {membersList.map(({ uuid, userImg, name, username }, index) => (
+          {membersList.map(({ id, userImg, name, username }, index) => (
             <ListItem
-              key={uuid}
+              key={id}
               leftAvatar={{
                 rounded: true,
                 source: {
@@ -196,8 +196,6 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
             />
           ))}
           <Button
-            primary
-            raised
             loading={updateTeamLoading}
             disabled={userLoading || !teamName || updateTeamLoading}
             onPress={() => {

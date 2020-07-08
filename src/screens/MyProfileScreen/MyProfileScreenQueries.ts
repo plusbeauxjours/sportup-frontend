@@ -4,14 +4,14 @@ export const ME = gql`
   query Me {
     me {
       user {
-        uuid
+        id
         username
         firstName
         lastName
         bio
         userImg
         sports {
-          sportUuid
+          sportId
           name
         }
         teamsCount
@@ -27,14 +27,14 @@ export const MY_FEED = gql`
   query GetMyFeed($pageNum: Int) {
     getMyFeed(pageNum: $pageNum) {
       posts{
-        uuid
+        id
         text
         postImg
         createdAt
         score
         interaction
         postedBy {
-          uuid
+          id
           name
           username
           userImg

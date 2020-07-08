@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useQuery } from "react-apollo-hooks";
 import { ActivityIndicator } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { Searchbar, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_ALL_SPORTS } from "../CreateTeamScreen/CreateTeamScreenQueries";
 import { UPDATE_SPORTS } from "./EditSportsScreenQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import RatingChip from "../../components/RatingChip";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import {
   GetAllSports_getAllSports_sports,
   GetAllSports,
@@ -22,10 +22,6 @@ const Container = styled.View``;
 const View = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-`;
-const Button = styled.Button`
-  margin-top: 10px;
-  width: 90%;
 `;
 
 const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
@@ -75,7 +71,7 @@ const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
   };
 
   const onSavePress = () => {
-    const selectedSportUuids = selectedSports
+    const selectedSportIds = selectedSports
       .filter((sport) => sport === true)
       .map((_, index) => index + 1);
     navigation.goBack();
@@ -105,12 +101,12 @@ const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
           />
           <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <View style={{}}>
-              {sports.map(({ sportUuid, name }) => (
+              {sports.map(({ sportId, name }) => (
                 <RatingChip
-                  sportUuid={sportUuid}
+                  sportId={sportId}
                   name={name}
                   selected={selectedSports.length > 0}
-                  key={sportUuid}
+                  key={sportId}
                   onChipPress={() => console.log("onPress")}
                 />
               ))}
@@ -119,15 +115,15 @@ const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
         </Container>
         <Button
           onPress={() => {
-            const selectedSportUuids = [];
+            const selectedSportIds = [];
             selectedSports.forEach((sport, index) => {
               if (sport === true) {
-                selectedSportUuids.push(index + 1);
+                selectedSportIds.push(index + 1);
               }
             });
             udpateSportsFn({
               variables: {
-                sportUuids: selectedSportUuids,
+                sportIds: selectedSportIds,
               },
             });
             navigation.goBack();

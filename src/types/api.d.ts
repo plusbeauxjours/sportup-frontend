@@ -9,7 +9,7 @@
 
 export interface FollowUser_followUser_following {
   __typename: "FollowType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -30,7 +30,7 @@ export interface FollowUser {
 }
 
 export interface FollowUserVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -44,7 +44,7 @@ export interface FollowUserVariables {
 
 export interface UnfollowUser_unfollowUser_following {
   __typename: "FollowType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -65,7 +65,7 @@ export interface UnfollowUser {
 }
 
 export interface UnfollowUserVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -87,7 +87,7 @@ export interface UpvotePost {
 }
 
 export interface UpvotePostVariables {
-  postUuid: string;
+  postId: string;
 }
 
 /* tslint:disable */
@@ -109,7 +109,7 @@ export interface DownvotePost {
 }
 
 export interface DownvotePostVariables {
-  postUuid: string;
+  postId: string;
 }
 
 /* tslint:disable */
@@ -131,7 +131,7 @@ export interface RemovePostInteraction {
 }
 
 export interface RemovePostInteractionVariables {
-  postUuid: string;
+  postId: string;
 }
 
 /* tslint:disable */
@@ -145,7 +145,7 @@ export interface RemovePostInteractionVariables {
 
 export interface CreatePost_createPost_post_postedBy {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -156,7 +156,10 @@ export interface CreatePost_createPost_post_postedBy {
 
 export interface CreatePost_createPost_post {
   __typename: "PostType";
-  uuid: any | null;
+  /**
+   * The ID of the object.
+   */
+  id: string;
   text: string | null;
   postImg: string | null;
   createdAt: any;
@@ -215,7 +218,7 @@ export interface LoginVariables {
 
 export interface Signup_createUser_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
 }
 
 export interface Signup_createUser {
@@ -260,8 +263,8 @@ export interface CreateTeam {
 
 export interface CreateTeamVariables {
   teamName: string;
-  sportUuid: string;
-  memberUuids?: (string | null)[] | null;
+  sportId: string;
+  memberIds?: (string | null)[] | null;
 }
 
 /* tslint:disable */
@@ -275,7 +278,7 @@ export interface CreateTeamVariables {
 
 export interface GetUserFromUsername_getUserFromUsername_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -308,7 +311,7 @@ export interface GetUserFromUsernameVariables {
 
 export interface GetAllSports_getAllSports_sports {
   __typename: "SportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string;
 }
 
@@ -366,7 +369,7 @@ export interface UpdateUserVariables {
 
 export interface UpdateSports_updateSports_user_sports {
   __typename: "UserPlaysSportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string | null;
   rating: number | null;
 }
@@ -386,7 +389,7 @@ export interface UpdateSports {
 }
 
 export interface UpdateSportsVariables {
-  sportUuids: (string | null)[];
+  sportIds: (string | null)[];
 }
 
 /* tslint:disable */
@@ -400,13 +403,13 @@ export interface UpdateSportsVariables {
 
 export interface UpdateTeam_updateTeam_team_sport {
   __typename: "SportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string;
 }
 
 export interface UpdateTeam_updateTeam_team_members {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -419,7 +422,7 @@ export interface UpdateTeam_updateTeam_team_members {
 
 export interface UpdateTeam_updateTeam_team {
   __typename: "TeamType";
-  uuid: any | null;
+  id: string;
   teamName: string;
   coverImg: string | null;
   sport: UpdateTeam_updateTeam_team_sport;
@@ -436,10 +439,10 @@ export interface UpdateTeam {
 }
 
 export interface UpdateTeamVariables {
-  teamUuid: string;
+  teamId: string;
   teamName: string;
-  sportUuid: string;
-  memberUuids?: (string | null)[] | null;
+  sportId: string;
+  memberIds?: (string | null)[] | null;
 }
 
 /* tslint:disable */
@@ -453,7 +456,7 @@ export interface UpdateTeamVariables {
 
 export interface GetMainFeed_getMainFeed_posts_postedBy {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -464,7 +467,10 @@ export interface GetMainFeed_getMainFeed_posts_postedBy {
 
 export interface GetMainFeed_getMainFeed_posts {
   __typename: "PostType";
-  uuid: any | null;
+  /**
+   * The ID of the object.
+   */
+  id: string;
   text: string | null;
   postImg: string | null;
   createdAt: any;
@@ -497,7 +503,7 @@ export interface GetMainFeedVariables {
 
 export interface GetUserFollowers_getUser_user_followers {
   __typename: "FollowType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -510,7 +516,7 @@ export interface GetUserFollowers_getUser_user_followers {
 
 export interface GetUserFollowers_getUser_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   followers: (GetUserFollowers_getUser_user_followers | null)[] | null;
 }
 
@@ -524,7 +530,7 @@ export interface GetUserFollowers {
 }
 
 export interface GetUserFollowersVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -538,7 +544,7 @@ export interface GetUserFollowersVariables {
 
 export interface GetUserFollowing_getUser_user_following {
   __typename: "FollowType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -551,7 +557,7 @@ export interface GetUserFollowing_getUser_user_following {
 
 export interface GetUserFollowing_getUser_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   following: (GetUserFollowing_getUser_user_following | null)[] | null;
 }
 
@@ -565,7 +571,7 @@ export interface GetUserFollowing {
 }
 
 export interface GetUserFollowingVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -579,13 +585,13 @@ export interface GetUserFollowingVariables {
 
 export interface Me_me_user_sports {
   __typename: "UserPlaysSportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string | null;
 }
 
 export interface Me_me_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
@@ -620,7 +626,7 @@ export interface Me {
 
 export interface GetMyFeed_getMyFeed_posts_postedBy {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -631,7 +637,10 @@ export interface GetMyFeed_getMyFeed_posts_postedBy {
 
 export interface GetMyFeed_getMyFeed_posts {
   __typename: "PostType";
-  uuid: any | null;
+  /**
+   * The ID of the object.
+   */
+  id: string;
   text: string | null;
   postImg: string | null;
   createdAt: any;
@@ -659,18 +668,97 @@ export interface GetMyFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetSearchResults
+// ====================================================
+
+export interface GetSearchResults_getSearchUsers_users {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface GetSearchResults_getSearchUsers {
+  __typename: "GetSearchUsersResponse";
+  users: (GetSearchResults_getSearchUsers_users | null)[] | null;
+}
+
+export interface GetSearchResults_getSearchTeams_teams_createdBy {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetSearchResults_getSearchTeams_teams {
+  __typename: "TeamType";
+  id: string;
+  teamName: string;
+  createdBy: GetSearchResults_getSearchTeams_teams_createdBy;
+}
+
+export interface GetSearchResults_getSearchTeams {
+  __typename: "GetSearchTeamsResponse";
+  teams: (GetSearchResults_getSearchTeams_teams | null)[] | null;
+}
+
+export interface GetSearchResults_getSearchEvents_events_owner {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetSearchResults_getSearchEvents_events {
+  __typename: "EventType";
+  id: string;
+  name: string;
+  owner: GetSearchResults_getSearchEvents_events_owner;
+}
+
+export interface GetSearchResults_getSearchEvents {
+  __typename: "GetSearchEventsResponse";
+  events: (GetSearchResults_getSearchEvents_events | null)[] | null;
+}
+
+export interface GetSearchResults {
+  getSearchUsers: GetSearchResults_getSearchUsers;
+  getSearchTeams: GetSearchResults_getSearchTeams;
+  getSearchEvents: GetSearchResults_getSearchEvents;
+}
+
+export interface GetSearchResultsVariables {
+  searchText: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetTeam
 // ====================================================
 
 export interface GetTeam_getTeam_team_sport {
   __typename: "SportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string;
 }
 
 export interface GetTeam_getTeam_team_members {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
@@ -683,7 +771,7 @@ export interface GetTeam_getTeam_team_members {
 
 export interface GetTeam_getTeam_team {
   __typename: "TeamType";
-  uuid: any | null;
+  id: string;
   teamName: string;
   coverImg: string | null;
   isAdmin: boolean | null;
@@ -702,7 +790,7 @@ export interface GetTeam {
 }
 
 export interface GetTeamVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -716,13 +804,13 @@ export interface GetTeamVariables {
 
 export interface GetUserTeams_getUser_user_teamSet_sport {
   __typename: "SportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string;
 }
 
 export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
-  uuid: any | null;
+  id: string;
   teamName: string;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
@@ -730,7 +818,7 @@ export interface GetUserTeams_getUser_user_teamSet {
 
 export interface GetUserTeams_getUser_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   teamSet: GetUserTeams_getUser_user_teamSet[];
 }
 
@@ -744,7 +832,7 @@ export interface GetUserTeams {
 }
 
 export interface GetUserTeamsVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -758,13 +846,13 @@ export interface GetUserTeamsVariables {
 
 export interface GetUser_getUser_user_sports {
   __typename: "UserPlaysSportType";
-  sportUuid: string | null;
+  sportId: string | null;
   name: string | null;
 }
 
 export interface GetUser_getUser_user {
   __typename: "UserType";
-  uuid: any | null;
+  id: string;
   name: string | null;
   firstName: string;
   lastName: string;
@@ -791,7 +879,7 @@ export interface GetUser {
 }
 
 export interface GetUserVariables {
-  uuid: string;
+  id: string;
 }
 
 /* tslint:disable */
@@ -816,7 +904,10 @@ export interface GetUserFeed_getUserFeed_posts_postedBy {
 
 export interface GetUserFeed_getUserFeed_posts {
   __typename: "PostType";
-  uuid: any | null;
+  /**
+   * The ID of the object.
+   */
+  id: string;
   text: string | null;
   postImg: string | null;
   createdAt: any;
@@ -835,7 +926,7 @@ export interface GetUserFeed {
 }
 
 export interface GetUserFeedVariables {
-  uuid: string;
+  id: string;
   pageNum?: number | null;
 }
 
@@ -858,8 +949,8 @@ export interface RateUserSport {
 }
 
 export interface RateUserSportVariables {
-  uuid: string;
-  sportUuid: string;
+  id: string;
+  sportId: string;
   rating: number;
 }
 

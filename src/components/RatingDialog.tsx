@@ -1,7 +1,7 @@
 import React from "react";
 import { AirbnbRating } from "react-native-ratings";
 import { Dialog } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const Button = styled.Button`
   margin-top: 10px;

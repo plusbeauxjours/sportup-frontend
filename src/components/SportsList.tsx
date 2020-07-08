@@ -6,7 +6,7 @@ import { GetAllSports_getAllSports_sports } from "../types/api";
 
 interface IProps {
   sports: GetAllSports_getAllSports_sports;
-  onChipPress?: (sportUuid: string) => void;
+  onChipPress?: (sportId: string) => void;
 }
 
 const SportsList: React.FC<IProps> = ({
@@ -19,13 +19,13 @@ const SportsList: React.FC<IProps> = ({
     data={sports}
     renderItem={({ item }) => (
       <RatingChip
-        sportUuid={item.sportUuid}
+        sportId={item.sportId}
         name={item.name}
         rating={item.rating}
         onChipPress={onChipPress}
       />
     )}
-    keyExtractor={(sport) => sport.sportUuid.toString()}
+    keyExtractor={(sport) => sport.sportId.toString()}
     {...rest}
   />
 );

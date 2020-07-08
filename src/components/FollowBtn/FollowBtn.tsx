@@ -22,12 +22,12 @@ import { GET_USER_FOLLOWERS } from "../../screens/FollowersScreen/FollowersScree
 
 interface IProps {
   isFollowing: boolean;
-  uuid: string;
+  id: string;
 }
 
 const FollowBtn: React.FC<IProps> = ({
   isFollowing: isFollowingProp = false,
-  uuid,
+  id,
 }) => {
   const { me, loading: meLoading } = useMe();
   const [isFollowing, setIsFollowing] = useState<boolean>(isFollowingProp);
@@ -35,7 +35,7 @@ const FollowBtn: React.FC<IProps> = ({
     FollowUser,
     FollowUserVariables
   >(FOLLOW_USER, {
-    variables: { uuid },
+    variables: { id },
     update(cache, { data: { followUser } }) {
       try {
         const { me } = cache.readQuery<Me>({
@@ -59,11 +59,9 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { uuid: me.user.uuid },
+          variables: { id: me.user.id },
         });
-        const following = data.getUser.user.following.find(
-          (i) => i.uuid === uuid
-        );
+        const following = data.getUser.user.following.find((i) => i.id === id);
         if (following) {
           following.isFollowing = true;
         } else {
@@ -72,7 +70,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { uuid: me.user.uuid },
+            variables: { id: me.user.id },
             data,
           });
         }
@@ -85,11 +83,9 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { uuid: me.user.uuid },
+          variables: { id: me.user.id },
         });
-        const followers = data.getUser.user.followers.find(
-          (i) => i.uuid === uuid
-        );
+        const followers = data.getUser.user.followers.find((i) => i.id === id);
         if (followers) {
           followers.isFollowing = true;
         } else {
@@ -98,7 +94,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { uuid: me.user.uuid },
+            variables: { id: me.user.id },
             data,
           });
         }
@@ -111,7 +107,7 @@ const FollowBtn: React.FC<IProps> = ({
     UnfollowUser,
     UnfollowUserVariables
   >(UNFOLLOW_USER, {
-    variables: { uuid },
+    variables: { id },
     update(cache, { data: { unfollowUser } }) {
       try {
         cache.writeQuery({
@@ -132,11 +128,9 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { uuid: me.user.uuid },
+          variables: { id: me.user.id },
         });
-        const following = data.getUser.user.following.find(
-          (i) => i.uuid === uuid
-        );
+        const following = data.getUser.user.following.find((i) => i.id === id);
         if (following) {
           following.isFollowing = false;
         } else {
@@ -145,7 +139,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { uuid: me.user.uuid },
+            variables: { id: me.user.id },
             data,
           });
         }
@@ -158,11 +152,9 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { uuid: me.user.uuid },
+          variables: { id: me.user.id },
         });
-        const followers = data.getUser.user.followers.find(
-          (i) => i.uuid === uuid
-        );
+        const followers = data.getUser.user.followers.find((i) => i.id === id);
         if (followers) {
           followers.isFollowing = false;
         } else {
@@ -171,7 +163,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { uuid: me.user.uuid },
+            variables: { id: me.user.id },
             data,
           });
         }

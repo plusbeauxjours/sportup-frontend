@@ -26,7 +26,7 @@ const FeedList: React.FC<IProps> = ({
     renderItem={({ item }) => (
       <PostCard {...item} disableNavigation={disableNavigation} />
     )}
-    keyExtractor={post => post.uuid.toString()}
+    keyExtractor={(post) => post.id.toString()}
     {...rest}
   />
 );

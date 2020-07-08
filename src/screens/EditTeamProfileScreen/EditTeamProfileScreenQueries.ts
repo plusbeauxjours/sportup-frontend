@@ -2,27 +2,27 @@ import gql from "graphql-tag";
 
 export const UPDATE_TEAM = gql`
   mutation UpdateTeam(
-    $teamUuid: String!
+    $teamId: String!
     $teamName: String!
-    $sportUuid: String!
-    $memberUuids: [String]
+    $sportId: String!
+    $memberIds: [String]
   ) {
     updateTeam(
-      teamUuid: $teamUuid
+      teamId: $teamId
       teamName: $teamName
-      sportUuid: $sportUuid
-      memberUuids: $memberUuids
+      sportId: $sportId
+      memberIds: $memberIds
     ) {
       team {
-        uuid
+        id
         teamName
         coverImg
         sport {
-          sportUuid
+          sportId
           name
         }
         members {
-          uuid
+          id
           name
           username
           userImg

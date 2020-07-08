@@ -12,7 +12,7 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  uuid: string;
+  id: string;
 }
 
 const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
@@ -24,17 +24,17 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
   } = useQuery<GetUserFollowing, GetUserFollowingVariables>(
     GET_USER_FOLLOWING,
     {
-      variables: { uuid: navigation.getParam("uuid") },
+      variables: { id: navigation.getParam("id") },
     }
   );
   return (
     <UserCardList
       users={following}
-      keyExtractor={(item) => item.uuid.toString()}
+      keyExtractor={(item) => item.id.toString()}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <UserCard
-          uuid={item.uuid}
+          id={item.id}
           userImg={item.userImg}
           name={item.name}
           username={item.username}

@@ -3,10 +3,10 @@ import gql from "graphql-tag";
 export const CREATE_TEAM = gql`
   mutation CreateTeam(
     $teamName: String!
-    $sportUuid: String!
-    $memberUuids: [String]
+    $sportId: String!
+    $memberIds: [String]
   ) {
-    createTeam(teamName: $teamName, sportUuid: $sportUuid, memberUuids: $memberUuids) {
+    createTeam(teamName: $teamName, sportId: $sportId, memberIds: $memberIds) {
       user {
         teamsCount
       }
@@ -18,7 +18,7 @@ export const GET_USER_FROM_USERNAME = gql`
   query GetUserFromUsername($username: String!) {
     getUserFromUsername(username: $username) {
       user {
-        uuid
+        id
         name
         username
         userImg
@@ -31,7 +31,7 @@ export const GET_ALL_SPORTS = gql`
   query GetAllSports {
     getAllSports {
       sports {
-        sportUuid
+        sportId
         name
       }
     }

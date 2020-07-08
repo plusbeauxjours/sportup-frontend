@@ -12,7 +12,7 @@ import { ListItem } from "react-native-elements";
 import { ActivityIndicator, Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation } from "react-apollo";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { Me } from "../../types/api";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
@@ -28,7 +28,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
-  const [sportUuid, setSportUuid] = useState<string>(
+  const [sportId, setSportId] = useState<string>(
     "46800336-cf54-40d3-8385-78d7d47d2f3c"
   );
   const [membersList, setMembersList] = useState<any>([]);
@@ -42,8 +42,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   >(CREATE_TEAM, {
     variables: {
       teamName,
-      sportUuid,
-      memberUuids: membersList.map(({ uuid }) => uuid),
+      sportId,
+      memberIds: membersList.map(({ id }) => id),
     },
     update(cache, { data: { createTeam } }) {
       try {
@@ -106,14 +106,14 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
           <PickerContainer>
             <Subheading style={{ fontWeight: "bold" }}>Sport</Subheading>
             <Picker
-              selectedValue={sportUuid}
+              selectedValue={sportId}
               style={{ width: 200 }}
               onValueChange={(value) => {
-                setSportUuid(value);
+                setSportId(value);
               }}
             >
-              {sports.map(({ sportUuid, name }) => (
-                <Picker.Item key={sportUuid} label={name} value={sportUuid} />
+              {sports.map(({ sportId, name }) => (
+                <Picker.Item key={sportId} label={name} value={sportId} />
               ))}
             </Picker>
           </PickerContainer>
@@ -139,9 +139,9 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               </Button>
             )}
           </ApolloConsumer>
-          {membersList.map(({ uuid, userImg, name, username }, index) => (
+          {membersList.map(({ id, userImg, name, username }, index) => (
             <ListItem
-              key={uuid}
+              key={id}
               leftAvatar={{
                 rounded: true,
                 source: {
@@ -157,8 +157,6 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
             />
           ))}
           <Button
-            primary
-            raised
             loading={createTeamLoading}
             disabled={userLoading || !teamName || createTeamLoading}
             onPress={() => {

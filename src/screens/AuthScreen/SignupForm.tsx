@@ -3,14 +3,10 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { Mutation, MutationFunction } from "react-apollo";
 import { AsyncStorage } from "react-native";
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from "react-navigation";
+
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { LOGIN, SIGNUP } from "./AuthScreenQueries";
 import {
   Login,
@@ -20,7 +16,7 @@ import {
 } from "../../types/api";
 
 interface IProps {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation;
 }
 
 const Button = styled.Button`

@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements";
 import { Caption, Subheading, Paragraph } from "react-native-paper";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { timeSince } from "../utils/time";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 
 const TouchableOpacity = styled.TouchableOpacity`
@@ -24,13 +24,14 @@ const UpperHalfContainer = styled.View`
   align-items: center;
 `;
 
-interface IProps extends NavigationStackScreenProps {
+interface IProps {
   id: number;
   unread?: boolean;
   avatar?: string;
   name: string;
   time: string;
   lastMessage: string;
+  navigation;
 }
 
 const ChatCard: React.FC<IProps> = ({

@@ -2,7 +2,7 @@ import React from "react";
 import { Paragraph, Caption, Headline } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { MEDIA_URL } from "../constants/urls";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import UserConnectionsCard from "./UserConnectionsCard";
 import UserInteractionCard from "./UserInteractionCard";
 import SportsList from "./SportsList";
@@ -15,17 +15,17 @@ const UserInfoContainer = styled.View`
 `;
 
 interface IProps {
-  uuid: string;
+  id: string;
   userImg?: string;
   name: string;
   username: string;
   bio?: string;
   sports: any;
   connections?: any;
-  onTeamsPress: (uuid: string) => void;
-  onFollowersPress: (uuid: string) => void;
-  onFollowingPress: (uuid: string) => void;
-  showDialog: (sportUuid: string) => void;
+  onTeamsPress: (id: string) => void;
+  onFollowersPress: (id: string) => void;
+  onFollowingPress: (id: string) => void;
+  showDialog: (sportId: string) => void;
   isFollowing: boolean;
   dialogVisible: boolean;
   rating: number;
@@ -35,7 +35,7 @@ interface IProps {
 }
 
 const UserProfileHeader: React.FC<IProps> = ({
-  uuid,
+  id,
   userImg = null,
   name,
   username,
@@ -68,7 +68,7 @@ const UserProfileHeader: React.FC<IProps> = ({
       <Headline>{name}</Headline>
       <Caption>{`@${username}`}</Caption>
       <Paragraph>{bio}</Paragraph>
-      <UserInteractionCard uuid={uuid} isFollowing={isFollowing} />
+      <UserInteractionCard id={id} isFollowing={isFollowing} />
       <SportsList sports={sports} onChipPress={showDialog} />
       <UserConnectionsCard
         {...connections}

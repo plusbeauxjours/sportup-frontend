@@ -1,20 +1,20 @@
 import gql from "graphql-tag";
 
 export const GET_TEAM = gql`
-  query GetTeam($uuid: String!) {
-    getTeam(uuid: $uuid) {
+  query GetTeam($id: String!) {
+    getTeam(id: $id) {
       team {
-        uuid
+        id
         teamName
         coverImg
         isAdmin
         sport {
-          sportUuid
+          sportId
           name
         }
         rating
         members {
-          uuid
+          id
           name
           username
           userImg

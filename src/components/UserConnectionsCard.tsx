@@ -1,6 +1,6 @@
 import React from "react";
 import { Title, Caption } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -35,7 +35,7 @@ const UserConnectionsCard: React.FC<IProps> = ({
   following = 0,
   onTeamsPress = null,
   onFollowersPress = null,
-  onFollowingPress = null
+  onFollowingPress = null,
 }) => (
   <Container>
     <TouchableOpacity onPress={onTeamsPress}>

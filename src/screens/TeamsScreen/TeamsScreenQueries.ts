@@ -1,16 +1,16 @@
 import gql from "graphql-tag";
 
 export const GET_USER_TEAMS = gql`
-  query GetUserTeams($uuid: String!) {
-    getUser(uuid: $uuid) {
+  query GetUserTeams($id: String!) {
+    getUser(id: $id) {
       user {
-        uuid
+        id
         teamSet {
-          uuid
+          id
           teamName
           coverImg
           sport {
-            sportUuid
+            sportId
             name
           }
         }

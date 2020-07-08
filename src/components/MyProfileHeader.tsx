@@ -2,7 +2,7 @@ import React from "react";
 import { Paragraph, Caption, Headline } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { MEDIA_URL } from "../constants/urls";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import UserConnectionsCard from "./UserConnectionsCard";
 import SportsList from "./SportsList";
 
@@ -19,9 +19,9 @@ interface IProps {
   bio?: string;
   sports: any;
   connections?: any;
-  onTeamsPress: (uuid: string) => void;
-  onFollowersPress: (uuid: string) => void;
-  onFollowingPress: (uuid: string) => void;
+  onTeamsPress: (id: string) => void;
+  onFollowersPress: (id: string) => void;
+  onFollowingPress: (id: string) => void;
 }
 
 const MyProfileHeader: React.FC<IProps> = ({

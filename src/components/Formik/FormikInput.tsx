@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { TextInput, HelperText } from "react-native-paper";
 import { KeyboardTypeOptions } from "react-native";
 
@@ -29,7 +29,7 @@ const FormikInput: React.FC<IProps> = ({
   autoCapitalize,
   ...rest
 }) => {
-  const handleChange = value => {
+  const handleChange = (value) => {
     onChange(name, value);
   };
 
@@ -37,7 +37,7 @@ const FormikInput: React.FC<IProps> = ({
     onTouch(name);
   };
   return (
-    <Container Container>
+    <Container>
       <TextInput
         label={label}
         autoCapitalize={autoCapitalize}

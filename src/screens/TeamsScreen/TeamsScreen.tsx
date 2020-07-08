@@ -10,18 +10,18 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  uuid: string;
+  id: string;
 }
 
 const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
   navigation,
 }) => {
-  const uuid = navigation.getParam("uuid");
+  const id = navigation.getParam("id");
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserTeams,
     GetUserTeamsVariables
   >(GET_USER_TEAMS, {
-    variables: { uuid },
+    variables: { id },
     fetchPolicy: "network-only",
   });
   if (!loading) {
@@ -29,7 +29,7 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
       <FlatList
         data={user.teamSet}
         renderItem={({ item }) => <TeamCard {...item} />}
-        keyExtractor={(team) => team.uuid.toString()}
+        keyExtractor={(team) => team.id.toString()}
       />
     );
   }

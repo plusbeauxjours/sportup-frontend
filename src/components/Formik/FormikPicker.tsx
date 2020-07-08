@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Picker } from "react-native";
 import { Subheading } from "react-native-paper";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const View = styled.View`
   padding: 10px 20px 10px 20px;

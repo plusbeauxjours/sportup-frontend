@@ -8,7 +8,7 @@ import { Me, GetMyFeed, GetMyFeedVariables } from "../../types/api";
 import MyProfileHeader from "../../components/MyProfileHeader";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import styled from "styled-components";
+import styled from "styled-components/native";
 
 const View = styled.View`
   flex-direction: row;
@@ -48,21 +48,21 @@ class MyProfileScreen extends React.Component {
     });
   };
 
-  public onTeamsPress = (uuid) => {
+  public onTeamsPress = (id) => {
     this.props.navigation.push("TeamsScreen", {
-      uuid,
+      id,
     });
   };
 
-  public onFollowersPress = (uuid) => {
+  public onFollowersPress = (id) => {
     this.props.navigation.push("FollowersScreen", {
-      uuid,
+      id,
     });
   };
 
-  public onFollowingPress = (uuid) => {
+  public onFollowingPress = (id) => {
     this.props.navigation.push("FollowingScreen", {
-      uuid,
+      id,
     });
   };
 
@@ -99,13 +99,13 @@ class MyProfileScreen extends React.Component {
                 sports={me?.sports}
                 connections={connections}
                 onTeamsPress={() => {
-                  this.onTeamsPress(me?.uuid);
+                  this.onTeamsPress(me?.id);
                 }}
                 onFollowersPress={() => {
-                  this.onFollowersPress(me?.uuid);
+                  this.onFollowersPress(me?.id);
                 }}
                 onFollowingPress={() => {
-                  this.onFollowingPress(me?.uuid);
+                  this.onFollowingPress(me?.id);
                 }}
               />
             );

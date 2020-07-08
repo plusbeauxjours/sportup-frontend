@@ -18,7 +18,7 @@
             "description": null,
             "args": [
               {
-                "name": "eventUuid",
+                "name": "eventId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -49,7 +49,7 @@
             "description": null,
             "args": [
               {
-                "name": "eventUuid",
+                "name": "eventId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -170,7 +170,7 @@
             "description": null,
             "args": [
               {
-                "name": "uuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -238,7 +238,7 @@
             "description": null,
             "args": [
               {
-                "name": "uuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -265,7 +265,7 @@
             "description": null,
             "args": [
               {
-                "name": "sportUuids",
+                "name": "sportIds",
                 "description": null,
                 "type": {
                   "kind": "LIST",
@@ -343,7 +343,7 @@
             "description": null,
             "args": [
               {
-                "name": "uuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -405,7 +405,7 @@
             "description": null,
             "args": [
               {
-                "name": "sportUuids",
+                "name": "sportIds",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -570,18 +570,6 @@
                 "name": "String",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -853,16 +841,6 @@
         "possibleTypes": null
       },
       {
-        "kind": "SCALAR",
-        "name": "UUID",
-        "description": "Leverages the internal Python implmeentation of UUID (uuid.UUID) to provide native UUID objects\nin fields, resolvers and input.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
         "kind": "OBJECT",
         "name": "SportType",
         "description": null,
@@ -911,18 +889,6 @@
                 "name": "ID",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1040,7 +1006,7 @@
             "deprecationReason": null
           },
           {
-            "name": "sportUuid",
+            "name": "sportId",
             "description": null,
             "args": [],
             "type": {
@@ -1090,18 +1056,6 @@
                 "name": "ID",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1443,18 +1397,6 @@
                 "name": "DateTime",
                 "ofType": null
               }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2144,18 +2086,6 @@
             "deprecationReason": null
           },
           {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "gender",
             "description": "",
             "args": [],
@@ -2601,18 +2531,6 @@
             "deprecationReason": null
           },
           {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "name",
             "description": "",
             "args": [],
@@ -3036,18 +2954,6 @@
             "deprecationReason": null
           },
           {
-            "name": "uuid",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "UUID",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "postedBy",
             "description": "",
             "args": [],
@@ -3306,7 +3212,7 @@
             "deprecationReason": null
           },
           {
-            "name": "sportUuid",
+            "name": "sportId",
             "description": null,
             "args": [],
             "type": {
@@ -3869,7 +3775,7 @@
                 "defaultValue": null
               },
               {
-                "name": "sportUuid",
+                "name": "sportId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -3962,7 +3868,7 @@
                 "defaultValue": null
               },
               {
-                "name": "eventUuid",
+                "name": "eventId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4021,7 +3927,7 @@
             "description": null,
             "args": [
               {
-                "name": "registrationUuid",
+                "name": "registrationId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4052,7 +3958,7 @@
             "description": null,
             "args": [
               {
-                "name": "registrationUuid",
+                "name": "registrationId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4114,7 +4020,7 @@
             "description": null,
             "args": [
               {
-                "name": "postUuid",
+                "name": "postId",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4141,7 +4047,7 @@
             "description": null,
             "args": [
               {
-                "name": "postUuid",
+                "name": "postId",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4168,7 +4074,7 @@
             "description": null,
             "args": [
               {
-                "name": "postUuid",
+                "name": "postId",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4195,7 +4101,7 @@
             "description": null,
             "args": [
               {
-                "name": "memberUuids",
+                "name": "memberIds",
                 "description": null,
                 "type": {
                   "kind": "LIST",
@@ -4209,7 +4115,7 @@
                 "defaultValue": null
               },
               {
-                "name": "sportUuid",
+                "name": "sportId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4254,6 +4160,16 @@
             "description": null,
             "args": [
               {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
                 "name": "isAdmin",
                 "description": null,
                 "type": {
@@ -4264,17 +4180,7 @@
                 "defaultValue": null
               },
               {
-                "name": "teamUuid",
-                "description": null,
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                },
-                "defaultValue": null
-              },
-              {
-                "name": "uuid",
+                "name": "teamId",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4301,7 +4207,7 @@
             "description": null,
             "args": [
               {
-                "name": "teamUuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4311,7 +4217,7 @@
                 "defaultValue": null
               },
               {
-                "name": "uuid",
+                "name": "teamId",
                 "description": null,
                 "type": {
                   "kind": "SCALAR",
@@ -4338,7 +4244,7 @@
             "description": null,
             "args": [
               {
-                "name": "memberUuids",
+                "name": "memberIds",
                 "description": null,
                 "type": {
                   "kind": "LIST",
@@ -4352,7 +4258,21 @@
                 "defaultValue": null
               },
               {
-                "name": "sportUuid",
+                "name": "sportId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "teamId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4367,20 +4287,6 @@
               },
               {
                 "name": "teamName",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              },
-              {
-                "name": "teamUuid",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4425,7 +4331,7 @@
                 "defaultValue": null
               },
               {
-                "name": "teamUuid",
+                "name": "teamId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4543,7 +4449,7 @@
             "description": null,
             "args": [
               {
-                "name": "uuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4574,7 +4480,7 @@
             "description": null,
             "args": [
               {
-                "name": "uuid",
+                "name": "id",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4605,7 +4511,7 @@
             "description": null,
             "args": [
               {
-                "name": "sportUuids",
+                "name": "sportIds",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4640,7 +4546,7 @@
             "description": null,
             "args": [
               {
-                "name": "sportUuids",
+                "name": "sportIds",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4742,7 +4648,7 @@
             "description": null,
             "args": [
               {
-                "name": "sportUuids",
+                "name": "sportIds",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -4777,6 +4683,20 @@
             "description": null,
             "args": [
               {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
                 "name": "rating",
                 "description": null,
                 "type": {
@@ -4791,21 +4711,7 @@
                 "defaultValue": null
               },
               {
-                "name": "sportUuid",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              },
-              {
-                "name": "uuid",
+                "name": "sportId",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",

@@ -3,15 +3,15 @@ import { Chip, Text, Caption } from "react-native-paper";
 import { PRIMARY_COLOR } from "../constants/colors";
 
 interface IProps {
-  sportUuid: string;
+  sportId: string;
   name?: string;
   icon?: string;
   rating?: number;
   selected?: boolean;
-  onChipPress: (sportUuid: string) => void;
+  onChipPress: (sportId: string) => void;
 }
 const RatingChip: React.FC<IProps> = ({
-  sportUuid,
+  sportId,
   name,
   icon,
   rating = null,
@@ -23,7 +23,7 @@ const RatingChip: React.FC<IProps> = ({
       icon={icon && { uri: icon }}
       onPress={() => {
         if (onChipPress !== null) {
-          onChipPress(sportUuid);
+          onChipPress(sportId);
         }
       }}
       style={selected && { backgroundColor: PRIMARY_COLOR }}

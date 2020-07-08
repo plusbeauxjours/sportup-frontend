@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { Avatar } from "react-native-elements";
 import { Card, Subheading, Caption, Paragraph } from "react-native-paper";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
@@ -39,17 +39,17 @@ const TouchableOpacity = styled.TouchableOpacity`
 `;
 
 interface UserInfoAreaProps {
-  uuid?: string;
+  id?: string;
   name?: string;
   username?: string;
   userImg?: string;
   createdAt: string;
   disableNavigation: boolean;
-  navigation?: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation?: NavigationScreenProp<any, any>;
 }
 
 interface IProps {
-  uuid?: string;
+  id?: string;
   postedBy?: GetMyFeed_getMyFeed_posts_postedBy;
   score?: number;
   text?: string;
@@ -61,7 +61,7 @@ interface IProps {
 
 const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
   ({
-    uuid,
+    id,
     name,
     username,
     userImg,
@@ -75,9 +75,9 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
         <TouchableOpacity
           disabled={disableNavigation}
           onPress={() => {
-            me.user.uuid === uuid
+            me.user.id === id
               ? navigation.push("MyProfileScreen")
-              : navigation.push("UserProfileScreen", { uuid });
+              : navigation.push("UserProfileScreen", { id });
           }}
         >
           <Avatar
@@ -100,7 +100,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
 );
 
 const PostCard: React.FC<IProps> = ({
-  uuid,
+  id,
   postedBy,
   score,
   text,
@@ -120,7 +120,7 @@ const PostCard: React.FC<IProps> = ({
     </Card.Content>
     {!!postImg && <Card.Cover source={{ uri: postImg }} />}
     <Card.Actions>
-      <VoteBtn uuid={uuid} interaction={interaction} score={score} />
+      <VoteBtn id={id} interaction={interaction} score={score} />
     </Card.Actions>
   </Card>
 );

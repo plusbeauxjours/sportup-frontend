@@ -12,8 +12,8 @@ import FormikImagePicker from "../../components/Formik/FormikImagePicker";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
 import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
-import styled from "styled-components";
-import { NavigationStackScreenProps } from 'react-navigation-stack';
+import styled from "styled-components/native";
+import { NavigationStackScreenProps } from "react-navigation-stack";
 
 const Button = styled.Button`
   margin-top: 10px;
@@ -80,7 +80,7 @@ export default class EditProfileScreen extends Component<IProps> {
               {
                 me {
                   user {
-                    uuid
+                    id
                     firstName
                     lastName
                     bio
@@ -192,8 +192,6 @@ export default class EditProfileScreen extends Component<IProps> {
                       {(updateUserProfile, { loading }) => (
                         <React.Fragment>
                           <Button
-                            raised
-                            primary
                             disabled={!isValid || loading}
                             loading={loading}
                             onPress={() => {

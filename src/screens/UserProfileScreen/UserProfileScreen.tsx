@@ -18,10 +18,10 @@ import {
 } from "../../types/api";
 
 interface IState {
-  uuid: string;
+  id: string;
   rating: number;
   dialogVisible: boolean;
-  ratingSportWithUuid: string;
+  ratingSportWithId: string;
 }
 
 class UserProfileScreen extends React.Component<any, IState> {
@@ -33,30 +33,30 @@ class UserProfileScreen extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      uuid: this.props.navigation.getParam("uuid"),
+      id: this.props.navigation.getParam("id"),
       rating: 0,
       dialogVisible: false,
-      ratingSportWithUuid: null,
+      ratingSportWithId: null,
     };
   }
 
-  public onTeamsPress = (uuid) => {
-    this.props.navigation.push("TeamsScreen", { uuid });
+  public onTeamsPress = (id) => {
+    this.props.navigation.push("TeamsScreen", { id });
   };
 
-  public onFollowersPress = (uuid) => {
-    this.props.navigation.push("FollowersScreen", { uuid });
+  public onFollowersPress = (id) => {
+    this.props.navigation.push("FollowersScreen", { id });
   };
 
-  public onFollowingPress = (uuid) => {
-    this.props.navigation.push("FollowingScreen", { uuid });
+  public onFollowingPress = (id) => {
+    this.props.navigation.push("FollowingScreen", { id });
   };
 
-  public showDialog = (sportUuid) => {
+  public showDialog = (sportId) => {
     this.setState({
       rating: 0,
       dialogVisible: true,
-      ratingSportWithUuid: sportUuid,
+      ratingSportWithId: sportId,
     });
   };
 
@@ -64,7 +64,7 @@ class UserProfileScreen extends React.Component<any, IState> {
     this.setState({
       rating: 0,
       dialogVisible: false,
-      ratingSportWithUuid: null,
+      ratingSportWithId: null,
     });
   };
 
@@ -73,15 +73,15 @@ class UserProfileScreen extends React.Component<any, IState> {
   };
 
   public onSubmit = () => {
-    const { uuid, ratingSportWithUuid, rating } = this.state;
+    const { id, ratingSportWithId, rating } = this.state;
     this.rateUserSportFn({
-      variables: { uuid, sportUuid: ratingSportWithUuid, rating },
+      variables: { id, sportId: ratingSportWithId, rating },
     });
     this.closeDialog();
   };
 
   public renderUserInfoArea = () => {
-    const { uuid, dialogVisible, rating } = this.state;
+    const { id, dialogVisible, rating } = this.state;
 
     return (
       <Mutation mutation={RATE_USER_SPORT}>
@@ -90,7 +90,7 @@ class UserProfileScreen extends React.Component<any, IState> {
           return (
             <Query<GetUser, GetUserVariables>
               query={GET_USER}
-              variables={{ uuid }}
+              variables={{ id }}
               fetchPolicy="network-only"
             >
               {({
@@ -110,7 +110,7 @@ class UserProfileScreen extends React.Component<any, IState> {
                   };
                   return (
                     <UserProfileHeader
-                      uuid={user.uuid}
+                      id={user.id}
                       userImg={user.userImg}
                       name={`${user.firstName} ${user.lastName}`}
                       username={user.username}
@@ -118,13 +118,13 @@ class UserProfileScreen extends React.Component<any, IState> {
                       sports={user.sports}
                       connections={connections}
                       onTeamsPress={() => {
-                        this.onTeamsPress(user.uuid);
+                        this.onTeamsPress(user.id);
                       }}
                       onFollowersPress={() => {
-                        this.onFollowersPress(user.uuid);
+                        this.onFollowersPress(user.id);
                       }}
                       onFollowingPress={() => {
-                        this.onFollowingPress(user.uuid);
+                        this.onFollowingPress(user.id);
                       }}
                       showDialog={this.showDialog}
                       isFollowing={user.isFollowing}
@@ -149,12 +149,12 @@ class UserProfileScreen extends React.Component<any, IState> {
   render() {
     let pageNum = 1;
 
-    const { uuid } = this.state;
+    const { id } = this.state;
     return (
       <Query<GetUserFeed, GetUserFeedVariables>
         query={GET_USER_FEED}
         variables={{
-          uuid,
+          id,
           pageNum,
         }}
         fetchPolicy="network-only"
@@ -172,7 +172,7 @@ class UserProfileScreen extends React.Component<any, IState> {
               refreshing={networkStatus === 4}
               onRefresh={() => {
                 pageNum = 1;
-                refetch({ uuid, pageNum });
+                refetch({ id, pageNum });
               }}
               ListHeaderComponent={this.renderUserInfoArea}
               ListFooterComponent={() => (

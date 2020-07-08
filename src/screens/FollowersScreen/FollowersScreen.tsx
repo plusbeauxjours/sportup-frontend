@@ -1,5 +1,9 @@
 import React from "react";
-import { GetUserFollowers, GetUserFollowersVariables } from "../../types/api";
+import {
+  GetUserFollowers,
+  GetUserFollowersVariables,
+  GetUserFollowers_getUser_user_followers,
+} from "../../types/api";
 import { useQuery } from "react-apollo";
 import { GET_USER_FOLLOWERS } from "./FollowersScreenQueries";
 import UserCardList from "../../components/UserCardList";
@@ -12,29 +16,28 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  uuid: string;
+  id: string;
 }
 
 const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
   navigation,
 }) => {
-  const {
-    data: { getUser: { user: { followers = null } = {} } = {} } = {},
-    loading,
-  } = useQuery<GetUserFollowers, GetUserFollowersVariables>(
-    GET_USER_FOLLOWERS,
-    {
-      variables: { uuid: navigation.getParam("uuid") },
-    }
-  );
+  const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
+    GetUserFollowers,
+    GetUserFollowersVariables
+  >(GET_USER_FOLLOWERS, {
+    variables: { id: navigation.getParam("id") },
+  });
   return (
     <UserCardList
-      users={followers}
-      keyExtractor={(item) => item.uuid.toString()}
+      users={user?.followers}
+      keyExtractor={(item: GetUserFollowers_getUser_user_followers) =>
+        item.id.toString()
+      }
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <UserCard
-          uuid={item.uuid}
+          id={item.id}
           userImg={item.userImg}
           name={item.name}
           username={item.username}
