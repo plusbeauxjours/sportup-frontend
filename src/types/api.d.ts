@@ -30,7 +30,7 @@ export interface FollowUser {
 }
 
 export interface FollowUserVariables {
-  id: string;
+  userId: string;
 }
 
 /* tslint:disable */
@@ -65,7 +65,7 @@ export interface UnfollowUser {
 }
 
 export interface UnfollowUserVariables {
-  id: string;
+  userId: string;
 }
 
 /* tslint:disable */
@@ -156,9 +156,6 @@ export interface CreatePost_createPost_post_postedBy {
 
 export interface CreatePost_createPost_post {
   __typename: "PostType";
-  /**
-   * The ID of the object.
-   */
   id: string;
   text: string | null;
   postImg: string | null;
@@ -306,30 +303,6 @@ export interface GetUserFromUsernameVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetAllSports
-// ====================================================
-
-export interface GetAllSports_getAllSports_sports {
-  __typename: "SportType";
-  sportId: string | null;
-  name: string;
-}
-
-export interface GetAllSports_getAllSports {
-  __typename: "GetAllSportReponse";
-  sports: (GetAllSports_getAllSports_sports | null)[] | null;
-}
-
-export interface GetAllSports {
-  getAllSports: GetAllSports_getAllSports;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
 // GraphQL mutation operation: UpdateUser
 // ====================================================
 
@@ -467,9 +440,6 @@ export interface GetMainFeed_getMainFeed_posts_postedBy {
 
 export interface GetMainFeed_getMainFeed_posts {
   __typename: "PostType";
-  /**
-   * The ID of the object.
-   */
   id: string;
   text: string | null;
   postImg: string | null;
@@ -490,6 +460,30 @@ export interface GetMainFeed {
 
 export interface GetMainFeedVariables {
   pageNum?: number | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetAllSports
+// ====================================================
+
+export interface GetAllSports_getAllSports_sports {
+  __typename: "SportType";
+  sportId: string | null;
+  name: string;
+}
+
+export interface GetAllSports_getAllSports {
+  __typename: "GetAllSportReponse";
+  sports: (GetAllSports_getAllSports_sports | null)[] | null;
+}
+
+export interface GetAllSports {
+  getAllSports: GetAllSports_getAllSports;
 }
 
 /* tslint:disable */
@@ -530,7 +524,7 @@ export interface GetUserFollowers {
 }
 
 export interface GetUserFollowersVariables {
-  id: string;
+  userId: string;
 }
 
 /* tslint:disable */
@@ -571,7 +565,87 @@ export interface GetUserFollowing {
 }
 
 export interface GetUserFollowingVariables {
+  userId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUsersForGame
+// ====================================================
+
+export interface GetUsersForGame_getUsersForGames_users_sports {
+  __typename: "UserPlaysSportType";
+  sportId: string | null;
+  name: string | null;
+  rating: number | null;
+}
+
+export interface GetUsersForGame_getUsersForGames_users {
+  __typename: "UserType";
   id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+  bio: string;
+  isFollowing: boolean | null;
+  sports: (GetUsersForGame_getUsersForGames_users_sports | null)[] | null;
+}
+
+export interface GetUsersForGame_getUsersForGames {
+  __typename: "GetUsersForGamesResponse";
+  users: (GetUsersForGame_getUsersForGames_users | null)[] | null;
+}
+
+export interface GetUsersForGame {
+  getUsersForGames: GetUsersForGame_getUsersForGames;
+}
+
+export interface GetUsersForGameVariables {
+  sportIds: (string | null)[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetTeamsForGame
+// ====================================================
+
+export interface GetTeamsForGame_getTeamsForGame_teams_sport {
+  __typename: "SportType";
+  sportId: string | null;
+  name: string;
+}
+
+export interface GetTeamsForGame_getTeamsForGame_teams {
+  __typename: "TeamType";
+  id: string;
+  teamName: string;
+  coverImg: string | null;
+  sport: GetTeamsForGame_getTeamsForGame_teams_sport;
+  rating: number | null;
+}
+
+export interface GetTeamsForGame_getTeamsForGame {
+  __typename: "GetTeamsForGameResponse";
+  teams: (GetTeamsForGame_getTeamsForGame_teams | null)[] | null;
+}
+
+export interface GetTeamsForGame {
+  getTeamsForGame: GetTeamsForGame_getTeamsForGame;
+}
+
+export interface GetTeamsForGameVariables {
+  sportIds: (string | null)[];
 }
 
 /* tslint:disable */
@@ -637,9 +711,6 @@ export interface GetMyFeed_getMyFeed_posts_postedBy {
 
 export interface GetMyFeed_getMyFeed_posts {
   __typename: "PostType";
-  /**
-   * The ID of the object.
-   */
   id: string;
   text: string | null;
   postImg: string | null;
@@ -790,7 +861,7 @@ export interface GetTeam {
 }
 
 export interface GetTeamVariables {
-  id: string;
+  teamId: string;
 }
 
 /* tslint:disable */
@@ -832,7 +903,7 @@ export interface GetUserTeams {
 }
 
 export interface GetUserTeamsVariables {
-  id: string;
+  userId: string;
 }
 
 /* tslint:disable */
@@ -879,7 +950,7 @@ export interface GetUser {
 }
 
 export interface GetUserVariables {
-  id: string;
+  userId: string;
 }
 
 /* tslint:disable */
@@ -904,9 +975,6 @@ export interface GetUserFeed_getUserFeed_posts_postedBy {
 
 export interface GetUserFeed_getUserFeed_posts {
   __typename: "PostType";
-  /**
-   * The ID of the object.
-   */
   id: string;
   text: string | null;
   postImg: string | null;
@@ -926,7 +994,7 @@ export interface GetUserFeed {
 }
 
 export interface GetUserFeedVariables {
-  id: string;
+  userId: string;
   pageNum?: number | null;
 }
 
@@ -949,7 +1017,7 @@ export interface RateUserSport {
 }
 
 export interface RateUserSportVariables {
-  id: string;
+  userId: string;
   sportId: string;
   rating: number;
 }

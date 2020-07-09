@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
-import {
-  GET_USER_FROM_USERNAME,
-  GET_ALL_SPORTS,
-  CREATE_TEAM,
-} from "./CreateTeamScreenQueries";
+import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput, Button, Subheading } from "react-native-paper";
 import { ListItem } from "react-native-elements";
@@ -16,6 +12,7 @@ import styled from "styled-components/native";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { Me } from "../../types/api";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
+import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 
 const PickerContainer = styled.View`
   padding: 0 20px;

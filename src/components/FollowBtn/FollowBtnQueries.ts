@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const FOLLOW_USER = gql`
-  mutation FollowUser($id: String!) {
-    followUser(id: $id) {
+  mutation FollowUser($userId: String!) {
+    followUser(userId: $userId) {
       following {
         id
         name
@@ -16,8 +16,8 @@ export const FOLLOW_USER = gql`
 `;
 
 export const UNFOLLOW_USER = gql`
-  mutation UnfollowUser($id: String!) {
-    unfollowUser(id: $id) {
+  mutation UnfollowUser($userId: String!) {
+    unfollowUser(userId: $userId) {
       following {
         id
         name

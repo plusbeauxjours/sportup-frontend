@@ -26,14 +26,3 @@ export const GET_USER_FROM_USERNAME = gql`
     }
   }
 `;
-
-export const GET_ALL_SPORTS = gql`
-  query GetAllSports {
-    getAllSports {
-      sports {
-        sportId
-        name
-      }
-    }
-  }
-`;

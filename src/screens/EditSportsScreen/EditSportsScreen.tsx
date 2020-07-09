@@ -4,7 +4,6 @@ import { ActivityIndicator } from "react-native";
 import { Searchbar, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
-import { GET_ALL_SPORTS } from "../CreateTeamScreen/CreateTeamScreenQueries";
 import { UPDATE_SPORTS } from "./EditSportsScreenQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import RatingChip from "../../components/RatingChip";
@@ -17,6 +16,7 @@ import {
   Me,
 } from "../../types/api";
 import { useMutation } from "react-apollo";
+import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 
 const Container = styled.View``;
 const View = styled.View`

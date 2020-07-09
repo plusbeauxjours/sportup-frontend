@@ -21,6 +21,8 @@ class FeedScreen extends React.Component {
     ),
   });
 
+  public pageNum = 1;
+
   public render() {
     let pageNum = 1;
 
@@ -28,7 +30,6 @@ class FeedScreen extends React.Component {
       <Query<GetMainFeed, GetMainFeedVariables>
         query={GET_MAIN_FEED}
         variables={{ pageNum }}
-        fetchPolicy="cache-and-network"
       >
         {({
           data: { getMainFeed: { posts = null } = {} } = {},

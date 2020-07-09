@@ -68,7 +68,9 @@ const UserCard: React.FC<IProps> = ({
             <Subheading numberOfLines={1}>{name}</Subheading>
             <Caption numberOfLines={1}>{`@${username}`}</Caption>
           </TouchableOpacity>
-          {me.user.id !== id && <FollowBtn isFollowing={isFollowing} id={id} />}
+          {me.user.id !== id && (
+            <FollowBtn isFollowing={isFollowing} userId={id} />
+          )}
         </Header>
         <Paragraph numberOfLines={2} style={{ padding: 5 }}>
           {bio}

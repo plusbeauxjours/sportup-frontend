@@ -10,18 +10,18 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  id: string;
+  userId: string;
 }
 
 const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
   navigation,
 }) => {
-  const id = navigation.getParam("id");
+  const userId = navigation.getParam("userId");
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserTeams,
     GetUserTeamsVariables
   >(GET_USER_TEAMS, {
-    variables: { id },
+    variables: { userId },
     fetchPolicy: "network-only",
   });
   if (!loading) {

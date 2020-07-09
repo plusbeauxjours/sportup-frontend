@@ -11,37 +11,61 @@ import {
 } from "../../types/api";
 import { CREATE_POST } from "./WritePostQueries";
 import { Button } from "react-native-paper";
+import { MY_FEED } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
+import { GetMyFeed } from "../../types/api";
 
 const View = styled.View``;
 
 const WritePost: React.FC = () => {
   const [text, setText] = useState<string>("");
-  const [createPostFn, loading] = useMutation<CreatePost, CreatePostVariables>(
-    CREATE_POST,
-    {
-      variables: { text },
-      update(cache, { data: { createPost } }) {
-        try {
-          const data = cache.readQuery<GetMainFeed, GetMainFeedVariables>({
-            query: GET_MAIN_FEED,
-            variables: { pageNum: 1 },
-          });
-          cache.writeQuery({
-            query: GET_MAIN_FEED,
-            variables: { pageNum: 1 },
-            data: {
-              getMainFeed: {
-                ...data.getMainFeed,
-                posts: [createPost.post, ...data.getMainFeed.posts],
-              },
+  const [createPostFn, { loading: createPostLoading }] = useMutation<
+    CreatePost,
+    CreatePostVariables
+  >(CREATE_POST, {
+    variables: { text },
+    update(cache, { data: { createPost } }) {
+      try {
+        const data = cache.readQuery<GetMyFeed>({
+          query: MY_FEED,
+          variables: { pageNum: 1 },
+        });
+        cache.writeQuery({
+          query: MY_FEED,
+          variables: { pageNum: 1 },
+          data: {
+            getMyFeed: {
+              ...data.getMyFeed,
+              posts: [createPost.post, ...data.getMyFeed.posts],
             },
-          });
-        } catch (e) {
-          console.log(e);
-        }
-      },
-    }
-  );
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+      try {
+        const data = cache.readQuery<GetMainFeed, GetMainFeedVariables>({
+          query: GET_MAIN_FEED,
+          variables: { pageNum: 1 },
+        });
+        cache.writeQuery({
+          query: GET_MAIN_FEED,
+          variables: { pageNum: 1 },
+          data: {
+            getMainFeed: {
+              ...data.getMainFeed,
+              posts: [createPost.post, ...data.getMainFeed.posts],
+            },
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+  const onPress = () => {
+    createPostFn();
+    setText("");
+  };
   return (
     <View>
       <Input
@@ -54,14 +78,12 @@ const WritePost: React.FC = () => {
         multiline
       />
       <Button
-        loading={loading}
+        loading={createPostLoading}
         disabled={text === ""}
-        onPress={() => {
-          createPostFn();
-          setText("");
-        }}
-        title="Post"
-      />
+        onPress={onPress}
+      >
+        Post
+      </Button>
     </View>
   );
 };

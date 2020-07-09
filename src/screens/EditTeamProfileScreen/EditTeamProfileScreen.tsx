@@ -16,12 +16,10 @@ import {
   GetTeamVariables,
 } from "../../types/api";
 import { GetAllSports } from "../../types/api";
-import {
-  GET_ALL_SPORTS,
-  GET_USER_FROM_USERNAME,
-} from "../CreateTeamScreen/CreateTeamScreenQueries";
+import { GET_USER_FROM_USERNAME } from "../CreateTeamScreen/CreateTeamScreenQueries";
 import { GET_TEAM } from "../TeamProfileScreen/TeamProfileScreenQueries";
 import { UPDATE_TEAM } from "./EditTeamProfileScreenQueries";
+import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -61,8 +59,6 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
           query: GET_TEAM,
           variables: { id: navigation.getParam("id") },
         });
-        console.log("getTeam", getTeam);
-        console.log("updateTeam", updateTeam);
         cache.writeQuery({
           query: GET_TEAM,
           variables: { id: navigation.getParam("id") },

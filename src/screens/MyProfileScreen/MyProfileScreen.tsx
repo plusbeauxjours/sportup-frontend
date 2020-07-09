@@ -48,21 +48,21 @@ class MyProfileScreen extends React.Component {
     });
   };
 
-  public onTeamsPress = (id) => {
+  public onTeamsPress = (userId) => {
     this.props.navigation.push("TeamsScreen", {
-      id,
+      userId,
     });
   };
 
-  public onFollowersPress = (id) => {
+  public onFollowersPress = (userId) => {
     this.props.navigation.push("FollowersScreen", {
-      id,
+      userId,
     });
   };
 
-  public onFollowingPress = (id) => {
+  public onFollowingPress = (userId) => {
     this.props.navigation.push("FollowingScreen", {
-      id,
+      userId,
     });
   };
 
@@ -126,7 +126,6 @@ class MyProfileScreen extends React.Component {
         variables={{
           pageNum,
         }}
-        fetchPolicy={"cache-and-network"}
       >
         {({
           data: { getMyFeed: { posts = null } = {} } = {},

@@ -25,7 +25,7 @@ const UpperHalfContainer = styled.View`
 `;
 
 interface IProps {
-  id: number;
+  id: string;
   unread?: boolean;
   avatar?: string;
   name: string;

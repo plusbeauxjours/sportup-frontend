@@ -1,32 +1,20 @@
 import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer, Observer } from "mobx-react/native";
-import { View, StyleSheet, Alert, ActivityIndicator } from "react-native";
-import { Searchbar, Button, ToolbarAction } from "react-native-paper";
+import { View, Alert, ActivityIndicator } from "react-native";
+import { Searchbar, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Query } from "react-apollo";
 import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
+import { GetAllSports } from "../../types/api";
 
 @observer
 export default class FindPlayerScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Find",
-    headerLeft: (
-      <ToolbarAction
-        dark
-        icon="menu"
-        onPress={() => {
-          navigation.toggleDrawer();
-        }}
-      />
-    ),
-  });
-
   @observable
   query = "";
 
-  constructor(props) {
+  public constructor(props) {
     super(props);
 
     this.allSports = [];
@@ -34,7 +22,7 @@ export default class FindPlayerScreen extends Component {
     this.selectedSports = observable([]);
   }
 
-  onFindPlayerPress = () => {
+  public onFindPlayerPress = () => {
     const selectedSportIds = [];
     this.selectedSports.forEach((sport, index) => {
       if (sport === true) {
@@ -46,7 +34,7 @@ export default class FindPlayerScreen extends Component {
     });
   };
 
-  onFindTeamPress = () => {
+  public onFindTeamPress = () => {
     const selectedSportIds = [];
     this.selectedSports.forEach((sport, index) => {
       if (sport === true) {
@@ -59,7 +47,7 @@ export default class FindPlayerScreen extends Component {
   };
 
   @action
-  onChangeText = (query) => {
+  public onChangeText = (query) => {
     this.sports = this.allSports.filter((sport) =>
       sport.name.toLowerCase().includes(query.toLowerCase())
     );
@@ -67,11 +55,11 @@ export default class FindPlayerScreen extends Component {
   };
 
   @action
-  toggleSportChip = (index) => {
+  public toggleSportChip = (index) => {
     this.selectedSports[index] = !this.selectedSports[index];
   };
 
-  render() {
+  public render() {
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -81,19 +69,22 @@ export default class FindPlayerScreen extends Component {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <Query
+        <Query<GetAllSports>
           query={GET_ALL_SPORTS}
           fetchPoliy="network-only"
           onError={(error) => Alert.alert("", error.message)}
         >
-          {({ loading, data }) => {
+          {({
+            data: { getAllSports: { sports = null } = {} } = {},
+            loading,
+          }) => {
             if (loading) {
               return <ActivityIndicator size="large" />;
             }
 
-            this.allSports = data.allSports;
+            this.allSports = sports;
             this.sports = observable(this.allSports);
-            this.selectedSports = observable(data.allSports.map(() => false));
+            this.selectedSports = observable(sports.map(() => false));
 
             return (
               <Observer>
@@ -106,14 +97,16 @@ export default class FindPlayerScreen extends Component {
                     />
                     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                        {this.sports.map(({ sportId, name }) => (
+                        {sports?.map((sport) => (
                           <RatingChip
-                            sportId={sportId}
-                            name={name}
-                            selected={this.selectedSports[sportId - 1]}
-                            key={sportId}
+                            sportId={sport.sportId}
+                            name={sport.name}
+                            selected={
+                              this.selectedSports[parseInt(sport.sportId) - 1]
+                            }
+                            key={sport.sportId}
                             onChipPress={() =>
-                              this.toggleSportChip(sportId - 1)
+                              this.toggleSportChip(parseInt(sport.sportId) - 1)
                             }
                           />
                         ))}

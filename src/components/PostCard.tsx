@@ -3,16 +3,11 @@ import styled from "styled-components/native";
 import { Avatar } from "react-native-elements";
 import { Card, Subheading, Caption, Paragraph } from "react-native-paper";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
-import {
-  NavigationScreenProp,
-  NavigationState,
-  NavigationParams,
-  withNavigation,
-} from "react-navigation";
+import { NavigationScreenProp, withNavigation } from "react-navigation";
 
 import { timeSince } from "../utils/time";
 import { GetMyFeed_getMyFeed_posts_postedBy } from "../types/api";
-import VoteBtn from "./VoteBtn";
+import VoteBtn from "./VoteBtn/VoteBtn";
 import { useMe } from "../context/meContext";
 
 const OuterUserInfoContainerStyle = styled.View`
@@ -77,7 +72,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
           onPress={() => {
             me.user.id === id
               ? navigation.push("MyProfileScreen")
-              : navigation.push("UserProfileScreen", { id });
+              : navigation.push("UserProfileScreen", { userId: id });
           }}
         >
           <Avatar
@@ -120,7 +115,7 @@ const PostCard: React.FC<IProps> = ({
     </Card.Content>
     {!!postImg && <Card.Cover source={{ uri: postImg }} />}
     <Card.Actions>
-      <VoteBtn id={id} interaction={interaction} score={score} />
+      <VoteBtn postId={id} interaction={interaction} score={score} />
     </Card.Actions>
   </Card>
 );

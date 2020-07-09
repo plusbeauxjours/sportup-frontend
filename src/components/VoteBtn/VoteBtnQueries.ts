@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const UPVOTE_POST = gql`
   mutation UpvotePost($postId: String!) {

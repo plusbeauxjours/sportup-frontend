@@ -10,7 +10,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AsyncStorage } from "react-native";
 import FormikInput from "../../components/Formik/FormikInput";
-import styled from "styled-components";
+import styled from "styled-components/native";
 import Divider from "../../components/Divider";
 import { LOGIN } from "./AuthScreenQueries";
 import { Login, LoginVariables } from "../../types/api";
@@ -85,8 +85,6 @@ export default class LoginForm extends React.Component<IProps> {
         {(tokenAuth, { loading, client }) => (
           <React.Fragment>
             <Button
-              raised
-              primary
               disabled={!isValid || loading}
               loading={loading}
               onPress={() => {

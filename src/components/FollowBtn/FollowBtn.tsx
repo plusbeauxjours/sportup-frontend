@@ -22,12 +22,12 @@ import { GET_USER_FOLLOWERS } from "../../screens/FollowersScreen/FollowersScree
 
 interface IProps {
   isFollowing: boolean;
-  id: string;
+  userId: string;
 }
 
 const FollowBtn: React.FC<IProps> = ({
   isFollowing: isFollowingProp = false,
-  id,
+  userId,
 }) => {
   const { me, loading: meLoading } = useMe();
   const [isFollowing, setIsFollowing] = useState<boolean>(isFollowingProp);
@@ -35,7 +35,7 @@ const FollowBtn: React.FC<IProps> = ({
     FollowUser,
     FollowUserVariables
   >(FOLLOW_USER, {
-    variables: { id },
+    variables: { userId },
     update(cache, { data: { followUser } }) {
       try {
         const { me } = cache.readQuery<Me>({
@@ -59,9 +59,11 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { id: me.user.id },
+          variables: { userId: me.user.id },
         });
-        const following = data.getUser.user.following.find((i) => i.id === id);
+        const following = data.getUser.user.following.find(
+          (i) => i.id === userId
+        );
         if (following) {
           following.isFollowing = true;
         } else {
@@ -70,7 +72,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { id: me.user.id },
+            variables: { userId: me.user.id },
             data,
           });
         }
@@ -83,9 +85,11 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { id: me.user.id },
+          variables: { userId: me.user.id },
         });
-        const followers = data.getUser.user.followers.find((i) => i.id === id);
+        const followers = data.getUser.user.followers.find(
+          (i) => i.id === userId
+        );
         if (followers) {
           followers.isFollowing = true;
         } else {
@@ -94,7 +98,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { id: me.user.id },
+            variables: { userId: me.user.id },
             data,
           });
         }
@@ -128,9 +132,11 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { id: me.user.id },
+          variables: { userId: me.user.id },
         });
-        const following = data.getUser.user.following.find((i) => i.id === id);
+        const following = data.getUser.user.following.find(
+          (i) => i.id === userId
+        );
         if (following) {
           following.isFollowing = false;
         } else {
@@ -139,7 +145,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { id: me.user.id },
+            variables: { userId: me.user.id },
             data,
           });
         }
@@ -152,9 +158,11 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { id: me.user.id },
+          variables: { userId: me.user.id },
         });
-        const followers = data.getUser.user.followers.find((i) => i.id === id);
+        const followers = data.getUser.user.followers.find(
+          (i) => i.id === userId
+        );
         if (followers) {
           followers.isFollowing = false;
         } else {
@@ -163,7 +171,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { id: me.user.id },
+            variables: { userId: me.user.id },
             data,
           });
         }

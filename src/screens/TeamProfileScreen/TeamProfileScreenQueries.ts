@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_TEAM = gql`
-  query GetTeam($id: String!) {
-    getTeam(id: $id) {
+  query GetTeam($teamId: String!) {
+    getTeam(teamId: $teamId) {
       team {
         id
         teamName

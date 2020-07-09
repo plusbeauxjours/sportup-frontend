@@ -16,17 +16,18 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  id: string;
+  userId: string;
 }
 
 const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
   navigation,
 }) => {
+  const userId = navigation.getParam("userId");
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserFollowers,
     GetUserFollowersVariables
   >(GET_USER_FOLLOWERS, {
-    variables: { id: navigation.getParam("id") },
+    variables: { userId },
   });
   return (
     <UserCardList

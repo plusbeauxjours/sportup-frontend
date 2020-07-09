@@ -21,7 +21,7 @@ const UserInteractionCard: React.FC<IProps> = ({ id, isFollowing }) => {
       <Button icon="message" onPress={() => console.log("go to chat")}>
         Message
       </Button>
-      <FollowBtn isFollowing={isFollowing} id={id} />
+      <FollowBtn isFollowing={isFollowing} userId={id} />
     </View>
   );
 };

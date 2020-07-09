@@ -27,13 +27,13 @@ const PostVoteContainer = styled.View`
 `;
 
 interface IProps {
-  id: string;
+  postId: string;
   interaction: string;
   score: number;
 }
 
 const VoteBtn: React.FC<IProps> = ({
-  id: postId,
+  postId: postId,
   interaction,
   score: scoreProp,
 }) => {
@@ -44,16 +44,17 @@ const VoteBtn: React.FC<IProps> = ({
     removePostInteractionFn,
     { loading: removePostInteractionLoading },
   ] = useMutation<RemovePostInteraction, RemovePostInteractionVariables>(
-    REMOVE_POST_INTERACTION
+    REMOVE_POST_INTERACTION,
+    { variables: { postId } }
   );
   const [upVotePostFn, { loading: upVotePostLoading }] = useMutation<
     UpvotePost,
     UpvotePostVariables
-  >(UPVOTE_POST);
+  >(UPVOTE_POST, { variables: { postId } });
   const [downVotePostFn, { loading: downVotePostLoading }] = useMutation<
     DownvotePost,
     DownvotePostVariables
-  >(DOWNVOTE_POST);
+  >(DOWNVOTE_POST, { variables: { postId } });
   const toggleUpvote = () => {
     if (downvoteSelected) {
       toggleDownvote();
@@ -93,9 +94,9 @@ const VoteBtn: React.FC<IProps> = ({
         containerStyle={{ paddingHorizontal: 10 }}
         onPress={() => {
           if (upvoteSelected) {
-            removePostInteractionFn({ variables: { postId } });
+            removePostInteractionFn();
           } else {
-            upVotePostFn({ variables: { postId } });
+            upVotePostFn();
           }
           toggleUpvote();
         }}
@@ -107,9 +108,9 @@ const VoteBtn: React.FC<IProps> = ({
         containerStyle={{ paddingHorizontal: 10 }}
         onPress={() => {
           if (downvoteSelected) {
-            removePostInteractionFn({ variables: { postId } });
+            removePostInteractionFn();
           } else {
-            downVotePostFn({ variables: { postId } });
+            downVotePostFn();
           }
           toggleDownvote();
         }}

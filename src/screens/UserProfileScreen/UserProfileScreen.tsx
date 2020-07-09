@@ -16,14 +16,17 @@ import {
   GetUserFeed,
   GetUserFeedVariables,
 } from "../../types/api";
+import { observer } from "mobx-react/native";
+import { observable, action } from "mobx";
 
 interface IState {
-  id: string;
+  userId: string;
   rating: number;
   dialogVisible: boolean;
   ratingSportWithId: string;
 }
 
+@observer
 class UserProfileScreen extends React.Component<any, IState> {
   public onEndReachedCalledDuringMomentum;
   public rateUserSportFn: MutationFunction;
@@ -33,25 +36,29 @@ class UserProfileScreen extends React.Component<any, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.navigation.getParam("id"),
+      userId: this.props.navigation.getParam("userId"),
       rating: 0,
       dialogVisible: false,
       ratingSportWithId: null,
     };
   }
 
-  public onTeamsPress = (id) => {
-    this.props.navigation.push("TeamsScreen", { id });
+  @observable
+  dialogVisible = false;
+
+  public onTeamsPress = (userId) => {
+    this.props.navigation.push("TeamsScreen", { userId });
   };
 
-  public onFollowersPress = (id) => {
-    this.props.navigation.push("FollowersScreen", { id });
+  public onFollowersPress = (userId) => {
+    this.props.navigation.push("FollowersScreen", { userId });
   };
 
-  public onFollowingPress = (id) => {
-    this.props.navigation.push("FollowingScreen", { id });
+  public onFollowingPress = (userId) => {
+    this.props.navigation.push("FollowingScreen", { userId });
   };
 
+  @action
   public showDialog = (sportId) => {
     this.setState({
       rating: 0,
@@ -60,6 +67,7 @@ class UserProfileScreen extends React.Component<any, IState> {
     });
   };
 
+  @action
   public closeDialog = () => {
     this.setState({
       rating: 0,
@@ -73,16 +81,15 @@ class UserProfileScreen extends React.Component<any, IState> {
   };
 
   public onSubmit = () => {
-    const { id, ratingSportWithId, rating } = this.state;
+    const { userId, ratingSportWithId, rating } = this.state;
     this.rateUserSportFn({
-      variables: { id, sportId: ratingSportWithId, rating },
+      variables: { userId, sportUuid: ratingSportWithId, rating },
     });
     this.closeDialog();
   };
 
   public renderUserInfoArea = () => {
-    const { id, dialogVisible, rating } = this.state;
-
+    const { userId, dialogVisible, rating } = this.state;
     return (
       <Mutation mutation={RATE_USER_SPORT}>
         {(rateUserSportFn, { loading: rateUserSportLoading }) => {
@@ -90,7 +97,7 @@ class UserProfileScreen extends React.Component<any, IState> {
           return (
             <Query<GetUser, GetUserVariables>
               query={GET_USER}
-              variables={{ id }}
+              variables={{ userId }}
               fetchPolicy="network-only"
             >
               {({
@@ -148,13 +155,12 @@ class UserProfileScreen extends React.Component<any, IState> {
 
   render() {
     let pageNum = 1;
-
-    const { id } = this.state;
+    const { userId } = this.state;
     return (
       <Query<GetUserFeed, GetUserFeedVariables>
         query={GET_USER_FEED}
         variables={{
-          id,
+          userId,
           pageNum,
         }}
         fetchPolicy="network-only"
@@ -172,7 +178,7 @@ class UserProfileScreen extends React.Component<any, IState> {
               refreshing={networkStatus === 4}
               onRefresh={() => {
                 pageNum = 1;
-                refetch({ id, pageNum });
+                refetch({ userId, pageNum });
               }}
               ListHeaderComponent={this.renderUserInfoArea}
               ListFooterComponent={() => (

@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_USER = gql`
-  query GetUser($id: String!) {
-    getUser(id: $id) {
+  query GetUser($userId: String!) {
+    getUser(userId: $userId) {
       user {
         id
         name
@@ -25,8 +25,8 @@ export const GET_USER = gql`
 `;
 
 export const GET_USER_FEED = gql`
-  query GetUserFeed($id: String!, $pageNum: Int) {
-    getUserFeed(id: $id, pageNum: $pageNum) {
+  query GetUserFeed($userId: String!, $pageNum: Int) {
+    getUserFeed(userId: $userId, pageNum: $pageNum) {
       posts {
         id
         text
@@ -46,8 +46,8 @@ export const GET_USER_FEED = gql`
 `;
 
 export const RATE_USER_SPORT = gql`
-  mutation RateUserSport($id: String!, $sportId: String!, $rating: Int!) {
-    rateUserSport(id: $id, sportId: $sportId, rating: $rating) {
+  mutation RateUserSport($userId: String!, $sportId: String!, $rating: Int!) {
+    rateUserSport(userId: $userId, sportId: $sportId, rating: $rating) {
       ok
     }
   }

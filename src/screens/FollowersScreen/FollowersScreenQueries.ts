@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_USER_FOLLOWERS = gql`
-  query GetUserFollowers($id: String!) {
-    getUser(id: $id) {
+  query GetUserFollowers($userId: String!) {
+    getUser(userId: $userId) {
       user {
         id
         followers {

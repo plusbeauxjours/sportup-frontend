@@ -20,15 +20,26 @@ const FeedList: React.FC<IProps> = ({
   disableNavigation = false,
   ...rest
 }) => (
-  <FlatList
-    data={posts}
-    refreshing={refreshing}
-    renderItem={({ item }) => (
-      <PostCard {...item} disableNavigation={disableNavigation} />
-    )}
-    keyExtractor={(post) => post.id.toString()}
-    {...rest}
-  />
+  <>
+    <FlatList
+      data={posts}
+      refreshing={refreshing}
+      renderItem={({ item }: any) => (
+        <PostCard
+          id={item.id}
+          postedBy={item.postedBy}
+          score={item.score}
+          text={item.text}
+          interaction={item.interaction}
+          postImg={item.postImg}
+          createdAt={item.createdAt}
+          disableNavigation={disableNavigation}
+        />
+      )}
+      keyExtractor={(post: any) => post.id.toString()}
+      {...rest}
+    />
+  </>
 );
 
 export default FeedList;
