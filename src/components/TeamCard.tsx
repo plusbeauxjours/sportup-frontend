@@ -15,7 +15,7 @@ const Container = styled.View`
   justify-content: space-between;
 `;
 
-interface IProps {
+interface IProps extends NavigationStackScreenProps {
   id: string;
   teamName: string;
   coverImg?: string;
@@ -67,7 +67,7 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
         <Container>
           <TouchableOpacity
             onPress={() => {
-              navigation.push("TeamProfileScreen", { id });
+              navigation.push("TeamProfileScreen", { teamId: id });
             }}
           >
             <Title numberOfLines={1} style={{ fontWeight: "bold" }}>

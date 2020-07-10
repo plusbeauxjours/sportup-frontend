@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import { SectionList, Alert } from "react-native";
 import { observable, action } from "mobx";
 import { Observer } from "mobx-react/native";
-import {
-  Searchbar,
-  ListItem,
-  Caption,
-  Divider,
-  ToolbarAction,
-} from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { ApolloConsumer } from "react-apollo";
+import { Searchbar, ListItem, Caption, Divider } from "react-native-paper";
+
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GET_SEARCH_RESULTS } from "./SearchQueries";
 
@@ -18,8 +14,7 @@ export default class SearchScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: "Search",
     headerLeft: (
-      <ToolbarAction
-        dark
+      <Appbar.Action
         icon="menu"
         onPress={() => {
           navigation.toggleDrawer();
