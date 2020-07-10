@@ -12,7 +12,7 @@ import {
 } from "react-navigation-stack";
 
 interface IProps extends NavigationStackScreenProps {
-  id: string;
+  userId: string;
 }
 
 const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
@@ -23,9 +23,7 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
     loading,
   } = useQuery<GetUserFollowing, GetUserFollowingVariables>(
     GET_USER_FOLLOWING,
-    {
-      variables: { id: navigation.getParam("id") },
-    }
+    { variables: { userId: navigation.getParam("userId") } }
   );
   return (
     <UserCardList

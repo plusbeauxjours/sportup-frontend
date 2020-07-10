@@ -62,8 +62,8 @@ export default class SearchScreen extends Component {
         <Avatar
           rounded
           source={
-            item.profile.profileImg
-              ? { uri: MEDIA_URL + item.profile.profileImg }
+            item.userImg
+              ? { uri: MEDIA_URL + item.userImg }
               : NO_AVATAR_THUMBNAIL
           }
         />

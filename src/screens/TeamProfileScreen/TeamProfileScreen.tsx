@@ -31,7 +31,7 @@ const Image = styled.Image`
   height: 150px;
 `;
 
-interface IProps extends NavigationStackScreenProps {
+interface IProps {
   coverImg?: string;
   teamName: string;
   sport: GetTeam_getTeam_team_sport;
@@ -124,8 +124,6 @@ export default class TeamProfileScreen extends React.Component<IProps> {
           error,
           client,
         }) => {
-          console.log(team);
-          console.log(loading);
           if (loading) {
             return <ActivityIndicator size="large" />;
           }
@@ -134,7 +132,6 @@ export default class TeamProfileScreen extends React.Component<IProps> {
             Alert.alert("", error.message);
             return null;
           }
-
           return (
             <FlatList
               data={team.members}
@@ -158,16 +155,16 @@ export default class TeamProfileScreen extends React.Component<IProps> {
                   dialogVisible={this.dialogVisible}
                   rating={this.rating}
                   onStarRatingPress={this.onStarRatingPress}
-                  onSubmitRating={this.onSubmitRating}
                   closeDialog={this.closeDialog}
                   showDialog={this.showDialog}
+                  onSubmitRating={this.onSubmitRating}
                 />
               )}
-              ListFooterComponent={() =>
+              ListFooterComponent={
                 team.isAdmin && (
                   <Button
                     onPress={() => {
-                      this.props.navigation.navigate("EditTeam", {
+                      this.props.navigation.navigate("EditTeamProfileScreen", {
                         teamId: team.id,
                         client,
                       });

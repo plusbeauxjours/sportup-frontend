@@ -32,7 +32,10 @@ interface IState {
   membersList: any;
 }
 
-export default class EditTeamScreen extends React.Component<IProps, IState> {
+export default class EditTeamProfileScreen extends React.Component<
+  IProps,
+  IState
+> {
   static navigationOptions = {
     title: "Edit Team",
   };
@@ -50,19 +53,20 @@ export default class EditTeamScreen extends React.Component<IProps, IState> {
 
   public componentDidMount = () => {
     const client = this.props.navigation.getParam("client");
-    const { team } = client.readQuery({
+    const data = client.readQuery({
       query: GET_TEAM,
-      variables: { id: this.props.navigation.getParam("teamId") },
+      variables: { teamId: this.props.navigation.getParam("teamId") },
     });
+    console.log("team", data);
     this.setState((prev) => ({
       ...prev,
-      teamName: team.name,
-      sportId: team.sport.sportId,
-      membersList: team.members.map((member) => ({
+      teamName: data?.getTeam?.team?.teamName,
+      sportId: data?.getTeam?.team?.sport?.sportId,
+      membersList: data?.getTeam?.team?.members?.map((member) => ({
         id: member.id,
         name: member.name,
         username: member.username,
-        profile: { profileImg: member.profile.profileImg },
+        userImg: member.userImg,
       })),
     }));
   };
@@ -88,23 +92,38 @@ export default class EditTeamScreen extends React.Component<IProps, IState> {
     this.setState((prev) => ({ ...prev, userLoading: false }));
   };
 
-  public updateCache = (cache, { data: { updateTeam } }) => {
-    const query = cache.readQuery({
-      query: GET_TEAM,
-      variables: { id: this.props.navigation.getParam("teamId") },
-    });
-    cache.writeQuery({
-      query: GET_TEAM,
+  public updateCache = (
+    cache,
+    {
       data: {
-        team: {
-          ...query.team,
-          name: updateTeam.team.name,
-          coverImg: updateTeam.team.coverImg,
-          sport: updateTeam.team.sport,
-          members: updateTeam.team.members,
-        },
+        updateTeam: { team },
       },
-    });
+    }
+  ) => {
+    try {
+      const data = cache.readQuery({
+        query: GET_TEAM,
+        variables: { teamId: this.props.navigation.getParam("teamId") },
+      });
+      console.log(data);
+      if (data) {
+        cache.writeQuery({
+          query: GET_TEAM,
+          data: {
+            ...data,
+            team: {
+              ...data.team,
+              name: team.name,
+              coverImg: team.coverImg,
+              sport: team.sport,
+              members: team.members,
+            },
+          },
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   public removeMember = (index) => {
@@ -129,11 +148,13 @@ export default class EditTeamScreen extends React.Component<IProps, IState> {
                   Alert.alert("", error.message);
                 }}
               >
-                {({ loading, data }) => {
+                {({
+                  loading,
+                  data: { getAllSports: { sports = null } = {} } = {},
+                }) => {
                   if (loading) {
                     return <ActivityIndicator size="large" />;
                   }
-
                   return (
                     <React.Fragment>
                       <TextInput
@@ -158,7 +179,7 @@ export default class EditTeamScreen extends React.Component<IProps, IState> {
                             }));
                           }}
                         >
-                          {data.allSports.map(({ sportId, name }) => (
+                          {sports.map(({ sportId, name }) => (
                             <Picker.Item
                               key={sportId}
                               label={name}
@@ -194,29 +215,27 @@ export default class EditTeamScreen extends React.Component<IProps, IState> {
                       >
                         Add
                       </Button>
-                      <List>
-                        {this.state.membersList.map(
-                          ({ id, userImg, name, username }, index) => (
-                            <ListItem
-                              key={id}
-                              leftAvatar={{
-                                rounded: true,
-                                source: {
-                                  uri: userImg
-                                    ? MEDIA_URL + userImg
-                                    : NO_AVATAR_THUMBNAIL,
-                                },
-                              }}
-                              title={name}
-                              subtitle={username}
-                              rightIcon={{ name: "cancel" }}
-                              onPress={() => {
-                                this.removeMember(index);
-                              }}
-                            />
-                          )
-                        )}
-                      </List>
+                      {this.state.membersList.map(
+                        ({ id, userImg, name, username }, index) => (
+                          <ListItem
+                            key={id}
+                            leftAvatar={{
+                              rounded: true,
+                              source: {
+                                uri: userImg
+                                  ? MEDIA_URL + userImg
+                                  : NO_AVATAR_THUMBNAIL,
+                              },
+                            }}
+                            title={name}
+                            subtitle={username}
+                            rightIcon={{ name: "cancel" }}
+                            onPress={() => {
+                              this.removeMember(index);
+                            }}
+                          />
+                        )
+                      )}
                       <Mutation<UpdateTeam, UpdateTeamVariables>
                         mutation={UPDATE_TEAM}
                         variables={{
