@@ -29,7 +29,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 `;
 
 interface IProps {
-  id?: string;
+  userId?: string;
   userImg?: string;
   name: string;
   username: string;
@@ -39,7 +39,7 @@ interface IProps {
 }
 
 const UserCard: React.FC<IProps> = ({
-  id,
+  userId,
   userImg = null,
   name,
   username,
@@ -48,6 +48,11 @@ const UserCard: React.FC<IProps> = ({
   navigation,
 }) => {
   const { me, loading: meLoading } = useMe();
+  const onPress = () => {
+    me?.user?.id === userId
+      ? navigation.navigate("MyProfileScreen")
+      : navigation.navigate("UserProfileScreen", { userId });
+  };
   return (
     <OuterUserInfoContainer>
       <Avatar
@@ -56,20 +61,16 @@ const UserCard: React.FC<IProps> = ({
         source={{
           uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
         }}
-        onPress={() => {
-          me.user.id === id
-            ? navigation.navigate("MyProfileScreen")
-            : navigation.navigate("UserProfileScreen", { id });
-        }}
+        onPress={onPress}
       />
       <InnerUserInfoContainer>
         <Header>
-          <TouchableOpacity onPress={() => navigation.push("MyProfileScreen")}>
+          <TouchableOpacity onPress={onPress}>
             <Subheading numberOfLines={1}>{name}</Subheading>
             <Caption numberOfLines={1}>{`@${username}`}</Caption>
           </TouchableOpacity>
-          {me.user.id !== id && (
-            <FollowBtn isFollowing={isFollowing} userId={id} />
+          {me?.user?.id !== userId && (
+            <FollowBtn isFollowing={isFollowing} userId={userId} />
           )}
         </Header>
         <Paragraph numberOfLines={2} style={{ padding: 5 }}>

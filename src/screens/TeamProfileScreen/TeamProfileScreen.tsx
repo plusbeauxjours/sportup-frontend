@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { MEDIA_URL } from "../../constants/urls";
+import { useQuery } from "react-apollo";
+import { ActivityIndicator, FlatList } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
-import RatingChip from "../../components/RatingChip";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import {
   GetTeam_getTeam_team_sport,
   GetTeam,
   GetTeamVariables,
 } from "../../types/api";
-import { useQuery } from "react-apollo";
+import { MEDIA_URL } from "../../constants/urls";
+import RatingChip from "../../components/RatingChip";
 import { GET_TEAM } from "./TeamProfileScreenQueries";
-import { ActivityIndicator, FlatList } from "react-native";
 import UserCard from "../../components/UserCard";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 import RatingDialog from "../../components/RatingDialog";
 
 const View = styled.View`
@@ -74,7 +75,7 @@ const TeamInfo: React.FC<IProps> = ({
 };
 
 const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const id = navigation.getParam("id");
+  const teamId = navigation.getParam("id");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const {
@@ -82,7 +83,7 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
     loading,
     client,
   } = useQuery<GetTeam, GetTeamVariables>(GET_TEAM, {
-    variables: { id },
+    variables: { teamId },
   });
   const onStarRatingPress = (rating) => {
     setRating(rating);
@@ -106,7 +107,7 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <UserCard
-            id={item.id}
+            userId={item.id}
             name={item.name}
             username={item.username}
             userImg={item.userImg}
@@ -133,7 +134,7 @@ const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
             <Button
               onPress={() => {
                 navigation.navigate("EditTeamProfileScreen", {
-                  id,
+                  teamId,
                   client,
                 });
               }}

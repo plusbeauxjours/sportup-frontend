@@ -8,9 +8,17 @@ import { Query } from "react-apollo";
 import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import { GetAllSports } from "../../types/api";
+import { NavigationScreenProp } from "react-navigation";
+
+interface IProps {
+  navigation: NavigationScreenProp<any, any>;
+}
 
 @observer
-export default class FindPlayerScreen extends Component {
+export default class FindPlayerScreen extends Component<IProps> {
+  public allSports;
+  public sports;
+  public selectedSports;
   @observable
   query = "";
 
@@ -29,7 +37,7 @@ export default class FindPlayerScreen extends Component {
         selectedSportIds.push(index + 1);
       }
     });
-    this.props.navigation.push("FoundPlayers", {
+    this.props.navigation.navigate("FoundPlayersListScreen", {
       selectedSportIds,
     });
   };
@@ -41,7 +49,7 @@ export default class FindPlayerScreen extends Component {
         selectedSportIds.push(index + 1);
       }
     });
-    this.props.navigation.push("FoundTeams", {
+    this.props.navigation.navigate("FoundTeamsListScreen", {
       selectedSportIds,
     });
   };

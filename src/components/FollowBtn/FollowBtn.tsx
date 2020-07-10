@@ -19,6 +19,7 @@ import {
 import { GET_USER_FOLLOWING } from "../../screens/FollowingScreen/FollowingScreenQueries";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./FollowBtnQueries";
 import { GET_USER_FOLLOWERS } from "../../screens/FollowersScreen/FollowersScreenQueries";
+import { action } from "mobx";
 
 interface IProps {
   isFollowing: boolean;
@@ -111,7 +112,7 @@ const FollowBtn: React.FC<IProps> = ({
     UnfollowUser,
     UnfollowUserVariables
   >(UNFOLLOW_USER, {
-    variables: { id },
+    variables: { userId },
     update(cache, { data: { unfollowUser } }) {
       try {
         cache.writeQuery({
@@ -145,7 +146,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { userId: me.user.id },
+            variables: { userId: me.usewr.id },
             data,
           });
         }

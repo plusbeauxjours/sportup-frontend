@@ -17,7 +17,7 @@ interface IProps {
 const FeedList: React.FC<IProps> = ({
   posts,
   refreshing,
-  disableNavigation = false,
+  disableNavigation,
   ...rest
 }) => (
   <>

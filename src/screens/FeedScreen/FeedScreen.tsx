@@ -78,7 +78,7 @@ class FeedScreen extends React.Component {
               onMomentumScrollBegin={() => {
                 this.onEndReachedCalledDuringMomentum = false;
               }}
-              disableNavigation
+              disableNavigation={false}
             />
           );
         }}

@@ -27,7 +27,7 @@ const PlayerCard: React.FC<IProps> = ({
   return (
     <Card>
       <UserCard
-        id={id}
+        userId={id}
         userImg={userImg}
         name={name}
         username={username}

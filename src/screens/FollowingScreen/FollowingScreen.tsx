@@ -34,7 +34,7 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <UserCard
-          id={item.id}
+          userId={item.id}
           userImg={item.userImg}
           name={item.name}
           username={item.username}

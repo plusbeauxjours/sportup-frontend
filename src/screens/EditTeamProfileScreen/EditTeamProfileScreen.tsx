@@ -31,7 +31,7 @@ const PickerContainer = styled.View`
 const EditTeamProfileScreen: NavigationStackScreenComponent = ({
   navigation,
 }) => {
-  const [teamId, setTeamId] = useState<string>(navigation.getParam("id"));
+  const [teamId, setTeamId] = useState<string>(navigation.getParam("teamId"));
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
@@ -57,11 +57,11 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
       try {
         const { getTeam } = cache.readQuery<GetTeam, GetTeamVariables>({
           query: GET_TEAM,
-          variables: { id: navigation.getParam("id") },
+          variables: { teamId },
         });
         cache.writeQuery({
           query: GET_TEAM,
-          variables: { id: navigation.getParam("id") },
+          variables: { teamId },
           data: {
             getTeam: {
               ...getTeam,

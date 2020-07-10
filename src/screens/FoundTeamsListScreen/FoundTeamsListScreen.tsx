@@ -7,9 +7,14 @@ import TeamCard from "../../components/TeamCard";
 import { getTeams } from "../../api/find";
 import { Query } from "react-apollo";
 import { GET_TEAMS_FOR_GAME } from "./FoundTeamsListScreenQueries";
+import { NavigationScreenProp } from "react-navigation";
+
+interface IProps {
+  navigation: NavigationScreenProp<any, any>;
+}
 
 @observer
-export default class FoundTeamsList extends Component {
+export default class FoundTeamsList extends Component<IProps> {
   static navigationOptions = {
     title: "Teams near you",
   };
@@ -78,13 +83,15 @@ export default class FoundTeamsList extends Component {
         }}
         fetchPolicy="network-only"
       >
-        {({ data, loading }) => {
-          const teams = data && !loading ? data.teamsForGame : [];
+        {({
+          data: { getTeamsForGame: { teams = null } = {} } = {},
+          loading,
+        }) => {
           return (
             <FlatList
               data={teams}
               renderItem={({ item }) => <TeamCard enableMessage {...item} />}
-              keyExtractor={(player) => player.id.toString()}
+              keyExtractor={(player: any) => player.id.toString()}
               ListEmptyComponent={() =>
                 !loading ? (
                   <View
@@ -97,7 +104,7 @@ export default class FoundTeamsList extends Component {
                     <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
                   </View>
                 ) : (
-                  <ActivityIndicator size="large" marginVertical={20} />
+                  <ActivityIndicator size="large" />
                 )
               }
             />

@@ -212,7 +212,7 @@ class UserProfileScreen extends React.Component<any, IState> {
               onMomentumScrollBegin={() => {
                 this.onEndReachedCalledDuringMomentum = false;
               }}
-              disableNavigation
+              disableNavigation={true}
             />
           );
         }}

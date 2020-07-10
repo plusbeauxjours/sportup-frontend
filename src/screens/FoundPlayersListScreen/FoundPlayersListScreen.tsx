@@ -6,12 +6,22 @@ import { Headline } from "react-native-paper";
 import { Query } from "react-apollo";
 import { GET_USERS_FOR_GAME } from "./FoundPlayersListScreenQueries";
 import PlayerCard from "../../components/PlayerCard";
+import { NavigationScreenProp } from "react-navigation";
+
+interface IProps {
+  navigation: NavigationScreenProp<any, any>;
+}
 
 @observer
-export default class FoundPlayersListScreen extends Component {
+export default class FoundPlayersListScreen extends Component<IProps> {
   static navigationOptions = {
     title: "Players near you",
   };
+
+  public constructor(props) {
+    super(props);
+    this.renderEmptyComponent = this.renderEmptyComponent.bind(this);
+  }
 
   public renderEmptyComponent = () => (
     <Observer>
@@ -45,12 +55,13 @@ export default class FoundPlayersListScreen extends Component {
         }}
         fetchPolicy="network-only"
       >
-        {({ data, loading }) => {
-          const players = data && !loading ? data.usersForGames : [];
-
+        {({
+          data: { getUsersForGames: { users = null } = {} } = {},
+          loading,
+        }) => {
           return (
             <FlatList
-              data={players}
+              data={users}
               renderItem={({ item }: any) => {
                 return (
                   <PlayerCard
@@ -63,7 +74,7 @@ export default class FoundPlayersListScreen extends Component {
                   />
                 );
               }}
-              keyExtractor={(player) => player.id.toString()}
+              keyExtractor={(player: any) => player.id.toString()}
               ListEmptyComponent={() =>
                 !loading ? (
                   <View
