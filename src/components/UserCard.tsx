@@ -33,7 +33,6 @@ interface IProps {
   userImg?: string;
   name: string;
   username: string;
-  bio?: string;
   isFollowing?: boolean;
   navigation;
 }
@@ -43,7 +42,6 @@ const UserCard: React.FC<IProps> = ({
   userImg = null,
   name,
   username,
-  bio = "",
   isFollowing,
   navigation,
 }) => {
@@ -73,9 +71,6 @@ const UserCard: React.FC<IProps> = ({
             <FollowBtn isFollowing={isFollowing} userId={userId} />
           )}
         </Header>
-        <Paragraph numberOfLines={2} style={{ padding: 5 }}>
-          {bio}
-        </Paragraph>
       </InnerUserInfoContainer>
     </OuterUserInfoContainer>
   );

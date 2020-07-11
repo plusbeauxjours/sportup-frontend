@@ -25,9 +25,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [teamName, setTeamName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [userLoading, setUserLoading] = useState<boolean>(false);
-  const [sportId, setSportId] = useState<string>(
-    "46800336-cf54-40d3-8385-78d7d47d2f3c"
-  );
+  const [sportId, setSportId] = useState<string>("1");
   const [membersList, setMembersList] = useState<any>([]);
   const {
     data: { getAllSports: { sports = null } = {} } = {},
@@ -52,7 +50,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
           data: {
             me: {
               ...me,
-              user: { ...me.user, teamsCount: createTeam.user.teamsCount },
+              user: { ...me.user, teamsCount: me.user.teamsCount + 1 },
             },
           },
         });
@@ -109,8 +107,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                 setSportId(value);
               }}
             >
-              {sports.map(({ sportId, name }) => (
-                <Picker.Item key={sportId} label={name} value={sportId} />
+              {sports.map(({ id, name }) => (
+                <Picker.Item key={id} label={name} value={id} />
               ))}
             </Picker>
           </PickerContainer>
@@ -170,7 +168,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   }
 };
 CreateTeamScreen.navigationOptions = {
-  title: "Craete Team",
+  title: "Create Team",
 };
 
 export default CreateTeamScreen;

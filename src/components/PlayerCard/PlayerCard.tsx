@@ -1,17 +1,18 @@
 import React from "react";
-import UserCard from "./UserCard";
-import PlayerCardBottomSection from "./PlayerCardBottomSection";
+import { useQuery } from "react-apollo";
 import { Card } from "react-native-elements";
+import UserCard from "../UserCard";
+import PlayerCardBottomSection from "../PlayerCardBottomSection";
+import { GET_TEAMS_FOR_PLAYER } from "./PlayerCardQueries";
 
 interface IProps {
   id: string;
   userImg: string;
   name: string;
   username: string;
-  bio: string;
   isFollowing: boolean;
   sports?: any;
-  team?: any;
+  sportIds?: [];
 }
 
 const PlayerCard: React.FC<IProps> = ({
@@ -19,11 +20,17 @@ const PlayerCard: React.FC<IProps> = ({
   userImg,
   name,
   username,
-  bio,
   isFollowing,
   sports,
-  team,
+  sportIds,
 }) => {
+  const { data: { getTeamsForPlayer: { teams = null } = {} } = {} } = useQuery(
+    GET_TEAMS_FOR_PLAYER,
+    {
+      variables: { sportIds, userId: id },
+      fetchPolicy: "network-only",
+    }
+  );
   return (
     <Card>
       <UserCard
@@ -31,10 +38,9 @@ const PlayerCard: React.FC<IProps> = ({
         userImg={userImg}
         name={name}
         username={username}
-        bio={bio}
         isFollowing={isFollowing}
       />
-      <PlayerCardBottomSection id={id} sports={sports} team={team} />
+      <PlayerCardBottomSection id={id} sports={sports} teams={teams} />
     </Card>
   );
 };

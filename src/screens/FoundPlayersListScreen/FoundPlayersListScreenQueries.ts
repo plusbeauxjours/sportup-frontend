@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const GET_USERS_FOR_GAME = gql`
   query GetUsersForGame($sportIds: [String]!) {
-    getUsersForGames(sportIds: $sportIds) {
+    getUsersForGame(sportIds: $sportIds) {
       users {
         id
         name
@@ -11,9 +11,8 @@ export const GET_USERS_FOR_GAME = gql`
         bio
         isFollowing
         sports {
-          sportId
+          id
           name
-          rating
         }
       }
     }

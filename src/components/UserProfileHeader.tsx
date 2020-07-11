@@ -1,7 +1,7 @@
 import React from "react";
 import { Paragraph, Caption, Headline } from "react-native-paper";
 import { Avatar } from "react-native-elements";
-import { MEDIA_URL } from "../constants/urls";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import styled from "styled-components/native";
 import UserConnectionsCard from "./UserConnectionsCard";
 import UserInteractionCard from "./UserInteractionCard";
@@ -58,11 +58,9 @@ const UserProfileHeader: React.FC<IProps> = ({
       <Avatar
         size="large"
         rounded
-        containerStyle={{ marginVertical: 5 }}
+        containerStyle={{ marginTop: 40 }}
         source={{
-          uri: userImg
-            ? MEDIA_URL + userImg
-            : "https://gblobscdn.gitbook.com/spaces%2F-L-nWFFFG5HNhz4YeOI_%2Favatar.png?generation=1523478414663564&alt=media",
+          uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
         }}
       />
       <Headline>{name}</Headline>

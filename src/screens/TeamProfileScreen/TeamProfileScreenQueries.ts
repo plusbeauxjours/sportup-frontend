@@ -9,7 +9,7 @@ export const GET_TEAM = gql`
         coverImg
         isAdmin
         sport {
-          sportId
+          id
           name
         }
         rating

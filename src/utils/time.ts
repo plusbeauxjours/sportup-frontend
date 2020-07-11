@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const months = [
   'Jan',
   'Feb',
@@ -24,9 +26,9 @@ export const timeSince = dateString => {
       ('0' + date.getDate().toString()).slice(-2) +
       months[date.getMonth()] +
       date
-      .getFullYear()
-      .toString()
-      .slice(-2)
+        .getFullYear()
+        .toString()
+        .slice(-2)
     );
   }
   if (interval > 0) {
@@ -42,3 +44,9 @@ export const timeSince = dateString => {
   }
   return `${Math.floor(seconds)}s`;
 };
+
+
+export const formatDate = date =>
+  moment(date, 'YYYY-MM-DD').format('ddd, Do MMM YYYY');
+
+export const formatTime = time => moment(time, 'HH:mm:ss').format('h:mm A');

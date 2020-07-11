@@ -13,7 +13,7 @@ export const GET_USER = gql`
         userImg
         isFollowing
         sports {
-          sportId
+          id
           name
         }
         teamsCount

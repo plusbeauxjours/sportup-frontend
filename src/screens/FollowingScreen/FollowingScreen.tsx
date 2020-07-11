@@ -36,7 +36,6 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
           userImg={item.userImg}
           name={item.name}
           username={item.username}
-          bio={item.bio}
           isFollowing={item.isFollowing}
         />
       )}

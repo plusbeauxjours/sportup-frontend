@@ -57,11 +57,10 @@ export default class EditTeamProfileScreen extends React.Component<
       query: GET_TEAM,
       variables: { teamId: this.props.navigation.getParam("teamId") },
     });
-    console.log("team", data);
     this.setState((prev) => ({
       ...prev,
       teamName: data?.getTeam?.team?.teamName,
-      sportId: data?.getTeam?.team?.sport?.sportId,
+      sportId: data?.getTeam?.team?.sport?.id,
       membersList: data?.getTeam?.team?.members?.map((member) => ({
         id: member.id,
         name: member.name,
@@ -105,7 +104,6 @@ export default class EditTeamProfileScreen extends React.Component<
         query: GET_TEAM,
         variables: { teamId: this.props.navigation.getParam("teamId") },
       });
-      console.log(data);
       if (data) {
         cache.writeQuery({
           query: GET_TEAM,
@@ -179,12 +177,8 @@ export default class EditTeamProfileScreen extends React.Component<
                             }));
                           }}
                         >
-                          {sports.map(({ sportId, name }) => (
-                            <Picker.Item
-                              key={sportId}
-                              label={name}
-                              value={sportId}
-                            />
+                          {sports.map(({ id, name }) => (
+                            <Picker.Item key={id} label={name} value={id} />
                           ))}
                         </Picker>
                       </PickerContainer>

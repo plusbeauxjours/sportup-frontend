@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { Query } from "react-apollo";
 import { ActivityIndicator, FlatList, Alert } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import {
   GetTeam_getTeam_team_sport,
@@ -60,7 +59,7 @@ const TeamInfo: React.FC<IProps> = ({
       <View>
         <Headline>{teamName}</Headline>
         <RatingChip
-          sportId={sport.sportId}
+          sportId={sport.id}
           name={sport.name}
           onChipPress={showDialog}
         />
@@ -142,7 +141,6 @@ export default class TeamProfileScreen extends React.Component<IProps> {
                   name={item.name}
                   username={item.username}
                   userImg={item.userImg}
-                  bio={item.bio}
                   isFollowing={item.isFollowing}
                 />
               )}

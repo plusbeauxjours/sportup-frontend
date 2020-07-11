@@ -16,8 +16,8 @@ export const getInfo = teamId => {
           'https://media-public.fcbarcelona.com/20157/0/document_thumbnail/20197/220/138/127/58690268/1.0-11/58690268.jpg?t=1509365853000',
         name: 'FC Barcelona',
         sports: [
-          { sportId: 0, rating: 3.5, rated: 3 },
-          { sportId: 1, rating: 4 },
+          { id: 0, rating: 3.5, rated: 3 },
+          { id: 1, rating: 4 },
         ],
       });
     }, 1000);

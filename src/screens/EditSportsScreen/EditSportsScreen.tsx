@@ -1,89 +1,82 @@
-import React, { useState } from "react";
-import { useQuery } from "react-apollo-hooks";
-import { ActivityIndicator } from "react-native";
+import React from "react";
+import { View, Alert, ActivityIndicator } from "react-native";
+import { observable, action } from "mobx";
+import { observer, Observer } from "mobx-react/native";
+import { Query, Mutation } from "react-apollo";
+import gql from "graphql-tag";
 import { Searchbar, Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
-import { UPDATE_SPORTS } from "./EditSportsScreenQueries";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
-import RatingChip from "../../components/RatingChip";
-import styled from "styled-components/native";
-import {
-  GetAllSports_getAllSports_sports,
-  GetAllSports,
-  UpdateSports,
-  UpdateSportsVariables,
-  Me,
-} from "../../types/api";
-import { useMutation } from "react-apollo";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
+import RatingChip from "../../components/RatingChip";
+import { UPDATE_SPORTS } from "./EditSportsScreenQueries";
 
-const Container = styled.View``;
-const View = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-`;
+interface IProps extends NavigationStackScreenProps {}
 
-const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const [search, setSearch] = useState<string>("");
-  const [allSports, setAllSports] = useState<
-    [GetAllSports_getAllSports_sports]
-  >([]);
-  const [selectedSports, setSelectedSports] = useState<[]>([]);
-  const {
-    data: { getAllSports: { sports = null } = {} } = {},
-    loading: getAllSportsLoading,
-  } = useQuery<GetAllSports>(GET_ALL_SPORTS, { fetchPolicy: "network-only" });
-  const [udpateSportsFn, { loading: udpateSportsLoading }] = useMutation<
-    UpdateSports,
-    UpdateSportsVariables
-  >(UPDATE_SPORTS, {
-    update(
-      cache,
-      {
-        data: {
-          updateSports: { user },
-        },
-      }
-    ) {
-      try {
-        const { me } = cache.readQuery<Me>({
-          query: ME,
-        });
+@observer
+export default class EditSportsScreen extends React.Component<IProps> {
+  public updateSportsFn;
+  static navigationOptions = {
+    title: "Edit Sports",
+  };
+
+  @observable
+  query = "";
+
+  constructor(props) {
+    super(props);
+
+    this.allSports = [];
+    this.sports = observable([]);
+    this.selectedSports = observable([]);
+  }
+
+  @action
+  public onChangeText = (query) => {
+    this.sports = this.allSports.filter((sport) =>
+      sport.name.toLowerCase().includes(query.toLowerCase())
+    );
+    this.query = query;
+  };
+
+  @action
+  public toggleSportChip = (index) => {
+    this.selectedSports[index] = !this.selectedSports[index];
+  };
+
+  public updateCache = (
+    cache,
+    {
+      data: {
+        updateSports: { user },
+      },
+    }
+  ) => {
+    try {
+      const data = cache.readQuery({ query: ME });
+      if (data) {
         cache.writeQuery({
           query: ME,
           data: {
+            ...data,
             me: {
-              ...me,
-              user: { ...me.user, sports: user.sports },
+              ...data.me,
+              user: {
+                ...data.me.user,
+                sports: user.sports,
+              },
             },
           },
         });
-      } catch (e) {
-        console.log(e);
       }
-    },
-  });
-  const onChangeText = (query) => {
-    allSports.filter((sport) =>
-      sport.name.toLowerCase().includes(query.toLowerCase())
-    );
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const onSavePress = () => {
-    const selectedSportIds = selectedSports
-      .filter((sport) => sport === true)
-      .map((_, index) => index + 1);
-    navigation.goBack();
-  };
-
-  const toggleSportChip = (index) => {
-    console.log("nani");
-  };
-
-  if (getAllSportsLoading) {
-    return <ActivityIndicator size="large" />;
-  } else {
+  public render() {
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -93,51 +86,98 @@ const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <Container>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={onChangeText}
-            value={search}
-          />
-          <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-            <View style={{}}>
-              {sports.map(({ sportId, name }) => (
-                <RatingChip
-                  sportId={sportId}
-                  name={name}
-                  selected={selectedSports.length > 0}
-                  key={sportId}
-                  onChipPress={() => console.log("onPress")}
-                />
-              ))}
-            </View>
-          </KeyboardAwareScrollView>
-        </Container>
-        <Button
-          onPress={() => {
-            const selectedSportIds = [];
-            selectedSports.forEach((sport, index) => {
-              if (sport === true) {
-                selectedSportIds.push(index + 1);
-              }
+        <Query
+          query={GET_ALL_SPORTS}
+          fetchPolicy="network-only"
+          onError={(error) => Alert.alert("", error.message)}
+        >
+          {({
+            loading,
+            data: { getAllSports: { sports = null } = {} } = {},
+            client,
+          }) => {
+            if (loading) {
+              return <ActivityIndicator size="large" />;
+            }
+            this.allSports = sports;
+            this.sports = observable(this.allSports);
+            this.selectedSports = observable(sports?.map(() => false));
+            const { me } = client.readQuery({
+              query: gql`
+                {
+                  me {
+                    user {
+                      sports {
+                        id
+                      }
+                    }
+                  }
+                }
+              `,
             });
-            udpateSportsFn({
-              variables: {
-                sportIds: selectedSportIds,
-              },
+            me.user.sports.forEach(({ pk }) => {
+              console.log(pk);
+              this.selectedSports[pk - 1] = true;
             });
-            navigation.goBack();
+            return (
+              <Observer>
+                {() => (
+                  <View>
+                    <Searchbar
+                      placeholder="Search"
+                      onChangeText={this.onChangeText}
+                      value={this.query}
+                    />
+                    <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
+                      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+                        {this.sports?.map(({ id, name }) => (
+                          <RatingChip
+                            sportId={id}
+                            name={name}
+                            selected={this.selectedSports[id - 1]}
+                            key={id}
+                            onChipPress={() => this.toggleSportChip(id - 1)}
+                          />
+                        ))}
+                      </View>
+                    </KeyboardAwareScrollView>
+                  </View>
+                )}
+              </Observer>
+            );
           }}
-          loading={udpateSportsLoading}
-          disabled={udpateSportsLoading}
-          title="Save"
-        />
+        </Query>
+
+        <Mutation
+          mutation={UPDATE_SPORTS}
+          update={this.updateCache}
+          onError={(error) => Alert.alert("", error.message)}
+        >
+          {(updateSportsFn, { loading }) => (
+            <Button
+              onPress={() => {
+                const selectedSportIds = [];
+                this.selectedSports.forEach((sport, index) => {
+                  if (sport === true) {
+                    selectedSportIds.push(index + 1);
+                  }
+                });
+                updateSportsFn({
+                  variables: {
+                    sportIds: selectedSportIds,
+                  },
+                });
+                this.props.navigation.goBack();
+              }}
+              style={{ width: "90%", alignSelf: "center" }}
+              loading={loading}
+              disabled={loading}
+            >
+              Save
+            </Button>
+          )}
+        </Mutation>
       </KeyboardAwareScrollView>
     );
   }
-};
-EditSportsScreen.navigationOptions = {
-  title: "Edit Sports",
-};
-
-export default EditSportsScreen;
+}

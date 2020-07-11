@@ -14,6 +14,10 @@ const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+const View = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
 
 interface IProps extends NavigationStackScreenProps {
   id: string;
@@ -25,7 +29,7 @@ interface IProps extends NavigationStackScreenProps {
 }
 
 const TeamCardWithCover: React.FC<IProps> = withNavigation(
-  ({ id, teamName, coverImg, enableMessage, sport, navigation }) => (
+  ({ id, rating, teamName, coverImg, enableMessage, sport, navigation }) => (
     <Card>
       {coverImg && <Card.Cover source={{ uri: coverImg }} />}
       <Card.Content>
@@ -51,9 +55,9 @@ const TeamCardWithCover: React.FC<IProps> = withNavigation(
           )}
         </Container>
         <RatingChip
-          sportId={sport.sportId}
+          sportId={sport.id}
           name={sport.name}
-          rating={sport.team}
+          rating={rating}
           onChipPress={() => {}}
         />
       </Card.Content>
@@ -61,7 +65,7 @@ const TeamCardWithCover: React.FC<IProps> = withNavigation(
   )
 );
 const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
-  ({ id, teamName, enableMessage, sport, navigation }) => (
+  ({ id, rating, teamName, enableMessage, sport, navigation }) => (
     <Card>
       <Card.Content>
         <Container>
@@ -85,12 +89,14 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
             </Button>
           )}
         </Container>
-        <RatingChip
-          sportId={sport.sportId}
-          name={sport.name}
-          rating={sport.team}
-          onChipPress={() => {}}
-        />
+        <View>
+          <RatingChip
+            sportId={sport.id}
+            name={sport.name}
+            rating={rating}
+            onChipPress={() => {}}
+          />
+        </View>
       </Card.Content>
     </Card>
   )

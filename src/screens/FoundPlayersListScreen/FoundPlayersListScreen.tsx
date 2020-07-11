@@ -44,21 +44,21 @@ export default class FoundPlayersListScreen extends Component<IProps> {
   );
 
   public render() {
+    const { selectedSportIds: sportIds } = this.props.navigation.state.params;
     return (
       <Query
         query={GET_USERS_FOR_GAME}
-        variables={{
-          sportIds: this.props.navigation.getParam("selectedSportIds"),
-        }}
+        variables={{ sportIds }}
         onError={(error) => {
           Alert.alert("", error.message);
         }}
         fetchPolicy="network-only"
       >
         {({
-          data: { getUsersForGames: { users = null } = {} } = {},
+          data: { getUsersForGame: { users = null } = {} } = {},
           loading,
         }) => {
+          console.log(users);
           return (
             <FlatList
               data={users}
@@ -69,8 +69,9 @@ export default class FoundPlayersListScreen extends Component<IProps> {
                     userImg={item.userImg}
                     name={item.name}
                     username={item.username}
-                    bio={item.bio}
                     isFollowing={item.isFollowing}
+                    sports={item.sports}
+                    sportIds={sportIds}
                   />
                 );
               }}

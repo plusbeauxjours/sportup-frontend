@@ -6,12 +6,12 @@ export const GET_TEAMS_FOR_GAME = gql`
       teams {
         id
         teamName
+        rating
         coverImg
         sport {
-          sportId
+          id
           name
         }
-        rating
       }
     }
   }

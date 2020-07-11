@@ -7,9 +7,7 @@ export const CREATE_TEAM = gql`
     $memberIds: [String]
   ) {
     createTeam(teamName: $teamName, sportId: $sportId, memberIds: $memberIds) {
-      user {
-        teamsCount
-      }
+      ok
     }
   }
 `;

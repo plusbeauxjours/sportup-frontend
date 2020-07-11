@@ -14,6 +14,8 @@ import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import styled from "styled-components/native";
 import { NavigationStackScreenProps } from "react-navigation-stack";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
+import { Avatar } from "react-native-elements";
 
 const Button = styled.Button`
   margin-top: 10px;
@@ -124,11 +126,15 @@ export default class EditProfileScreen extends Component<IProps> {
                   isValid,
                 }) => (
                   <React.Fragment>
-                    <FormikImagePicker
-                      initialImg={me.user.userImg && { uri: me.user.userImg }}
-                      value={values.userImg}
-                      onChoose={setFieldValue}
-                      name="userImg"
+                    <Avatar
+                      size="large"
+                      rounded
+                      containerStyle={{ marginVertical: 40 }}
+                      source={{
+                        uri: me.user.userImg
+                          ? MEDIA_URL + me.user.userImg
+                          : NO_AVATAR_THUMBNAIL,
+                      }}
                     />
                     <FormikInput
                       label="First name"

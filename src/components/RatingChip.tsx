@@ -29,7 +29,7 @@ const RatingChip: React.FC<IProps> = ({
       style={selected && { backgroundColor: PRIMARY_COLOR }}
     >
       <Text>
-        <Text style={selected && { color: "#fff" }}>{name} </Text>
+        <Text style={selected && { color: "#fff" }}>{name}</Text>
         {rating && <Caption> {rating}</Caption>}
       </Text>
     </Chip>

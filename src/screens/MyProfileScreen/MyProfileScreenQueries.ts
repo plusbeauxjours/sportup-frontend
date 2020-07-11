@@ -11,7 +11,7 @@ export const ME = gql`
         bio
         userImg
         sports {
-          sportId
+          id
           name
         }
         teamsCount

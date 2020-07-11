@@ -19,13 +19,13 @@ const SportsList: React.FC<IProps> = ({
     data={sports}
     renderItem={({ item }) => (
       <RatingChip
-        sportId={item.sportId}
+        sportId={item.id}
         name={item.name}
         rating={item.rating}
         onChipPress={onChipPress}
       />
     )}
-    keyExtractor={(sport) => sport.sportId.toString()}
+    keyExtractor={(sport) => sport.id.toString()}
     {...rest}
   />
 );

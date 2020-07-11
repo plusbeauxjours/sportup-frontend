@@ -74,6 +74,44 @@ export interface UnfollowUserVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetTeamsForPlayer
+// ====================================================
+
+export interface GetTeamsForPlayer_getTeamsForPlayer_teams_sport {
+  __typename: "SportType";
+  id: string;
+  name: string;
+}
+
+export interface GetTeamsForPlayer_getTeamsForPlayer_teams {
+  __typename: "TeamType";
+  id: string;
+  teamName: string;
+  coverImg: string | null;
+  sport: GetTeamsForPlayer_getTeamsForPlayer_teams_sport;
+  rating: number | null;
+}
+
+export interface GetTeamsForPlayer_getTeamsForPlayer {
+  __typename: "GetTeamsForPlayerResponse";
+  teams: (GetTeamsForPlayer_getTeamsForPlayer_teams | null)[] | null;
+}
+
+export interface GetTeamsForPlayer {
+  getTeamsForPlayer: GetTeamsForPlayer_getTeamsForPlayer;
+}
+
+export interface GetTeamsForPlayerVariables {
+  sportIds: (string | null)[];
+  userId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: UpvotePost
 // ====================================================
 
@@ -244,14 +282,9 @@ export interface SignupVariables {
 // GraphQL mutation operation: CreateTeam
 // ====================================================
 
-export interface CreateTeam_createTeam_user {
-  __typename: "UserType";
-  teamsCount: number | null;
-}
-
 export interface CreateTeam_createTeam {
   __typename: "CreateTeamResponse";
-  user: CreateTeam_createTeam_user | null;
+  ok: boolean | null;
 }
 
 export interface CreateTeam {
@@ -342,9 +375,8 @@ export interface UpdateUserVariables {
 
 export interface UpdateSports_updateSports_user_sports {
   __typename: "UserPlaysSportType";
-  sportId: string | null;
+  id: string;
   name: string | null;
-  rating: number | null;
 }
 
 export interface UpdateSports_updateSports_user {
@@ -376,7 +408,7 @@ export interface UpdateSportsVariables {
 
 export interface UpdateTeam_updateTeam_team_sport {
   __typename: "SportType";
-  sportId: string | null;
+  id: string;
   name: string;
 }
 
@@ -473,7 +505,7 @@ export interface GetMainFeedVariables {
 
 export interface GetAllSports_getAllSports_sports {
   __typename: "SportType";
-  sportId: string | null;
+  id: string;
   name: string;
 }
 
@@ -577,14 +609,13 @@ export interface GetUserFollowingVariables {
 // GraphQL query operation: GetUsersForGame
 // ====================================================
 
-export interface GetUsersForGame_getUsersForGames_users_sports {
+export interface GetUsersForGame_getUsersForGame_users_sports {
   __typename: "UserPlaysSportType";
-  sportId: string | null;
+  id: string;
   name: string | null;
-  rating: number | null;
 }
 
-export interface GetUsersForGame_getUsersForGames_users {
+export interface GetUsersForGame_getUsersForGame_users {
   __typename: "UserType";
   id: string;
   name: string | null;
@@ -595,16 +626,16 @@ export interface GetUsersForGame_getUsersForGames_users {
   userImg: string | null;
   bio: string;
   isFollowing: boolean | null;
-  sports: (GetUsersForGame_getUsersForGames_users_sports | null)[] | null;
+  sports: (GetUsersForGame_getUsersForGame_users_sports | null)[] | null;
 }
 
-export interface GetUsersForGame_getUsersForGames {
+export interface GetUsersForGame_getUsersForGame {
   __typename: "GetUsersForGamesResponse";
-  users: (GetUsersForGame_getUsersForGames_users | null)[] | null;
+  users: (GetUsersForGame_getUsersForGame_users | null)[] | null;
 }
 
 export interface GetUsersForGame {
-  getUsersForGames: GetUsersForGame_getUsersForGames;
+  getUsersForGame: GetUsersForGame_getUsersForGame;
 }
 
 export interface GetUsersForGameVariables {
@@ -622,7 +653,7 @@ export interface GetUsersForGameVariables {
 
 export interface GetTeamsForGame_getTeamsForGame_teams_sport {
   __typename: "SportType";
-  sportId: string | null;
+  id: string;
   name: string;
 }
 
@@ -630,9 +661,9 @@ export interface GetTeamsForGame_getTeamsForGame_teams {
   __typename: "TeamType";
   id: string;
   teamName: string;
+  rating: number | null;
   coverImg: string | null;
   sport: GetTeamsForGame_getTeamsForGame_teams_sport;
-  rating: number | null;
 }
 
 export interface GetTeamsForGame_getTeamsForGame {
@@ -659,7 +690,7 @@ export interface GetTeamsForGameVariables {
 
 export interface Me_me_user_sports {
   __typename: "UserPlaysSportType";
-  sportId: string | null;
+  id: string;
   name: string | null;
 }
 
@@ -823,7 +854,7 @@ export interface GetSearchResultsVariables {
 
 export interface GetTeam_getTeam_team_sport {
   __typename: "SportType";
-  sportId: string | null;
+  id: string;
   name: string;
 }
 
@@ -875,7 +906,7 @@ export interface GetTeamVariables {
 
 export interface GetUserTeams_getUser_user_teamSet_sport {
   __typename: "SportType";
-  sportId: string | null;
+  id: string;
   name: string;
 }
 
@@ -883,6 +914,7 @@ export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   id: string;
   teamName: string;
+  rating: number | null;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
 }
@@ -917,7 +949,7 @@ export interface GetUserTeamsVariables {
 
 export interface GetUser_getUser_user_sports {
   __typename: "UserPlaysSportType";
-  sportId: string | null;
+  id: string;
   name: string | null;
 }
 

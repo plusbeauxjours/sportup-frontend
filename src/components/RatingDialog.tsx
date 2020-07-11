@@ -1,12 +1,6 @@
 import React from "react";
 import { AirbnbRating } from "react-native-ratings";
-import { Dialog } from "react-native-paper";
-import styled from "styled-components/native";
-
-const Button = styled.Button`
-  margin-top: 10px;
-  width: 90%;
-`;
+import { Dialog, Button } from "react-native-paper";
 
 interface IProps {
   rating?: number;
@@ -33,8 +27,8 @@ const RatingDialog: React.FC<IProps> = ({
       />
     </Dialog.Content>
     <Dialog.Actions>
-      <Button onPress={close} title="Cancel" />
-      <Button onPress={onSubmit} title="Submit" />
+      <Button onPress={close}>Cancel</Button>
+      <Button onPress={onSubmit}>Submit</Button>
     </Dialog.Actions>
   </Dialog>
 );

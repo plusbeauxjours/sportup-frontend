@@ -9,10 +9,10 @@ export const getPlayers = (userId, sports) => {
           ...user,
           bio: 'This is a test profile',
           sports: [
-            { sportId: 0, rating: 4.5 },
-            { sportId: 1, rating: 4.8 },
-            { sportId: 2, rating: 3.5 },
-            { sportId: 3, rating: 3.0 },
+            { id: 0, rating: 4.5 },
+            { id: 1, rating: 4.8 },
+            { id: 2, rating: 3.5 },
+            { id: 3, rating: 3.0 },
           ],
           team: {
             id: 0,
