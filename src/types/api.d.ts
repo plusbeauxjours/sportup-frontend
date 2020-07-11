@@ -515,6 +515,62 @@ export interface UpdateTeamVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: GetEvent
+// ====================================================
+
+export interface GetEvent_getEvent_event_sport {
+  __typename: "SportType";
+  id: string;
+  name: string;
+}
+
+export interface GetEvent_getEvent_event_owner {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetEvent_getEvent_event {
+  __typename: "EventType";
+  id: string;
+  name: string;
+  description: string | null;
+  sport: GetEvent_getEvent_event_sport;
+  coverImg: string | null;
+  startDate: any | null;
+  endDate: any | null;
+  startTime: any | null;
+  endTime: any | null;
+  expectedTeams: number;
+  owner: GetEvent_getEvent_event_owner;
+  isOwner: boolean | null;
+  minimumMembers: number;
+  maximumMembers: number;
+}
+
+export interface GetEvent_getEvent {
+  __typename: "GetEventResponse";
+  event: GetEvent_getEvent_event | null;
+}
+
+export interface GetEvent {
+  getEvent: GetEvent_getEvent;
+}
+
+export interface GetEventVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetMainFeed
 // ====================================================
 

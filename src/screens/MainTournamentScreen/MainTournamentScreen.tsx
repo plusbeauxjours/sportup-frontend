@@ -7,6 +7,7 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
 const MainTournamentScreen = ({ navigation }) => (
   <Container>
     <Button
