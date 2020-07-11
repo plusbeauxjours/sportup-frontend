@@ -11,6 +11,8 @@ import MainTournamentScreen from "../screens/MainTournamentScreen";
 import UpcomingEventScreen from "../screens/UpcomingEventScreen";
 import CreateEventScreen from "../screens/CreateEventScreen";
 import EventScreen from "../screens/EventScreen";
+import RegisterForEventScreen from "../screens/RegisterForEventScreen";
+import RegistrationScreen from "../screens/RegistrationScreen";
 
 const EventNavigation = createStackNavigator(
   {
@@ -18,6 +20,8 @@ const EventNavigation = createStackNavigator(
     UpcomingEventScreen,
     CreateEventScreen,
     EventScreen,
+    RegisterForEventScreen,
+    RegistrationScreen,
     UserProfileScreen,
     FollowersScreen,
     FollowingScreen,

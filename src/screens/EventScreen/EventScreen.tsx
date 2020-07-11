@@ -31,7 +31,7 @@ const EventScreen = ({ navigation }) => {
   }
   return (
     <ScrollView>
-      {event.coverImg ? (
+      {event?.coverImg ? (
         <Image
           style={{ width: "100%", height: 150 }}
           source={{ uri: MEDIA_URL + event.coverImg }}
@@ -42,17 +42,17 @@ const EventScreen = ({ navigation }) => {
       <Caption>{event.description}</Caption>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("Profile", { userId: event.owner.id });
+          navigation.navigate("UserProfileScreen", { userId: event.owner.id });
         }}
       >
         <Caption>
           <Caption>Organized by{event.owner.name} </Caption>
           <Caption style={{ fontWeight: "bold" }}>
-            {event.owner.username}
+            {event?.owner.username}
           </Caption>
         </Caption>
       </TouchableOpacity>
-      {event.startDate && (
+      {event?.startDate && (
         <Caption>
           <Caption>Event dates: from </Caption>
           <Caption style={{ fontWeight: "bold" }}>
@@ -68,7 +68,7 @@ const EventScreen = ({ navigation }) => {
           )}
         </Caption>
       )}
-      {event.startTime && (
+      {event?.startTime && (
         <Caption>
           <Caption>Event day timings: from </Caption>
           <Caption style={{ fontWeight: "bold" }}>
@@ -84,14 +84,10 @@ const EventScreen = ({ navigation }) => {
           )}
         </Caption>
       )}
-      {event.expectedTeams && (
-        <Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.expectedTeams}
-          </Caption>
-          <Caption> teams exptected.</Caption>
-        </Caption>
-      )}
+      <Caption>
+        <Caption style={{ fontWeight: "bold" }}>{event.expectedTeams}</Caption>
+        <Caption> teams exptected.</Caption>
+      </Caption>
       <Caption>
         <Caption>Minimum members per team: </Caption>
         <Caption style={{ fontWeight: "bold" }}>{event.minimumMembers}</Caption>
@@ -126,9 +122,8 @@ const EventScreen = ({ navigation }) => {
       </View> */}
       {event.isOwner ? (
         <Button
-          icon="edit"
           onPress={() => {
-            navigation.navigate("Registrations", { eventId: event.id });
+            navigation.navigate("RegistrationScreen", { eventId: event.id });
           }}
         >
           Manage registrations
@@ -136,7 +131,7 @@ const EventScreen = ({ navigation }) => {
       ) : (
         <Button
           onPress={() => {
-            navigation.navigate("Register", {
+            navigation.navigate("RegisterForEventScreen", {
               eventId: event.id,
               maximumMembers: event.maximumMembers,
               minimumMembers: event.minimumMembers,

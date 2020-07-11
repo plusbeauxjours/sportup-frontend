@@ -885,6 +885,116 @@ export interface GetMyFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: RegisterTeam
+// ====================================================
+
+export interface RegisterTeam_registerTeam {
+  __typename: "RegisterTeamResponse";
+  ok: boolean | null;
+}
+
+export interface RegisterTeam {
+  registerTeam: RegisterTeam_registerTeam;
+}
+
+export interface RegisterTeamVariables {
+  eventId: string;
+  teamName: string;
+  captainName: string;
+  captainCnic: string;
+  captainContact: string;
+  playerNames?: (string | null)[] | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetRegistrations
+// ====================================================
+
+export interface GetRegistrations_getRegistrations_registrations_registeredBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+}
+
+export interface GetRegistrations_getRegistrations_registrations {
+  __typename: "RegistrationType";
+  id: string;
+  name: string;
+  registeredBy: GetRegistrations_getRegistrations_registrations_registeredBy;
+  approved: boolean;
+}
+
+export interface GetRegistrations_getRegistrations {
+  __typename: "GetRegistrationsResponse";
+  registrations: (GetRegistrations_getRegistrations_registrations | null)[] | null;
+}
+
+export interface GetRegistrations {
+  getRegistrations: GetRegistrations_getRegistrations;
+}
+
+export interface GetRegistrationsVariables {
+  eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: ApproveRegistration
+// ====================================================
+
+export interface ApproveRegistration_approveRegistration {
+  __typename: "ApproveRegistrationResponse";
+  ok: boolean | null;
+}
+
+export interface ApproveRegistration {
+  approveRegistration: ApproveRegistration_approveRegistration;
+}
+
+export interface ApproveRegistrationVariables {
+  registrationId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: DisapproveRegistration
+// ====================================================
+
+export interface DisapproveRegistration_disapproveRegistration {
+  __typename: "DisapproveRegistrationResponse";
+  ok: boolean | null;
+}
+
+export interface DisapproveRegistration {
+  disapproveRegistration: DisapproveRegistration_disapproveRegistration;
+}
+
+export interface DisapproveRegistrationVariables {
+  registrationId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetSearchResults
 // ====================================================
 

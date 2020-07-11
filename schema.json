@@ -45,7 +45,7 @@
             "deprecationReason": null
           },
           {
-            "name": "getRegistration",
+            "name": "getRegistrations",
             "description": null,
             "args": [
               {
@@ -68,7 +68,7 @@
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "GetRegistrationResponse",
+                "name": "GetRegistrationsResponse",
                 "ofType": null
               }
             },
@@ -2968,11 +2968,11 @@
       },
       {
         "kind": "OBJECT",
-        "name": "GetRegistrationResponse",
+        "name": "GetRegistrationsResponse",
         "description": null,
         "fields": [
           {
-            "name": "registration",
+            "name": "registrations",
             "description": null,
             "args": [],
             "type": {
