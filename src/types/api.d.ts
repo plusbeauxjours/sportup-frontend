@@ -279,6 +279,65 @@ export interface SignupVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: CreateEvent
+// ====================================================
+
+export interface CreateEvent_createEvent_event_sport {
+  __typename: "SportType";
+  id: string;
+  name: string;
+}
+
+export interface CreateEvent_createEvent_event_owner {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+}
+
+export interface CreateEvent_createEvent_event {
+  __typename: "EventType";
+  id: string;
+  name: string;
+  description: string | null;
+  sport: CreateEvent_createEvent_event_sport;
+  maximumMembers: number;
+  minimumMembers: number;
+  expectedTeams: number;
+  startDate: any | null;
+  endDate: any | null;
+  startTime: any | null;
+  endTime: any | null;
+  owner: CreateEvent_createEvent_event_owner;
+}
+
+export interface CreateEvent_createEvent {
+  __typename: "CreateEventResponse";
+  event: CreateEvent_createEvent_event | null;
+}
+
+export interface CreateEvent {
+  createEvent: CreateEvent_createEvent;
+}
+
+export interface CreateEventVariables {
+  name: string;
+  description?: string | null;
+  sportId: string;
+  maximumMembers: number;
+  minimumMembers: number;
+  expectedTeams?: number | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  startTime?: any | null;
+  endTime?: any | null;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: CreateTeam
 // ====================================================
 
@@ -936,6 +995,49 @@ export interface GetUserTeams {
 
 export interface GetUserTeamsVariables {
   userId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: GetUpcomingEvents
+// ====================================================
+
+export interface GetUpcomingEvents_getUpcomingEvents_events_sport {
+  __typename: "SportType";
+  id: string;
+  name: string;
+}
+
+export interface GetUpcomingEvents_getUpcomingEvents_events_owner {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+}
+
+export interface GetUpcomingEvents_getUpcomingEvents_events {
+  __typename: "EventType";
+  id: string;
+  name: string;
+  coverImg: string | null;
+  sport: GetUpcomingEvents_getUpcomingEvents_events_sport;
+  owner: GetUpcomingEvents_getUpcomingEvents_events_owner;
+  startDate: any | null;
+  endDate: any | null;
+  startTime: any | null;
+  endTime: any | null;
+}
+
+export interface GetUpcomingEvents_getUpcomingEvents {
+  __typename: "GetUpcomingEventsResponse";
+  events: (GetUpcomingEvents_getUpcomingEvents_events | null)[] | null;
+}
+
+export interface GetUpcomingEvents {
+  getUpcomingEvents: GetUpcomingEvents_getUpcomingEvents;
 }
 
 /* tslint:disable */

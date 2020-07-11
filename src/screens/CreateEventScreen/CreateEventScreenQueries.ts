@@ -1,10 +1,10 @@
 import gql from "graphql-tag";
 
-export const CREATE_EVENT_MUTATION = gql`
+export const CREATE_EVENT = gql`
   mutation CreateEvent(
     $name: String!
     $description: String
-    $sportId: Int!
+    $sportId: String!
     $maximumMembers: Int!
     $minimumMembers: Int!
     $expectedTeams: Int
@@ -30,7 +30,7 @@ export const CREATE_EVENT_MUTATION = gql`
         name
         description
         sport {
-          sportId
+          id
           name
         }
         maximumMembers

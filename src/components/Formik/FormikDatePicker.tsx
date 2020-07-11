@@ -11,24 +11,49 @@ interface IProps {
   onChange: (field: string, value: any, shouldValidate?: boolean) => void;
   label: string;
   name: string;
+  date: any;
+  mode: string;
+  placeholder: string;
+  format: string;
+  minDate?: any;
+  is24Hour?: boolean;
+  getDateStr?: (date: string) => void;
 }
-export default class FormikDatePicker extends PureComponent<IProps> {
-  public onDateChange = (date) => {
-    this.props.onChange(this.props.name, date);
+const FormikDatePicker: React.FC<IProps> = ({
+  onChange,
+  label,
+  name,
+  date,
+  mode,
+  placeholder,
+  format,
+  minDate,
+  is24Hour,
+  getDateStr,
+  ...rest
+}) => {
+  const onDateChange = (date) => {
+    onChange(name, date);
   };
+  return (
+    <View>
+      <Subheading style={{ fontWeight: "bold" }}>{label}</Subheading>
+      <DatePicker
+        style={{ alignSelf: "center" }}
+        onDateChange={onDateChange}
+        date={date}
+        mode={mode}
+        placeholder={placeholder}
+        format={format}
+        minDate={minDate}
+        onChange={onChange}
+        name={name}
+        is24Hour={is24Hour}
+        getDateStr={getDateStr}
+        {...rest}
+      />
+    </View>
+  );
+};
 
-  public render() {
-    return (
-      <View>
-        <Subheading style={{ fontWeight: "bold" }}>
-          {this.props.label}
-        </Subheading>
-        <DatePicker
-          style={{ alignSelf: "center" }}
-          onDateChange={this.onDateChange}
-          {...this.props}
-        />
-      </View>
-    );
-  }
-}
+export default FormikDatePicker;

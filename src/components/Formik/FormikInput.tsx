@@ -18,6 +18,8 @@ interface IProps {
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
   onChange: (name: string, value: string) => void;
   onTouch: (name: string) => void;
+  multiline?: boolean;
+  autoCorrect?: boolean;
 }
 
 const FormikInput: React.FC<IProps> = ({
@@ -27,6 +29,8 @@ const FormikInput: React.FC<IProps> = ({
   onChange,
   onTouch,
   autoCapitalize,
+  multiline = false,
+  autoCorrect = true,
   ...rest
 }) => {
   const handleChange = (value) => {
@@ -45,6 +49,8 @@ const FormikInput: React.FC<IProps> = ({
         onBlur={handleBlur}
         placeholder={label}
         error={error}
+        multiline={multiline}
+        autoCorrect={autoCorrect}
         {...rest}
       />
       <HelperText type="error" visible={error}>

@@ -43,4 +43,4 @@ const hockey = {
   icon: HockeyIcon,
 };
 
-export default [football, golf, basketball];
+export default [football, chess, golf, baseball, basketball, hockey];

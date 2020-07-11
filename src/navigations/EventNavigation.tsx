@@ -7,18 +7,17 @@ import FollowingScreen from "../screens/FollowingScreen";
 import TeamsScreen from "../screens/TeamsScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
-import MainTournamentScreen from "../screens/MainTournamentScreen/MainTournamentScreen";
-import UpcomingEventScreen from "../screens/UpcomingEventScreen/index";
-import CreateEventScreen from "../screens/CreateEventScreen/CreateEventScreenQueries";
+import MainTournamentScreen from "../screens/MainTournamentScreen";
+import UpcomingEventScreen from "../screens/UpcomingEventScreen";
+import CreateEventScreen from "../screens/CreateEventScreen";
+import EventScreen from "../screens/EventScreen";
 
 const EventNavigation = createStackNavigator(
   {
     MainTournamentScreen,
     UpcomingEventScreen,
     CreateEventScreen,
-    // EventScreen,
-    // RegisterForEventScreen,
-    // RegistrationScreen,
+    EventScreen,
     UserProfileScreen,
     FollowersScreen,
     FollowingScreen,

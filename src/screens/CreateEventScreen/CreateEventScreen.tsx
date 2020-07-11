@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Picker, StyleSheet, ActivityIndicator, Alert } from "react-native";
+import { Picker, ActivityIndicator, Alert } from "react-native";
 import { Divider } from "react-native-elements";
 import { Query, Mutation } from "react-apollo";
 import { Formik } from "formik";
@@ -12,8 +12,8 @@ import FormikInput from "../../components/Formik/FormikInput";
 import FormikPicker from "../../components/Formik/FormikPicker";
 import sports from "../../constants/sports";
 import FormikDatePicker from "../../components/Formik/FormikDatePicker";
-import { GET_ALL_SPORTS } from "../../graphql/queries";
-import { CREATE_EVENT_MUTATION } from "../../graphql/mutations";
+import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
+import { CREATE_EVENT } from "./CreateEventScreenQueries";
 
 const TODAY = new Date();
 
@@ -27,15 +27,15 @@ const initialValues = {
   endDate: null,
   startTime: null,
   endTime: null,
-  minimumMembers: "",
-  maximumMembers: "",
-  expectedTeamCount: "",
+  minimumMembers: 0,
+  maximumMembers: 0,
+  expectedTeamCount: 0,
 };
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Event name is required."),
   description: Yup.string(),
-  sportId: Yup.number()
+  sportId: Yup.string()
     .min(1)
     .max(sportsList.length)
     .required("Please select event sport."),
@@ -66,9 +66,12 @@ export default class CreateEventScreen extends PureComponent {
             Alert.alert("", error.message);
           }}
         >
-          {({ data, loading }) => {
+          {({
+            data: { getAllSports: { sports = null } = {} } = {},
+            loading,
+          }) => {
             if (loading) {
-              return <ActivityIndicator size="large" margin={20} />;
+              return <ActivityIndicator size="large" />;
             }
 
             return (
@@ -76,7 +79,8 @@ export default class CreateEventScreen extends PureComponent {
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={() => {}}
-                render={({
+              >
+                {({
                   values,
                   setFieldValue,
                   setFieldTouched,
@@ -96,7 +100,7 @@ export default class CreateEventScreen extends PureComponent {
                     <FormikInput
                       label="Event description (optional)"
                       value={values.description}
-                      multiline
+                      multiline={true}
                       onChange={setFieldValue}
                       onTouch={setFieldTouched}
                       name="description"
@@ -108,12 +112,8 @@ export default class CreateEventScreen extends PureComponent {
                       onChange={setFieldValue}
                       name="sportId"
                     >
-                      {data.allSports.map(({ sportId, name }) => (
-                        <Picker.Item
-                          key={sportId}
-                          label={name}
-                          value={sportId}
-                        />
+                      {sports?.map(({ id, name }) => (
+                        <Picker.Item key={id} label={name} value={id} />
                       ))}
                     </FormikPicker>
                     <Divider />
@@ -195,7 +195,7 @@ export default class CreateEventScreen extends PureComponent {
                       keyboardType="phone-pad"
                     />
                     <Mutation
-                      mutation={CREATE_EVENT_MUTATION}
+                      mutation={CREATE_EVENT}
                       variables={{
                         name: values.name,
                         description: values.description,
@@ -215,16 +215,17 @@ export default class CreateEventScreen extends PureComponent {
                       {(createTeam, mutationResult) => {
                         return (
                           <Button
-                            primary
-                            raised
                             loading={mutationResult.loading}
-                            disabled={!isValid || mutationResult.loading}
-                            icon="navigate-next"
+                            // disabled={!isValid || mutationResult.loading}
                             onPress={() => {
                               createTeam();
                               this.props.navigation.goBack();
                             }}
-                            style={styles.button}
+                            style={{
+                              marginTop: 10,
+                              width: "90%",
+                              alignSelf: "center",
+                            }}
                           >
                             Create
                           </Button>
@@ -233,7 +234,7 @@ export default class CreateEventScreen extends PureComponent {
                     </Mutation>
                   </React.Fragment>
                 )}
-              />
+              </Formik>
             );
           }}
         </Query>
@@ -241,12 +242,3 @@ export default class CreateEventScreen extends PureComponent {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-  },
-  button: { marginTop: 10, width: "90%", alignSelf: "center" },
-});

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const GET_UPCOMING_EVENTS = gql`
-  mutation getUpcomingEvents {
+  query GetUpcomingEvents {
     getUpcomingEvents {
       events {
         id

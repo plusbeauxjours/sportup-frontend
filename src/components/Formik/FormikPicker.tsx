@@ -14,6 +14,7 @@ interface IProps {
   onChange: (field: string, value: any, shouldValidate?: boolean) => void;
   label: string;
   name: string;
+  selectedValue: any;
 }
 
 export default class FormikPicker extends PureComponent<IProps> {
@@ -28,8 +29,9 @@ export default class FormikPicker extends PureComponent<IProps> {
           {this.props.label}
         </Subheading>
         <Picker
-          style={{ width: "200" }}
+          style={{ width: 200 }}
           onValueChange={this.handleChange}
+          selectedValue={this.props.selectedValue}
           {...this.props}
         />
       </View>

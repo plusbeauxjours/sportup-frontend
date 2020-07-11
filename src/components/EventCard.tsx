@@ -3,13 +3,7 @@ import { TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import { formatDate, formatTime } from "../utils/time";
-import {
-  Card,
-  CardCover,
-  CardContent,
-  Headline,
-  Caption,
-} from "react-native-paper";
+import { Card, Headline, Caption } from "react-native-paper";
 
 const EventCard = ({
   id,
@@ -25,8 +19,8 @@ const EventCard = ({
 }) => {
   return (
     <Card>
-      {cover ? <CardCover source={{ uri: cover }} /> : null}
-      <CardContent>
+      {cover ? <Card.Cover source={{ uri: cover }} /> : null}
+      <Card.Content>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("EventScreen", { eventId: id });
@@ -41,7 +35,7 @@ const EventCard = ({
         />
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Profile", { userId: owner.id });
+            navigation.navigate("UserProfileScreent", { userId: owner.id });
           }}
         >
           <Caption>
@@ -84,7 +78,7 @@ const EventCard = ({
             </React.Fragment>
           )}
         </Caption>
-      </CardContent>
+      </Card.Content>
     </Card>
   );
 };
