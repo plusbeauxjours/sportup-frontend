@@ -70,11 +70,10 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
   const teamId = navigation.getParam("teamId");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
-  const {
-    data: { getTeam: { team = null } = {} } = {},
-    client,
-    loading,
-  } = useQuery<GetTeam, GetTeamVariables>(GET_TEAM, { variables: { teamId } });
+  const { data: { getTeam: { team = null } = {} } = {}, loading } = useQuery<
+    GetTeam,
+    GetTeamVariables
+  >(GET_TEAM, { variables: { teamId } });
 
   const onStarRatingPress = (rating: number) => {
     setRating(rating);
@@ -127,10 +126,7 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
             team.isAdmin && (
               <Button
                 onPress={() => {
-                  navigation.navigate("EditTeamProfileScreen", {
-                    teamId: team.id,
-                    client,
-                  });
+                  navigation.navigate("EditTeamProfileScreen", { team });
                 }}
               >
                 Edit team
