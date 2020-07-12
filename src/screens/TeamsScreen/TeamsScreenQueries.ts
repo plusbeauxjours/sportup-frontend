@@ -13,6 +13,7 @@ export const GET_USER_TEAMS = gql`
           sport {
             sportId
             name
+            rating
           }
         }
       }

@@ -7,6 +7,7 @@ export const UPDATE_SPORTS = gql`
         sports {
           sportId
           name
+          rating
         }
       }
     }

@@ -20,6 +20,7 @@ export const UPDATE_TEAM = gql`
         sport {
           sportId
           name
+          rating
         }
         members {
           id

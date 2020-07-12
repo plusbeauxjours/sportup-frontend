@@ -13,6 +13,7 @@ export const ME = gql`
         sports {
           sportId
           name
+          rating
         }
         teamsCount
         followersCount

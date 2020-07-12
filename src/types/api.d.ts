@@ -1126,6 +1126,29 @@ export interface GetTeamVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: RateTeam
+// ====================================================
+
+export interface RateTeam_rateTeam {
+  __typename: "RatesTeamResponse";
+  ok: boolean | null;
+}
+
+export interface RateTeam {
+  rateTeam: RateTeam_rateTeam;
+}
+
+export interface RateTeamVariables {
+  teamId: string;
+  rating: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: GetUserTeams
 // ====================================================
 
@@ -1219,6 +1242,7 @@ export interface GetUser_getUser_user_sports {
   __typename: "UserPlaysSportType";
   sportId: string | null;
   name: string | null;
+  rating: number | null;
 }
 
 export interface GetUser_getUser_user {

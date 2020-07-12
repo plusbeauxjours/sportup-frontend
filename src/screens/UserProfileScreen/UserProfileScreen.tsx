@@ -42,6 +42,32 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [ratingSportWithId, setRatingSportWithId] = useState<string>(null);
 
+  const {
+    data: { getUserFeed: { posts = null } = {} } = {},
+    loading: getUserFeedLoading,
+    fetchMore: getUserFeedFetchMore,
+    networkStatus,
+    refetch: getUserFeedRefetch,
+  } = useQuery<GetUserFeed, GetUserFeedVariables>(GET_USER_FEED, {
+    variables: { userId, pageNum },
+    fetchPolicy: "network-only",
+  });
+
+  const {
+    data: { getUser: { user = null } = {} } = {},
+    loading: getUserLoading,
+  } = useQuery<GetUser, GetUserVariables>(GET_USER, {
+    variables: { userId },
+    fetchPolicy: "network-only",
+  });
+
+  const [rateUserSportFn, { loading: rateUserSportLoading }] = useMutation<
+    RateUserSport,
+    RateUserSportVariables
+  >(RATE_USER_SPORT, {
+    variables: { userId, sportId: ratingSportWithId, rating },
+  });
+
   const onTeamsPress = (userId) => {
     navigation.push("TeamsScreen", { userId });
   };
@@ -73,30 +99,6 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
     closeDialog();
   };
 
-  const [rateUserSportFn, { loading: rateUserSportLoading }] = useMutation<
-    RateUserSport,
-    RateUserSportVariables
-  >(RATE_USER_SPORT, {
-    variables: { userId, sportId: ratingSportWithId, rating },
-  });
-
-  const {
-    data: { getUserFeed: { posts = null } = {} } = {},
-    loading: getUserFeedLoading,
-    fetchMore: getUserFeedFetchMore,
-    networkStatus,
-    refetch: getUserFeedRefetch,
-  } = useQuery<GetUserFeed, GetUserFeedVariables>(GET_USER_FEED, {
-    variables: { userId, pageNum },
-    fetchPolicy: "network-only",
-  });
-  const {
-    data: { getUser: { user = null } = {} } = {},
-    loading: getUserLoading,
-  } = useQuery<GetUser, GetUserVariables>(GET_USER, {
-    variables: { userId },
-    fetchPolicy: "network-only",
-  });
   const renderUserInfoArea = () => {
     if (getUserLoading) {
       return <ActivityIndicator size="large" style={{ margin: 20 }} />;

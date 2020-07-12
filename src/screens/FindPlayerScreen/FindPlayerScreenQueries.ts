@@ -6,6 +6,7 @@ export const GET_ALL_SPORTS = gql`
             sports {
                 sportId
                 name
+                rating
             }
         }
     }
