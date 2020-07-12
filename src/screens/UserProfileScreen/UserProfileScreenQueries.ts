@@ -15,6 +15,7 @@ export const GET_USER = gql`
         sports {
           sportId
           name
+          rating
         }
         teamsCount
         followersCount

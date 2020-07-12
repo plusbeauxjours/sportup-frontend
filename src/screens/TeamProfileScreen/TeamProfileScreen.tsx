@@ -75,7 +75,7 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
     GetTeamVariables
   >(GET_TEAM, { variables: { teamId } });
 
-  const onStarRatingPress = (rating: number) => {
+  const onStarRatingPrrateress = (rating: number) => {
     setRating(rating);
   };
 
@@ -90,6 +90,18 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
   const closeDialog = () => {
     setRating(0);
     setDialogVisible(false);
+  };
+
+  // const [rateTeamFn, { loading: rateTeamLoading }] = useMutation<
+  //   RateTeam,
+  //   RateUserSportVariables
+  // >(RATE_USER_SPORT, {
+  //   variables: { userId, sportId: ratingSportWithId, rating },
+  // });
+
+  const onSubmit = () => {
+    // rateTeamFn();
+    closeDialog();
   };
   if (loading) {
     return <ActivityIndicator size="large" />;
@@ -139,7 +151,7 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
           rating={rating}
           onStarRatingPress={onStarRatingPress}
           close={closeDialog}
-          onSubmit={onSubmitRating}
+          onSubmit={onSubmit}
         />
       </>
     );

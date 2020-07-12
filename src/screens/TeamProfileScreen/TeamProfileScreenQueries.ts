@@ -25,3 +25,12 @@ export const GET_TEAM = gql`
     }
   }
 `;
+
+
+export const RATE_TEAM = gql`
+  mutation RateTeam($teamId: String!, $rating: Int!) {
+    rateTeam(teamId: $teamId, rating: $rating) {
+      ok
+    }
+  }
+`;
