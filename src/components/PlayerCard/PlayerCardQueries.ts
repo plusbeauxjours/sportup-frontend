@@ -10,7 +10,6 @@ export const GET_TEAMS_FOR_PLAYER = gql`
         sport {
           sportId
           name
-          rating
         }
         rating
       }

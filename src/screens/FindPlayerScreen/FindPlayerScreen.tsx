@@ -92,7 +92,7 @@ export default class FindPlayerScreen extends Component<IProps> {
 
             this.allSports = sports;
             this.sports = observable(this.allSports);
-            this.selectedSports = observable(sports.map(() => false));
+            this.selectedSports = observable(sports?.map(() => false));
 
             return (
               <Observer>

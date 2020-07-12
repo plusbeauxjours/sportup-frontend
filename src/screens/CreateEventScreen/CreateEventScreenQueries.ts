@@ -32,7 +32,6 @@ export const CREATE_EVENT = gql`
         sport {
           sportId
           name
-          rating
         }
         maximumMembers
         minimumMembers

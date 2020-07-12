@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator, AsyncStorage } from "react-native";
-import { Appbar } from "react-native-paper";
+import { Appbar, Headline, Caption, Paragraph } from "react-native-paper";
+import styled from "styled-components/native";
+import { useQuery } from "react-apollo-hooks";
+import { Avatar } from "react-native-elements";
 
 import { ME, MY_FEED } from "./MyProfileScreenQueries";
 import { Me, GetMyFeed, GetMyFeedVariables } from "../../types/api";
-import MyProfileHeader from "../../components/MyProfileHeader";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import styled from "styled-components/native";
-import { useQuery } from "react-apollo-hooks";
+
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
+import SportsList from "../../components/SportsList";
+import UserConnectionsCard from "../../components/UserConnectionsCard";
 
 const View = styled.View`
   flex-direction: row;
+`;
+const UserInfoContainer = styled.View`
+  align-items: center;
+  margin: 1px 0;
+  background-color: #fff;
 `;
 
 const MyProfileScreen = ({ navigation }) => {
@@ -73,23 +82,34 @@ const MyProfileScreen = ({ navigation }) => {
         following: user?.followingCount,
       };
       return (
-        <MyProfileHeader
-          userImg={user?.userImg}
-          name={`${user?.firstName} ${user?.lastName}`}
-          username={user?.username}
-          bio={user?.bio}
-          sports={user?.sports}
-          connections={connections}
-          onTeamsPress={() => {
-            onTeamsPress(user?.id);
-          }}
-          onFollowersPress={() => {
-            onFollowersPress(user?.id);
-          }}
-          onFollowingPress={() => {
-            onFollowingPress(user?.id);
-          }}
-        />
+        <UserInfoContainer>
+          <Avatar
+            size="large"
+            rounded
+            containerStyle={{ marginTop: 40 }}
+            source={{
+              uri: user?.userImg
+                ? MEDIA_URL + user?.userImg
+                : NO_AVATAR_THUMBNAIL,
+            }}
+          />
+          <Headline>{user?.name}</Headline>
+          <Caption>{`@${user?.username}`}</Caption>
+          <Paragraph>{user?.bio}</Paragraph>
+          <SportsList sports={user?.sports} />
+          <UserConnectionsCard
+            {...connections}
+            onTeamsPress={() => {
+              onTeamsPress(user?.id);
+            }}
+            onFollowersPress={() => {
+              onFollowersPress(user?.id);
+            }}
+            onFollowingPress={() => {
+              onFollowingPress(user?.id);
+            }}
+          />
+        </UserInfoContainer>
       );
     } else {
       return null;

@@ -5,15 +5,15 @@ export const ME = gql`
     me {
       user {
         id
-        username
+        name
         firstName
         lastName
+        username
         bio
         userImg
         sports {
           sportId
           name
-          rating
         }
         teamsCount
         followersCount

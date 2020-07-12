@@ -812,12 +812,13 @@ export interface Me_me_user_sports {
 export interface Me_me_user {
   __typename: "UserType";
   id: string;
+  name: string | null;
+  firstName: string;
+  lastName: string;
   /**
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
-  firstName: string;
-  lastName: string;
   bio: string;
   userImg: string | null;
   sports: (Me_me_user_sports | null)[] | null;
@@ -1162,7 +1163,6 @@ export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   id: string;
   teamName: string;
-  rating: number | null;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
 }

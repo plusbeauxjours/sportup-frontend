@@ -22,7 +22,6 @@ import {
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
-
 import UserInteractionCard from "../../components/UserInteractionCard";
 import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";

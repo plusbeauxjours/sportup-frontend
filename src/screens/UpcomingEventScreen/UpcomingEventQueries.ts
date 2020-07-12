@@ -10,7 +10,6 @@ export const GET_UPCOMING_EVENTS = gql`
         sport {
           sportId
           name
-          rating
         }
         owner {
           id

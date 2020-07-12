@@ -8,12 +8,10 @@ export const GET_USER_TEAMS = gql`
         teamSet {
           id
           teamName
-          rating
           coverImg
           sport {
             sportId
             name
-            rating
           }
         }
       }

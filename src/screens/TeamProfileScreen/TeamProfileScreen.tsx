@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { ActivityIndicator, FlatList, Alert } from "react-native";
+import { ActivityIndicator, FlatList } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
@@ -11,9 +11,11 @@ import {
 } from "../../types/api";
 import { MEDIA_URL } from "../../constants/urls";
 import RatingChip from "../../components/RatingChip";
-import { GET_TEAM } from "./TeamProfileScreenQueries";
+import { GET_TEAM, RATE_TEAM } from "./TeamProfileScreenQueries";
 import UserCard from "../../components/UserCard";
 import RatingDialog from "../../components/RatingDialog";
+import { useMutation } from "react-apollo";
+import { RateTeam, RateTeamVariables } from "../../types/api";
 
 const View = styled.View`
   align-items: center;
@@ -27,39 +29,36 @@ const Image = styled.Image`
   width: 100%;
   height: 150px;
 `;
+const Touchable = styled.TouchableOpacity``;
 
 interface IProps {
-  coverImg?: string;
+  coverImg: string;
   teamName: string;
-  sport: GetTeam_getTeam_team_sport;
-  dialogVisible: boolean;
+  sport: any;
+  showDialog: boolean;
   rating: number;
-  onStarRatingPress: (rating: number) => void;
-  closeDialog: () => void;
-  showDialog: () => void;
-  onSubmitRating: () => void;
 }
 
-const TeamInfo: React.FC<IProps> = ({
+const TeamInfoArea: React.FC<IProps> = ({
   coverImg,
   teamName,
   sport,
-  dialogVisible,
-  rating,
-  onStarRatingPress,
-  closeDialog,
   showDialog,
-  onSubmitRating,
+  rating,
 }) => {
   return (
     <Container>
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
-        <Headline>{teamName}</Headline>
+        <Touchable onPress={showDialog}>
+          <Headline>
+            {teamName}⭐️{rating}
+          </Headline>
+        </Touchable>
         <RatingChip
           sportId={sport.sportId}
           name={sport.name}
-          onChipPress={showDialog}
+          onChipPress={() => {}}
         />
       </View>
     </Container>
@@ -75,7 +74,7 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
     GetTeamVariables
   >(GET_TEAM, { variables: { teamId } });
 
-  const onStarRatingPrrateress = (rating: number) => {
+  const onStarRatingPress = (rating: number) => {
     setRating(rating);
   };
 
@@ -92,15 +91,15 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
     setDialogVisible(false);
   };
 
-  // const [rateTeamFn, { loading: rateTeamLoading }] = useMutation<
-  //   RateTeam,
-  //   RateUserSportVariables
-  // >(RATE_USER_SPORT, {
-  //   variables: { userId, sportId: ratingSportWithId, rating },
-  // });
+  const [rateTeamFn, { loading: rateTeamLoading }] = useMutation<
+    RateTeam,
+    RateTeamVariables
+  >(RATE_TEAM, {
+    variables: { teamId, rating },
+  });
 
   const onSubmit = () => {
-    // rateTeamFn();
+    rateTeamFn();
     closeDialog();
   };
   if (loading) {
@@ -122,16 +121,12 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
           )}
           ItemSeparatorComponent={() => <Divider />}
           ListHeaderComponent={() => (
-            <TeamInfo
+            <TeamInfoArea
               coverImg={team.coverImg}
               teamName={team.teamName}
               sport={team.sport}
-              dialogVisible={dialogVisible}
-              rating={rating}
-              onStarRatingPress={onStarRatingPress}
-              closeDialog={closeDialog}
               showDialog={showDialog}
-              onSubmitRating={onSubmitRating}
+              rating={team.rating}
             />
           )}
           ListFooterComponent={
