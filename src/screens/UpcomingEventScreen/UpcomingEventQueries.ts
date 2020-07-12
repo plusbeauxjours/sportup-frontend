@@ -8,7 +8,7 @@ export const GET_UPCOMING_EVENTS = gql`
         name
         coverImg
         sport {
-          id
+          sportId
           name
         }
         owner {

@@ -79,7 +79,7 @@ export interface UnfollowUserVariables {
 
 export interface GetTeamsForPlayer_getTeamsForPlayer_teams_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -284,7 +284,7 @@ export interface SignupVariables {
 
 export interface CreateEvent_createEvent_event_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -434,7 +434,7 @@ export interface UpdateUserVariables {
 
 export interface UpdateSports_updateSports_user_sports {
   __typename: "UserPlaysSportType";
-  id: string;
+  sportId: string | null;
   name: string | null;
 }
 
@@ -467,7 +467,7 @@ export interface UpdateSportsVariables {
 
 export interface UpdateTeam_updateTeam_team_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -520,7 +520,7 @@ export interface UpdateTeamVariables {
 
 export interface GetEvent_getEvent_event_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -620,7 +620,7 @@ export interface GetMainFeedVariables {
 
 export interface GetAllSports_getAllSports_sports {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -726,7 +726,7 @@ export interface GetUserFollowingVariables {
 
 export interface GetUsersForGame_getUsersForGame_users_sports {
   __typename: "UserPlaysSportType";
-  id: string;
+  sportId: string | null;
   name: string | null;
 }
 
@@ -768,7 +768,7 @@ export interface GetUsersForGameVariables {
 
 export interface GetTeamsForGame_getTeamsForGame_teams_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -805,7 +805,7 @@ export interface GetTeamsForGameVariables {
 
 export interface Me_me_user_sports {
   __typename: "UserPlaysSportType";
-  id: string;
+  sportId: string | null;
   name: string | null;
 }
 
@@ -1079,7 +1079,7 @@ export interface GetSearchResultsVariables {
 
 export interface GetTeam_getTeam_team_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -1131,7 +1131,7 @@ export interface GetTeamVariables {
 
 export interface GetUserTeams_getUser_user_teamSet_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -1174,7 +1174,7 @@ export interface GetUserTeamsVariables {
 
 export interface GetUpcomingEvents_getUpcomingEvents_events_sport {
   __typename: "SportType";
-  id: string;
+  sportId: string | null;
   name: string;
 }
 
@@ -1217,7 +1217,7 @@ export interface GetUpcomingEvents {
 
 export interface GetUser_getUser_user_sports {
   __typename: "UserPlaysSportType";
-  id: string;
+  sportId: string | null;
   name: string | null;
 }
 

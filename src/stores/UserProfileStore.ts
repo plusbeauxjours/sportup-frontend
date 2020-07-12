@@ -159,7 +159,7 @@ export default class UserProfileStore {
   };
 
   onSubmitRating = (sportId, rating) => {
-    const idx = this.sports.findIndex(sport => sport.id === sportId);
+    const idx = this.sports.findIndex(sport => sport.sportId === sportId);
     this.sports[idx].rated = rating;
     this.closeDialog();
   };

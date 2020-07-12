@@ -107,14 +107,14 @@ export default class FindPlayerScreen extends Component<IProps> {
                       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
                         {sports?.map((sport) => (
                           <RatingChip
-                            sportId={sport.id}
+                            sportId={sport.sportId}
                             name={sport.name}
                             selected={
-                              this.selectedSports[parseInt(sport.id) - 1]
+                              this.selectedSports[parseInt(sport.sportId) - 1]
                             }
-                            key={sport.id}
+                            key={sport.sportId}
                             onChipPress={() =>
-                              this.toggleSportChip(parseInt(sport.id) - 1)
+                              this.toggleSportChip(parseInt(sport.sportId) - 1)
                             }
                           />
                         ))}

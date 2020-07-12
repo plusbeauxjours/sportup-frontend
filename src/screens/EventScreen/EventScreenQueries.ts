@@ -8,7 +8,7 @@ export const GET_EVENT = gql`
         name
         description
         sport {
-          id
+          sportId
           name
         }
         coverImg

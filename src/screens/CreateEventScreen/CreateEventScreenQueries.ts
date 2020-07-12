@@ -30,7 +30,7 @@ export const CREATE_EVENT = gql`
         name
         description
         sport {
-          id
+          sportId
           name
         }
         maximumMembers

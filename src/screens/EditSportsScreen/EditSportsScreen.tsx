@@ -108,7 +108,7 @@ export default class EditSportsScreen extends React.Component<IProps> {
                   me {
                     user {
                       sports {
-                        id
+                        sportId
                       }
                     }
                   }
@@ -116,7 +116,6 @@ export default class EditSportsScreen extends React.Component<IProps> {
               `,
             });
             me.user.sports.forEach(({ pk }) => {
-              console.log(pk);
               this.selectedSports[pk - 1] = true;
             });
             return (
@@ -130,13 +129,13 @@ export default class EditSportsScreen extends React.Component<IProps> {
                     />
                     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                        {this.sports?.map(({ id, name }) => (
+                        {this.sports?.map(({ sportId, name }) => (
                           <RatingChip
-                            sportId={id}
+                            sportId={sportId}
                             name={name}
-                            selected={this.selectedSports[id - 1]}
-                            key={id}
-                            onChipPress={() => this.toggleSportChip(id - 1)}
+                            selected={this.selectedSports[sportId - 1]}
+                            key={sportId}
+                            onChipPress={() => {}}
                           />
                         ))}
                       </View>

@@ -9,15 +9,28 @@ import {
 } from "./UserProfileScreenQueries";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import UserProfileHeader from "../../components/UserProfileHeader";
 import {
   GetUser,
   GetUserVariables,
   GetUserFeed,
   GetUserFeedVariables,
 } from "../../types/api";
-import { observer } from "mobx-react/native";
+import { observer, Observer } from "mobx-react/native";
 import { observable, action } from "mobx";
+import { Avatar } from "react-native-elements";
+import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
+import { Headline, Caption, Paragraph } from "react-native-paper";
+import UserInteractionCard from "../../components/UserInteractionCard";
+import SportsList from "../../components/SportsList";
+import UserConnectionsCard from "../../components/UserConnectionsCard";
+import RatingDialog from "../../components/RatingDialog";
+import styled from "styled-components/native";
+
+const UserInfoContainer = styled.View`
+  align-items: center;
+  margin: 5px 0;
+  background-color: #fff;
+`;
 
 interface IState {
   userId: string;
@@ -60,6 +73,7 @@ class UserProfileScreen extends React.Component<any, IState> {
 
   @action
   public showDialog = (sportId) => {
+    console.log("sportId", sportId);
     this.setState({
       rating: 0,
       dialogVisible: true,
@@ -83,13 +97,13 @@ class UserProfileScreen extends React.Component<any, IState> {
   public onSubmit = () => {
     const { userId, ratingSportWithId, rating } = this.state;
     this.rateUserSportFn({
-      variables: { userId, sportUuid: ratingSportWithId, rating },
+      variables: { userId, sportId: ratingSportWithId, rating },
     });
     this.closeDialog();
   };
 
   public renderUserInfoArea = () => {
-    const { userId, dialogVisible, rating } = this.state;
+    const { userId } = this.state;
     return (
       <Mutation mutation={RATE_USER_SPORT}>
         {(rateUserSportFn, { loading: rateUserSportLoading }) => {
@@ -116,31 +130,41 @@ class UserProfileScreen extends React.Component<any, IState> {
                     following: user.followingCount,
                   };
                   return (
-                    <UserProfileHeader
-                      id={user.id}
-                      userImg={user.userImg}
-                      name={`${user.firstName} ${user.lastName}`}
-                      username={user.username}
-                      bio={user.bio}
-                      sports={user.sports}
-                      connections={connections}
-                      onTeamsPress={() => {
-                        this.onTeamsPress(user.id);
-                      }}
-                      onFollowersPress={() => {
-                        this.onFollowersPress(user.id);
-                      }}
-                      onFollowingPress={() => {
-                        this.onFollowingPress(user.id);
-                      }}
-                      showDialog={this.showDialog}
-                      isFollowing={user.isFollowing}
-                      dialogVisible={dialogVisible}
-                      rating={rating}
-                      closeDialog={this.closeDialog}
-                      onStarRatingPress={this.onStarRatingPress}
-                      onSubmit={this.onSubmit}
-                    />
+                    <UserInfoContainer>
+                      <Avatar
+                        size="large"
+                        rounded
+                        containerStyle={{ marginTop: 40 }}
+                        source={{
+                          uri: user.userImg
+                            ? MEDIA_URL + user.userImg
+                            : NO_AVATAR_THUMBNAIL,
+                        }}
+                      />
+                      <Headline>{user.name}</Headline>
+                      <Caption>{`@${user.username}`}</Caption>
+                      <Paragraph>{user.bio}</Paragraph>
+                      <UserInteractionCard
+                        id={user.id}
+                        isFollowing={user.isFollowing}
+                      />
+                      <SportsList
+                        sports={user.sports}
+                        onChipPress={this.showDialog}
+                      />
+                      <UserConnectionsCard
+                        {...connections}
+                        onTeamsPress={() => {
+                          this.onTeamsPress(user.id);
+                        }}
+                        onFollowersPress={() => {
+                          this.onFollowersPress(user.id);
+                        }}
+                        onFollowingPress={() => {
+                          this.onFollowingPress(user.id);
+                        }}
+                      />
+                    </UserInfoContainer>
                   );
                 } else {
                   return null;
@@ -155,7 +179,7 @@ class UserProfileScreen extends React.Component<any, IState> {
 
   render() {
     let pageNum = 1;
-    const { userId } = this.state;
+    const { userId, dialogVisible, rating } = this.state;
     return (
       <Query<GetUserFeed, GetUserFeedVariables>
         query={GET_USER_FEED}
@@ -173,47 +197,60 @@ class UserProfileScreen extends React.Component<any, IState> {
           refetch,
         }) => {
           return (
-            <FeedList
-              posts={posts}
-              refreshing={networkStatus === 4}
-              onRefresh={() => {
-                pageNum = 1;
-                refetch({ userId, pageNum });
-              }}
-              ListHeaderComponent={this.renderUserInfoArea}
-              ListFooterComponent={() => (
-                <ListFooterComponent loading={loading} />
-              )}
-              onEndReached={() => {
-                if (!this.onEndReachedCalledDuringMomentum) {
-                  pageNum += 1;
-                  fetchMore({
-                    variables: {
-                      pageNum,
-                    },
-                    updateQuery: (prev, { fetchMoreResult }) => {
-                      if (!fetchMoreResult) return prev;
-                      if (!fetchMoreResult.getUserFeed) return prev;
-                      return Object.assign({}, prev, {
-                        getUserFeed: {
-                          ...prev.getUserFeed,
-                          posts: [
-                            ...prev.getUserFeed.posts,
-                            ...fetchMoreResult.getUserFeed.posts,
-                          ],
-                        },
-                      });
-                    },
-                  });
-                  this.onEndReachedCalledDuringMomentum = true;
-                }
-              }}
-              onEndReachedThreshold={0.2}
-              onMomentumScrollBegin={() => {
-                this.onEndReachedCalledDuringMomentum = false;
-              }}
-              disableNavigation={true}
-            />
+            <>
+              <FeedList
+                posts={posts}
+                refreshing={networkStatus === 4}
+                onRefresh={() => {
+                  pageNum = 1;
+                  refetch({ userId, pageNum });
+                }}
+                ListHeaderComponent={this.renderUserInfoArea}
+                ListFooterComponent={() => (
+                  <ListFooterComponent loading={loading} />
+                )}
+                onEndReached={() => {
+                  if (!this.onEndReachedCalledDuringMomentum) {
+                    pageNum += 1;
+                    fetchMore({
+                      variables: {
+                        pageNum,
+                      },
+                      updateQuery: (prev, { fetchMoreResult }) => {
+                        if (!fetchMoreResult) return prev;
+                        if (!fetchMoreResult.getUserFeed) return prev;
+                        return Object.assign({}, prev, {
+                          getUserFeed: {
+                            ...prev.getUserFeed,
+                            posts: [
+                              ...prev.getUserFeed.posts,
+                              ...fetchMoreResult.getUserFeed.posts,
+                            ],
+                          },
+                        });
+                      },
+                    });
+                    this.onEndReachedCalledDuringMomentum = true;
+                  }
+                }}
+                onEndReachedThreshold={0.2}
+                onMomentumScrollBegin={() => {
+                  this.onEndReachedCalledDuringMomentum = false;
+                }}
+                disableNavigation={true}
+              />
+              <Observer>
+                {() => (
+                  <RatingDialog
+                    visible={dialogVisible}
+                    rating={rating}
+                    onStarRatingPress={this.onStarRatingPress}
+                    close={this.closeDialog}
+                    onSubmit={this.onSubmit}
+                  />
+                )}
+              </Observer>
+            </>
           );
         }}
       </Query>

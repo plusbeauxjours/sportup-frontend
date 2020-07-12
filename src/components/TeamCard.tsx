@@ -55,7 +55,7 @@ const TeamCardWithCover: React.FC<IProps> = withNavigation(
           )}
         </Container>
         <RatingChip
-          sportId={sport.id}
+          sportId={sport.sportId}
           name={sport.name}
           rating={rating}
           onChipPress={() => {}}
@@ -91,7 +91,7 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
         </Container>
         <View>
           <RatingChip
-            sportId={sport.id}
+            sportId={sport.sportId}
             name={sport.name}
             rating={rating}
             onChipPress={() => {}}

@@ -5,7 +5,7 @@ export const UPDATE_SPORTS = gql`
     updateSports(sportIds: $sportIds) {
       user {
         sports {
-          id
+          sportId
           name
         }
       }

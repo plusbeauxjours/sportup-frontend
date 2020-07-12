@@ -22,9 +22,7 @@ const RatingChip: React.FC<IProps> = ({
     <Chip
       icon={icon && { uri: icon }}
       onPress={() => {
-        if (onChipPress !== null) {
-          onChipPress(sportId);
-        }
+        onChipPress && onChipPress(sportId);
       }}
       style={selected && { backgroundColor: PRIMARY_COLOR }}
     >

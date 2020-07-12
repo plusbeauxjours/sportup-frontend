@@ -60,7 +60,7 @@ export default class EditTeamProfileScreen extends React.Component<
     this.setState((prev) => ({
       ...prev,
       teamName: data?.getTeam?.team?.teamName,
-      sportId: data?.getTeam?.team?.sport?.id,
+      sportId: data?.getTeam?.team?.sport?.sportId,
       membersList: data?.getTeam?.team?.members?.map((member) => ({
         id: member.id,
         name: member.name,
@@ -177,8 +177,12 @@ export default class EditTeamProfileScreen extends React.Component<
                             }));
                           }}
                         >
-                          {sports.map(({ id, name }) => (
-                            <Picker.Item key={id} label={name} value={id} />
+                          {sports.map(({ sportId, name }) => (
+                            <Picker.Item
+                              key={sportId}
+                              label={name}
+                              value={sportId}
+                            />
                           ))}
                         </Picker>
                       </PickerContainer>

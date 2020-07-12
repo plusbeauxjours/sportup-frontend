@@ -11,7 +11,7 @@ export const GET_USERS_FOR_GAME = gql`
         bio
         isFollowing
         sports {
-          id
+          sportId
           name
         }
       }

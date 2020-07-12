@@ -16,7 +16,7 @@ const RatingDialog: React.FC<IProps> = ({
   close,
   onSubmit,
 }) => (
-  <Dialog visible={visible} onDismiss={close}>
+  <Dialog visible={visible} onDismiss={close} style={{ zIndex: 20 }}>
     <Dialog.Content>
       <AirbnbRating
         showRating

@@ -56,7 +56,7 @@ const MainDrawer = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: "Events",
+    initialRouteName: "Me",
   }
 );
 

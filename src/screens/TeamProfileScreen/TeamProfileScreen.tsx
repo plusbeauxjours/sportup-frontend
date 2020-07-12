@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
-import { Query } from "react-apollo";
 import { ActivityIndicator, FlatList, Alert } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
+import { useQuery } from "react-apollo-hooks";
 
 import {
   GetTeam_getTeam_team_sport,
@@ -14,8 +14,6 @@ import RatingChip from "../../components/RatingChip";
 import { GET_TEAM } from "./TeamProfileScreenQueries";
 import UserCard from "../../components/UserCard";
 import RatingDialog from "../../components/RatingDialog";
-import { observer, Observer } from "mobx-react/native";
-import { action, observable } from "mobx";
 
 const View = styled.View`
   align-items: center;
@@ -59,123 +57,97 @@ const TeamInfo: React.FC<IProps> = ({
       <View>
         <Headline>{teamName}</Headline>
         <RatingChip
-          sportId={sport.id}
+          sportId={sport.sportId}
           name={sport.name}
           onChipPress={showDialog}
         />
       </View>
-      <Observer>
-        {() => (
-          <RatingDialog
-            visible={dialogVisible}
-            rating={rating}
-            onStarRatingPress={onStarRatingPress}
-            close={closeDialog}
-            onSubmit={onSubmitRating}
-          />
-        )}
-      </Observer>
     </Container>
   );
 };
 
-@observer
-export default class TeamProfileScreen extends React.Component<IProps> {
-  static navigationOptions = {
-    title: "Team",
+const TeamProfileScreen: React.FC = ({ navigation }) => {
+  const teamId = navigation.getParam("teamId");
+  const [dialogVisible, setDialogVisible] = useState<boolean>(false);
+  const [rating, setRating] = useState<number>(0);
+  const {
+    data: { getTeam: { team = null } = {} } = {},
+    client,
+    loading,
+  } = useQuery<GetTeam, GetTeamVariables>(GET_TEAM, { variables: { teamId } });
+
+  const onStarRatingPress = (rating: number) => {
+    setRating(rating);
   };
 
-  @observable
-  dialogVisible = false;
-  @observable
-  loadedInfo = false;
-
-  rating = 0;
-
-  onStarRatingPress = (rating) => {
-    this.rating = rating;
+  const onSubmitRating = () => {
+    closeDialog();
   };
 
-  onSubmitRating = () => {
-    this.closeDialog();
+  const showDialog = () => {
+    setDialogVisible(true);
   };
 
-  @action
-  showDialog = () => {
-    this.dialogVisible = true;
+  const closeDialog = () => {
+    setRating(0);
+    setDialogVisible(false);
   };
-
-  @action
-  closeDialog = () => {
-    this.rating = 0;
-    this.dialogVisible = false;
-  };
-
-  render() {
+  if (loading) {
+    return <ActivityIndicator size="large" />;
+  } else {
     return (
-      <Query<GetTeam, GetTeamVariables>
-        query={GET_TEAM}
-        variables={{ teamId: this.props.navigation.getParam("teamId") }}
-      >
-        {({
-          data: { getTeam: { team = null } = {} } = {},
-          loading,
-          error,
-          client,
-        }) => {
-          if (loading) {
-            return <ActivityIndicator size="large" />;
-          }
-
-          if (error) {
-            Alert.alert("", error.message);
-            return null;
-          }
-          return (
-            <FlatList
-              data={team.members}
-              keyExtractor={(item) => item.id.toString()}
-              renderItem={({ item }) => (
-                <UserCard
-                  userId={item.id}
-                  name={item.name}
-                  username={item.username}
-                  userImg={item.userImg}
-                  isFollowing={item.isFollowing}
-                />
-              )}
-              ItemSeparatorComponent={() => <Divider />}
-              ListHeaderComponent={() => (
-                <TeamInfo
-                  coverImg={team.coverImg}
-                  teamName={team.teamName}
-                  sport={team.sport}
-                  dialogVisible={this.dialogVisible}
-                  rating={this.rating}
-                  onStarRatingPress={this.onStarRatingPress}
-                  closeDialog={this.closeDialog}
-                  showDialog={this.showDialog}
-                  onSubmitRating={this.onSubmitRating}
-                />
-              )}
-              ListFooterComponent={
-                team.isAdmin && (
-                  <Button
-                    onPress={() => {
-                      this.props.navigation.navigate("EditTeamProfileScreen", {
-                        teamId: team.id,
-                        client,
-                      });
-                    }}
-                  >
-                    Edit team
-                  </Button>
-                )
-              }
+      <>
+        <FlatList
+          data={team.members}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <UserCard
+              userId={item.id}
+              name={item.name}
+              username={item.username}
+              userImg={item.userImg}
+              isFollowing={item.isFollowing}
             />
-          );
-        }}
-      </Query>
+          )}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={() => (
+            <TeamInfo
+              coverImg={team.coverImg}
+              teamName={team.teamName}
+              sport={team.sport}
+              dialogVisible={dialogVisible}
+              rating={rating}
+              onStarRatingPress={onStarRatingPress}
+              closeDialog={closeDialog}
+              showDialog={showDialog}
+              onSubmitRating={onSubmitRating}
+            />
+          )}
+          ListFooterComponent={
+            team.isAdmin && (
+              <Button
+                onPress={() => {
+                  navigation.navigate("EditTeamProfileScreen", {
+                    teamId: team.id,
+                    client,
+                  });
+                }}
+              >
+                Edit team
+              </Button>
+            )
+          }
+        />
+        <RatingDialog
+          visible={dialogVisible}
+          rating={rating}
+          onStarRatingPress={onStarRatingPress}
+          close={closeDialog}
+          onSubmit={onSubmitRating}
+        />
+      </>
     );
   }
-}
+};
+
+export default TeamProfileScreen;

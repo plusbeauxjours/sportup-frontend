@@ -8,37 +8,37 @@ import {
 } from './icons';
 
 const football = {
-  id: 1,
+  sportId: 1,
   name: 'Football',
   icon: FootballIcon,
 };
 
 const chess = {
-  id: 2,
+  sportId: 2,
   name: 'Chess',
   icon: ChessIcon,
 };
 
 const golf = {
-  id: 3,
+  sportId: 3,
   name: 'Golf',
   icon: GolfIcon,
 };
 
 const baseball = {
-  id: 4,
+  sportId: 4,
   name: 'Baseball',
   icon: BaseballIcon,
 };
 
 const basketball = {
-  id: 5,
+  sportId: 5,
   name: 'Basketball',
   icon: BasketballIcon,
 };
 
 const hockey = {
-  id: 6,
+  sportId: 6,
   name: 'Hockey',
   icon: HockeyIcon,
 };

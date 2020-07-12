@@ -14,9 +14,9 @@ const rest = {
   rated: 4,
   connections,
   sports: [
-    { id: 1, rating: 4.8, rated: 5 },
-    { id: 2, rating: 3.5 },
-    { id: 3, rating: 3.0 },
+    { sportId: 1, rating: 4.8, rated: 5 },
+    { sportId: 2, rating: 3.5 },
+    { sportId: 3, rating: 3.0 },
   ],
 };
 

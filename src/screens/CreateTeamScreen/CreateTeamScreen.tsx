@@ -107,8 +107,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                 setSportId(value);
               }}
             >
-              {sports.map(({ id, name }) => (
-                <Picker.Item key={id} label={name} value={id} />
+              {sports.map(({ sportId, name }) => (
+                <Picker.Item key={sportId} label={name} value={sportId} />
               ))}
             </Picker>
           </PickerContainer>

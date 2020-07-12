@@ -18,10 +18,10 @@ const rest = {
   rated: 4,
   connections,
   sports: [{
-    id: 0,
+    sportId: 0,
     rating: 4.5
   }, {
-    id: 1,
+    sportId: 1,
     rating: 4.8
   }],
 };
