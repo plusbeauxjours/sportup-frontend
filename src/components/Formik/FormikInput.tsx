@@ -11,7 +11,7 @@ const Container = styled.View`
 interface IProps {
   label: string;
   error: any;
-  value: string;
+  value: any;
   name: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
