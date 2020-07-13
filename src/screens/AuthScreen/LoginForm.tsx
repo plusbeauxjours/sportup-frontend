@@ -25,17 +25,18 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginForm = ({ navigation }) => {
-  const handleLoginComplete = async ({ tokenAuth }) => {
-    const { token } = tokenAuth;
-    await AsyncStorage.setItem("jwt", token);
-    navigation.navigate("Main");
-  };
   const [LoginFn, { client, loading: LoginLoading }] = useMutation<
     Login,
     LoginVariables
   >(LOGIN, {
     onCompleted: (tokenAuth) => handleLoginComplete(tokenAuth),
   });
+
+  const handleLoginComplete = async ({ tokenAuth }) => {
+    const { token } = tokenAuth;
+    await AsyncStorage.setItem("jwt", token);
+    navigation.navigate("Main");
+  };
 
   const renderForm = ({
     values,
@@ -112,4 +113,5 @@ const LoginForm = ({ navigation }) => {
     </KeyboardAwareScrollView>
   );
 };
+
 export default LoginForm;

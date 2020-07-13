@@ -1,28 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Mutation, MutationFunction } from "react-apollo";
+import { useMutation } from "react-apollo";
 import { AsyncStorage } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
-import styled from "styled-components/native";
 import { LOGIN, SIGNUP } from "./AuthScreenQueries";
+import { Button } from "react-native-paper";
 import {
   Login,
   LoginVariables,
   Signup,
   SignupVariables,
 } from "../../types/api";
-
-interface IProps {
-  navigation;
-}
-
-const Button = styled.Button`
-  margin-top: 10px;
-  width: 90%;
-`;
 
 const initialValues = {
   firstName: "",
@@ -50,19 +41,33 @@ const validationSchema = Yup.object().shape({
     .required("Please re-enter your password"),
 });
 
-export default class SignupForm extends React.Component<IProps> {
-  public tokenAuth: MutationFunction;
-  public createUser: MutationFunction;
-  static navigationOptions = {
-    title: "Sign Up",
+const SignupForm = ({ navigation }) => {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [LoginFn, { client: LoginClient, loading: LoginLoading }] = useMutation<
+    Login,
+    LoginVariables
+  >(LOGIN, {
+    onCompleted: (tokenAuth) => handleLoginComplete(tokenAuth),
+  });
+
+  const [SignupFn, { loading: SignupLoading }] = useMutation<
+    Signup,
+    SignupVariables
+  >(SIGNUP, {
+    onCompleted: () => {
+      console.log(username, password);
+      LoginClient.resetStore(), LoginFn({ variables: { username, password } });
+    },
+  });
+
+  const handleLoginComplete = async ({ tokenAuth }) => {
+    const { token } = tokenAuth;
+    await AsyncStorage.setItem("jwt", token);
+    navigation.navigate("Main");
   };
 
-  public handleSignupComplete = async (data) => {
-    await AsyncStorage.setItem("jwt", data.tokenAuth.token);
-    this.props.navigation.navigate("Main");
-  };
-
-  public renderForm = ({
+  const renderForm = ({
     values,
     setFieldValue,
     setFieldTouched,
@@ -126,67 +131,46 @@ export default class SignupForm extends React.Component<IProps> {
         name="confirmPassword"
         error={touched.confirmPassword && errors.confirmPassword}
       />
-      <Mutation<Login, LoginVariables>
-        mutation={LOGIN}
-        variables={{
-          username: values.handle,
-          password: values.password,
-        }}
-        onCompleted={this.handleSignupComplete}
-      >
-        {(tokenAuth, loginResult) => (
-          <Mutation<Signup, SignupVariables>
-            mutation={SIGNUP}
-            variables={{
+      <Button
+        disabled={!isValid || LoginLoading || SignupLoading}
+        loading={LoginLoading || SignupLoading}
+        onPress={() => {
+          SignupFn({
+            variables: {
               firstName: values.firstName,
               lastName: values.lastName,
               email: values.email,
               username: values.handle,
               password: values.password,
-            }}
-            onCompleted={() => {
-              loginResult.client.resetStore();
-              tokenAuth();
-            }}
-          >
-            {(createUser, signupResult) => (
-              <Button
-                disabled={
-                  !isValid || loginResult.loading || signupResult.loading
-                }
-                loading={loginResult.loading || signupResult.loading}
-                onPress={() => {
-                  createUser();
-                }}
-                style={{ marginTop: 10, width: "90%" }}
-                title="Create account"
-              />
-            )}
-          </Mutation>
-        )}
-      </Mutation>
+            },
+          });
+          setUsername(values.handle);
+          setPassword(values.password);
+        }}
+      >
+        Create account
+      </Button>
     </React.Fragment>
   );
-
-  public render() {
-    return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        keyboardShouldPersistTaps="handled"
+  return (
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Formik
+        initialValues={initialValues}
+        onSubmit={() => {}}
+        validationSchema={validationSchema}
       >
-        <Formik
-          initialValues={initialValues}
-          onSubmit={() => {}}
-          validationSchema={validationSchema}
-        >
-          {this.renderForm}
-        </Formik>
-      </KeyboardAwareScrollView>
-    );
-  }
-}
+        {renderForm}
+      </Formik>
+    </KeyboardAwareScrollView>
+  );
+};
+
+export default SignupForm;
