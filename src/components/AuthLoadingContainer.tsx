@@ -1,9 +1,5 @@
-import React from "react";
-import {
-  NavigationScreenProp,
-  NavigationParams,
-  NavigationState,
-} from "react-navigation";
+import React, { useEffect } from "react";
+
 import { ActivityIndicator, AsyncStorage } from "react-native";
 import styled from "styled-components/native";
 
@@ -13,29 +9,23 @@ const Container = styled.View`
   justify-content: center;
 `;
 
-interface IProps {
-  navigation: NavigationScreenProp<any, any>;
-}
-export default class AuthLoadingContainer extends React.Component<IProps> {
-  constructor(props) {
-    super(props);
-    this.checkAuthentication();
-  }
-
-  checkAuthentication = async () => {
+export default ({ navigation }) => {
+  const checkAuthentication = async () => {
     try {
       const id = await AsyncStorage.getItem("jwt");
-      this.props.navigation.navigate(id ? "Main" : "Auth");
+      navigation.navigate(id ? "Main" : "Auth");
     } catch (_) {
-      this.props.navigation.navigate("Auth");
+      navigation.navigate("Auth");
     }
   };
 
-  render() {
-    return (
-      <Container>
-        <ActivityIndicator />
-      </Container>
-    );
-  }
-}
+  useEffect(() => {
+    checkAuthentication();
+  }, []);
+
+  return (
+    <Container>
+      <ActivityIndicator />
+    </Container>
+  );
+};

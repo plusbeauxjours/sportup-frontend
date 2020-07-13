@@ -1,28 +1,15 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Mutation, MutationFunction } from "react-apollo";
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from "react-navigation";
+import { useMutation } from "react-apollo";
+import { Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AsyncStorage } from "react-native";
+
 import FormikInput from "../../components/Formik/FormikInput";
-import styled from "styled-components/native";
 import Divider from "../../components/Divider";
 import { LOGIN } from "./AuthScreenQueries";
 import { Login, LoginVariables } from "../../types/api";
-
-interface IProps {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
-}
-
-const Button = styled.Button`
-  margin-top: 10px;
-  width: 90%;
-`;
 
 const initialValues = { username: "", password: "" };
 const validationSchema = Yup.object().shape({
@@ -37,19 +24,20 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-export default class LoginForm extends React.Component<IProps> {
-  public tokenAuth: MutationFunction;
-  static navigationOptions = {
-    title: "sportup",
-  };
-
-  public handleLoginComplete = async ({ tokenAuth }) => {
+const LoginForm = ({ navigation }) => {
+  const handleLoginComplete = async ({ tokenAuth }) => {
     const { token } = tokenAuth;
     await AsyncStorage.setItem("jwt", token);
-    this.props.navigation.navigate("Main");
+    navigation.navigate("Main");
   };
+  const [LoginFn, { client, loading: LoginLoading }] = useMutation<
+    Login,
+    LoginVariables
+  >(LOGIN, {
+    onCompleted: (tokenAuth) => handleLoginComplete(tokenAuth),
+  });
 
-  public renderForm = ({
+  const renderForm = ({
     values,
     setFieldValue,
     setFieldTouched,
@@ -77,55 +65,51 @@ export default class LoginForm extends React.Component<IProps> {
         name="password"
         error={touched.password && errors.password}
       />
-      <Mutation<Login, LoginVariables>
-        mutation={LOGIN}
-        variables={{ username: values.username, password: values.password }}
-        onCompleted={this.handleLoginComplete}
+      <Button
+        disabled={!isValid || LoginLoading}
+        loading={LoginLoading}
+        onPress={() => {
+          client.resetStore();
+          LoginFn({
+            variables: {
+              username: values.username,
+              password: values.password,
+            },
+          });
+        }}
       >
-        {(tokenAuth, { loading, client }) => (
-          <React.Fragment>
-            <Button
-              disabled={!isValid || loading}
-              loading={loading}
-              onPress={() => {
-                client.resetStore();
-                tokenAuth();
-              }}
-              title="Log in"
-            />
-            <Divider text="OR" />
-            <Button
-              disabled={loading}
-              onPress={() => {
-                this.props.navigation.navigate("SignUp");
-              }}
-              title="Create new account"
-            />
-          </React.Fragment>
-        )}
-      </Mutation>
+        Log in
+      </Button>
+      <Divider text="OR" />
+      <Button
+        disabled={LoginLoading}
+        onPress={() => {
+          navigation.navigate("SignUp");
+        }}
+      >
+        Create new account
+      </Button>
     </React.Fragment>
   );
 
-  public render() {
-    return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        keyboardShouldPersistTaps="handled"
+  return (
+    <KeyboardAwareScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={() => {}}
       >
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={() => {}}
-        >
-          {this.renderForm}
-        </Formik>
-      </KeyboardAwareScrollView>
-    );
-  }
-}
+        {renderForm}
+      </Formik>
+    </KeyboardAwareScrollView>
+  );
+};
+export default LoginForm;

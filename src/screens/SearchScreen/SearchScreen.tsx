@@ -1,156 +1,155 @@
-import React, { Component } from "react";
-import { SectionList, Alert } from "react-native";
-import { observable, action } from "mobx";
-import { Observer } from "mobx-react/native";
-import { Appbar } from "react-native-paper";
-import { Avatar } from "react-native-elements";
-import { ApolloConsumer } from "react-apollo";
-import { Searchbar, ListItem, Caption, Divider } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { ActivityIndicator, FlatList } from "react-native";
+import { Appbar, Headline } from "react-native-paper";
+import { ListItem } from "react-native-elements";
+import { Searchbar } from "react-native-paper";
 
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GET_SEARCH_RESULTS } from "./SearchQueries";
+import { useLazyQuery } from "react-apollo";
+import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
+import styled from "styled-components/native";
 
-export default class SearchScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Search",
-    headerLeft: (
-      <Appbar.Action
-        icon="menu"
-        onPress={() => {
-          navigation.toggleDrawer();
-        }}
-      />
-    ),
-  });
-
-  @observable
-  query = "";
-
-  state = {
-    users: [],
-    teams: [],
-    events: [],
-  };
-
-  public onIconPress = async (client) => {
-    try {
-      const { data } = await client.query({
-        query: GET_SEARCH_RESULTS,
-        variables: { searchText: this.query },
-      });
-      this.setState((prev) => ({
-        ...prev,
-        users: data.searchUsers,
-        teams: data.searchTeams,
-        events: data.searchEvents,
-      }));
-    } catch (error) {
-      Alert.alert("", error.message);
-    }
-  };
-
-  @action
-  public onChangeText = (query) => {
-    this.query = query;
-  };
-
-  public renderUser = ({ item }) => (
-    <ListItem
-      title={item.name}
-      description={`@${item.username}`}
-      avatar={
-        <Avatar
-          rounded
-          source={
-            item.userImg
-              ? { uri: MEDIA_URL + item.userImg }
-              : NO_AVATAR_THUMBNAIL
-          }
-        />
-      }
-      onPress={() => {
-        this.props.navigation.push("Profile", { userId: item.id });
-      }}
-    />
+const SectionTitle = styled.Text`
+  font-size: 10px;
+  font-weight: 400;
+`;
+const SearchScreen = ({ navigation }) => {
+  const [searchText, setSearchText] = useState<string>("");
+  const [
+    search,
+    {
+      data: {
+        getSearchUsers: { users = null } = {},
+        getSearchTeams: { teams = null } = {},
+        getSearchEvents: { events = null } = {},
+      } = {},
+      loading,
+    },
+  ] = useLazyQuery<GetSearchResults, GetSearchResultsVariables>(
+    GET_SEARCH_RESULTS,
+    { variables: { searchText } }
   );
 
-  public renderTeam = ({ item }) => (
-    <ListItem
-      title={item.name}
-      description={`Created by ${item.createdBy.name} (@${item.createdBy.username})`}
-      // avatar={
-      //   item.coverImg ? { uri: MEDIA_URL + item.coverImg } : NO_AVATAR_THUMBNAIL
-      // }
-      onPress={() => {
-        this.props.navigation.push("Team", { teamId: item.id });
-      }}
-    />
-  );
+  const handleChange = (text) => {
+    setSearchText(text);
+    console.log(text);
+  };
 
-  public renderEvent = ({ item }) => (
-    <ListItem
-      title={item.name}
-      description={`Created by ${item.owner.name} (@${item.owner.username})`}
-      // avatar={
-      //   item.coverImg ? { uri: MEDIA_URL + item.coverImg } : NO_AVATAR_THUMBNAIL
-      // }
-      onPress={() => {
-        this.props.navigation.push("EventScreen", { eventId: item.id });
-      }}
-    />
-  );
-
-  public render() {
-    return (
-      <ApolloConsumer>
-        {(client) => (
-          <SectionList
-            renderItem={() => {}}
-            renderSectionHeader={({ section: { title } }) => (
-              <Caption style={{ paddingLeft: 10 }}>{title}</Caption>
-            )}
-            sections={[
-              {
-                title: "Users",
-                data: this.state.users,
-                renderItem: this.renderUser,
+  const RenderUser = () => (
+    <>
+      <SectionTitle>Users</SectionTitle>
+      <FlatList
+        data={users}
+        renderItem={({ item }) => (
+          <ListItem
+            title={item?.name}
+            subtitle={`@${item?.username}`}
+            leftAvatar={{
+              rounded: true,
+              source: {
+                uri: item?.userImg
+                  ? MEDIA_URL + item?.userImg
+                  : NO_AVATAR_THUMBNAIL,
               },
-              {
-                title: "Teams",
-                data: this.state.teams,
-                renderItem: this.renderTeam,
-              },
-              {
-                title: "Events",
-                data: this.state.events,
-                renderItem: this.renderEvent,
-              },
-            ]}
-            // ListEmptyComponent={() => {
-            //   if (this.state.loading) {
-            //     return <ActivityIndicator size="small" margin={20} />;
-            //   }
-            //   return null;
-            // }}
-            keyExtractor={(item) => item.id.toString()}
-            ItemSeparatorComponent={() => <Divider />}
-            ListHeaderComponent={() => (
-              <Observer>
-                {() => (
-                  <Searchbar
-                    placeholder="Search"
-                    onChangeText={this.onChangeText}
-                    value={this.query}
-                    onIconPress={() => {
-                      this.onIconPress(client);
-                    }}
-                  />
-                )}
-              </Observer>
-            )}
+            }}
+            onPress={() => {
+              navigation.push("UserProfileScreen", { userId: item?.id });
+            }}
           />
         )}
-      </ApolloConsumer>
-    );
-  }
-}
+        keyExtractor={(itemm, index) => index.toString()}
+        ListEmptyComponent={() => (
+          <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
+            &middot;
+          </Headline>
+        )}
+      />
+    </>
+  );
+
+  const RenderTeam = () => (
+    <>
+      <SectionTitle>Teams</SectionTitle>
+      <FlatList
+        data={teams}
+        renderItem={({ item }) => (
+          <ListItem
+            title={item?.teamName}
+            subtitle={`Created by ${item?.createdBy.name} (@${item?.createdBy.username})`}
+            onPress={() => {
+              navigation.push("TeamProfileScreen", { teamId: item?.id });
+            }}
+          />
+        )}
+        keyExtractor={(itemm, index) => index.toString()}
+        ListEmptyComponent={() => (
+          <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
+            &middot;
+          </Headline>
+        )}
+      />
+    </>
+  );
+
+  const RenderEvent = () => (
+    <>
+      <SectionTitle>Events</SectionTitle>
+      <FlatList
+        data={events}
+        renderItem={({ item }) => (
+          <ListItem
+            title={item?.name}
+            subtitle={`Created by ${item?.owner.name} (@${item?.owner.username})`}
+            onPress={() => {
+              navigation.push("EventScreen", { eventId: item?.id });
+            }}
+          />
+        )}
+        keyExtractor={(itemm, index) => index.toString()}
+        ListEmptyComponent={() => (
+          <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
+            &middot;
+          </Headline>
+        )}
+      />
+    </>
+  );
+
+  useEffect(() => {
+    search();
+    console.log(users);
+  }, [searchText]);
+
+  return (
+    <React.Fragment>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={handleChange}
+        value={searchText}
+      />
+      {loading ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <>
+          <RenderUser />
+          <RenderTeam />
+          <RenderEvent />
+        </>
+      )}
+    </React.Fragment>
+  );
+};
+SearchScreen.navigationOptions = ({ navigation }) => ({
+  title: "Search",
+  headerLeft: () => (
+    <Appbar.Action
+      icon="menu"
+      onPress={() => {
+        navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
+
+export default SearchScreen;

@@ -151,8 +151,6 @@ export default class SignupForm extends React.Component<IProps> {
           >
             {(createUser, signupResult) => (
               <Button
-                raised
-                primary
                 disabled={
                   !isValid || loginResult.loading || signupResult.loading
                 }

@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Picker } from "react-native";
 import { Subheading } from "react-native-paper";
 import styled from "styled-components/native";
@@ -17,24 +17,27 @@ interface IProps {
   selectedValue: any;
 }
 
-export default class FormikPicker extends PureComponent<IProps> {
-  handleChange = (value) => {
-    this.props.onChange(this.props.name, value);
+const FormikPicker: React.FC<IProps> = ({
+  onChange,
+  label,
+  name,
+  selectedValue,
+  ...rest
+}) => {
+  const handleChange = (value) => {
+    onChange(name, value);
   };
+  return (
+    <View>
+      <Subheading style={{ fontWeight: "bold" }}>{label}</Subheading>
+      <Picker
+        style={{ width: 200 }}
+        onValueChange={handleChange}
+        selectedValue={selectedValue}
+        {...rest}
+      />
+    </View>
+  );
+};
 
-  render() {
-    return (
-      <View>
-        <Subheading style={{ fontWeight: "bold" }}>
-          {this.props.label}
-        </Subheading>
-        <Picker
-          style={{ width: 200 }}
-          onValueChange={this.handleChange}
-          selectedValue={this.props.selectedValue}
-          {...this.props}
-        />
-      </View>
-    );
-  }
-}
+export default FormikPicker;
