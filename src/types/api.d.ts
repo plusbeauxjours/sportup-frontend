@@ -906,7 +906,6 @@ export interface RegisterTeamVariables {
   eventId: string;
   teamName: string;
   captainName: string;
-  captainCnic: string;
   captainContact: string;
   playerNames?: (string | null)[] | null;
 }

@@ -2406,22 +2406,6 @@
             "deprecationReason": null
           },
           {
-            "name": "captainCnic",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "captainContactNum",
             "description": "",
             "args": [],
@@ -3497,20 +3481,6 @@
             "name": "registerTeam",
             "description": null,
             "args": [
-              {
-                "name": "captainCnic",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null
-              },
               {
                 "name": "captainContact",
                 "description": null,

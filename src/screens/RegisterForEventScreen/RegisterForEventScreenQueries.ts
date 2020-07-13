@@ -5,7 +5,6 @@ export const REGISTER_TEAM = gql`
     $eventId: String!
     $teamName: String!
     $captainName: String!
-    $captainCnic: String!
     $captainContact: String!
     $playerNames: [String]
   ) {
@@ -13,7 +12,6 @@ export const REGISTER_TEAM = gql`
       eventId: $eventId
       teamName: $teamName
       captainName: $captainName
-      captainCnic: $captainCnic
       captainContact: $captainContact
       playerNames: $playerNames
     ) {
