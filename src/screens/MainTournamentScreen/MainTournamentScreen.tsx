@@ -13,7 +13,6 @@ const MainTournamentScreen = ({ navigation }) => (
     <Button
       style={{ marginBottom: 10 }}
       onPress={() => {
-        console.log("mkokoko");
         navigation.navigate("UpcomingEventScreen");
       }}
     >

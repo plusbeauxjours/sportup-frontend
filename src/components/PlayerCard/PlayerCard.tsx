@@ -33,7 +33,6 @@ const PlayerCard: React.FC<IProps> = ({
   );
   return (
     <Card>
-      {console.log(sports)}
       <UserCard
         userId={id}
         userImg={userImg}

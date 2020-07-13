@@ -33,7 +33,6 @@ const SearchScreen = ({ navigation }) => {
 
   const handleChange = (text) => {
     setSearchText(text);
-    console.log(text);
   };
 
   const RenderUser = () => (
@@ -118,7 +117,6 @@ const SearchScreen = ({ navigation }) => {
 
   useEffect(() => {
     search();
-    console.log(users);
   }, [searchText]);
 
   return (
