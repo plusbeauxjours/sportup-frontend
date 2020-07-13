@@ -24,7 +24,6 @@ const UserInfoContainer = styled.View`
 `;
 
 const MyProfileScreen = ({ navigation }) => {
-  let pageNum = 1;
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -33,13 +32,13 @@ const MyProfileScreen = ({ navigation }) => {
   } = useQuery<Me>(ME);
 
   const {
-    data: { getMyFeed: { posts = null } = {} } = {},
+    data: { getMyFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
     loading: getMyFeedLoading,
     fetchMore: getMyFeedFetchMore,
     networkStatus,
     refetch: getMyFeedRefetch,
   } = useQuery<GetMyFeed, GetMyFeedVariables>(MY_FEED, {
-    variables: { pageNum },
+    variables: { pageNum: 1 },
     fetchPolicy: "network-only",
   });
 
@@ -123,17 +122,16 @@ const MyProfileScreen = ({ navigation }) => {
         posts={posts}
         refreshing={networkStatus === 4}
         onRefresh={() => {
-          pageNum = 1;
-          getMyFeedRefetch({ pageNum });
+          getMyFeedRefetch({ pageNum: 1 });
         }}
         ListHeaderComponent={renderUserInfoArea}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
         onEndReached={() => {
-          if (!loading) {
-            pageNum += 1;
+          console.log(hasNextPage, pageNum);
+          if (!loading && hasNextPage) {
             getMyFeedFetchMore({
               variables: {
-                pageNum,
+                pageNum: pageNum + 1,
               },
               updateQuery: (prev, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prev;
@@ -141,6 +139,8 @@ const MyProfileScreen = ({ navigation }) => {
                 return Object.assign({}, prev, {
                   getMyFeed: {
                     ...prev.getMyFeed,
+                    pageNum: fetchMoreResult.getMyFeed.pageNum,
+                    hasNextPage: fetchMoreResult.getMyFeed.hasNextPage,
                     posts: [
                       ...prev.getMyFeed.posts,
                       ...fetchMoreResult.getMyFeed.posts,

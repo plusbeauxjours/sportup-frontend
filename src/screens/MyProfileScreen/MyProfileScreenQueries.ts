@@ -27,6 +27,8 @@ export const ME = gql`
 export const MY_FEED = gql`
   query GetMyFeed($pageNum: Int) {
     getMyFeed(pageNum: $pageNum) {
+      pageNum
+      hasNextPage
       posts{
         id
         text

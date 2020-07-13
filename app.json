@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "Blank Template (TypeScript)",
+    "name": "SportUp",
+    "description": "SportUp application",
     "slug": "app",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,7 +24,24 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "sportup.plusbeauxjours",
+      "usesAppleSignIn": true,
+      "userInterfaceStyle": "light"
+    },
+    "android": {
+      "versionCode": 11,
+      "package": "sportup.plusbeauxjours",
+      "permissions": [
+        "ACCESS_NOTIFICATION_POLICY"
+      ]
+    },
+    "notification": {
+      "icon": "./assets/notification.png"
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#fff"
     }
   }
 }

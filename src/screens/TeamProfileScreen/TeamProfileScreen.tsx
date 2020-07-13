@@ -4,11 +4,7 @@ import { ActivityIndicator, FlatList } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
-import {
-  GetTeam_getTeam_team_sport,
-  GetTeam,
-  GetTeamVariables,
-} from "../../types/api";
+import { GetTeam, GetTeamVariables } from "../../types/api";
 import { MEDIA_URL } from "../../constants/urls";
 import RatingChip from "../../components/RatingChip";
 import { GET_TEAM, RATE_TEAM } from "./TeamProfileScreenQueries";
@@ -35,7 +31,7 @@ interface IProps {
   coverImg: string;
   teamName: string;
   sport: any;
-  showDialog: boolean;
+  showDialog: () => void;
   rating: number;
 }
 
@@ -50,7 +46,7 @@ const TeamInfoArea: React.FC<IProps> = ({
     <Container>
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
-        <Touchable onPress={showDialog}>
+        <Touchable onPress={() => showDialog}>
           <Headline>
             {teamName}⭐️{rating}
           </Headline>
@@ -76,10 +72,6 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
 
   const onStarRatingPress = (rating: number) => {
     setRating(rating);
-  };
-
-  const onSubmitRating = () => {
-    closeDialog();
   };
 
   const showDialog = () => {

@@ -1,90 +1,83 @@
-import React from "react";
-import { Query } from "react-apollo";
+import React, { useState } from "react";
 import { Appbar } from "react-native-paper";
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import WritePost from "../../components/WritePost/WritePost";
+import { useQuery } from "react-apollo-hooks";
+import { ActivityIndicator } from "react-native";
 
-class FeedScreen extends React.Component {
-  public onEndReachedCalledDuringMomentum;
-  static navigationOptions = ({ navigation }) => ({
-    title: "Feed",
-    headerLeft: () => (
-      <Appbar.Action
-        icon="menu"
-        onPress={() => {
-          navigation.toggleDrawer();
-        }}
-      />
-    ),
+const FeedScreen = ({ navigation }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const {
+    data: { getMainFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
+    loading: getMainFeedLoading,
+    fetchMore: getMainFeedFetchMore,
+    networkStatus,
+    refetch: getMainFeedRefetch,
+  } = useQuery<GetMainFeed, GetMainFeedVariables>(GET_MAIN_FEED, {
+    variables: { pageNum: 1 },
+    fetchPolicy: "network-only",
   });
 
-  public pageNum = 1;
-
-  public render() {
-    let pageNum = 1;
-
+  if (getMainFeedLoading) {
+    return <ActivityIndicator size="large" style={{ margin: 20 }} />;
+  } else {
     return (
-      <Query<GetMainFeed, GetMainFeedVariables>
-        query={GET_MAIN_FEED}
-        variables={{ pageNum }}
-      >
-        {({
-          data: { getMainFeed: { posts = null } = {} } = {},
-          fetchMore,
-          loading,
-          refetch,
-          networkStatus,
-        }) => {
-          return (
-            <FeedList
-              posts={posts}
-              refreshing={networkStatus === 4}
-              onRefresh={() => {
-                pageNum = 1;
-                refetch({ pageNum });
-              }}
-              ListHeaderComponent={() => <WritePost />}
-              ListFooterComponent={() => (
-                <ListFooterComponent loading={loading} />
-              )}
-              onEndReached={() => {
-                if (!this.onEndReachedCalledDuringMomentum) {
-                  pageNum += 1;
-                  fetchMore({
-                    variables: {
-                      pageNum,
-                    },
-                    updateQuery: (prev, { fetchMoreResult }) => {
-                      if (!fetchMoreResult) return prev;
-                      if (!fetchMoreResult.getMainFeed) return prev;
-                      return Object.assign({}, prev, {
-                        getMainFeed: {
-                          ...prev.getMainFeed,
-                          posts: [
-                            ...prev.getMainFeed.posts,
-                            ...fetchMoreResult.getMainFeed.posts,
-                          ],
-                        },
-                      });
-                    },
-                  });
-                  this.onEndReachedCalledDuringMomentum = true;
-                }
-              }}
-              onEndReachedThreshold={0.2}
-              onMomentumScrollBegin={() => {
-                this.onEndReachedCalledDuringMomentum = false;
-              }}
-              disableNavigation={false}
-            />
-          );
+      <FeedList
+        posts={posts}
+        refreshing={networkStatus === 4}
+        onRefresh={() => {
+          getMainFeedRefetch({ pageNum: 1 });
         }}
-      </Query>
+        ListHeaderComponent={() => <WritePost />}
+        ListFooterComponent={() => <ListFooterComponent loading={loading} />}
+        onEndReached={() => {
+          if (!loading && hasNextPage) {
+            getMainFeedFetchMore({
+              variables: {
+                pageNum: pageNum + 1,
+              },
+              updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                if (!fetchMoreResult.getMainFeed) return prev;
+                return Object.assign({}, prev, {
+                  getMainFeed: {
+                    ...prev.getMainFeed,
+                    pageNum: fetchMoreResult.getMainFeed.pageNum,
+                    hasNextPage: fetchMoreResult.getMainFeed.hasNextPage,
+                    posts: [
+                      ...prev.getMainFeed.posts,
+                      ...fetchMoreResult.getMainFeed.posts,
+                    ],
+                  },
+                });
+              },
+            });
+            setLoading(true);
+          }
+        }}
+        onEndReachedThreshold={0.2}
+        onMomentumScrollBegin={() => {
+          setLoading(false);
+        }}
+        disableNavigation={false}
+      />
     );
   }
-}
+};
+FeedScreen.navigationOptions = ({ navigation }) => ({
+  title: "Feed",
+  headerLeft: () => (
+    <Appbar.Action
+      icon="menu"
+      onPress={() => {
+        navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
 
 export default FeedScreen;

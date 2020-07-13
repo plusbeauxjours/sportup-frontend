@@ -34,7 +34,6 @@ const UserInfoContainer = styled.View`
 `;
 
 const UserProfileScreen: React.FC = ({ navigation }) => {
-  let pageNum = 1;
   const userId = navigation.getParam("userId");
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -42,13 +41,13 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
   const [ratingSportWithId, setRatingSportWithId] = useState<string>(null);
 
   const {
-    data: { getUserFeed: { posts = null } = {} } = {},
+    data: { getUserFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
     loading: getUserFeedLoading,
     fetchMore: getUserFeedFetchMore,
     networkStatus,
     refetch: getUserFeedRefetch,
   } = useQuery<GetUserFeed, GetUserFeedVariables>(GET_USER_FEED, {
-    variables: { userId, pageNum },
+    variables: { userId, pageNum: 1 },
     fetchPolicy: "network-only",
   });
 
@@ -151,17 +150,15 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
           posts={posts}
           refreshing={networkStatus === 4}
           onRefresh={() => {
-            pageNum = 1;
-            getUserFeedRefetch({ userId, pageNum });
+            getUserFeedRefetch({ userId, pageNum: 1 });
           }}
           ListHeaderComponent={renderUserInfoArea}
           ListFooterComponent={() => <ListFooterComponent loading={loading} />}
           onEndReached={() => {
-            if (!loading) {
-              pageNum += 1;
+            if (!loading && hasNextPage) {
               getUserFeedFetchMore({
                 variables: {
-                  pageNum,
+                  pageNum: pageNum + 1,
                 },
                 updateQuery: (prev, { fetchMoreResult }) => {
                   if (!fetchMoreResult) return prev;
@@ -169,6 +166,8 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
                   return Object.assign({}, prev, {
                     getUserFeed: {
                       ...prev.getUserFeed,
+                      pageNum: fetchMoreResult.getUserFeed.pageNum,
+                      hasNextPage: fetchMoreResult.getUserFeed.hasNextPage,
                       posts: [
                         ...prev.getUserFeed.posts,
                         ...fetchMoreResult.getUserFeed.posts,

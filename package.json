@@ -10,6 +10,7 @@
     "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^2.6.0",
     "@react-native-community/masked-view": "^0.1.7",
     "apollo": "^2.25.0",
     "apollo-cache-hermes": "^0.8.10",
@@ -34,6 +35,7 @@
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-modal-datetime-picker": "^8.7.1",
     "react-native-paper": "^3.6.0",
     "react-native-reanimated": "^1.7.1",
     "react-native-safe-area-context": "^0.7.3",

@@ -28,6 +28,8 @@ export const GET_USER = gql`
 export const GET_USER_FEED = gql`
   query GetUserFeed($userId: String!, $pageNum: Int) {
     getUserFeed(userId: $userId, pageNum: $pageNum) {
+      pageNum
+      hasNextPage
       posts {
         id
         text

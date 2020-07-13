@@ -598,6 +598,8 @@ export interface GetMainFeed_getMainFeed_posts {
 
 export interface GetMainFeed_getMainFeed {
   __typename: "GetMainFeedResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
   posts: (GetMainFeed_getMainFeed_posts | null)[] | null;
 }
 
@@ -869,6 +871,8 @@ export interface GetMyFeed_getMyFeed_posts {
 
 export interface GetMyFeed_getMyFeed {
   __typename: "GetMyFeedResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
   posts: (GetMyFeed_getMyFeed_posts | null)[] | null;
 }
 
@@ -1310,6 +1314,8 @@ export interface GetUserFeed_getUserFeed_posts {
 
 export interface GetUserFeed_getUserFeed {
   __typename: "GetUserFeedResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
   posts: (GetUserFeed_getUserFeed_posts | null)[] | null;
 }
 
