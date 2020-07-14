@@ -5,7 +5,7 @@ import FeedNavigation from "./FeedNavigation";
 import FindNavigation from "./FindNavigation";
 import EventNavigation from "./EventNavigation";
 import SearchNavigation from "./SearchNavigation";
-// import ChatNavigation from "./ChatNavigation";
+import ChatNavigation from "./ChatNavigation";
 import { Icon } from "react-native-elements";
 
 const MainDrawer = createDrawerNavigator(
@@ -33,13 +33,13 @@ const MainDrawer = createDrawerNavigator(
         drawerIcon: ({ tintColor }) => <Icon name="games" color={tintColor} />,
       },
     },
-    // Chat: {
-    //   screen: ChatNavigation,
-    //   navigationOptions: {
-    //     drawerLabel: "Chat",
-    //     drawerIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />,
-    //   },
-    // },
+    Chat: {
+      screen: ChatNavigation,
+      navigationOptions: {
+        drawerLabel: "Chat",
+        drawerIcon: ({ tintColor }) => <Icon name="chat" color={tintColor} />,
+      },
+    },
     Events: {
       screen: EventNavigation,
       navigationOptions: {

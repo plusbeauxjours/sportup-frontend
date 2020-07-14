@@ -13,7 +13,7 @@ const chat = {
   lastMessage: "Yaar yeh Ronaldo tou ghaddar nikla.",
   time: "2018-07-10T17:16:00",
   avatar: "",
-  unread: true,
+  unread: false,
 };
 
 export default [unreadChat, chat];
