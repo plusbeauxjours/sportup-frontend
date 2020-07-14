@@ -127,7 +127,6 @@ const MyProfileScreen = ({ navigation }) => {
         ListHeaderComponent={renderUserInfoArea}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
         onEndReached={() => {
-          console.log(hasNextPage, pageNum);
           if (!loading && hasNextPage) {
             getMyFeedFetchMore({
               variables: {

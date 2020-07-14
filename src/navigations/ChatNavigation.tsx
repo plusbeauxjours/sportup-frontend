@@ -1,10 +1,16 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { PRIMARY_COLOR } from "../constants/colors";
-import ChatListScreen from "../screens/ChatListScreen/ChatListScreen";
+import ChatListScreen from "../screens/ChatListScreen";
+import ChatInfoScreen from "../screens/ChatInfoScreen";
+import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
+import ChatScreen from "../screens/ChatScreen";
 
-const CharNavigation = createStackNavigator(
+const ChatNavigation = createStackNavigator(
   {
     ChatListScreen,
+    ChatInfoScreen,
+    ChatSendLocationScreen,
+    ChatScreen,
   },
   {
     initialRouteName: "ChatListScreen",
@@ -16,4 +22,4 @@ const CharNavigation = createStackNavigator(
     },
   }
 );
-export default CharNavigation;
+export default ChatNavigation;

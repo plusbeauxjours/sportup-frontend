@@ -33,7 +33,6 @@ export default ({ navigation }) => {
   };
 
   for (let i = 1; i < maximumMembers; i += 1) {
-    console.log(maximumMembers);
     initialValues[`player${i}Name`] = "";
     if (i < minimumMembers) {
       validationSchema[`player${i}Name`] = Yup.string().required(
@@ -97,7 +96,6 @@ export default ({ navigation }) => {
               .slice(3)
               .map((field, index) => (
                 <>
-                  {console.log(initialValues)}
                   <FormikInput
                     label={`Player ${index + 1} name${
                       index >= minimumMembers - 1 ? " (optional)" : ""

@@ -27,8 +27,6 @@ const EditProfileScreen = ({ navigation }) => {
     update(cache, { data: { updateUser } }) {
       try {
         const { me } = cache.readQuery<Me>({ query: ME });
-        console.log(updateUser);
-        console.log(me);
         cache.writeQuery({
           query: ME,
           data: {

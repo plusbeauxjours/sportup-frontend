@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import { Appbar, Headline } from "react-native-paper";
+import { Appbar, Headline, Divider } from "react-native-paper";
 import { ListItem } from "react-native-elements";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
@@ -11,11 +11,6 @@ import { useLazyQuery } from "react-apollo";
 import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const GreyLine = styled.View`
-  margin: 10px 0;
-  border-bottom-width: 0.3px;
-  border-bottom-color: #999;
-`;
 const SectionTitle = styled.Text`
   font-size: 10px;
   font-weight: 400;
@@ -23,6 +18,7 @@ const SectionTitle = styled.Text`
 const Container = styled.View`
   padding: 10px;
 `;
+
 const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState<string>("");
   const [
@@ -141,9 +137,9 @@ const SearchScreen = ({ navigation }) => {
           keyboardShouldPersistTaps="handled"
         >
           <RenderUser />
-          <GreyLine />
+          <Divider />
           <RenderTeam />
-          <GreyLine />
+          <Divider />
           <RenderEvent />
         </KeyboardAwareScrollView>
       )}

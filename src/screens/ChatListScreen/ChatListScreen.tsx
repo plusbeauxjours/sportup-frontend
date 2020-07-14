@@ -5,7 +5,6 @@ import chats from "../../temp/chat";
 import ChatCard from "../../components/ChatCard";
 
 const ChatListScreen = () => {
-  console.log(chats);
   return (
     <FlatList
       data={chats}

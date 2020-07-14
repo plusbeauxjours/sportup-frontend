@@ -25,67 +25,68 @@ const UpperHalfContainer = styled.View`
   align-items: center;
 `;
 
-const ChatCard = ({
-  id,
-  unread = false,
-  avatar = "",
-  name,
-  time,
-  lastMessage,
-  navigation,
-}) => {
-  const gotoChat = () => {
-    navigation.push("ChatScreen", {
-      chatId: id,
-      chatName: name,
-      lastMessage,
-      time,
-    });
-  };
-  return (
-    <TouchableOpacity onPress={gotoChat}>
-      <Avatar
-        rounded
-        containerStyle={{ marginTop: 5, marginLeft: 5 }}
-        source={{
-          uri: avatar ? MEDIA_URL + avatar : NO_AVATAR_THUMBNAIL,
-        }}
-      />
-      <RightContainer>
-        {unread ? (
-          <>
-            <UpperHalfContainer>
-              <Subheading
+export default withNavigation(
+  ({
+    id,
+    unread = false,
+    avatar = "",
+    name,
+    time,
+    lastMessage,
+    navigation,
+  }) => {
+    console.log(navigation);
+    const gotoChat = () => {
+      navigation.push("ChatScreen", {
+        chatId: id,
+        chatName: name,
+        lastMessage,
+        time,
+      });
+    };
+    return (
+      <TouchableOpacity onPress={gotoChat}>
+        <Avatar
+          rounded
+          containerStyle={{ marginTop: 5, marginLeft: 5 }}
+          source={{
+            uri: avatar ? MEDIA_URL + avatar : NO_AVATAR_THUMBNAIL,
+          }}
+        />
+        <RightContainer>
+          {unread ? (
+            <>
+              <UpperHalfContainer>
+                <Subheading
+                  numberOfLines={1}
+                  style={{ color: "#000", fontWeight: "bold" }}
+                >
+                  {name}
+                </Subheading>
+                <Caption style={{ color: "#000", fontWeight: "bold" }}>
+                  {timeSince(time)}
+                </Caption>
+              </UpperHalfContainer>
+              <Paragraph
                 numberOfLines={1}
                 style={{ color: "#000", fontWeight: "bold" }}
               >
-                {name}
-              </Subheading>
-              <Caption style={{ color: "#000", fontWeight: "bold" }}>
-                {timeSince(time)}
-              </Caption>
-            </UpperHalfContainer>
-            <Paragraph
-              numberOfLines={1}
-              style={{ color: "#000", fontWeight: "bold" }}
-            >
-              {lastMessage}
-            </Paragraph>
-          </>
-        ) : (
-          <>
-            <UpperHalfContainer>
-              <Subheading numberOfLines={1}>{name}</Subheading>
-              <Caption>{timeSince(time)}</Caption>
-            </UpperHalfContainer>
-            <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>
-              {lastMessage}
-            </Paragraph>
-          </>
-        )}
-      </RightContainer>
-    </TouchableOpacity>
-  );
-};
-
-export default withNavigation(ChatCard);
+                {lastMessage}
+              </Paragraph>
+            </>
+          ) : (
+            <>
+              <UpperHalfContainer>
+                <Subheading numberOfLines={1}>{name}</Subheading>
+                <Caption>{timeSince(time)}</Caption>
+              </UpperHalfContainer>
+              <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>
+                {lastMessage}
+              </Paragraph>
+            </>
+          )}
+        </RightContainer>
+      </TouchableOpacity>
+    );
+  }
+);

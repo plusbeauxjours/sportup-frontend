@@ -251,12 +251,6 @@ const CreateEventScreen = ({ navigation }) => {
                 loading={createEventLoading}
                 disabled={!isValid || createEventLoading}
                 onPress={() => {
-                  console.log(
-                    Moment(startDate).format("YYYY-MM-DD"),
-                    Moment(endDate).format("YYYY-MM-DD"),
-                    Moment(startTime).format("HH:MM"),
-                    Moment(endTime).format("HH:MM")
-                  );
                   createEventFn({
                     variables: {
                       name: values.name,

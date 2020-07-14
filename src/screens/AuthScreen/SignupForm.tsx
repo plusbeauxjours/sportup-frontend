@@ -56,7 +56,6 @@ const SignupForm = ({ navigation }) => {
     SignupVariables
   >(SIGNUP, {
     onCompleted: () => {
-      console.log(username, password);
       LoginClient.resetStore(), LoginFn({ variables: { username, password } });
     },
   });
