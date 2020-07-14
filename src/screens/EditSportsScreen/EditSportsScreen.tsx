@@ -1,82 +1,87 @@
-import React from "react";
-import { View, Alert, ActivityIndicator } from "react-native";
-import { observable, action } from "mobx";
-import { observer, Observer } from "mobx-react/native";
-import { Query, Mutation } from "react-apollo";
-import gql from "graphql-tag";
-import { Searchbar, Button } from "react-native-paper";
+import React, { useState, useEffect } from "react";
+import { ActivityIndicator } from "react-native";
+import { useQuery, useMutation } from "react-apollo";
+import { Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import { UPDATE_SPORTS } from "./EditSportsScreenQueries";
+import {
+  GetAllSports,
+  Me,
+  UpdateSports,
+  UpdateSportsVariables,
+} from "../../types/api";
+import styled from "styled-components/native";
 
-interface IProps extends NavigationStackScreenProps {}
+const Container = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 
-@observer
-export default class EditSportsScreen extends React.Component<IProps> {
-  public updateSportsFn;
-  static navigationOptions = {
-    title: "Edit Sports",
-  };
+const Row = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
 
-  @observable
-  query = "";
+export default ({ navigation }) => {
+  const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
-  constructor(props) {
-    super(props);
+  const {
+    data: { me: { user = null } = {} } = {},
+    loading: meLoading,
+  } = useQuery<Me>(ME, {
+    onCompleted: ({ me }) =>
+      me.user?.sports.forEach(({ sportId }) =>
+        setSelectedSportsIds((i) => [...i, sportId])
+      ),
+  });
 
-    this.allSports = [];
-    this.sports = observable([]);
-    this.selectedSports = observable([]);
-  }
+  const {
+    data: { getAllSports: { sports = null } = {} } = {},
+    loading: getAllSportsLoading,
+  } = useQuery<GetAllSports>(GET_ALL_SPORTS, {
+    fetchPolicy: "network-only",
+  });
 
-  @action
-  public onChangeText = (query) => {
-    this.sports = this.allSports.filter((sport) =>
-      sport.name.toLowerCase().includes(query.toLowerCase())
-    );
-    this.query = query;
-  };
-
-  @action
-  public toggleSportChip = (index) => {
-    this.selectedSports[index] = !this.selectedSports[index];
-  };
-
-  public updateCache = (
-    cache,
-    {
-      data: {
-        updateSports: { user },
-      },
-    }
-  ) => {
-    try {
-      const data = cache.readQuery({ query: ME });
-      if (data) {
+  const [updateSportsFn, { loading: updateUserLoading }] = useMutation<
+    UpdateSports,
+    UpdateSportsVariables
+  >(UPDATE_SPORTS, {
+    update(cache, { data: { updateSports } }) {
+      try {
+        const { me } = cache.readQuery<Me>({ query: ME });
         cache.writeQuery({
           query: ME,
           data: {
-            ...data,
             me: {
-              ...data.me,
+              ...me,
               user: {
-                ...data.me.user,
-                sports: user.sports,
+                ...me.user,
+                sports: updateSports.user.sports,
               },
             },
           },
         });
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
+    },
+  });
+
+  const toggleSportChip = (sportId: string) => {
+    if (selectedSportIds.includes(sportId)) {
+      setSelectedSportsIds(selectedSportIds.filter((i) => i !== sportId));
+    } else {
+      setSelectedSportsIds((i) => [...i, sportId]);
     }
   };
 
-  public render() {
+  if (getAllSportsLoading || meLoading) {
+    return <ActivityIndicator size="large" />;
+  } else {
     return (
       <KeyboardAwareScrollView
         contentContainerStyle={{
@@ -86,97 +91,35 @@ export default class EditSportsScreen extends React.Component<IProps> {
         }}
         keyboardShouldPersistTaps="handled"
       >
-        <Query
-          query={GET_ALL_SPORTS}
-          fetchPolicy="network-only"
-          onError={(error) => Alert.alert("", error.message)}
-        >
-          {({
-            loading,
-            data: { getAllSports: { sports = null } = {} } = {},
-            client,
-          }) => {
-            if (loading) {
-              return <ActivityIndicator size="large" />;
-            }
-            this.allSports = sports;
-            this.sports = observable(this.allSports);
-            this.selectedSports = observable(sports?.map(() => false));
-            const { me } = client.readQuery({
-              query: gql`
-                {
-                  me {
-                    user {
-                      sports {
-                        sportId
-                      }
-                    }
-                  }
-                }
-              `,
-            });
-            me.user.sports.forEach(({ pk }) => {
-              this.selectedSports[pk - 1] = true;
-            });
-            return (
-              <Observer>
-                {() => (
-                  <View>
-                    <Searchbar
-                      placeholder="Search"
-                      onChangeText={this.onChangeText}
-                      value={this.query}
-                    />
-                    <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                      <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                        {this.sports?.map(({ sportId, name }) => (
-                          <RatingChip
-                            sportId={sportId}
-                            name={name}
-                            selected={this.selectedSports[sportId - 1]}
-                            key={sportId}
-                            onChipPress={() => {}}
-                          />
-                        ))}
-                      </View>
-                    </KeyboardAwareScrollView>
-                  </View>
-                )}
-              </Observer>
-            );
-          }}
-        </Query>
-
-        <Mutation
-          mutation={UPDATE_SPORTS}
-          update={this.updateCache}
-          onError={(error) => Alert.alert("", error.message)}
-        >
-          {(updateSportsFn, { loading }) => (
-            <Button
-              onPress={() => {
-                const selectedSportIds = [];
-                this.selectedSports.forEach((sport, index) => {
-                  if (sport === true) {
-                    selectedSportIds.push(index + 1);
-                  }
-                });
-                updateSportsFn({
-                  variables: {
-                    sportIds: selectedSportIds,
-                  },
-                });
-                this.props.navigation.goBack();
-              }}
-              style={{ width: "90%", alignSelf: "center" }}
-              loading={loading}
-              disabled={loading}
-            >
-              Save
-            </Button>
-          )}
-        </Mutation>
+        <Row>
+          {sports?.map((sport) => (
+            <RatingChip
+              sportId={sport.sportId}
+              name={sport.name}
+              selected={selectedSportIds.includes(sport.sportId)}
+              key={sport.sportId}
+              onChipPress={() => toggleSportChip(sport.sportId)}
+            />
+          ))}
+        </Row>
+        <Container>
+          <Button
+            onPress={() => {
+              updateSportsFn({
+                variables: {
+                  sportIds: selectedSportIds,
+                },
+              });
+              navigation.goBack();
+            }}
+            style={{ width: "90%", alignSelf: "center" }}
+            loading={updateUserLoading}
+            disabled={updateUserLoading}
+          >
+            Save
+          </Button>
+        </Container>
       </KeyboardAwareScrollView>
     );
   }
-}
+};
