@@ -1,61 +1,65 @@
-import React, { Component } from "react";
-import { Alert } from "react-native";
-import { ApolloConsumer, Mutation } from "react-apollo";
-import gql from "graphql-tag";
+import React from "react";
+import { ActivityIndicator } from "react-native";
+import { useMutation, useQuery } from "react-apollo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { ReactNativeFile } from "apollo-upload-client";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
 import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
-import styled from "styled-components/native";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { Avatar } from "react-native-elements";
+import { Button } from "react-native-paper";
+import { UpdateUser, UpdateUserVariables, Me } from "../../types/api";
 
-const Button = styled.Button`
-  margin-top: 10px;
-  width: 90%;
-`;
+const EditProfileScreen = ({ navigation }) => {
+  const {
+    data: { me: { user = null } = {} } = {},
+    loading: meLoading,
+  } = useQuery<Me>(ME);
 
-interface IProps extends NavigationStackScreenProps {}
-
-export default class EditProfileScreen extends Component<IProps> {
-  static navigationOptions = {
-    title: "Edit profile",
-  };
-
-  public onEditSportsPress = () => {
-    this.props.navigation.navigate("EditSportsScreen");
-  };
-
-  public onCreateTeamPress = () => {
-    this.props.navigation.navigate("CreateTeamScreen");
-  };
-
-  public updateCache = (cache, { data: { updateUser } }) => {
-    const { me } = cache.readQuery({ query: ME });
-    cache.writeQuery({
-      query: ME,
-      data: {
-        me: {
-          ...me,
-          user: {
-            ...me.user,
-            firstName: updateUser.user.firstName,
-            lastName: updateUser.user.lastName,
-            bio: updateUser.user.bio,
-            userImg: updateUser.user.userImg,
+  const [updateUserFn, { loading: updateUserLoading }] = useMutation<
+    UpdateUser,
+    UpdateUserVariables
+  >(UPDATE_USER, {
+    update(cache, { data: { updateUser } }) {
+      try {
+        const { me } = cache.readQuery<Me>({ query: ME });
+        console.log(updateUser);
+        console.log(me);
+        cache.writeQuery({
+          query: ME,
+          data: {
+            me: {
+              ...me,
+              user: {
+                ...me.user,
+                name:
+                  updateUser.user.firstName + " " + updateUser.user.lastName,
+                firstName: updateUser.user.firstName,
+                lastName: updateUser.user.lastName,
+                bio: updateUser.user.bio,
+              },
+            },
           },
-        },
-      },
-    });
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  });
+
+  const onEditSportsPress = () => {
+    navigation.navigate("EditSportsScreen");
   };
 
-  public validationSchema = Yup.object().shape({
+  const onCreateTeamPress = () => {
+    navigation.navigate("CreateTeamScreen");
+  };
+
+  const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     bio: Yup.string(),
@@ -71,161 +75,127 @@ export default class EditProfileScreen extends Component<IProps> {
       "Passwords do not match"
     ),
   });
-
-  render() {
+  if (meLoading) {
+    return <ActivityIndicator size="large" />;
+  } else {
     return (
-      <ApolloConsumer>
-        {(client) => {
-          const { me } = client.readQuery({
-            query: gql`
-              {
-                me {
-                  user {
-                    id
-                    firstName
-                    lastName
-                    bio
-                    userImg
-                  }
-                }
-              }
-            `,
-          });
-
-          return (
-            <KeyboardAwareScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                backgroundColor: "#fff",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <Formik
-                initialValues={{
-                  firstName: me.user.firstName,
-                  lastName: me.user.lastName,
-                  bio: me.user.bio,
-                  password: "",
-                  confirmPassword: "",
-                  userImg: me.user.userImg && {
-                    uri: me.user.userImg,
-                  },
-                }}
-                onSubmit={() => {}}
-                validationSchema={this.validationSchema}
-              >
-                {({
-                  values,
-                  setFieldValue,
-                  setFieldTouched,
-                  touched,
-                  errors,
-                  isValid,
-                }) => (
-                  <React.Fragment>
-                    <Avatar
-                      size="large"
-                      rounded
-                      containerStyle={{ marginVertical: 40 }}
-                      source={{
-                        uri: me.user.userImg
-                          ? MEDIA_URL + me.user.userImg
-                          : NO_AVATAR_THUMBNAIL,
-                      }}
-                    />
-                    <FormikInput
-                      label="First name"
-                      value={values.firstName}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="firstName"
-                      error={touched.firstName && errors.firstName}
-                    />
-                    <FormikInput
-                      label="Last name"
-                      value={values.lastName}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="lastName"
-                      error={touched.lastName && errors.lastName}
-                    />
-                    <FormikInput
-                      label="Bio"
-                      value={values.bio}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="bio"
-                      error={touched.bio && errors.bio}
-                    />
-                    <FormikInput
-                      label="Password"
-                      autoCapitalize="none"
-                      secureTextEntry
-                      value={values.password}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="password"
-                      error={touched.password && errors.password}
-                    />
-                    <FormikInput
-                      label="Confirm password"
-                      autoCapitalize="none"
-                      secureTextEntry
-                      value={values.confirmPassword}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name="confirmPassword"
-                      error={touched.confirmPassword && errors.confirmPassword}
-                    />
-                    <Mutation
-                      mutation={UPDATE_USER}
-                      variables={{
-                        firstName: values.firstName.trim(),
-                        lastName: values.lastName.trim(),
-                        bio: values.bio.trim(),
-                        password: values.password,
-                        userImg:
-                          me.user.userImg === values.userImg
-                            ? null
-                            : new ReactNativeFile(values.userImg),
-                      }}
-                      update={this.updateCache}
-                      onError={(error) => Alert.alert("", error.message)}
-                    >
-                      {(updateUserProfile, { loading }) => (
-                        <React.Fragment>
-                          <Button
-                            disabled={!isValid || loading}
-                            loading={loading}
-                            onPress={() => {
-                              updateUserProfile();
-                              this.props.navigation.goBack();
-                            }}
-                            title="Save"
-                          />
-                          <Divider text="OR" />
-                          <Button
-                            disabled={loading}
-                            onPress={this.onEditSportsPress}
-                            title="Edit sports"
-                          />
-                          <Button
-                            disabled={loading}
-                            onPress={this.onCreateTeamPress}
-                            title="Create team"
-                          />
-                        </React.Fragment>
-                      )}
-                    </Mutation>
-                  </React.Fragment>
-                )}
-              </Formik>
-            </KeyboardAwareScrollView>
-          );
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: "#fff",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-      </ApolloConsumer>
+        keyboardShouldPersistTaps="handled"
+      >
+        <Formik
+          initialValues={{
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            bio: user?.bio,
+            password: "",
+            confirmPassword: "",
+          }}
+          onSubmit={() => {}}
+          validationSchema={validationSchema}
+        >
+          {({
+            values,
+            setFieldValue,
+            setFieldTouched,
+            touched,
+            errors,
+            isValid,
+          }) => (
+            <React.Fragment>
+              <Avatar
+                size="large"
+                rounded
+                containerStyle={{ marginVertical: 40 }}
+                source={{
+                  uri: user?.userImg
+                    ? MEDIA_URL + user?.userImg
+                    : NO_AVATAR_THUMBNAIL,
+                }}
+              />
+              <FormikInput
+                label="First name"
+                value={values.firstName}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name="firstName"
+                error={touched.firstName && errors.firstName}
+              />
+              <FormikInput
+                label="Last name"
+                value={values.lastName}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name="lastName"
+                error={touched.lastName && errors.lastName}
+              />
+              <FormikInput
+                label="Bio"
+                value={values.bio}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name="bio"
+                error={touched.bio && errors.bio}
+              />
+              <FormikInput
+                label="Password"
+                autoCapitalize="none"
+                secureTextEntry
+                value={values.password}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name="password"
+                error={touched.password && errors.password}
+              />
+              <FormikInput
+                label="Confirm password"
+                autoCapitalize="none"
+                secureTextEntry
+                value={values.confirmPassword}
+                onChange={setFieldValue}
+                onTouch={setFieldTouched}
+                name="confirmPassword"
+                error={touched.confirmPassword && errors.confirmPassword}
+              />
+              <Button
+                disabled={!isValid || updateUserLoading}
+                loading={updateUserLoading}
+                onPress={() => {
+                  updateUserFn({
+                    variables: {
+                      firstName: values.firstName.trim(),
+                      lastName: values.lastName.trim(),
+                      bio: values.bio.trim(),
+                      password: values.password,
+                    },
+                  });
+                  navigation.goBack();
+                }}
+              >
+                Save
+              </Button>
+              <Divider text="OR" />
+              <Button disabled={updateUserLoading} onPress={onEditSportsPress}>
+                Edit sports
+              </Button>
+              <Button disabled={updateUserLoading} onPress={onCreateTeamPress}>
+                Create team
+              </Button>
+            </React.Fragment>
+          )}
+        </Formik>
+      </KeyboardAwareScrollView>
     );
   }
-}
+};
+
+EditProfileScreen.navigationOptions = {
+  title: "Edit profile",
+};
+
+export default EditProfileScreen;

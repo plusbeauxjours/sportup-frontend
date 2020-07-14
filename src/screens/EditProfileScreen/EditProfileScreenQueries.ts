@@ -6,20 +6,17 @@ mutation UpdateUser(
   $lastName: String!
   $bio: String!
   $password: String!
-  $userImg: Upload
 ) {
   updateUser(
     firstName: $firstName
     lastName: $lastName
     bio: $bio
     password: $password
-    userImg: $userImg
   ) {
     user {
         firstName
         lastName
         bio
-        userImg
     }
   }
 }
