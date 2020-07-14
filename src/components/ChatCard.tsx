@@ -35,13 +35,14 @@ export default withNavigation(
     lastMessage,
     navigation,
   }) => {
-    console.log(navigation);
     const gotoChat = () => {
       navigation.push("ChatScreen", {
-        chatId: id,
-        chatName: name,
-        lastMessage,
-        time,
+        //         chatId
+        // userId
+        // receiverId
+        // receiverPushToken
+        // userName
+        // targetUserId
       });
     };
     return (

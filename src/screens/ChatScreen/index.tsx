@@ -1,2 +1,2 @@
-import ChatScreen from "./ChatScreen";
-export default ChatScreen;
+import ChatScreenContainer from "./ChatScreenContainer";
+export default ChatScreenContainer;
