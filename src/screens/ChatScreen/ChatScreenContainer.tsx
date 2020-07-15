@@ -7,8 +7,10 @@ import { withNavigation } from "react-navigation";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import { Avatar } from "react-native-elements";
-import * as firebase from "firebase";
-// import { firebase } from "@firebase/app";
+
+import * as firebase from "firebase/app";
+import "firebase/database";
+
 import CustomView from "./CustomView";
 import {
   TouchableOpacity,
@@ -28,21 +30,20 @@ import {
   get_old_chat_messages,
   update_message_info,
   fb_db,
-} from "../../constants/fb";
+} from "../../constants/firebase";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
 const ChatContainer = ({ navigation }) => {
-  const chatId = navigation.getParam("chatId");
-  const userId = navigation.getParam("userId");
-  const receiverId = navigation.getParam("receiverId");
-  const receiverPushToken = navigation.getParam("receiverPushToken");
-  const userName = navigation.getParam("userName");
-  const targetUserId = navigation.getParam("targetUserId");
+  const chatId = navigation.getParam("chatId") || 1;
+  const userId = navigation.getParam("userId") || 3;
+  const receiverId = navigation.getParam("receiverId") || 4;
+  const receiverPushToken = navigation.getParam("receiverPushToken") || null;
+  const userName = navigation.getParam("userName") || "sexkin";
+  const targetUserId = navigation.getParam("targetUserId") || 1;
 
-  const dbref = firebase
-    .database()
-    .ref("messages")
-    .child(navigation.getParam("chatId"));
+  const dbref = firebase.database().ref("messages");
+  // .child(navigation.getParam("chatId"));
+  console.log("dbref", dbref);
   const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
   const [region, setRegion] = useState<any>({
     latitude: 20,
@@ -70,26 +71,26 @@ const ChatContainer = ({ navigation }) => {
     }
   };
 
-  // const onSendLocation = (latitude: string, longitude: string) => {
-  //   let new_key = get_new_key("messages");
-  //   let user: UserChatMessage = {
-  //     _id: userId,
-  //     name: userName,
-  //   };
-  //   let messageLocation: ChatMessage = {
-  //     _id: new_key,
-  //     createdAt: new Date(),
-  //     status: false,
-  //     user: user,
-  //     location: { latitude, longitude },
-  //     receiverPushToken,
-  //   };
-  //   let messages = [];
-  //   messages.push(messageLocation);
-  //   setMessages((previousMsg) => GiftedChat.append(previousMsg, messages));
-  //   setMapModalOpen(false);
-  //   chat_send(chatId, messageLocation).catch((e) => console.log(e));
-  // };
+  const onSendLocation = (latitude: string, longitude: string) => {
+    let new_key = get_new_key("messages");
+    let user: UserChatMessage = {
+      _id: userId,
+      name: userName,
+    };
+    let messageLocation: ChatMessage = {
+      _id: new_key,
+      createdAt: new Date(),
+      status: false,
+      user: user,
+      location: { latitude, longitude },
+      receiverPushToken,
+    };
+    let messages = [];
+    messages.push(messageLocation);
+    setMessages((previousMsg) => GiftedChat.append(previousMsg, messages));
+    setMapModalOpen(false);
+    chat_send(chatId, messageLocation).catch((e) => console.log(e));
+  };
 
   const renderCustomView = (props) => {
     return <CustomView {...props} />;
@@ -309,80 +310,84 @@ const ChatContainer = ({ navigation }) => {
     setMapLoading(false);
   };
 
-  // useEffect(() => {
-  //   BackHandler.addEventListener("hardwareBackPress", () => {
-  //     if (!overlayVisible) {
-  //       navigation.navigate("ChatListScreen");
-  //     } else {
-  //       setOverlayVisible(false);
-  //     }
-  //   });
-  //   get_old_chat_messages(chatId).then((messages) => {
-  //     if (messages) {
-  //       let promises = messages.map((m) =>
-  //         update_message_info(m, chatId, userId)
-  //       );
-  //       Promise.all(promises).then((results) => {
-  //         setMessages(results.filter((r) => r).sort(sortByDate));
-  //       });
-  //     }
-  //   });
-  //   let start_key = get_new_key("messages");
-  //   fb_db.ref
-  //     .child("messages")
-  //     .child(chatId)
-  //     .orderByKey()
-  //     .startAt(start_key)
-  //     .on("child_changed", (child) => {
-  //       if (child && child.val()) {
-  //         if (child.val()["status"] === true) {
-  //           setMessages(
-  //             messages.map((previousState) =>
-  //               previousState._id === child.val()["_id"]
-  //                 ? { ...previousState, ...child.val() }
-  //                 : previousState
-  //             )
-  //           );
-  //         }
-  //       }
-  //     });
-  //   fb_db.ref
-  //     .child("messages")
-  //     .child(chatId)
-  //     .orderByKey()
-  //     .startAt(start_key)
-  //     .on("child_added", (child) => {
-  //       /* tslint:disable:no-string-literal */
-  //       if (child && child.val()) {
-  //         let message_container = [];
-  //         let new_message = child.val();
-  //         if (new_message.system || new_message.user._id !== userId) {
-  //           update_message_info(new_message, chatId, userId).then(
-  //             (updated_message) => {
-  //               message_container.push(new_message);
-  //               setMessages((previousMsg) => ({
-  //                 messages: GiftedChat.append(
-  //                   previousMsg,
-  //                   message_container
-  //                 ).sort(sortByDate),
-  //               }));
-  //             }
-  //           );
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     didBlurSubscription.remove();
-  //   };
-  // }, []);
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      if (!overlayVisible) {
+        navigation.navigate("ChatListScreen");
+      } else {
+        setOverlayVisible(false);
+      }
+    });
+    get_old_chat_messages(chatId).then((messages) => {
+      if (messages) {
+        let promises = messages.map((m) =>
+          update_message_info(m, chatId, userId)
+        );
+        Promise.all(promises).then((results) => {
+          setMessages(results.filter((r) => r).sort(sortByDate));
+        });
+      }
+    });
+    let start_key = get_new_key("messages");
+    firebase
+      .database()
+      .ref()
+      .child("messages")
+      .child(chatId)
+      .orderByKey()
+      .startAt(start_key)
+      .on("child_changed", (child) => {
+        if (child && child.val()) {
+          if (child.val()["status"] === true) {
+            setMessages(
+              messages.map((previousState) =>
+                previousState._id === child.val()["_id"]
+                  ? { ...previousState, ...child.val() }
+                  : previousState
+              )
+            );
+          }
+        }
+      });
+    firebase
+      .database()
+      .ref()
+      .child("messages")
+      .child(chatId)
+      .orderByKey()
+      .startAt(start_key)
+      .on("child_added", (child) => {
+        /* tslint:disable:no-string-literal */
+        if (child && child.val()) {
+          let message_container = [];
+          let new_message = child.val();
+          if (new_message.system || new_message.user._id !== userId) {
+            update_message_info(new_message, chatId, userId).then(
+              (updated_message) => {
+                message_container.push(new_message);
+                setMessages((previousMsg) => ({
+                  messages: GiftedChat.append(
+                    previousMsg,
+                    message_container
+                  ).sort(sortByDate),
+                }));
+              }
+            );
+          }
+        }
+      });
+    return () => {
+      didBlurSubscription.remove();
+    };
+  }, []);
 
   return (
     <ChatPresenter
       userId={userId}
       mapModalOpen={mapModalOpen}
       messages={messages}
-      // onSend={onSend}
-      // onSendLocation={onSendLocation}
+      onSend={onSend}
+      onSendLocation={onSendLocation}
       renderCustomView={renderCustomView}
       renderActions={renderActions}
       closeMapModal={closeMapModal}

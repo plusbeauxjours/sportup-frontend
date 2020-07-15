@@ -1,5 +1,6 @@
-import * as firebase from "firebase";
-// import { firebase } from "@firebase/app";
+import * as firebase from "firebase/app";
+import "firebase/database";
+
 import keys from "./keys"
 import { SystemMessage } from "react-native-gifted-chat";
 
@@ -13,10 +14,12 @@ const firebaseConfig = {
   appId: keys.REACT_APP_FIREBASE_APP_ID,
   measurementId: keys.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
-export const fb_app = firebase.initializeApp(firebaseConfig);
-export const fb_db = firebase.database().ref();
 
-export const database = firebase.database();
+const fb_app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+console.log("fb_app", fb_app)
+
+const fb_db = firebase.database().ref();
+console.log("fb_db", fb_db)
 
 export interface UserChatMessage {
   _id: string;

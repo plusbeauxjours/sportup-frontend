@@ -73,8 +73,8 @@ interface IProps {
   userId: string;
   mapModalOpen: boolean;
   messages: any;
-  // onSend: any;
-  // onSendLocation: any;
+  onSend: any;
+  onSendLocation: any;
   renderCustomView: any;
   renderActions: any;
   closeMapModal: () => void;
@@ -89,8 +89,8 @@ const ChatPresenter: React.FunctionComponent<IProps> = ({
   userId,
   mapModalOpen,
   messages,
-  // onSend,
-  // onSendLocation,
+  onSend,
+  onSendLocation,
   renderCustomView,
   renderActions,
   closeMapModal,
