@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-native-paper";
+import { Button, Appbar } from "react-native-paper";
 import styled from "styled-components/native";
 
 const Container = styled.View`
@@ -31,5 +31,15 @@ const MainTournamentScreen = ({ navigation }) => (
     </Button>
   </Container>
 );
-
+MainTournamentScreen.navigationOptions = ({ navigation }) => ({
+  title: "Events",
+  headerLeft: () => (
+    <Appbar.Action
+      icon="menu"
+      onPress={() => {
+        navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
 export default MainTournamentScreen;

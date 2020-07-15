@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ActivityIndicator } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
 
@@ -19,7 +19,7 @@ const Row = styled.View`
   flex-wrap: wrap;
 `;
 
-export default ({ navigation }) => {
+const FindPlayerScreen = ({ navigation }) => {
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
   const {
@@ -82,3 +82,15 @@ export default ({ navigation }) => {
     );
   }
 };
+FindPlayerScreen.navigationOptions = ({ navigation }) => ({
+  title: "Play",
+  headerLeft: () => (
+    <Appbar.Action
+      icon="menu"
+      onPress={() => {
+        navigation.toggleDrawer();
+      }}
+    />
+  ),
+});
+export default FindPlayerScreen;

@@ -9,7 +9,7 @@ import { RegisterTeam, RegisterTeamVariables } from "../../types/api";
 import FormikInput from "../../components/Formik/FormikInput";
 import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
 
-export default ({ navigation }) => {
+const RegisterForEventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
   const maximumMembers = navigation.getParam("maximumMembers");
   const minimumMembers = navigation.getParam("minimumMembers");
@@ -138,3 +138,7 @@ export default ({ navigation }) => {
     </KeyboardAwareScrollView>
   );
 };
+RegisterForEventScreen.navigationOptions = ({ navigation }) => ({
+  title: "Register For Event",
+});
+export default RegisterForEventScreen;

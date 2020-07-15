@@ -18,6 +18,7 @@ export const ME = gql`
         teamsCount
         followersCount
         followingCount
+        pushToken
       }
     }
   }

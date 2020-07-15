@@ -144,5 +144,7 @@ const EventScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
-
+EventScreen.navigationOptions = ({ navigation }) => ({
+  title: "Event",
+});
 export default EventScreen;

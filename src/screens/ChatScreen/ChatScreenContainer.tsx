@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import * as Permissions from "expo-permissions";
 import * as IntentLauncher from "expo-intent-launcher";
+import * as moment from "moment-timezone";
 import { withNavigation } from "react-navigation";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import { Avatar } from "react-native-elements";
-import firebase from "firebase";
+import * as firebase from "firebase";
+// import { firebase } from "@firebase/app";
 import CustomView from "./CustomView";
 import {
   TouchableOpacity,
@@ -27,7 +29,6 @@ import {
   update_message_info,
   fb_db,
 } from "../../constants/fb";
-import * as moment from "moment-timezone";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
 const ChatContainer = ({ navigation }) => {
@@ -37,17 +38,13 @@ const ChatContainer = ({ navigation }) => {
   const receiverPushToken = navigation.getParam("receiverPushToken");
   const userName = navigation.getParam("userName");
   const targetUserId = navigation.getParam("targetUserId");
+
   const dbref = firebase
     .database()
     .ref("messages")
     .child(navigation.getParam("chatId"));
   const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
-  const [region, setRegion] = useState<{
-    latitude: number;
-    longitude: number;
-    latitudeDelta: number;
-    longitudeDelta: number;
-  }>({
+  const [region, setRegion] = useState<any>({
     latitude: 20,
     longitude: 20,
     latitudeDelta: 0.01,
@@ -73,30 +70,31 @@ const ChatContainer = ({ navigation }) => {
     }
   };
 
-  const onSendLocation = (latitude: string, longitude: string) => {
-    let new_key = get_new_key("messages");
-    let user: UserChatMessage = {
-      _id: userId,
-      name: userName,
-    };
-    let messageLocation: ChatMessage = {
-      _id: new_key,
-      createdAt: new Date(),
-      status: false,
-      user: user,
-      location: { latitude, longitude },
-      receiverPushToken,
-    };
-    let messages = [];
-    messages.push(messageLocation);
-    setMessages((previousMsg) => GiftedChat.append(previousMsg, messages));
-    setMapModalOpen(false);
-    chat_send(chatId, messageLocation).catch((e) => console.log(e));
-  };
+  // const onSendLocation = (latitude: string, longitude: string) => {
+  //   let new_key = get_new_key("messages");
+  //   let user: UserChatMessage = {
+  //     _id: userId,
+  //     name: userName,
+  //   };
+  //   let messageLocation: ChatMessage = {
+  //     _id: new_key,
+  //     createdAt: new Date(),
+  //     status: false,
+  //     user: user,
+  //     location: { latitude, longitude },
+  //     receiverPushToken,
+  //   };
+  //   let messages = [];
+  //   messages.push(messageLocation);
+  //   setMessages((previousMsg) => GiftedChat.append(previousMsg, messages));
+  //   setMapModalOpen(false);
+  //   chat_send(chatId, messageLocation).catch((e) => console.log(e));
+  // };
 
   const renderCustomView = (props) => {
     return <CustomView {...props} />;
   };
+
   const renderAvatar = () => {
     return (
       <TouchableOpacity
@@ -116,34 +114,37 @@ const ChatContainer = ({ navigation }) => {
     );
   };
 
-  const renderActions = () => (
-    <TouchableOpacity
-      style={{
-        justifyContent: "center",
-      }}
-      onPress={() => {
-        askPermission();
-      }}
-    >
-      <View
+  const renderActions = () => {
+    return (
+      <TouchableOpacity
         style={{
-          width: 40,
-          height: 40,
           justifyContent: "center",
-          alignItems: "center",
-          borderColor: "#999",
-          borderStyle: "solid",
-          borderWidth: 0.5,
-          borderRadius: 5,
-          padding: 2,
+          padding: 5,
+        }}
+        onPress={() => {
+          askPermission();
         }}
       >
-        <Text style={{ color: "#999", textAlign: "center", fontSize: 10 }}>
-          MAP
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            justifyContent: "center",
+            alignItems: "center",
+            borderColor: "#999",
+            borderStyle: "solid",
+            borderWidth: 0.5,
+            borderRadius: 5,
+            padding: 2,
+          }}
+        >
+          <Text style={{ color: "#999", textAlign: "center", fontSize: 10 }}>
+            MAP
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   const closeMapModal = () => {
     setMapModalOpen(false);
@@ -155,79 +156,13 @@ const ChatContainer = ({ navigation }) => {
     return date1 < date2 ? 1 : date2 < date1 ? -1 : 0;
   };
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", () => {
-      if (!overlayVisible) {
-        navigation.navigate("ChatListScreen");
-      } else {
-        setOverlayVisible(false);
-      }
-    });
-    get_old_chat_messages(chatId).then((messages) => {
-      if (messages) {
-        let promises = messages.map((m) =>
-          update_message_info(m, chatId, userId)
-        );
-        Promise.all(promises).then((results) => {
-          setMessages(results.filter((r) => r).sort(sortByDate));
-        });
-      }
-    });
-    let start_key = get_new_key("messages");
-    fb_db.ref
-      .child("messages")
-      .child(chatId)
-      .orderByKey()
-      .startAt(start_key)
-      .on("child_changed", (child) => {
-        if (child && child.val()) {
-          if (child.val()["status"] === true) {
-            setMessages(
-              messages.map((previousState) =>
-                previousState._id === child.val()["_id"]
-                  ? { ...previousState, ...child.val() }
-                  : previousState
-              )
-            );
-          }
-        }
-      });
-    fb_db.ref
-      .child("messages")
-      .child(chatId)
-      .orderByKey()
-      .startAt(start_key)
-      .on("child_added", (child) => {
-        /* tslint:disable:no-string-literal */
-        if (child && child.val()) {
-          let message_container = [];
-          let new_message = child.val();
-          if (new_message.system || new_message.user._id !== userId) {
-            update_message_info(new_message, chatId, userId).then(
-              (updated_message) => {
-                message_container.push(new_message);
-                setMessages((previousMsg) => ({
-                  messages: GiftedChat.append(
-                    previousMsg,
-                    message_container
-                  ).sort(sortByDate),
-                }));
-              }
-            );
-          }
-        }
-      });
-    return () => {
-      didBlurSubscription.remove();
-    };
-  }, []);
-
   const didBlurSubscription = navigation.addListener("didBlur", (payload) => {
     BackHandler.removeEventListener("hardwareBackPress", () => {
       return;
     });
     dbref.off("child_added");
   });
+
   const messageFooter = (timeProps) => {
     const { currentMessage, position } = timeProps;
     const timeZone = moment.tz.guess();
@@ -374,13 +309,80 @@ const ChatContainer = ({ navigation }) => {
     setMapLoading(false);
   };
 
+  // useEffect(() => {
+  //   BackHandler.addEventListener("hardwareBackPress", () => {
+  //     if (!overlayVisible) {
+  //       navigation.navigate("ChatListScreen");
+  //     } else {
+  //       setOverlayVisible(false);
+  //     }
+  //   });
+  //   get_old_chat_messages(chatId).then((messages) => {
+  //     if (messages) {
+  //       let promises = messages.map((m) =>
+  //         update_message_info(m, chatId, userId)
+  //       );
+  //       Promise.all(promises).then((results) => {
+  //         setMessages(results.filter((r) => r).sort(sortByDate));
+  //       });
+  //     }
+  //   });
+  //   let start_key = get_new_key("messages");
+  //   fb_db.ref
+  //     .child("messages")
+  //     .child(chatId)
+  //     .orderByKey()
+  //     .startAt(start_key)
+  //     .on("child_changed", (child) => {
+  //       if (child && child.val()) {
+  //         if (child.val()["status"] === true) {
+  //           setMessages(
+  //             messages.map((previousState) =>
+  //               previousState._id === child.val()["_id"]
+  //                 ? { ...previousState, ...child.val() }
+  //                 : previousState
+  //             )
+  //           );
+  //         }
+  //       }
+  //     });
+  //   fb_db.ref
+  //     .child("messages")
+  //     .child(chatId)
+  //     .orderByKey()
+  //     .startAt(start_key)
+  //     .on("child_added", (child) => {
+  //       /* tslint:disable:no-string-literal */
+  //       if (child && child.val()) {
+  //         let message_container = [];
+  //         let new_message = child.val();
+  //         if (new_message.system || new_message.user._id !== userId) {
+  //           update_message_info(new_message, chatId, userId).then(
+  //             (updated_message) => {
+  //               message_container.push(new_message);
+  //               setMessages((previousMsg) => ({
+  //                 messages: GiftedChat.append(
+  //                   previousMsg,
+  //                   message_container
+  //                 ).sort(sortByDate),
+  //               }));
+  //             }
+  //           );
+  //         }
+  //       }
+  //     });
+  //   return () => {
+  //     didBlurSubscription.remove();
+  //   };
+  // }, []);
+
   return (
     <ChatPresenter
       userId={userId}
       mapModalOpen={mapModalOpen}
       messages={messages}
-      onSend={onSend}
-      onSendLocation={onSendLocation}
+      // onSend={onSend}
+      // onSendLocation={onSendLocation}
       renderCustomView={renderCustomView}
       renderActions={renderActions}
       closeMapModal={closeMapModal}

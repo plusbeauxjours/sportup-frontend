@@ -1,5 +1,6 @@
-import firebase from "firebase";
-import keys from "./keys";
+import * as firebase from "firebase";
+// import { firebase } from "@firebase/app";
+import keys from "./keys"
 import { SystemMessage } from "react-native-gifted-chat";
 
 const firebaseConfig = {

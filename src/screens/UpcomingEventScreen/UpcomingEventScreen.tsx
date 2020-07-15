@@ -36,5 +36,7 @@ const UpcomingEvents = () => {
     />
   );
 };
-
+UpcomingEvents.navigationOptions = ({ navigation }) => ({
+  title: "Upcoming Events",
+});
 export default UpcomingEvents;

@@ -15,7 +15,7 @@ import {
   DISAPPROVE_REGISTRATION,
 } from "./RegistrationScreenQueries";
 
-export default ({ navigation }) => {
+const RegistrationScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
   const {
     data: { getRegistrations: { registrations = null } = {} } = {},
@@ -131,3 +131,7 @@ export default ({ navigation }) => {
     />
   );
 };
+RegistrationScreen.navigationOptions = ({ navigation }) => ({
+  title: "Manage Registrations",
+});
+export default RegistrationScreen;

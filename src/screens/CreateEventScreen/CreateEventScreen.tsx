@@ -282,5 +282,7 @@ const CreateEventScreen = ({ navigation }) => {
     );
   }
 };
-
+CreateEventScreen.navigationOptions = ({ navigation }) => ({
+  title: "Create Events",
+});
 export default CreateEventScreen;

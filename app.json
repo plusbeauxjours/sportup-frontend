@@ -2,9 +2,10 @@
   "expo": {
     "name": "SportUp",
     "description": "SportUp application",
-    "slug": "app",
+    "slug": "sportup-plusbeauxjours",
     "privacy": "public",
     "sdkVersion": "36.0.0",
+    "scheme": "sportup.plusbeauxjours",
     "platforms": [
       "ios",
       "android"
@@ -26,6 +27,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "sportup.plusbeauxjours",
+      "infoPlist": {
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Pinner uses your location for features like Filters, Search, Pinner Map, and more.",
+        "NSLocationWhenInUseUsageDescription": "Pinner uses your location for features like Filters, Search, Pinner Map, and more.",
+        "NSPhotoLibraryUsageDescription": "Pinner uses photo library to select pictures."
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyDv66JZo6YNvVnnQu_x65TK_ik2EF_vCcQ"
+      },
       "usesAppleSignIn": true,
       "userInterfaceStyle": "light"
     },
@@ -33,8 +42,27 @@
       "versionCode": 11,
       "package": "sportup.plusbeauxjours",
       "permissions": [
-        "ACCESS_NOTIFICATION_POLICY"
-      ]
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "ACCESS_NOTIFICATION_POLICY",
+        "com.anddoes.launcher.permission.UPDATE_COUNT",
+        "com.android.launcher.permission.INSTALL_SHORTCUT",
+        "com.google.android.c2dm.permission.RECEIVE",
+        "com.google.android.gms.permission.ACTIVITY_RECOGNITION",
+        "com.google.android.providers.gsf.permission.READ_GSERVICES",
+        "com.htc.launcher.permission.READ_SETTINGS",
+        "com.htc.launcher.permission.UPDATE_SHORTCUT",
+        "com.majeur.launcher.permission.UPDATE_BADGE",
+        "com.sec.android.provider.badge.permission.READ",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "com.sonyericsson.home.permission.BROADCAST_BADGE"
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDv66JZo6YNvVnnQu_x65TK_ik2EF_vCcQ"
+        }
+      }
     },
     "notification": {
       "icon": "./assets/notification.png"

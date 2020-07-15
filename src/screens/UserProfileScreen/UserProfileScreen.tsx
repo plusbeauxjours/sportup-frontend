@@ -33,7 +33,7 @@ const UserInfoContainer = styled.View`
   background-color: #fff;
 `;
 
-const UserProfileScreen: React.FC = ({ navigation }) => {
+const UserProfileScreen = ({ navigation }) => {
   const userId = navigation.getParam("userId");
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -196,5 +196,8 @@ const UserProfileScreen: React.FC = ({ navigation }) => {
     );
   }
 };
+UserProfileScreen.navigationOptions = ({ navigation }) => ({
+  title: "User Profile",
+});
 
 export default UserProfileScreen;
