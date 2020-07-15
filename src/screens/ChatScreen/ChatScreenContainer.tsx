@@ -29,7 +29,6 @@ import {
   ChatMessage,
   get_old_chat_messages,
   update_message_info,
-  fb_db,
 } from "../../constants/firebase";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
@@ -43,7 +42,6 @@ const ChatContainer = ({ navigation }) => {
 
   const dbref = firebase.database().ref("messages");
   // .child(navigation.getParam("chatId"));
-  console.log("dbref", dbref);
   const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
   const [region, setRegion] = useState<any>({
     latitude: 20,
@@ -55,7 +53,6 @@ const ChatContainer = ({ navigation }) => {
   const [mapModalOpen, setMapModalOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<any>([]);
   const onRegionChangeComplete = (region: any) => {
-    console.log("region on chatContainer", region);
     setRegion(region);
   };
 

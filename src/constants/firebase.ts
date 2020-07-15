@@ -16,10 +16,7 @@ const firebaseConfig = {
 };
 
 const fb_app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
-console.log("fb_app", fb_app)
-
 const fb_db = firebase.database().ref();
-console.log("fb_db", fb_db)
 
 export interface UserChatMessage {
   _id: string;

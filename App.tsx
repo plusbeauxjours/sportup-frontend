@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppLoading } from "expo";
+import { HttpLink } from "apollo-link-http";
 import { Asset } from "expo-asset";
 import { AsyncStorage } from "react-native";
 import { persistCache } from "apollo-cache-persist";
@@ -9,7 +10,6 @@ import { ApolloProvider } from "react-apollo";
 
 import apolloClientOptions from "./apollo";
 import { ApolloClient } from "apollo-client";
-import { createUploadLink } from "apollo-upload-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { setContext } from "apollo-link-context";
 
@@ -28,7 +28,7 @@ export default function App() {
       });
       // await AsyncStorage.clear();
       cache.reset();
-      let httpLink = createUploadLink({
+      let httpLink = new HttpLink({
         uri: GRAPHQL_URL as string,
       });
       let authLink = setContext(async (_: any, { headers }: any) => {

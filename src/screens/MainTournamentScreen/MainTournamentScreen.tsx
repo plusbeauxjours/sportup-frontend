@@ -26,9 +26,6 @@ const MainTournamentScreen = ({ navigation }) => (
     >
       Create Event
     </Button>
-    <Button icon="contact-mail" style={{ marginBottom: 10 }}>
-      Contact Us
-    </Button>
   </Container>
 );
 MainTournamentScreen.navigationOptions = ({ navigation }) => ({
