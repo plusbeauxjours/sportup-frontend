@@ -403,7 +403,6 @@ export interface UpdateUser_updateUser_user {
   firstName: string;
   lastName: string;
   bio: string;
-  userImg: string | null;
 }
 
 export interface UpdateUser_updateUser {
@@ -420,7 +419,6 @@ export interface UpdateUserVariables {
   lastName: string;
   bio: string;
   password: string;
-  userImg?: any | null;
 }
 
 /* tslint:disable */
@@ -827,6 +825,7 @@ export interface Me_me_user {
   teamsCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
+  pushToken: string | null;
 }
 
 export interface Me_me {
@@ -1265,6 +1264,7 @@ export interface GetUser_getUser_user {
   teamsCount: number | null;
   followersCount: number | null;
   followingCount: number | null;
+  pushToken: string | null;
 }
 
 export interface GetUser_getUser {

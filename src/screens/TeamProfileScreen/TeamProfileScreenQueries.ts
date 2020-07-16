@@ -8,6 +8,10 @@ export const GET_TEAM = gql`
         teamName
         coverImg
         isAdmin
+        createdBy{
+          id
+          username
+        }
         sport {
           sportId
           name

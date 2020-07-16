@@ -15,7 +15,7 @@ const firebaseConfig = {
   measurementId: keys.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
-const fb_app = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
 const fb_db = firebase.database().ref();
 
 export interface UserChatMessage {
@@ -36,8 +36,6 @@ export interface ChatMessage {
   user: UserChatMessage;
   location?: LocationChatMessage;
   receiverPushToken: string;
-  snsId?: string;
-  snsIdPlatform?: string;
 }
 
 export const chat_leave = (
@@ -45,9 +43,9 @@ export const chat_leave = (
   user_id: string,
   user_name: string
 ) => {
-  let new_key = fb_db.ref.child("messages").push().key;
+  let new_key_messages = fb_db.ref.child("messages").push().key;
   let message = {
-    _id: new_key,
+    _id: new_key_messages,
     text: `User ${user_name} left. This chat room will be disappeared`,
     createdAt: new Date(),
     system: true
@@ -55,7 +53,7 @@ export const chat_leave = (
   let updates = {};
   updates[`/chats/${chat_id}/lastMessage/`] = message.text;
   updates[`/chats/${chat_id}/lastSender/`] = "system";
-  updates[`/messages/${chat_id}/${new_key}/`] = message;
+  updates[`/messages/${chat_id}/${new_key_messages}/`] = message;
   return fb_db.ref.update(updates);
 };
 
@@ -68,20 +66,17 @@ export const get_new_key = (child: string) => {
 };
 
 export const chat_send = (chat_id: string, message: ChatMessage) => {
-  let new_key;
+  let new_key_messages;
   if (!message._id) {
-    new_key = fb_db.ref.child("messages").push().key;
-    message._id = new_key;
+    new_key_messages = fb_db.ref.child("messages").push().key;
+    message._id = new_key_messages;
   } else {
-    new_key = message._id;
+    new_key_messages = message._id;
   }
   let updates = {};
-  updates[`/messages/${chat_id}/${new_key}/`] = message;
+  updates[`/messages/${chat_id}/${new_key_messages}/`] = message;
   updates[`/chats/${chat_id}/lastSender/`] = `${message.user._id}`;
   updates[`/chats/${chat_id}/createdAt/`] = `${message.createdAt}`;
-  updates[
-    `/chats/${chat_id}/receiverPushToken/`
-  ] = `${message.receiverPushToken}`;
   if (message.text) {
     updates[`/chats/${chat_id}/lastMessage/`] = `${message.text}`;
     updates[`/chats/${chat_id}/status/`] = `${message.status}`;
@@ -89,19 +84,21 @@ export const chat_send = (chat_id: string, message: ChatMessage) => {
   return fb_db.ref.update(updates);
 };
 
-export const create_chat = (chat_id: string) => {
-  let new_key = fb_db.ref.child("messages").push().key;
+export const get_or_create_chat = () => {
+  let new_key_chats = fb_db.ref.child("chats").push().key;
+  let new_key_messages = fb_db.ref.child("messages").push().key;
   let message = {
-    _id: new_key,
+    _id: new_key_messages,
     text: "You've got new match.",
     createdAt: new Date(),
     system: true
   };
   let updates = {};
-  updates[`/chats/${chat_id}/lastMessage/`] = message.text;
-  updates[`/chats/${chat_id}/lastSender/`] = "system";
-  updates[`/messages/${chat_id}/${new_key}/`] = message;
-  return fb_db.ref.update(updates);
+  updates[`/chats/${new_key_chats}/lastMessage/`] = message.text;
+  updates[`/chats/${new_key_chats}/lastSender/`] = "system";
+  updates[`/chats/${new_key_chats}/createdAt/`] = `${message.createdAt}`;
+  updates[`/messages/${new_key_chats}/${new_key_messages}/`] = message;
+  return new_key_chats
 };
 
 export const update_message_info = async (

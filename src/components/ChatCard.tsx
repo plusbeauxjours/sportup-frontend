@@ -28,21 +28,21 @@ const UpperHalfContainer = styled.View`
 export default withNavigation(
   ({
     id,
-    unread = false,
+    status = false,
     avatar = "",
     name,
-    time,
+    createdAt,
     lastMessage,
     navigation,
   }) => {
     const gotoChat = () => {
       navigation.push("ChatScreen", {
-        //         chatId
-        // userId
-        // receiverId
+        chatIdForChat: "-MCMRcg98egmvRPX1zeu",
+        // chatIdForChat:id,
+        // senderUserIdForChat
+        // senderUsernameForChat
         // receiverPushToken
-        // userName
-        // targetUserId
+        // receiverUserIdForChat
       });
     };
     return (
@@ -55,7 +55,7 @@ export default withNavigation(
           }}
         />
         <RightContainer>
-          {unread ? (
+          {status ? (
             <>
               <UpperHalfContainer>
                 <Subheading
@@ -65,7 +65,7 @@ export default withNavigation(
                   {name}
                 </Subheading>
                 <Caption style={{ color: "#000", fontWeight: "bold" }}>
-                  {timeSince(time)}
+                  {timeSince(createdAt)}
                 </Caption>
               </UpperHalfContainer>
               <Paragraph
@@ -79,7 +79,7 @@ export default withNavigation(
             <>
               <UpperHalfContainer>
                 <Subheading numberOfLines={1}>{name}</Subheading>
-                <Caption>{timeSince(time)}</Caption>
+                <Caption>{timeSince(createdAt)}</Caption>
               </UpperHalfContainer>
               <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>
                 {lastMessage}

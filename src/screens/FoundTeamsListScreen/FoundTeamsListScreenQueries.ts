@@ -12,6 +12,10 @@ export const GET_TEAMS_FOR_GAME = gql`
           sportId
           name
         }
+        createdBy{
+          id
+          username
+        }
       }
     }
   }

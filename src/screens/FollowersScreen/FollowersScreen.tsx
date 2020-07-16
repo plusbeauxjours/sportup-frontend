@@ -29,6 +29,7 @@ const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
   >(GET_USER_FOLLOWERS, {
     variables: { userId },
   });
+  console.log("FollowersScreenuser", user);
   return (
     <UserCardList
       users={user?.followers}

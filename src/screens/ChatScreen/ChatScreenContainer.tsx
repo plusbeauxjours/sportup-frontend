@@ -33,12 +33,14 @@ import {
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
 const ChatContainer = ({ navigation }) => {
-  const chatId = navigation.getParam("chatId") || 1;
-  const userId = navigation.getParam("userId") || 3;
-  const receiverId = navigation.getParam("receiverId") || 4;
-  const receiverPushToken = navigation.getParam("receiverPushToken") || null;
-  const userName = navigation.getParam("userName") || "sexkin";
-  const targetUserId = navigation.getParam("targetUserId") || 1;
+  const chatIdForChat = navigation.getParam("chatIdForChat");
+  const senderUserIdForChat = navigation.getParam("userId") || 3;
+  const senderUsernameForChat =
+    navigation.getParam("senderUsernameForChat") || "sexkin";
+  const receiverUserIdForChat =
+    navigation.getParam("receiverUserIdForChat") || 1;
+  const receiverPushToken =
+    navigation.getParam("receiverPushToken") || "kokokfosakdf";
 
   const dbref = firebase.database().ref("messages");
   // .child(navigation.getParam("chatId"));
@@ -60,10 +62,10 @@ const ChatContainer = ({ navigation }) => {
     let msg = messages[0];
     if (msg) {
       msg._id = get_new_key("messages");
-      msg.user.name = userName;
+      msg.user.name = senderUsernameForChat;
       msg.receiverPushToken = receiverPushToken;
       msg.status = false;
-      chat_send(chatId, msg).catch((e) => console.log(e));
+      chat_send(chatIdForChat, msg).catch((e) => console.log(e));
       setMessages((previousMsg) => GiftedChat.append(previousMsg, msg));
     }
   };
@@ -71,22 +73,22 @@ const ChatContainer = ({ navigation }) => {
   const onSendLocation = (latitude: string, longitude: string) => {
     let new_key = get_new_key("messages");
     let user: UserChatMessage = {
-      _id: userId,
-      name: userName,
+      _id: senderUserIdForChat,
+      name: senderUsernameForChat,
     };
     let messageLocation: ChatMessage = {
       _id: new_key,
       createdAt: new Date(),
       status: false,
       user: user,
-      location: { latitude, longitude },
       receiverPushToken,
+      location: { latitude, longitude },
     };
     let messages = [];
     messages.push(messageLocation);
     setMessages((previousMsg) => GiftedChat.append(previousMsg, messages));
     setMapModalOpen(false);
-    chat_send(chatId, messageLocation).catch((e) => console.log(e));
+    chat_send(chatIdForChat, messageLocation).catch((e) => console.log(e));
   };
 
   const renderCustomView = (props) => {
@@ -98,7 +100,7 @@ const ChatContainer = ({ navigation }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.push("UserProfile", {
-            userId: targetUserId,
+            userId: receiverUserIdForChat,
           })
         }
       >
@@ -315,10 +317,10 @@ const ChatContainer = ({ navigation }) => {
         setOverlayVisible(false);
       }
     });
-    get_old_chat_messages(chatId).then((messages) => {
+    get_old_chat_messages(chatIdForChat).then((messages) => {
       if (messages) {
         let promises = messages.map((m) =>
-          update_message_info(m, chatId, userId)
+          update_message_info(m, chatIdForChat, senderUserIdForChat)
         );
         Promise.all(promises).then((results) => {
           setMessages(results.filter((r) => r).sort(sortByDate));
@@ -330,7 +332,7 @@ const ChatContainer = ({ navigation }) => {
       .database()
       .ref()
       .child("messages")
-      .child(chatId)
+      .child(chatIdForChat)
       .orderByKey()
       .startAt(start_key)
       .on("child_changed", (child) => {
@@ -350,7 +352,7 @@ const ChatContainer = ({ navigation }) => {
       .database()
       .ref()
       .child("messages")
-      .child(chatId)
+      .child(chatIdForChat)
       .orderByKey()
       .startAt(start_key)
       .on("child_added", (child) => {
@@ -358,18 +360,23 @@ const ChatContainer = ({ navigation }) => {
         if (child && child.val()) {
           let message_container = [];
           let new_message = child.val();
-          if (new_message.system || new_message.user._id !== userId) {
-            update_message_info(new_message, chatId, userId).then(
-              (updated_message) => {
-                message_container.push(new_message);
-                setMessages((previousMsg) => ({
-                  messages: GiftedChat.append(
-                    previousMsg,
-                    message_container
-                  ).sort(sortByDate),
-                }));
-              }
-            );
+          if (
+            new_message.system ||
+            new_message.user._id !== senderUserIdForChat
+          ) {
+            update_message_info(
+              new_message,
+              chatIdForChat,
+              senderUserIdForChat
+            ).then((updated_message) => {
+              message_container.push(new_message);
+              setMessages((previousMsg) => ({
+                messages: GiftedChat.append(
+                  previousMsg,
+                  message_container
+                ).sort(sortByDate),
+              }));
+            });
           }
         }
       });
@@ -380,7 +387,7 @@ const ChatContainer = ({ navigation }) => {
 
   return (
     <ChatPresenter
-      userId={userId}
+      userId={senderUserIdForChat}
       mapModalOpen={mapModalOpen}
       messages={messages}
       onSend={onSend}

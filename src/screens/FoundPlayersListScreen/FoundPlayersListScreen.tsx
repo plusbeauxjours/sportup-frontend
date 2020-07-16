@@ -52,6 +52,6 @@ const FoundPlayersListScreen = ({ navigation }) => {
   );
 };
 FoundPlayersListScreen.navigationOptions = {
-  title: "Players near you",
+  title: "Players",
 };
 export default FoundPlayersListScreen;

@@ -26,6 +26,7 @@ import UserInteractionCard from "../../components/UserInteractionCard";
 import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import RatingDialog from "../../components/RatingDialog";
+import { useMe } from "../../context/meContext";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -34,6 +35,7 @@ const UserInfoContainer = styled.View`
 `;
 
 const UserProfileScreen = ({ navigation }) => {
+  const { me } = useMe();
   const userId = navigation.getParam("userId");
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -121,7 +123,13 @@ const UserProfileScreen = ({ navigation }) => {
           <Headline>{user.name}</Headline>
           <Caption>{`@${user.username}`}</Caption>
           <Paragraph>{user.bio}</Paragraph>
-          <UserInteractionCard id={user.id} isFollowing={user.isFollowing} />
+          <UserInteractionCard
+            senderUserIdForChat={me.user.id}
+            senderUsernameForChat={me.user.username}
+            receiverPushToken={user.pushToken}
+            receiverUserIdForChat={user.id}
+            isFollowing={user.isFollowing}
+          />
           <SportsList sports={user.sports} onChipPress={showDialog} />
           <UserConnectionsCard
             {...connections}

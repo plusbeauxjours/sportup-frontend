@@ -13,6 +13,10 @@ export const GET_USER_TEAMS = gql`
             sportId
             name
           }
+          createdBy{
+          id
+          username
+        }
         }
       }
     }
