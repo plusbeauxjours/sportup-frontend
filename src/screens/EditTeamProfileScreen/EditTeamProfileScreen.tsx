@@ -28,11 +28,7 @@ const PickerContainer = styled.View`
   align-items: center;
 `;
 
-interface IProps {
-  navigation: NavigationScreenProp<any, any>;
-}
-
-const EditTeamProfileScreen: React.FC<IProps> = ({ navigation }) => {
+const EditTeamProfileScreen = ({ navigation }) => {
   const team = navigation.getParam("team");
   const [teamName, setTeamName] = useState<string>(team?.teamName || "");
   const [sportId, setSportId] = useState<string>(team?.sport?.sportId || "1");
@@ -188,6 +184,9 @@ const EditTeamProfileScreen: React.FC<IProps> = ({ navigation }) => {
       </React.Fragment>
     </KeyboardAwareScrollView>
   );
+};
+EditTeamProfileScreen.navigationOptions = {
+  title: "Edit Team",
 };
 
 export default EditTeamProfileScreen;

@@ -1,8 +1,9 @@
-import React, { Component } from "react";
-import { View, StyleSheet, Alert } from "react-native";
-import { MapView } from "expo";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Alert } from "react-native";
+import MapView from "react-native-maps";
 import { Icon } from "react-native-elements";
 import { Button } from "react-native-paper";
+import styled from "styled-components/native";
 
 const ICON_SIZE = 35;
 
@@ -16,66 +17,45 @@ const INITIAL_REGION = {
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = 0.01;
 
-export default class ChatSendLocationScree extends Component {
-  static navigationOptions = {
-    header: null,
+const MarkerContainer = styled.View`
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: "transparent";
+`;
+
+const ChatSendLocationScreen = ({ navigation }) => {
+  const mapRef = useRef(null);
+  const [ready, setReady] = useState<boolean>(false);
+  const [region, setRegion] = useState<any>(INITIAL_REGION);
+
+  const onMapReady = () => {
+    setReady(true);
   };
 
-  constructor(props) {
-    super(props);
-
-    this.onSend = this.onSend.bind(this);
-    this.onCancel = this.onCancel.bind(this);
-    this.onMapReady = this.onMapReady.bind(this);
-    this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
-
-    this.map = null;
-    this.state = {
-      paddingTop: 1,
-      ready: false,
-      region: INITIAL_REGION,
-    };
-  }
-
-  componentDidMount = () => {
-    this.getCurrentPosition();
-    setTimeout(() => {
-      this.setState((prevState) => ({
-        ...prevState,
-        paddingTop: 0,
-      }));
-    }, 500);
+  const onCancel = () => {
+    navigation.goBack();
   };
 
-  onMapReady = () => {
-    if (!this.state.ready) {
-      this.setState((prevState) => ({ ...prevState, ready: true }));
-    }
-  };
-
-  onCancel = () => {
-    this.props.navigation.goBack();
-  };
-
-  onSend = () => {
-    const { longitude, latitude } = this.state.region;
-    this.props.navigation.state.params.onSend({
+  const onSend = () => {
+    const { longitude, latitude } = region;
+    navigation.state.params.onSend({
       location: { longitude, latitude },
     });
-    this.props.navigation.goBack();
+    navigation.goBack();
   };
 
-  onRegionChangeComplete = (region) => {
-    this.setState((prevState) => ({ ...prevState, region }));
+  const onRegionChangeComplete = (region) => {
+    setRegion(region);
   };
 
-  setRegion = (region) => {
-    if (this.state.ready) {
-      setTimeout(() => this.map.animateToRegion(region), 10);
+  const setRegionFn = (region) => {
+    if (ready && mapRef) {
+      mapRef.current.animateToRegion(region);
     }
   };
 
-  getCurrentPosition = () => {
+  const getCurrentPosition = () => {
     try {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -85,10 +65,9 @@ export default class ChatSendLocationScree extends Component {
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
           };
-          this.setRegion(region);
+          setRegionFn(region);
         },
         (error) => {
-          // TODO: better design
           switch (error.code) {
             case 1:
               Alert.alert(
@@ -108,65 +87,50 @@ export default class ChatSendLocationScree extends Component {
       Alert.alert("Error", e.message || "");
     }
   };
+  useEffect(() => {
+    getCurrentPosition();
+  }, []);
 
-  render() {
-    return (
+  return (
+    <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <View
-          style={{
-            flex: 1,
-            paddingTop: this.state.paddingTop,
-          }}
-        >
-          <MapView
-            ref={(map) => {
-              this.map = map;
-            }}
-            initialRegion={INITIAL_REGION}
-            showsUserLocation
-            showsMyLocationButton
-            onMapReady={this.onMapReady}
-            onRegionChangeComplete={this.onRegionChangeComplete}
-            style={{ flex: 1 }}
+        <MapView
+          ref={mapRef}
+          initialRegion={INITIAL_REGION}
+          showsUserLocation
+          showsMyLocationButton
+          onMapReady={onMapReady}
+          onRegionChangeComplete={onRegionChangeComplete}
+          style={{ flex: 1 }}
+        />
+        <MarkerContainer>
+          <Icon
+            name="location-on"
+            color="red"
+            size={ICON_SIZE}
+            containerStyle={{ marginBottom: ICON_SIZE - 4 }}
           />
-          <View pointerEvents="none" style={styles.markerContainer}>
-            <Icon
-              name="location-on"
-              color="red"
-              size={ICON_SIZE}
-              pointerEvents="none"
-              containerStyle={{ marginBottom: ICON_SIZE - 4 }}
-            />
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            backgroundColor: "#fff",
-          }}
-        >
-          <Button color="red" onPress={this.onCancel} style={{ flex: 1 }}>
-            Cancel
-          </Button>
-          <Button color="#4a80f5" onPress={this.onSend} style={{ flex: 1 }}>
-            Send
-          </Button>
-        </View>
+        </MarkerContainer>
       </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  markerContainer: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-  },
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          backgroundColor: "#fff",
+        }}
+      >
+        <Button color="red" onPress={onCancel} style={{ flex: 1 }}>
+          Cancel
+        </Button>
+        <Button color="#4a80f5" onPress={onSend} style={{ flex: 1 }}>
+          Send
+        </Button>
+      </View>
+    </View>
+  );
+};
+ChatSendLocationScreen.navigationOptions = () => ({
+  header: null,
 });
+
+export default ChatSendLocationScreen;

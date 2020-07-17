@@ -61,7 +61,7 @@ const TeamInfoArea: React.FC<IProps> = ({
   );
 };
 
-const TeamProfileScreen: React.FC = ({ navigation }) => {
+const TeamProfileScreen = ({ navigation }) => {
   const teamId = navigation.getParam("teamId");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -143,6 +143,9 @@ const TeamProfileScreen: React.FC = ({ navigation }) => {
       </>
     );
   }
+};
+TeamProfileScreen.navigationOptions = {
+  title: "Team Profile",
 };
 
 export default TeamProfileScreen;
