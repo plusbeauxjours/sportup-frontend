@@ -3,6 +3,8 @@ import { withNavigation } from "react-navigation";
 import { Caption, Button } from "react-native-paper";
 import SportsList from "./SportsList";
 import styled from "styled-components/native";
+import { get_or_create_chat } from "../constants/firebase";
+import { useMe } from "../context/meContext";
 
 const Row = styled.View`
   flex-direction: row;
@@ -24,6 +26,22 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
   teams,
   navigation,
 }) => {
+  const { me, loading: meLoading } = useMe();
+  const onPress = async (team) => {
+    const new_key_chats = await get_or_create_chat();
+    if (new_key_chats) {
+      navigation.push("ChatScreen", {
+        chatId: new_key_chats,
+        senderUserId: me.user.id,
+        senderUsername: me.user.username,
+        senderPushToken: me.user.pushToken,
+        receiverUserId: team.createdBy.id,
+        receiverUsername: team.createdBy.username,
+        receiverPushToken: team.createdBy.pushToken,
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <SportsList sports={sports} />
@@ -45,7 +63,7 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
                 {team.teamName}
               </Caption>
             </View>
-            <Button icon="message" onPress={() => {}}>
+            <Button icon="message" onPress={() => onPress(team)}>
               Message
             </Button>
           </Row>

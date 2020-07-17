@@ -15,6 +15,7 @@ export const GET_TEAMS_FOR_GAME = gql`
         createdBy{
           id
           username
+          pushToken
         }
       }
     }

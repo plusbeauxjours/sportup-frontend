@@ -83,6 +83,16 @@ export interface GetTeamsForPlayer_getTeamsForPlayer_teams_sport {
   name: string;
 }
 
+export interface GetTeamsForPlayer_getTeamsForPlayer_teams_createdBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  pushToken: string | null;
+}
+
 export interface GetTeamsForPlayer_getTeamsForPlayer_teams {
   __typename: "TeamType";
   id: string;
@@ -90,6 +100,7 @@ export interface GetTeamsForPlayer_getTeamsForPlayer_teams {
   coverImg: string | null;
   sport: GetTeamsForPlayer_getTeamsForPlayer_teams_sport;
   rating: number | null;
+  createdBy: GetTeamsForPlayer_getTeamsForPlayer_teams_createdBy;
 }
 
 export interface GetTeamsForPlayer_getTeamsForPlayer {
@@ -772,6 +783,16 @@ export interface GetTeamsForGame_getTeamsForGame_teams_sport {
   name: string;
 }
 
+export interface GetTeamsForGame_getTeamsForGame_teams_createdBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  pushToken: string | null;
+}
+
 export interface GetTeamsForGame_getTeamsForGame_teams {
   __typename: "TeamType";
   id: string;
@@ -779,6 +800,7 @@ export interface GetTeamsForGame_getTeamsForGame_teams {
   rating: number | null;
   coverImg: string | null;
   sport: GetTeamsForGame_getTeamsForGame_teams_sport;
+  createdBy: GetTeamsForGame_getTeamsForGame_teams_createdBy;
 }
 
 export interface GetTeamsForGame_getTeamsForGame {
@@ -1025,6 +1047,7 @@ export interface GetSearchResults_getSearchTeams_teams_createdBy {
    * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
    */
   username: string;
+  pushToken: string | null;
 }
 
 export interface GetSearchResults_getSearchTeams_teams {
@@ -1080,6 +1103,16 @@ export interface GetSearchResultsVariables {
 // GraphQL query operation: GetTeam
 // ====================================================
 
+export interface GetTeam_getTeam_team_createdBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  pushToken: string | null;
+}
+
 export interface GetTeam_getTeam_team_sport {
   __typename: "SportType";
   sportId: string | null;
@@ -1105,6 +1138,7 @@ export interface GetTeam_getTeam_team {
   teamName: string;
   coverImg: string | null;
   isAdmin: boolean | null;
+  createdBy: GetTeam_getTeam_team_createdBy;
   sport: GetTeam_getTeam_team_sport;
   rating: number | null;
   members: GetTeam_getTeam_team_members[];
@@ -1161,12 +1195,23 @@ export interface GetUserTeams_getUser_user_teamSet_sport {
   name: string;
 }
 
+export interface GetUserTeams_getUser_user_teamSet_createdBy {
+  __typename: "UserType";
+  id: string;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  pushToken: string | null;
+}
+
 export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   id: string;
   teamName: string;
   coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
+  createdBy: GetUserTeams_getUser_user_teamSet_createdBy;
 }
 
 export interface GetUserTeams_getUser_user {

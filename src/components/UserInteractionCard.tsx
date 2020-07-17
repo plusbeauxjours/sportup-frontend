@@ -13,19 +13,23 @@ const View = styled.View`
 `;
 
 interface IProps {
-  senderUsernameForChat: string;
-  senderUserIdForChat: string;
-  receiverUserIdForChat: string;
+  senderUserId: string;
+  senderUsername: string;
+  senderPushToken: string;
+  receiverUserId: string;
+  receiverUsername: string;
   receiverPushToken: string;
   isFollowing: boolean;
   navigation;
 }
 
 const UserInteractionCard: React.FC<IProps> = ({
-  senderUserIdForChat,
-  senderUsernameForChat,
+  senderUserId,
+  senderUsername,
+  senderPushToken,
+  receiverUserId,
+  receiverUsername,
   receiverPushToken,
-  receiverUserIdForChat,
   isFollowing,
   navigation,
 }) => {
@@ -33,11 +37,13 @@ const UserInteractionCard: React.FC<IProps> = ({
     const new_key_chats = await get_or_create_chat();
     if (new_key_chats) {
       navigation.push("ChatScreen", {
-        chatIdForChat: new_key_chats,
-        senderUserIdForChat,
-        senderUsernameForChat,
+        chatId: new_key_chats,
+        senderUserId,
+        senderUsername,
+        senderPushToken,
+        receiverUserId,
+        receiverUsername,
         receiverPushToken,
-        receiverUserIdForChat,
       });
     }
   };
@@ -46,7 +52,7 @@ const UserInteractionCard: React.FC<IProps> = ({
       <Button icon="message" onPress={() => onPress()}>
         Message
       </Button>
-      <FollowBtn isFollowing={isFollowing} userId={receiverUserIdForChat} />
+      <FollowBtn isFollowing={isFollowing} userId={receiverUserId} />
     </View>
   );
 };

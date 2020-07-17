@@ -18,9 +18,16 @@ const firebaseConfig = {
 !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
 const fb_db = firebase.database().ref();
 
-export interface UserChatMessage {
+export interface SenderChatMessage {
   _id: string;
-  name: string;
+  senderUsername: string;
+  senderPushToken?: string;
+}
+
+export interface ReceiverChatMessage {
+  _id: string;
+  receiverUsername: string;
+  receiverPushToken?: string;
 }
 
 export interface LocationChatMessage {
@@ -33,9 +40,9 @@ export interface ChatMessage {
   text?: string;
   createdAt: Date;
   status: boolean;
-  user: UserChatMessage;
+  sender: SenderChatMessage;
+  receiver: ReceiverChatMessage;
   location?: LocationChatMessage;
-  receiverPushToken: string;
 }
 
 export const chat_leave = (
@@ -75,7 +82,10 @@ export const chat_send = (chat_id: string, message: ChatMessage) => {
   }
   let updates = {};
   updates[`/messages/${chat_id}/${new_key_messages}/`] = message;
-  updates[`/chats/${chat_id}/lastSender/`] = `${message.user._id}`;
+  updates[`/chats/${chat_id}/_id/`] = chat_id;
+  updates[`/chats/${chat_id}/lastSender/`] = `${message.sender._id}`;
+  updates[`/chats/${chat_id}/sender/`] = message.sender
+  updates[`/chats/${chat_id}/receiver/`] = message.receiver
   updates[`/chats/${chat_id}/createdAt/`] = `${message.createdAt}`;
   if (message.text) {
     updates[`/chats/${chat_id}/lastMessage/`] = `${message.text}`;
@@ -84,20 +94,10 @@ export const chat_send = (chat_id: string, message: ChatMessage) => {
   return fb_db.ref.update(updates);
 };
 
+// To Find chatId with senderUserId and receiverChatId
 export const get_or_create_chat = () => {
   let new_key_chats = fb_db.ref.child("chats").push().key;
-  let new_key_messages = fb_db.ref.child("messages").push().key;
-  let message = {
-    _id: new_key_messages,
-    text: "You've got new match.",
-    createdAt: new Date(),
-    system: true
-  };
-  let updates = {};
-  updates[`/chats/${new_key_chats}/lastMessage/`] = message.text;
-  updates[`/chats/${new_key_chats}/lastSender/`] = "system";
-  updates[`/chats/${new_key_chats}/createdAt/`] = `${message.createdAt}`;
-  updates[`/messages/${new_key_chats}/${new_key_messages}/`] = message;
+
   return new_key_chats
 };
 
@@ -112,7 +112,7 @@ export const update_message_info = async (
     }
     let updated_message: ChatMessage;
     let updates = {};
-    if (msg.user._id !== user_id && msg.status === false) {
+    if (msg.sender._id !== user_id && msg.status === false) {
       msg.status = true;
       updated_message = msg;
       resolve(updated_message);

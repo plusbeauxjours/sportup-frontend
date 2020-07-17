@@ -28,7 +28,7 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
     return (
       <FlatList
         data={user.teamSet}
-        renderItem={({ item }) => <TeamCard {...item} />}
+        renderItem={({ item }) => <TeamCard enableMessage {...item} />}
         keyExtractor={(team) => team.id.toString()}
       />
     );

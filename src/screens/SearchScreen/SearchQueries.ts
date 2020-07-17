@@ -18,6 +18,7 @@ export const GET_SEARCH_RESULTS = gql`
           id
           name
           username
+          pushToken
         }
       }
     }

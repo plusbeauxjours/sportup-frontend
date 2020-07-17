@@ -124,10 +124,12 @@ const UserProfileScreen = ({ navigation }) => {
           <Caption>{`@${user.username}`}</Caption>
           <Paragraph>{user.bio}</Paragraph>
           <UserInteractionCard
-            senderUserIdForChat={me.user.id}
-            senderUsernameForChat={me.user.username}
+            senderUserId={me.user.id}
+            senderUsername={me.user.username}
+            senderPushToken={me.user.pushToken}
+            receiverUserId={user.id}
+            receiverUsername={user.username}
             receiverPushToken={user.pushToken}
-            receiverUserIdForChat={user.id}
             isFollowing={user.isFollowing}
           />
           <SportsList sports={user.sports} onChipPress={showDialog} />

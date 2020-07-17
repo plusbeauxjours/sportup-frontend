@@ -8,8 +8,8 @@ exports.sendNotification = functions.database
     .ref("messages/{roomId}/{messageId}")
     .onCreate((event: any) => {
         let sendMsg
-        const sendUserName = event._data.user.name;
-        const receiverPushToken = event._data.receiverPushToken;
+        const senderUsername = event._data.sender.senderUsername;
+        const receiverPushToken = event._data.receiver.receiverPushToken;
         if (event._data.text) {
             sendMsg = event._data.text
         } else if (event._data.location) {
@@ -21,7 +21,7 @@ exports.sendNotification = functions.database
             return axios.post("https://exp.host/--/api/v2/push/send", {
                 to: receiverPushToken,
                 title: "New message",
-                body: `${sendUserName}: ${sendMsg}`
+                body: `${senderUsername}: ${sendMsg}`
             });
         }
     });

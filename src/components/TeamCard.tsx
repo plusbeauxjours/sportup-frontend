@@ -5,10 +5,9 @@ import { Title, Card, Button } from "react-native-paper";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
 import { GetUser_getUser_user_sports } from "../types/api";
-import {
-  NavigationStackScreenComponent,
-  NavigationStackScreenProps,
-} from "react-navigation-stack";
+import { NavigationStackScreenProps } from "react-navigation-stack";
+import { get_or_create_chat } from "../constants/firebase";
+import { useMe } from "../context/meContext";
 
 const Container = styled.View`
   flex-direction: row;
@@ -29,75 +28,109 @@ interface IProps extends NavigationStackScreenProps {
 }
 
 const TeamCardWithCover: React.FC<IProps> = withNavigation(
-  ({ id, rating, teamName, coverImg, enableMessage, sport, navigation }) => (
-    <Card>
-      {coverImg && <Card.Cover source={{ uri: coverImg }} />}
-      <Card.Content>
-        <Container>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("TeamProfileScreen", { id });
-            }}
-          >
-            <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-              {teamName}
-            </Title>
-          </TouchableOpacity>
-          {enableMessage && (
-            <Button
-              icon="message"
+  ({
+    id,
+    rating,
+    teamName,
+    createdBy,
+    coverImg,
+    enableMessage,
+    sport,
+    navigation,
+  }) => {
+    const { me, loading: meLoading } = useMe();
+    const onPress = async (createdBy) => {
+      const new_key_chats = await get_or_create_chat();
+      if (new_key_chats) {
+        navigation.push("ChatScreen", {
+          chatId: new_key_chats,
+          senderUserId: me.user.id,
+          senderUsername: me.user.username,
+          senderPushToken: me.user.pushToken,
+          receiverUserId: createdBy.id,
+          receiverUsername: createdBy.username,
+          receiverPushToken: createdBy.pushToken,
+        });
+      }
+    };
+    return (
+      <Card>
+        {coverImg && <Card.Cover source={{ uri: coverImg }} />}
+        <Card.Content>
+          <Container>
+            <TouchableOpacity
               onPress={() => {
-                console.log("go to chat");
+                navigation.push("TeamProfileScreen", { id });
               }}
             >
-              Message
-            </Button>
-          )}
-        </Container>
-        <RatingChip
-          sportId={sport.sportId}
-          name={sport.name}
-          onChipPress={() => {}}
-        />
-      </Card.Content>
-    </Card>
-  )
-);
-const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
-  ({ id, rating, teamName, enableMessage, sport, navigation }) => (
-    <Card>
-      <Card.Content>
-        <Container>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.push("TeamProfileScreen", { teamId: id });
-            }}
-          >
-            <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-              {teamName}
-            </Title>
-          </TouchableOpacity>
-          {enableMessage && (
-            <Button
-              icon="message"
-              onPress={() => {
-                console.log("go to chat");
-              }}
-            >
-              Message
-            </Button>
-          )}
-        </Container>
-        <View>
+              <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
+                {teamName}
+              </Title>
+            </TouchableOpacity>
+            {enableMessage && (
+              <Button icon="message" onPress={() => onPress(createdBy)}>
+                Message
+              </Button>
+            )}
+          </Container>
           <RatingChip
             sportId={sport.sportId}
             name={sport.name}
             onChipPress={() => {}}
           />
-        </View>
-      </Card.Content>
-    </Card>
-  )
+        </Card.Content>
+      </Card>
+    );
+  }
+);
+
+const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
+  ({ id, rating, teamName, createdBy, enableMessage, sport, navigation }) => {
+    const { me, loading: meLoading } = useMe();
+    const onPress = async (createdBy) => {
+      const new_key_chats = await get_or_create_chat();
+      if (new_key_chats) {
+        navigation.push("ChatScreen", {
+          chatId: new_key_chats,
+          senderUserId: me.user.id,
+          senderUsername: me.user.username,
+          senderPushToken: me.user.pushToken,
+          receiverUserId: createdBy.id,
+          receiverUsername: createdBy.username,
+          receiverPushToken: createdBy.pushToken,
+        });
+      }
+    };
+    return (
+      <Card>
+        <Card.Content>
+          <Container>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push("TeamProfileScreen", { teamId: id });
+              }}
+            >
+              <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
+                {teamName}
+              </Title>
+            </TouchableOpacity>
+            {enableMessage && (
+              <Button icon="message" onPress={() => onPress(createdBy)}>
+                Message
+              </Button>
+            )}
+          </Container>
+          <View>
+            <RatingChip
+              sportId={sport.sportId}
+              name={sport.name}
+              onChipPress={() => {}}
+            />
+          </View>
+        </Card.Content>
+      </Card>
+    );
+  }
 );
 
 const TeamCard = (props) => {

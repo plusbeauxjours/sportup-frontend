@@ -7,11 +7,12 @@ import { useQuery } from "react-apollo";
 import { GetTeamsForGame, GetTeamsForGameVariables } from "../../types/api";
 
 const FoundTeamsListScreen = ({ navigation }) => {
+  const sportIds = navigation.getParam("selectedSportIds");
   const {
     data: { getTeamsForGame: { teams = null } = {} } = {},
     loading,
   } = useQuery<GetTeamsForGame, GetTeamsForGameVariables>(GET_TEAMS_FOR_GAME, {
-    variables: { sportIds: navigation.getParam("selectedSportIds") },
+    variables: { sportIds },
     fetchPolicy: "network-only",
   });
   return (

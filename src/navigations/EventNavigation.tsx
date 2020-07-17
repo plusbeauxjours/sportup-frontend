@@ -13,6 +13,8 @@ import CreateEventScreen from "../screens/CreateEventScreen";
 import EventScreen from "../screens/EventScreen";
 import RegisterForEventScreen from "../screens/RegisterForEventScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
+import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
+import ChatScreen from "../screens/ChatScreen/";
 
 const EventNavigation = createStackNavigator(
   {
@@ -28,6 +30,8 @@ const EventNavigation = createStackNavigator(
     TeamsScreen,
     TeamProfileScreen,
     EditTeamProfileScreen,
+    ChatSendLocationScreen,
+    ChatScreen,
   },
   {
     initialRouteName: "MainTournamentScreen",

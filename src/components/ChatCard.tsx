@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements";
 import styled from "styled-components/native";
 import { Caption, Subheading, Paragraph } from "react-native-paper";
 
-import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
+import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { timeSince } from "../utils/time";
 
 const TouchableOpacity = styled.TouchableOpacity`
@@ -25,69 +25,86 @@ const UpperHalfContainer = styled.View`
   align-items: center;
 `;
 
-export default withNavigation(
-  ({
-    id,
-    status = false,
-    avatar = "",
-    name,
-    createdAt,
-    lastMessage,
-    navigation,
-  }) => {
-    const gotoChat = () => {
-      navigation.push("ChatScreen", {
-        chatIdForChat: "-MCMRcg98egmvRPX1zeu",
-        // chatIdForChat:id,
-        // senderUserIdForChat
-        // senderUsernameForChat
-        // receiverPushToken
-        // receiverUserIdForChat
-      });
-    };
-    return (
-      <TouchableOpacity onPress={gotoChat}>
-        <Avatar
-          rounded
-          containerStyle={{ marginTop: 5, marginLeft: 5 }}
-          source={{
-            uri: avatar ? MEDIA_URL + avatar : NO_AVATAR_THUMBNAIL,
-          }}
-        />
-        <RightContainer>
-          {status ? (
-            <>
-              <UpperHalfContainer>
-                <Subheading
-                  numberOfLines={1}
-                  style={{ color: "#000", fontWeight: "bold" }}
-                >
-                  {name}
-                </Subheading>
-                <Caption style={{ color: "#000", fontWeight: "bold" }}>
-                  {timeSince(createdAt)}
-                </Caption>
-              </UpperHalfContainer>
-              <Paragraph
+interface IProps {
+  status: string;
+  createdAt: string;
+  lastMessage: string;
+  chatId: string;
+  senderUsername: string;
+  senderUserId: string;
+  senderPushToken: string;
+  receiverUsername: string;
+  receiverUserId: string;
+  receiverPushToken: string;
+  navigation;
+}
+
+const ChatCard: React.FC<IProps> = ({
+  status,
+  createdAt,
+  lastMessage,
+  chatId,
+  senderUsername,
+  senderUserId,
+  senderPushToken,
+  receiverUsername,
+  receiverUserId,
+  receiverPushToken,
+  navigation,
+}) => {
+  const gotoChat = () => {
+    navigation.push("ChatScreen", {
+      chatId,
+      senderUsername,
+      senderUserId,
+      senderPushToken,
+      receiverUsername,
+      receiverUserId,
+      receiverPushToken,
+    });
+  };
+  return (
+    <TouchableOpacity onPress={gotoChat}>
+      <Avatar
+        rounded
+        containerStyle={{ marginTop: 5, marginLeft: 5 }}
+        source={{ uri: NO_AVATAR_THUMBNAIL }}
+      />
+      <RightContainer>
+        {status === "false" ? (
+          <>
+            <UpperHalfContainer>
+              <Subheading
                 numberOfLines={1}
                 style={{ color: "#000", fontWeight: "bold" }}
               >
-                {lastMessage}
-              </Paragraph>
-            </>
-          ) : (
-            <>
-              <UpperHalfContainer>
-                <Subheading numberOfLines={1}>{name}</Subheading>
-                <Caption>{timeSince(createdAt)}</Caption>
-              </UpperHalfContainer>
-              <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>
-                {lastMessage}
-              </Paragraph>
-            </>
-          )}
-        </RightContainer>
-      </TouchableOpacity>
-    );
-  }
-);
+                {senderUsername}
+              </Subheading>
+              <Caption style={{ color: "#000", fontWeight: "bold" }}>
+                {timeSince(createdAt)}
+              </Caption>
+            </UpperHalfContainer>
+            <Paragraph
+              numberOfLines={1}
+              style={{ color: "#000", fontWeight: "bold" }}
+            >
+              {lastMessage}
+            </Paragraph>
+          </>
+        ) : (
+          <>
+            <UpperHalfContainer>
+              <Subheading numberOfLines={1}>{senderUsername}</Subheading>
+              <Caption>{timeSince(createdAt)}</Caption>
+            </UpperHalfContainer>
+            <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>
+              {lastMessage}
+            </Paragraph>
+          </>
+        )}
+      </RightContainer>
+    </TouchableOpacity>
+  );
+};
+
+export default withNavigation(ChatCard);

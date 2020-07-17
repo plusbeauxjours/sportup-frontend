@@ -9,6 +9,7 @@ import { GetUsersForGameVariables, GetUsersForGame } from "../../types/api";
 
 const FoundPlayersListScreen = ({ navigation }) => {
   const sportIds = navigation.getParam("selectedSportIds");
+  console.log(sportIds);
   const {
     data: { getUsersForGame: { users = null } = {} } = {},
     loading,
