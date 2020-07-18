@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "precodegen": "apollo schema:download --endpoint=http://localhost:8000/graphql/",
+    "precodegen": "apollo schema:download --endpoint=https://sportup-server.herokuapp.com/graphql/",
     "codegen": "apollo codegen:generate src/types/api.d.ts --localSchemaFile=schema.json --includes='src/**/!(*.local).ts' --target typescript --outputFlat"
   },
   "dependencies": {
