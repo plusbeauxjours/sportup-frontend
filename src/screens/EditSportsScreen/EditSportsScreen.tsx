@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "react-apollo";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
@@ -18,15 +17,19 @@ import Button from "../../components/Button";
 
 const Container = styled.View`
   flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 
 const Row = styled.View`
+  flex: 1;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 `;
 
-export default ({ navigation }) => {
+const EditSportsScreen = ({ navigation }) => {
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
   const {
@@ -83,14 +86,7 @@ export default ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "space-between",
-          marginBottom: 10,
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <React.Fragment>
         <Row>
           {sports?.map((sport) => (
             <RatingChip
@@ -110,15 +106,19 @@ export default ({ navigation }) => {
                   sportIds: selectedSportIds,
                 },
               });
-              navigation.goBack();
+              navigation.navigate("MyProfileScreen");
             }}
-            style={{ width: "90%", alignSelf: "center" }}
             loading={updateUserLoading}
             disabled={updateUserLoading}
             text={"Save"}
           />
         </Container>
-      </KeyboardAwareScrollView>
+      </React.Fragment>
     );
   }
 };
+EditSportsScreen.navigationOptions = {
+  title: "Edit Sport",
+};
+
+export default EditSportsScreen;

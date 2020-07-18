@@ -116,6 +116,7 @@ const RegistrationScreen = ({ navigation }) => {
   return (
     <FlatList
       data={registrations}
+      showsVerticalScrollIndicator={false}
       renderItem={({ item, index }) => (
         <ListItem
           key={item?.id}

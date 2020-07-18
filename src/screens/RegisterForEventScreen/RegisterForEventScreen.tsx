@@ -129,9 +129,8 @@ const RegisterForEventScreen = ({ navigation }) => {
                 });
                 navigation.goBack();
               }}
-            >
-              Register
-            </Button>
+              text={"Register"}
+            />
           </React.Fragment>
         )}
       </Formik>

@@ -33,6 +33,13 @@ const TouchableOpacity = styled.TouchableOpacity`
   align-items: center;
 `;
 
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2;
+  border-radius: 10px;
+  padding: 10px 0;
+`;
+
 interface UserInfoAreaProps {
   id?: string;
   name?: string;
@@ -104,19 +111,21 @@ const PostCard: React.FC<IProps> = ({
   createdAt,
   disableNavigation,
 }) => (
-  <Card>
-    <Card.Content>
-      <UserInfoArea
-        disableNavigation={disableNavigation}
-        createdAt={createdAt}
-        {...postedBy}
-      />
-      {text && <Paragraph>{text}</Paragraph>}
-    </Card.Content>
-    {!!postImg && <Card.Cover source={{ uri: postImg }} />}
-    <Card.Actions>
-      <VoteBtn postId={id} interaction={interaction} score={score} />
-    </Card.Actions>
+  <Card style={{ padding: 3 }}>
+    <Border>
+      <Card.Content>
+        <UserInfoArea
+          disableNavigation={disableNavigation}
+          createdAt={createdAt}
+          {...postedBy}
+        />
+        {text && <Paragraph>{text}</Paragraph>}
+      </Card.Content>
+      {!!postImg && <Card.Cover source={{ uri: postImg }} />}
+      <Card.Actions>
+        <VoteBtn postId={id} interaction={interaction} score={score} />
+      </Card.Actions>
+    </Border>
   </Card>
 );
 export default PostCard;

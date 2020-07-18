@@ -34,6 +34,7 @@ const FoundPlayersListScreen = ({ navigation }) => {
         );
       }}
       keyExtractor={(player: any) => player.id.toString()}
+      showsVerticalScrollIndicator={false}
       ListEmptyComponent={() =>
         !loading ? (
           <View

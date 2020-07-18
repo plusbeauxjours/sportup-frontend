@@ -104,6 +104,7 @@ const TeamProfileScreen = ({ navigation }) => {
         <FlatList
           data={team.members}
           keyExtractor={(item) => item.id.toString()}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
             <UserCard
               userId={item.id}

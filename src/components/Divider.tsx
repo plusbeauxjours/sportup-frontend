@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 
 const View = styled.View`
   flex-direction: row;
-  padding: 15px;
+  padding: 50px;
 `;
 const Container = styled.View`
   background-color: #3f51b5;

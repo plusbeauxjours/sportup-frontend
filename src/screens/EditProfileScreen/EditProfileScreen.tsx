@@ -14,6 +14,11 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { UpdateUser, UpdateUserVariables, Me } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import styled from "styled-components/native";
+
+const WhiteSpace = styled.View`
+  height: 50px;
+`;
 
 const EditProfileScreen = ({ navigation }) => {
   const {
@@ -139,6 +144,7 @@ const EditProfileScreen = ({ navigation }) => {
                 onChange={setFieldValue}
                 onTouch={setFieldTouched}
                 name="bio"
+                multiline={true}
                 error={touched.bio && errors.bio}
               />
               <FormikInput
@@ -161,6 +167,8 @@ const EditProfileScreen = ({ navigation }) => {
                 name="confirmPassword"
                 error={touched.confirmPassword && errors.confirmPassword}
               />
+              <WhiteSpace />
+
               <Button
                 disabled={!isValid || updateUserLoading}
                 loading={updateUserLoading}
@@ -182,12 +190,15 @@ const EditProfileScreen = ({ navigation }) => {
                 disabled={updateUserLoading}
                 onPress={onEditSportsPress}
                 text={"Edit sports"}
+                long={true}
               />
               <Button
                 disabled={updateUserLoading}
                 onPress={onCreateTeamPress}
                 text={"Create team"}
+                long={true}
               />
+              <WhiteSpace />
             </React.Fragment>
           )}
         </Formik>

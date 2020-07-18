@@ -5,6 +5,7 @@ export default ({
   onPress,
   loading = false,
   disabled = false,
+  long = false,
   text,
   ...rest
 }) => {
@@ -14,7 +15,7 @@ export default ({
       onPress={onPress}
       disabled={disabled}
       mode="outlined"
-      style={{ width: 100, margin: 10 }}
+      style={{ width: long ? 200 : 100, margin: 10 }}
       labelStyle={{ color: disabled ? "gray" : "#ffa500", fontWeight: "600" }}
       color={"#ffa500"}
       compact={true}

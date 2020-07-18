@@ -10,9 +10,10 @@ const Container = styled.View`
 
 interface IProps {
   label: string;
-  error: any;
+  error?: any;
   value: any;
-  name: string;
+  name?: string;
+  placeholder?: string;
   secureTextEntry?: boolean;
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: "none" | "sentences" | "words" | "characters";
@@ -26,6 +27,7 @@ const FormikInput: React.FC<IProps> = ({
   label,
   error,
   name,
+  placeholder,
   onChange,
   onTouch,
   autoCapitalize,
@@ -47,11 +49,12 @@ const FormikInput: React.FC<IProps> = ({
         autoCapitalize={autoCapitalize}
         onChangeText={handleChange}
         onBlur={handleBlur}
-        // placeholder={label}
+        placeholder={placeholder}
         error={error}
         multiline={multiline}
         autoCorrect={autoCorrect}
         style={{ backgroundColor: "transparent" }}
+        theme={{ colors: { primary: "#e59400" } }}
         {...rest}
       />
       <HelperText type="error" visible={error}>

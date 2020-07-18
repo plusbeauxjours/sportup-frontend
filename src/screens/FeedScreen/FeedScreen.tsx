@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Appbar } from "react-native-paper";
+import styled from "styled-components/native";
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import WritePost from "../../components/WritePost/WritePost";
 import { useQuery } from "react-apollo-hooks";
-import styled from "styled-components/native";
 import Loader from "../../components/Loader";
 
 const Conatiner = styled.View`

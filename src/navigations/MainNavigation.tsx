@@ -7,10 +7,10 @@ const MainNavigation = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingContainer,
     Auth: AuthNavigation,
-    Main: MainDrawer
+    Main: MainDrawer,
   },
   {
-    initialRouteName: "AuthLoading"
+    initialRouteName: "AuthLoading",
   }
 );
 

@@ -36,6 +36,7 @@ const FeedList: React.FC<IProps> = ({
           disableNavigation={disableNavigation}
         />
       )}
+      showsVerticalScrollIndicator={false}
       keyExtractor={(post: any) => post.id.toString()}
       {...rest}
     />

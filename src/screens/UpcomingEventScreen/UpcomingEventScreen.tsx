@@ -34,6 +34,7 @@ const UpcomingEvents = () => {
         />
       )}
       keyExtractor={(item: any) => item.id.toString()}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

@@ -86,6 +86,7 @@ const ChatListScreen = () => {
           )}
           keyExtractor={(_, index) => index.toString()}
           ItemSeparatorComponent={() => <Divider />}
+          showsVerticalScrollIndicator={false}
         />
       </>
     );

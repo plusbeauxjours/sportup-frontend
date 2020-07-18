@@ -20,6 +20,7 @@ const FoundTeamsListScreen = ({ navigation }) => {
       data={teams}
       renderItem={({ item }) => <TeamCard enableMessage {...item} />}
       keyExtractor={(player: any) => player.id.toString()}
+      showsVerticalScrollIndicator={false}
       ListEmptyComponent={() =>
         !loading ? (
           <View

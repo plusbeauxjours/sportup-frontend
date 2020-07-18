@@ -25,6 +25,7 @@ const SportsList: React.FC<IProps> = ({
       />
     )}
     keyExtractor={(sport: any) => sport.sportId.toString()}
+    showsVerticalScrollIndicator={false}
     {...rest}
   />
 );

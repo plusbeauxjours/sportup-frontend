@@ -31,6 +31,7 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
         data={user.teamSet}
         renderItem={({ item }) => <TeamCard enableMessage {...item} />}
         keyExtractor={(team) => team.id.toString()}
+        showsVerticalScrollIndicator={false}
       />
     );
   }

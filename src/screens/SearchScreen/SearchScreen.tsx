@@ -15,9 +15,6 @@ const SectionTitle = styled.Text`
   font-size: 10px;
   font-weight: 400;
 `;
-const Container = styled.View`
-  padding: 10px;
-`;
 
 const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState<string>("");
