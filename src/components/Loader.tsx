@@ -1,16 +1,15 @@
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import constants from "../constants/dimensions";
 import styled from "styled-components/native";
 
-const Container = styled.View`
-  width: ${constants.width}px;
+const LoadingContainer = styled.View`
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
 export default () => (
-  <Container>
-    <ActivityIndicator color={"#999"} />
-  </Container>
+  <LoadingContainer>
+    <ActivityIndicator size="large" style={{ margin: 20 }} />
+  </LoadingContainer>
 );

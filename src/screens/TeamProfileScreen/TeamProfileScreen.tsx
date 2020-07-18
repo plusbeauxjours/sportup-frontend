@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { ActivityIndicator, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { Headline, Divider, Button } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
@@ -12,6 +12,7 @@ import UserCard from "../../components/UserCard";
 import RatingDialog from "../../components/RatingDialog";
 import { useMutation } from "react-apollo";
 import { RateTeam, RateTeamVariables } from "../../types/api";
+import Loader from "../../components/Loader";
 
 const View = styled.View`
   align-items: center;
@@ -95,7 +96,7 @@ const TeamProfileScreen = ({ navigation }) => {
     closeDialog();
   };
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <>

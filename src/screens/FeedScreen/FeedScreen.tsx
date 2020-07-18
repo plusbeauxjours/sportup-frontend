@@ -6,9 +6,15 @@ import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import WritePost from "../../components/WritePost/WritePost";
 import { useQuery } from "react-apollo-hooks";
-import { ActivityIndicator } from "react-native";
+import styled from "styled-components/native";
+import Loader from "../../components/Loader";
 
-const FeedScreen = ({ navigation }) => {
+const Conatiner = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+
+const FeedScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -23,48 +29,50 @@ const FeedScreen = ({ navigation }) => {
   });
 
   if (getMainFeedLoading) {
-    return <ActivityIndicator size="large" style={{ margin: 20 }} />;
+    return <Loader />;
   } else {
     return (
-      <FeedList
-        posts={posts}
-        refreshing={networkStatus === 4}
-        onRefresh={() => {
-          getMainFeedRefetch({ pageNum: 1 });
-        }}
-        ListHeaderComponent={() => <WritePost />}
-        ListFooterComponent={() => <ListFooterComponent loading={loading} />}
-        onEndReached={() => {
-          if (!loading && hasNextPage) {
-            getMainFeedFetchMore({
-              variables: {
-                pageNum: pageNum + 1,
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                if (!fetchMoreResult.getMainFeed) return prev;
-                return Object.assign({}, prev, {
-                  getMainFeed: {
-                    ...prev.getMainFeed,
-                    pageNum: fetchMoreResult.getMainFeed.pageNum,
-                    hasNextPage: fetchMoreResult.getMainFeed.hasNextPage,
-                    posts: [
-                      ...prev.getMainFeed.posts,
-                      ...fetchMoreResult.getMainFeed.posts,
-                    ],
-                  },
-                });
-              },
-            });
-            setLoading(true);
-          }
-        }}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => {
-          setLoading(false);
-        }}
-        disableNavigation={false}
-      />
+      <Conatiner>
+        <FeedList
+          posts={posts}
+          refreshing={networkStatus === 4}
+          onRefresh={() => {
+            getMainFeedRefetch({ pageNum: 1 });
+          }}
+          ListHeaderComponent={() => <WritePost />}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
+          onEndReached={() => {
+            if (!loading && hasNextPage) {
+              getMainFeedFetchMore({
+                variables: {
+                  pageNum: pageNum + 1,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  if (!fetchMoreResult.getMainFeed) return prev;
+                  return Object.assign({}, prev, {
+                    getMainFeed: {
+                      ...prev.getMainFeed,
+                      pageNum: fetchMoreResult.getMainFeed.pageNum,
+                      hasNextPage: fetchMoreResult.getMainFeed.hasNextPage,
+                      posts: [
+                        ...prev.getMainFeed.posts,
+                        ...fetchMoreResult.getMainFeed.posts,
+                      ],
+                    },
+                  });
+                },
+              });
+              setLoading(true);
+            }
+          }}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setLoading(false);
+          }}
+          disableNavigation={false}
+        />
+      </Conatiner>
     );
   }
 };

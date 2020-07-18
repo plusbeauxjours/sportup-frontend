@@ -1,8 +1,9 @@
 import React from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
+import Loader from "../../components/Loader";
 import {
   GetRegistrations,
   GetRegistrationsVariables,
@@ -110,7 +111,7 @@ const RegistrationScreen = ({ navigation }) => {
   };
 
   if (getRegistrationsLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   }
   return (
     <FlatList
@@ -122,7 +123,7 @@ const RegistrationScreen = ({ navigation }) => {
           subtitle={`Registered by ${item?.registeredBy.username}`}
           rightIcon={{
             name: "check",
-            color: item?.approved ? "green" : "grey",
+            color: item?.approved ? "green" : "gray",
             onPress: () => onPress(item.id, index, item.approved),
           }}
         />

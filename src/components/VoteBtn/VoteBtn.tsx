@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useMutation } from "react-apollo";
 import styled from "styled-components/native";
-import { Icon } from "react-native-elements";
 import { Caption } from "react-native-paper";
 import { UPVOTED, DOWNVOTED } from "../../constants/strings";
+import { FontAwesome } from "@expo/vector-icons";
 import {
   REMOVE_POST_INTERACTION,
   UPVOTE_POST,
@@ -23,8 +23,10 @@ const PostVoteContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 50px;
+  padding: 5px 130px;
 `;
+
+const IconContainer = styled.TouchableOpacity``;
 
 interface IProps {
   postId: string;
@@ -89,9 +91,7 @@ const VoteBtn: React.FC<IProps> = ({
 
   return (
     <PostVoteContainer>
-      <Icon
-        color={upvoteSelected ? "red" : "gray"}
-        containerStyle={{ paddingHorizontal: 10 }}
+      <IconContainer
         onPress={() => {
           if (upvoteSelected) {
             removePostInteractionFn();
@@ -100,12 +100,16 @@ const VoteBtn: React.FC<IProps> = ({
           }
           toggleUpvote();
         }}
-        name="arrow-upward"
-      />
+      >
+        <FontAwesome
+          name={"arrow-up"}
+          color={upvoteSelected ? "#ffae19" : "gray"}
+          size={20}
+        />
+      </IconContainer>
       <Caption>{score}</Caption>
-      <Icon
-        color={downvoteSelected ? "blue" : "gray"}
-        containerStyle={{ paddingHorizontal: 10 }}
+
+      <IconContainer
         onPress={() => {
           if (downvoteSelected) {
             removePostInteractionFn();
@@ -114,8 +118,13 @@ const VoteBtn: React.FC<IProps> = ({
           }
           toggleDownvote();
         }}
-        name="arrow-downward"
-      />
+      >
+        <FontAwesome
+          name={"arrow-down"}
+          color={downvoteSelected ? "#e59400" : "gray"}
+          size={20}
+        />
+      </IconContainer>
     </PostVoteContainer>
   );
 };

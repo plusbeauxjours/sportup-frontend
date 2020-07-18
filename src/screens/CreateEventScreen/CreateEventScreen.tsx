@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Moment from "moment";
-import { Picker, ActivityIndicator } from "react-native";
+import { Picker } from "react-native";
 import { Divider } from "react-native-elements";
 import { useQuery, useMutation } from "react-apollo";
 import { Formik } from "formik";
@@ -16,6 +16,7 @@ import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import { CREATE_EVENT } from "./CreateEventScreenQueries";
 import styled from "styled-components/native";
 import { formatDate, formatTime } from "../../utils/time";
+import Loader from "../../components/Loader";
 import {
   GetAllSports,
   CreateEvent,
@@ -92,7 +93,7 @@ const CreateEventScreen = ({ navigation }) => {
   >(CREATE_EVENT);
 
   if (getAllSportsLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
@@ -249,7 +250,6 @@ const CreateEventScreen = ({ navigation }) => {
               />
               <Button
                 loading={createEventLoading}
-                disabled={createEventLoading}
                 disabled={!isValid || createEventLoading}
                 onPress={() => {
                   createEventFn({

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { ActivityIndicator } from "react-native";
+import React, { useState } from "react";
 import { useQuery, useMutation } from "react-apollo";
 import { Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -34,7 +33,7 @@ export default ({ navigation }) => {
     loading: meLoading,
   } = useQuery<Me>(ME, {
     onCompleted: ({ me }) =>
-      me.user?.sports.forEach(({ sportId }) =>
+      me?.user?.sports.forEach(({ sportId }) =>
         setSelectedSportsIds((i) => [...i, sportId])
       ),
   });
@@ -59,7 +58,7 @@ export default ({ navigation }) => {
             me: {
               ...me,
               user: {
-                ...me.user,
+                ...me?.user,
                 sports: updateSports.user.sports,
               },
             },
@@ -80,7 +79,7 @@ export default ({ navigation }) => {
   };
 
   if (getAllSportsLoading || meLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <KeyboardAwareScrollView

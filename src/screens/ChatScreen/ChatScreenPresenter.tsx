@@ -8,15 +8,11 @@ import {
 } from "react-native-gifted-chat";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
-import {
-  Platform,
-  Modal as MapModal,
-  SafeAreaView,
-  ActivityIndicator,
-} from "react-native";
+import { Platform, Modal as MapModal, SafeAreaView } from "react-native";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import constants from "../../constants/dimensions";
 import { mapStyle } from "../../constants/mapStyle";
+import Loader from "../../components/Loader";
 
 const View = styled.View``;
 
@@ -140,9 +136,9 @@ const ChatPresenter: React.FunctionComponent<IProps> = ({
     <>
       <MapModal visible={mapModalOpen} transparent={true}>
         {mapLoading ? (
-          <ActivityIndicator size="large" />
+          <Loader />
         ) : (
-          <>
+          <React.Fragment>
             <MapView
               provider={PROVIDER_GOOGLE}
               style={{
@@ -183,7 +179,7 @@ const ChatPresenter: React.FunctionComponent<IProps> = ({
                 </MapBtn>
               </MapBackBtn>
             </Footer>
-          </>
+          </React.Fragment>
         )}
       </MapModal>
       <ChatContainer>

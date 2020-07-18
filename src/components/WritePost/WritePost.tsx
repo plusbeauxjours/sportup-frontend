@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { GET_MAIN_FEED } from "../../screens/FeedScreen/FeedScreenQueries";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
+import { Divider } from "react-native-paper";
 import {
   CreatePost,
   CreatePostVariables,
@@ -10,11 +10,16 @@ import {
   GetMainFeedVariables,
 } from "../../types/api";
 import { CREATE_POST } from "./WritePostQueries";
-import { Button } from "react-native-paper";
+import { GET_MAIN_FEED } from "../../screens/FeedScreen/FeedScreenQueries";
 import { MY_FEED } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
 import { GetMyFeed } from "../../types/api";
+import Button from "../../components/Button";
 
-const View = styled.View``;
+const Container = styled.View`
+  height: 150px;
+  align-items: center;
+  justify-content: flex-end;
+`;
 
 const WritePost: React.FC = () => {
   const [text, setText] = useState<string>("");
@@ -67,24 +72,27 @@ const WritePost: React.FC = () => {
     setText("");
   };
   return (
-    <View>
-      <Input
-        label={"Write post..."}
-        style={{ height: 100 }}
-        value={text}
-        autoCorrect={false}
-        autoCapitalize="none"
-        onChangeText={(text) => setText(text)}
-        multiline
-      />
-      <Button
-        loading={createPostLoading}
-        disabled={text === ""}
-        onPress={onPress}
-      >
-        Post
-      </Button>
-    </View>
+    <>
+      <Container>
+        <Input
+          label={"Write post..."}
+          style={{ height: 100 }}
+          value={text}
+          autoCorrect={false}
+          autoCapitalize="none"
+          onChangeText={(text) => setText(text)}
+          multiline
+        />
+        <Button
+          loading={createPostLoading}
+          disabled={text === ""}
+          onPress={onPress}
+        >
+          Post
+        </Button>
+      </Container>
+      <Divider />
+    </>
   );
 };
 

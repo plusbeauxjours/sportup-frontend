@@ -32,7 +32,7 @@ const FoundTeamsListScreen = ({ navigation }) => {
             <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
           </View>
         ) : (
-          <ActivityIndicator size="large" />
+          <ActivityIndicator size="small" />
         )
       }
     />

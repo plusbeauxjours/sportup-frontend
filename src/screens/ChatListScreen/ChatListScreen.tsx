@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native";
 import { Divider, Appbar } from "react-native-paper";
 
 import * as firebase from "firebase/app";
@@ -7,6 +7,7 @@ import "firebase/database";
 
 import ChatCard from "../../components/ChatCard";
 import { useMe } from "../../context/meContext";
+import Loader from "../../components/Loader";
 
 const ChatListScreen = () => {
   const { me, loading: meLoading } = useMe();
@@ -27,7 +28,7 @@ const ChatListScreen = () => {
     });
   };
   const amISender = (item) => {
-    return item.sender._id === me.user?.id;
+    return item.sender._id === me?.user?.id;
   };
   const onRefresh = () => {
     try {
@@ -43,7 +44,7 @@ const ChatListScreen = () => {
     getChats();
   });
   if (meLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else if (chats) {
     return (
       <>

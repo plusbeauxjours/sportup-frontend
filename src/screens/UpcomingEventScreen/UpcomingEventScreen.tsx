@@ -1,9 +1,10 @@
 import React from "react";
-import { FlatList, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
 import { GetUpcomingEvents } from "../../types/api";
+import Loader from "../../components/Loader";
 
 const UpcomingEvents = () => {
   const {
@@ -14,7 +15,7 @@ const UpcomingEvents = () => {
   });
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   }
   return (
     <FlatList

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import { Appbar, Headline, Caption, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
 import { useQuery } from "react-apollo-hooks";
@@ -13,14 +13,21 @@ import ListFooterComponent from "../../components/ListFooterComponent";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
+import Loader from "../../components/Loader";
 
 const View = styled.View`
   flex-direction: row;
 `;
+
 const UserInfoContainer = styled.View`
   align-items: center;
   margin: 1px 0;
   background-color: #fff;
+`;
+
+const Conatiner = styled.View`
+  flex: 1;
+  background-color: white;
 `;
 
 const MyProfileScreen = ({ navigation }) => {
@@ -72,9 +79,7 @@ const MyProfileScreen = ({ navigation }) => {
   }, []);
 
   const renderUserInfoArea = () => {
-    if (meLoading) {
-      return <ActivityIndicator size="large" style={{ margin: 20 }} />;
-    } else if (user) {
+    if (user) {
       const connections = {
         teams: user?.teamsCount,
         followers: user?.followersCount,
@@ -114,49 +119,51 @@ const MyProfileScreen = ({ navigation }) => {
       return null;
     }
   };
-  if (getMyFeedLoading) {
-    return <ActivityIndicator size="large" style={{ margin: 20 }} />;
+  if (getMyFeedLoading || meLoading) {
+    return <Loader />;
   } else {
     return (
-      <FeedList
-        posts={posts}
-        refreshing={networkStatus === 4}
-        onRefresh={() => {
-          getMyFeedRefetch({ pageNum: 1 });
-        }}
-        ListHeaderComponent={renderUserInfoArea}
-        ListFooterComponent={() => <ListFooterComponent loading={loading} />}
-        onEndReached={() => {
-          if (!loading && hasNextPage) {
-            getMyFeedFetchMore({
-              variables: {
-                pageNum: pageNum + 1,
-              },
-              updateQuery: (prev, { fetchMoreResult }) => {
-                if (!fetchMoreResult) return prev;
-                if (!fetchMoreResult.getMyFeed) return prev;
-                return Object.assign({}, prev, {
-                  getMyFeed: {
-                    ...prev.getMyFeed,
-                    pageNum: fetchMoreResult.getMyFeed.pageNum,
-                    hasNextPage: fetchMoreResult.getMyFeed.hasNextPage,
-                    posts: [
-                      ...prev.getMyFeed.posts,
-                      ...fetchMoreResult.getMyFeed.posts,
-                    ],
-                  },
-                });
-              },
-            });
-            setLoading(true);
-          }
-        }}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => {
-          setLoading(false);
-        }}
-        disableNavigation={true}
-      />
+      <Conatiner>
+        <FeedList
+          posts={posts}
+          refreshing={networkStatus === 4}
+          onRefresh={() => {
+            getMyFeedRefetch({ pageNum: 1 });
+          }}
+          ListHeaderComponent={renderUserInfoArea}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
+          onEndReached={() => {
+            if (!loading && hasNextPage) {
+              getMyFeedFetchMore({
+                variables: {
+                  pageNum: pageNum + 1,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  if (!fetchMoreResult.getMyFeed) return prev;
+                  return Object.assign({}, prev, {
+                    getMyFeed: {
+                      ...prev.getMyFeed,
+                      pageNum: fetchMoreResult.getMyFeed.pageNum,
+                      hasNextPage: fetchMoreResult.getMyFeed.hasNextPage,
+                      posts: [
+                        ...prev.getMyFeed.posts,
+                        ...fetchMoreResult.getMyFeed.posts,
+                      ],
+                    },
+                  });
+                },
+              });
+              setLoading(true);
+            }
+          }}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setLoading(false);
+          }}
+          disableNavigation={true}
+        />
+      </Conatiner>
     );
   }
 };

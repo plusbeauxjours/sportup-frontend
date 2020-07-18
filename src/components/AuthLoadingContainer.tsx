@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 
-import { ActivityIndicator, AsyncStorage } from "react-native";
-import styled from "styled-components/native";
-
-const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
+import { AsyncStorage } from "react-native";
+import Loader from "./Loader";
 
 export default ({ navigation }) => {
   const checkAuthentication = async () => {
@@ -23,9 +17,5 @@ export default ({ navigation }) => {
     checkAuthentication();
   }, []);
 
-  return (
-    <Container>
-      <ActivityIndicator />
-    </Container>
-  );
+  return <Loader />;
 };

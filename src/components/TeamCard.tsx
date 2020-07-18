@@ -44,9 +44,9 @@ const TeamCardWithCover: React.FC<IProps> = withNavigation(
       if (new_key_chats) {
         navigation.push("ChatScreen", {
           chatId: new_key_chats,
-          senderUserId: me.user.id,
-          senderUsername: me.user.username,
-          senderPushToken: me.user.pushToken,
+          senderUserId: me?.user.id,
+          senderUsername: me?.user.username,
+          senderPushToken: me?.user.pushToken,
           receiverUserId: createdBy.id,
           receiverUsername: createdBy.username,
           receiverPushToken: createdBy.pushToken,
@@ -92,9 +92,9 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
       if (new_key_chats) {
         navigation.push("ChatScreen", {
           chatId: new_key_chats,
-          senderUserId: me.user.id,
-          senderUsername: me.user.username,
-          senderPushToken: me.user.pushToken,
+          senderUserId: me?.user.id,
+          senderUsername: me?.user.username,
+          senderPushToken: me?.user.pushToken,
           receiverUserId: createdBy.id,
           receiverUsername: createdBy.username,
           receiverPushToken: createdBy.pushToken,

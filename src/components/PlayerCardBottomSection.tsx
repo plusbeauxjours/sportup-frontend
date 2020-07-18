@@ -32,9 +32,9 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
     if (new_key_chats) {
       navigation.push("ChatScreen", {
         chatId: new_key_chats,
-        senderUserId: me.user.id,
-        senderUsername: me.user.username,
-        senderPushToken: me.user.pushToken,
+        senderUserId: me?.user.id,
+        senderUsername: me?.user.username,
+        senderPushToken: me?.user.pushToken,
         receiverUserId: team.createdBy.id,
         receiverUsername: team.createdBy.username,
         receiverPushToken: team.createdBy.pushToken,

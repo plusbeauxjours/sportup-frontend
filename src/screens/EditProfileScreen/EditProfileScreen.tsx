@@ -1,5 +1,6 @@
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { Avatar } from "react-native-elements";
+import { Button } from "react-native-paper";
 import { useMutation, useQuery } from "react-apollo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -10,9 +11,9 @@ import { UPDATE_USER } from "./EditProfileScreenQueries";
 import Divider from "../../components/Divider";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
-import { Avatar } from "react-native-elements";
-import { Button } from "react-native-paper";
+
 import { UpdateUser, UpdateUserVariables, Me } from "../../types/api";
+import Loader from "../../components/Loader";
 
 const EditProfileScreen = ({ navigation }) => {
   const {
@@ -33,7 +34,7 @@ const EditProfileScreen = ({ navigation }) => {
             me: {
               ...me,
               user: {
-                ...me.user,
+                ...me?.user,
                 name:
                   updateUser.user.firstName + " " + updateUser.user.lastName,
                 firstName: updateUser.user.firstName,
@@ -74,7 +75,7 @@ const EditProfileScreen = ({ navigation }) => {
     ),
   });
   if (meLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <KeyboardAwareScrollView

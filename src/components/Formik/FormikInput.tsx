@@ -47,10 +47,11 @@ const FormikInput: React.FC<IProps> = ({
         autoCapitalize={autoCapitalize}
         onChangeText={handleChange}
         onBlur={handleBlur}
-        placeholder={label}
+        // placeholder={label}
         error={error}
         multiline={multiline}
         autoCorrect={autoCorrect}
+        style={{ backgroundColor: "transparent" }}
         {...rest}
       />
       <HelperText type="error" visible={error}>

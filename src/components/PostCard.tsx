@@ -70,7 +70,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
         <TouchableOpacity
           disabled={disableNavigation}
           onPress={() => {
-            me.user.id === id
+            me?.user.id === id
               ? navigation.push("MyProfileScreen")
               : navigation.push("UserProfileScreen", { userId: id });
           }}

@@ -2,12 +2,13 @@ import React from "react";
 import { useQuery } from "react-apollo-hooks";
 import { GetUserTeams, GetUserTeamsVariables } from "../../types/api";
 import { GET_USER_TEAMS } from "./TeamsScreenQueries";
-import { ActivityIndicator, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import TeamCard from "../../components/TeamCard";
 import {
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
 } from "react-navigation-stack";
+import Loader from "../../components/Loader";
 
 interface IProps extends NavigationStackScreenProps {
   userId: string;
@@ -33,7 +34,7 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
       />
     );
   }
-  return <ActivityIndicator size="large" />;
+  return <Loader />;
 };
 TeamsScreen.navigationOptions = {
   title: "Teams",

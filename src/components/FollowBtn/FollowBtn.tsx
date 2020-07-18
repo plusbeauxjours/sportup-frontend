@@ -59,7 +59,7 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { userId: me.user.id },
+          variables: { userId: me?.user.id },
         });
         const following = data.getUser.user.following.find(
           (i) => i.id === userId
@@ -72,7 +72,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { userId: me.user.id },
+            variables: { userId: me?.user.id },
             data,
           });
         }
@@ -85,7 +85,7 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { userId: me.user.id },
+          variables: { userId: me?.user.id },
         });
         const followers = data.getUser.user.followers.find(
           (i) => i.id === userId
@@ -96,7 +96,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { userId: me.user.id },
+            variables: { userId: me?.user.id },
             data,
           });
         }
@@ -130,7 +130,7 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowingVariables
         >({
           query: GET_USER_FOLLOWING,
-          variables: { userId: me.user.id },
+          variables: { userId: me?.user.id },
         });
         const following = data.getUser.user.following.find(
           (i) => i.id === userId
@@ -143,7 +143,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { userId: me.user.id },
+            variables: { userId: me?.user.id },
             data,
           });
         }
@@ -156,7 +156,7 @@ const FollowBtn: React.FC<IProps> = ({
           GetUserFollowersVariables
         >({
           query: GET_USER_FOLLOWERS,
-          variables: { userId: me.user.id },
+          variables: { userId: me?.user.id },
         });
         const followers = data.getUser.user.followers.find(
           (i) => i.id === userId
@@ -169,7 +169,7 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWERS,
-            variables: { userId: me.user.id },
+            variables: { userId: me?.user.id },
             data,
           });
         }

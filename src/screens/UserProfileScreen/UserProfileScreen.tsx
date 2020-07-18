@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import { useMutation } from "react-apollo";
 import { Avatar } from "react-native-elements";
@@ -27,6 +26,7 @@ import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import RatingDialog from "../../components/RatingDialog";
 import { useMe } from "../../context/meContext";
+import Loader from "../../components/Loader";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -101,7 +101,7 @@ const UserProfileScreen = ({ navigation }) => {
 
   const renderUserInfoArea = () => {
     if (getUserLoading) {
-      return <ActivityIndicator size="large" style={{ margin: 20 }} />;
+      return <Loader />;
     } else if (user) {
       const connections = {
         teams: user.teamsCount,
@@ -124,9 +124,9 @@ const UserProfileScreen = ({ navigation }) => {
           <Caption>{`@${user.username}`}</Caption>
           <Paragraph>{user.bio}</Paragraph>
           <UserInteractionCard
-            senderUserId={me.user.id}
-            senderUsername={me.user.username}
-            senderPushToken={me.user.pushToken}
+            senderUserId={me?.user.id}
+            senderUsername={me?.user.username}
+            senderPushToken={me?.user.pushToken}
             receiverUserId={user.id}
             receiverUsername={user.username}
             receiverPushToken={user.pushToken}
@@ -152,7 +152,7 @@ const UserProfileScreen = ({ navigation }) => {
     }
   };
   if (getUserFeedLoading) {
-    return <ActivityIndicator size="large" style={{ margin: 20 }} />;
+    return <Loader />;
   } else {
     return (
       <>

@@ -5,7 +5,7 @@ import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput, Button, Subheading } from "react-native-paper";
 import { ListItem } from "react-native-elements";
-import { ActivityIndicator, Picker } from "react-native";
+import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation } from "react-apollo";
 import styled from "styled-components/native";
@@ -13,6 +13,7 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { Me } from "../../types/api";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
+import Loader from "../../components/Loader";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -50,7 +51,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
           data: {
             me: {
               ...me,
-              user: { ...me.user, teamsCount: me.user.teamsCount + 1 },
+              user: { ...me?.user, teamsCount: me?.user.teamsCount + 1 },
             },
           },
         });
@@ -84,7 +85,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
     );
   };
   if (getAllSportsLoading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <KeyboardAwareScrollView

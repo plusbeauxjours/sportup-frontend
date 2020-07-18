@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  ScrollView,
-  Image,
-  ActivityIndicator,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, Image, Alert, TouchableOpacity } from "react-native";
 import { Headline, Caption, Button } from "react-native-paper";
 import { useQuery } from "react-apollo";
 // import { MapView } from 'expo';
@@ -14,6 +8,7 @@ import { MEDIA_URL } from "../../constants/urls";
 import { formatDate, formatTime } from "../../utils/time";
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
+import Loader from "../../components/Loader";
 
 const EventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
@@ -23,7 +18,7 @@ const EventScreen = ({ navigation }) => {
     loading,
   } = useQuery(GET_EVENT, { variables: { eventId } });
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   }
   if (error) {
     Alert.alert("", error.message);

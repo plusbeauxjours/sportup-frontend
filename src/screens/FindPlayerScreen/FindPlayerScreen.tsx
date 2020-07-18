@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ActivityIndicator } from "react-native";
 import { Button, Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
@@ -8,6 +7,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import { GetAllSports } from "../../types/api";
+import Loader from "../../components/Loader";
 
 const Container = styled.View`
   flex-direction: row;
@@ -48,7 +48,7 @@ const FindPlayerScreen = ({ navigation }) => {
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return <Loader />;
   } else {
     return (
       <KeyboardAwareScrollView
