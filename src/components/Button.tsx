@@ -1,7 +1,13 @@
 import React from "react";
 import { Button } from "react-native-paper";
 
-export default ({ onPress, loading, disabled, ...rest }) => {
+export default ({
+  onPress,
+  loading = false,
+  disabled = false,
+  text,
+  ...rest
+}) => {
   return (
     <Button
       loading={loading}
@@ -12,9 +18,10 @@ export default ({ onPress, loading, disabled, ...rest }) => {
       labelStyle={{ color: disabled ? "gray" : "#ffa500", fontWeight: "600" }}
       color={"#ffa500"}
       compact={true}
+      uppercase={true}
       {...rest}
     >
-      Post
+      {text}
     </Button>
   );
 };

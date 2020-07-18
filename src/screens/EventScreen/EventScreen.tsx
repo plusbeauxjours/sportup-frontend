@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, Image, Alert, TouchableOpacity } from "react-native";
-import { Headline, Caption, Button } from "react-native-paper";
+import { Headline, Caption } from "react-native-paper";
 import { useQuery } from "react-apollo";
 // import { MapView } from 'expo';
 
@@ -9,6 +9,7 @@ import { formatDate, formatTime } from "../../utils/time";
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const EventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
@@ -120,9 +121,8 @@ const EventScreen = ({ navigation }) => {
           onPress={() => {
             navigation.navigate("RegistrationScreen", { eventId: event.id });
           }}
-        >
-          Manage registrations
-        </Button>
+          text={"Manage registrations"}
+        />
       ) : (
         <Button
           onPress={() => {
@@ -132,14 +132,14 @@ const EventScreen = ({ navigation }) => {
               minimumMembers: event.minimumMembers,
             });
           }}
-        >
-          Register team
-        </Button>
+          text={"Register team"}
+        />
       )}
     </ScrollView>
   );
 };
-EventScreen.navigationOptions = ({ navigation }) => ({
+EventScreen.navigationOptions = () => ({
   title: "Event",
 });
+
 export default EventScreen;

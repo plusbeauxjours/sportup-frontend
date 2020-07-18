@@ -4,7 +4,7 @@ import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ListItem } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button, Subheading, TextInput } from "react-native-paper";
+import { Subheading, TextInput } from "react-native-paper";
 import styled from "styled-components/native";
 
 import {
@@ -17,9 +17,9 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GET_USER_FROM_USERNAME } from "../CreateTeamScreen/CreateTeamScreenQueries";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import { GET_TEAM } from "../TeamProfileScreen/TeamProfileScreenQueries";
-import { NavigationScreenProp } from "react-navigation";
 import { UPDATE_TEAM } from "./EditTeamProfileScreenQueries";
 import { GetAllSports, GetTeam, GetTeamVariables } from "../../types/api";
+import Button from "../../components/Button";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -139,14 +139,8 @@ const EditTeamProfileScreen = ({ navigation }) => {
           onPress={() => {
             onAddPress();
           }}
-          style={{
-            marginTop: 10,
-            width: "90%",
-            alignSelf: "center",
-          }}
-        >
-          Add
-        </Button>
+          text={"Add"}
+        />
         {membersList.map(({ id, userImg, name, username }, index) => (
           <ListItem
             key={id}
@@ -173,14 +167,8 @@ const EditTeamProfileScreen = ({ navigation }) => {
             updateTeamFn();
             navigation.goBack();
           }}
-          style={{
-            marginTop: 20,
-            width: "90%",
-            alignSelf: "center",
-          }}
-        >
-          Save
-        </Button>
+          text={"Save"}
+        />
       </React.Fragment>
     </KeyboardAwareScrollView>
   );

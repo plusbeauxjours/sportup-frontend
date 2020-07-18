@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Alert } from "react-native";
 import MapView from "react-native-maps";
 import { Icon } from "react-native-elements";
-import { Button } from "react-native-paper";
 import styled from "styled-components/native";
+
+import Button from "../../components/Button";
 
 const ICON_SIZE = 35;
 
@@ -119,12 +120,8 @@ const ChatSendLocationScreen = ({ navigation }) => {
           backgroundColor: "#fff",
         }}
       >
-        <Button color="red" onPress={onCancel} style={{ flex: 1 }}>
-          Cancel
-        </Button>
-        <Button color="#4a80f5" onPress={onSend} style={{ flex: 1 }}>
-          Send
-        </Button>
+        <Button color="red" onPress={onCancel} text={"Cancel"} />
+        <Button color="#4a80f5" onPress={onSend} text={"Send"} />
       </View>
     </View>
   );

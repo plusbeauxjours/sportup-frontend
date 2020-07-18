@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "react-native-paper";
 import styled from "styled-components/native";
 import FollowBtn from "./FollowBtn";
 import { get_or_create_chat } from "../constants/firebase";
 import { withNavigation } from "react-navigation";
+import Button from "./Button";
 
 const View = styled.View`
   flex: 1;
@@ -49,9 +49,7 @@ const UserInteractionCard: React.FC<IProps> = ({
   };
   return (
     <View>
-      <Button icon="message" onPress={() => onPress()}>
-        Message
-      </Button>
+      <Button icon="message" onPress={() => onPress()} text={"Message"} />
       <FollowBtn isFollowing={isFollowing} userId={receiverUserId} />
     </View>
   );

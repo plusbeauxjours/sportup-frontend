@@ -2,7 +2,6 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
-import { Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { AsyncStorage } from "react-native";
 
@@ -10,6 +9,7 @@ import FormikInput from "../../components/Formik/FormikInput";
 import Divider from "../../components/Divider";
 import { LOGIN } from "./AuthScreenQueries";
 import { Login, LoginVariables } from "../../types/api";
+import Button from "../../components/Button";
 
 const initialValues = { username: "", password: "" };
 const validationSchema = Yup.object().shape({
@@ -78,18 +78,16 @@ const LoginForm = ({ navigation }) => {
             },
           });
         }}
-      >
-        Log in
-      </Button>
+        text={"Log in"}
+      />
       <Divider text="OR" />
       <Button
         disabled={LoginLoading}
         onPress={() => {
           navigation.navigate("SignUp");
         }}
-      >
-        Create new account
-      </Button>
+        text={"Create new account"}
+      />
     </React.Fragment>
   );
 

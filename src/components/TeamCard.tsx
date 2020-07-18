@@ -1,13 +1,14 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
 import { TouchableOpacity } from "react-native";
-import { Title, Card, Button } from "react-native-paper";
+import { Title, Card } from "react-native-paper";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
 import { GetUser_getUser_user_sports } from "../types/api";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
+import Button from "./Button";
 
 const Container = styled.View`
   flex-direction: row;
@@ -68,9 +69,11 @@ const TeamCardWithCover: React.FC<IProps> = withNavigation(
               </Title>
             </TouchableOpacity>
             {enableMessage && (
-              <Button icon="message" onPress={() => onPress(createdBy)}>
-                Message
-              </Button>
+              <Button
+                icon="message"
+                onPress={() => onPress(createdBy)}
+                text={"Message"}
+              />
             )}
           </Container>
           <RatingChip
@@ -115,9 +118,11 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
               </Title>
             </TouchableOpacity>
             {enableMessage && (
-              <Button icon="message" onPress={() => onPress(createdBy)}>
-                Message
-              </Button>
+              <Button
+                icon="message"
+                onPress={() => onPress(createdBy)}
+                text={"Message"}
+              />
             )}
           </Container>
           <View>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { FlatList } from "react-native";
-import { Headline, Divider, Button } from "react-native-paper";
+import { Headline, Divider } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
 import { GetTeam, GetTeamVariables } from "../../types/api";
@@ -13,6 +13,7 @@ import RatingDialog from "../../components/RatingDialog";
 import { useMutation } from "react-apollo";
 import { RateTeam, RateTeamVariables } from "../../types/api";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const View = styled.View`
   align-items: center;
@@ -125,12 +126,12 @@ const TeamProfileScreen = ({ navigation }) => {
           ListFooterComponent={
             team.isAdmin && (
               <Button
+                disabled={loading || rateTeamLoading}
                 onPress={() => {
                   navigation.navigate("EditTeamProfileScreen", { team });
                 }}
-              >
-                Edit team
-              </Button>
+                text={"Edit team"}
+              />
             )
           }
         />

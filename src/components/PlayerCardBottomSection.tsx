@@ -1,10 +1,11 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { Caption, Button } from "react-native-paper";
+import { Caption } from "react-native-paper";
 import SportsList from "./SportsList";
 import styled from "styled-components/native";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
+import Button from "./Button";
 
 const Row = styled.View`
   flex-direction: row;
@@ -63,9 +64,11 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
                 {team.teamName}
               </Caption>
             </View>
-            <Button icon="message" onPress={() => onPress(team)}>
-              Message
-            </Button>
+            <Button
+              icon="message"
+              onPress={() => onPress(team)}
+              text={"Message"}
+            />
           </Row>
         ))}
       </View>

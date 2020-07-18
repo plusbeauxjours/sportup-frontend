@@ -1,6 +1,5 @@
 import React from "react";
 import { Avatar } from "react-native-elements";
-import { Button } from "react-native-paper";
 import { useMutation, useQuery } from "react-apollo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
@@ -14,6 +13,7 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 
 import { UpdateUser, UpdateUserVariables, Me } from "../../types/api";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const EditProfileScreen = ({ navigation }) => {
   const {
@@ -175,16 +175,19 @@ const EditProfileScreen = ({ navigation }) => {
                   });
                   navigation.goBack();
                 }}
-              >
-                Save
-              </Button>
+                text={"Save"}
+              />
               <Divider text="OR" />
-              <Button disabled={updateUserLoading} onPress={onEditSportsPress}>
-                Edit sports
-              </Button>
-              <Button disabled={updateUserLoading} onPress={onCreateTeamPress}>
-                Create team
-              </Button>
+              <Button
+                disabled={updateUserLoading}
+                onPress={onEditSportsPress}
+                text={"Edit sports"}
+              />
+              <Button
+                disabled={updateUserLoading}
+                onPress={onCreateTeamPress}
+                text={"Create team"}
+              />
             </React.Fragment>
           )}
         </Formik>

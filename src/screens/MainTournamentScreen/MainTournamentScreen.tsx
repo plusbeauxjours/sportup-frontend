@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Appbar } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import styled from "styled-components/native";
+import Button from "../../components/Button";
 
 const Container = styled.View`
   flex: 1;
@@ -15,17 +16,15 @@ const MainTournamentScreen = ({ navigation }) => (
       onPress={() => {
         navigation.navigate("UpcomingEventScreen");
       }}
-    >
-      Browse Upcoming Events
-    </Button>
+      text={"Browse Upcoming Events"}
+    />
     <Button
       style={{ marginBottom: 10 }}
       onPress={() => {
         navigation.navigate("CreateEventScreen");
       }}
-    >
-      Create Event
-    </Button>
+      text={"Create Event"}
+    />
   </Container>
 );
 MainTournamentScreen.navigationOptions = ({ navigation }) => ({

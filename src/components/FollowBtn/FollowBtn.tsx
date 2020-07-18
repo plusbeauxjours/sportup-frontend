@@ -8,7 +8,6 @@ import {
   UnfollowUserVariables,
   Me,
 } from "../../types/api";
-import { Button } from "react-native-paper";
 import { ME } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
 import {
   GetUserFollowing,
@@ -19,6 +18,7 @@ import {
 import { GET_USER_FOLLOWING } from "../../screens/FollowingScreen/FollowingScreenQueries";
 import { FOLLOW_USER, UNFOLLOW_USER } from "./FollowBtnQueries";
 import { GET_USER_FOLLOWERS } from "../../screens/FollowersScreen/FollowersScreenQueries";
+import Button from "../Button";
 
 interface IProps {
   isFollowing: boolean;
@@ -194,9 +194,8 @@ const FollowBtn: React.FC<IProps> = ({
         setIsFollowing((isFollowing) => !isFollowing);
       }}
       color={isFollowing && "gray"}
-    >
-      {isFollowing ? "Following" : "Follow"}
-    </Button>
+      text={isFollowing ? "Following" : "Follow"}
+    />
   );
 };
 

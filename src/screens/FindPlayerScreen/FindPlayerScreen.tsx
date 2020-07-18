@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Appbar } from "react-native-paper";
+import { Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
 
@@ -8,6 +8,7 @@ import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import { GetAllSports } from "../../types/api";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const Container = styled.View`
   flex-direction: row;
@@ -71,12 +72,8 @@ const FindPlayerScreen = ({ navigation }) => {
           ))}
         </Row>
         <Container>
-          <Button onPress={onFindTeamPress} style={{ flex: 1 }}>
-            Find A Team
-          </Button>
-          <Button onPress={onFindPlayerPress} style={{ flex: 1 }}>
-            Find A Player
-          </Button>
+          <Button onPress={onFindTeamPress} text={"Find A Team"}></Button>
+          <Button onPress={onFindPlayerPress} text={"Find A Player"}></Button>
         </Container>
       </KeyboardAwareScrollView>
     );

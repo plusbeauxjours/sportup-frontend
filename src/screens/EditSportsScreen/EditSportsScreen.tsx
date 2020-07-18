@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "react-apollo";
-import { Button } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
@@ -14,6 +13,8 @@ import {
   UpdateSportsVariables,
 } from "../../types/api";
 import styled from "styled-components/native";
+import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const Container = styled.View`
   flex-direction: row;
@@ -114,9 +115,8 @@ export default ({ navigation }) => {
             style={{ width: "90%", alignSelf: "center" }}
             loading={updateUserLoading}
             disabled={updateUserLoading}
-          >
-            Save
-          </Button>
+            text={"Save"}
+          />
         </Container>
       </KeyboardAwareScrollView>
     );

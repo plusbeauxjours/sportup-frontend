@@ -5,8 +5,8 @@ import { Divider } from "react-native-elements";
 import { useQuery, useMutation } from "react-apollo";
 import { Formik } from "formik";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button } from "react-native-paper";
 import * as Yup from "yup";
+import styled from "styled-components/native";
 import DatePickerModal from "react-native-modal-datetime-picker";
 
 import FormikInput from "../../components/Formik/FormikInput";
@@ -14,7 +14,7 @@ import FormikPicker from "../../components/Formik/FormikPicker";
 import sports from "../../constants/sports";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import { CREATE_EVENT } from "./CreateEventScreenQueries";
-import styled from "styled-components/native";
+
 import { formatDate, formatTime } from "../../utils/time";
 import Loader from "../../components/Loader";
 import {
@@ -22,6 +22,7 @@ import {
   CreateEvent,
   CreateEventVariables,
 } from "../../types/api";
+import Button from "../../components/Button";
 
 const sportsList = sports.slice(1);
 
@@ -273,9 +274,8 @@ const CreateEventScreen = ({ navigation }) => {
                   width: "90%",
                   alignSelf: "center",
                 }}
-              >
-                Create
-              </Button>
+                text={"Create"}
+              />
             </React.Fragment>
           )}
         </Formik>

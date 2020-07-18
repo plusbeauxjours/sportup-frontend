@@ -87,9 +87,8 @@ const WritePost: React.FC = () => {
           loading={createPostLoading}
           disabled={text === ""}
           onPress={onPress}
-        >
-          Post
-        </Button>
+          text={"Post"}
+        />
       </Container>
       <Divider />
     </>

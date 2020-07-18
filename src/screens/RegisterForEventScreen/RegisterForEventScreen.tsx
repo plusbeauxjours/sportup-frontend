@@ -2,12 +2,12 @@ import React from "react";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Button } from "react-native-paper";
 import { useMutation } from "react-apollo";
 
+import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
 import { RegisterTeam, RegisterTeamVariables } from "../../types/api";
 import FormikInput from "../../components/Formik/FormikInput";
-import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
+import Button from "../../components/Button";
 
 const RegisterForEventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");

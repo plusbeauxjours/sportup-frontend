@@ -7,13 +7,13 @@ import { AsyncStorage } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
 import { LOGIN, SIGNUP } from "./AuthScreenQueries";
-import { Button } from "react-native-paper";
 import {
   Login,
   LoginVariables,
   Signup,
   SignupVariables,
 } from "../../types/api";
+import Button from "../../components/Button";
 
 const initialValues = {
   firstName: "",
@@ -146,9 +146,8 @@ const SignupForm = ({ navigation }) => {
           setUsername(values.handle);
           setPassword(values.password);
         }}
-      >
-        Create account
-      </Button>
+        text={"Create account"}
+      />
     </React.Fragment>
   );
   return (

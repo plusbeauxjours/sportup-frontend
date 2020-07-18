@@ -3,7 +3,7 @@ import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { TextInput, Button, Subheading } from "react-native-paper";
+import { TextInput, Subheading } from "react-native-paper";
 import { ListItem } from "react-native-elements";
 import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
@@ -14,6 +14,7 @@ import { Me } from "../../types/api";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import Loader from "../../components/Loader";
+import Button from "../../components/Button";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -130,9 +131,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                   onAddPress(client);
                 }}
                 style={{ marginTop: 10, width: "90%", alignSelf: "center" }}
-              >
-                Add
-              </Button>
+                text={"Add"}
+              />
             )}
           </ApolloConsumer>
           {membersList.map(({ id, userImg, name, username }, index) => (
@@ -160,9 +160,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               navigation.goBack();
             }}
             style={{ width: "90%", alignSelf: "center", marginTop: 20 }}
-          >
-            Save
-          </Button>
+            text={"Save"}
+          />
         </React.Fragment>
       </KeyboardAwareScrollView>
     );
