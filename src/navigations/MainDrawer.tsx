@@ -6,111 +6,109 @@ import FindNavigation from "./FindNavigation";
 import EventNavigation from "./EventNavigation";
 import SearchNavigation from "./SearchNavigation";
 import ChatNavigation from "./ChatNavigation";
-import { Icon } from "react-native-elements";
+import { Icon, Avatar } from "react-native-elements";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Text, FlatList } from "react-native";
 import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
+import styled from "styled-components/native";
+import { withNavigation } from "react-navigation";
+import { useMe } from "../context/meContext";
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    paddingTop: 40,
-    alignItems: "center",
-    flex: 1,
-  },
-  listItem: {
-    height: 60,
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  title: {
-    fontSize: 18,
-    marginLeft: 20,
-  },
-  header: {
-    width: "100%",
-    height: 60,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  profileImg: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginTop: 20,
-  },
-  sidebarDivider: {
-    height: 1,
-    width: "100%",
-    backgroundColor: "lightgray",
-    marginVertical: 10,
-  },
+const Title = styled.Text`
+  font-size: 14;
+  margin-left: 15px;
+`;
+
+const ListItem = styled.TouchableOpacity`
+  margin-left: 10px;
+  height: 50;
+  align-items: center;
+  flex-direction: row;
+`;
+
+const Container = styled.View`
+  background-color: white;
+  padding-top: 40;
+  align-items: center;
+  flex: 1;
+`;
+
+const SidebarDivider = styled.View`
+  height: 1;
+  width: 100%;
+  background-color: lightgray;
+  margin: 10px 0;
+`;
+
+const Name = styled.Text`
+  font-weight: bold;
+  font-size: 16;
+  margin-top: 10;
+`;
+const Username = styled.Text`
+  color: gray;
+  margin-bottom: 10px;
+`;
+
+const Item = withNavigation(({ item, navigation }) => {
+  return (
+    <ListItem onPress={() => navigation.navigate(item.name)}>
+      <Icon name={item.icon} size={20} />
+      <Title>{item.name}</Title>
+    </ListItem>
+  );
 });
 
-function Item({ item, navigate }) {
+const Sidebar = () => {
+  const { me } = useMe();
+  const routes = [
+    {
+      name: "Me",
+      icon: "person",
+    },
+    {
+      name: "Feed",
+      icon: "timeline",
+    },
+    {
+      name: "Find",
+      icon: "games",
+    },
+    {
+      name: "Chat",
+      icon: "chat",
+    },
+    {
+      name: "Events",
+      icon: "event",
+    },
+    {
+      name: "Search",
+      icon: "search",
+    },
+  ];
   return (
-    <TouchableOpacity
-      style={styles.listItem}
-      onPress={() => navigate(item.name)}
-    >
-      <Ionicons name={item.icon} size={32} />
-      <Text style={styles.title}>{item.name}</Text>
-    </TouchableOpacity>
+    <Container>
+      <Avatar
+        size="large"
+        rounded
+        containerStyle={{ marginTop: 40 }}
+        source={{
+          uri: NO_AVATAR_THUMBNAIL,
+        }}
+      />
+      <Name>{me?.user.name}</Name>
+      <Username>@{me?.user.username}</Username>
+      <SidebarDivider />
+      <FlatList
+        style={{ width: "100%", marginLeft: 30 }}
+        data={routes}
+        renderItem={({ item }) => <Item item={item} />}
+        keyExtractor={(item) => item.name}
+      />
+    </Container>
   );
-}
-
-class Sidebar extends React.Component {
-  state = {
-    routes: [
-      {
-        name: "Home",
-        icon: "ios-home",
-      },
-      {
-        name: "Profile",
-        icon: "ios-contact",
-      },
-      {
-        name: "Settings",
-        icon: "ios-settings",
-      },
-    ],
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={{ uri: NO_AVATAR_THUMBNAIL }}
-          style={styles.profileImg}
-        />
-        <Text style={{ fontWeight: "bold", fontSize: 16, marginTop: 10 }}>
-          Janna Doe
-        </Text>
-        <Text style={{ color: "gray", marginBottom: 10 }}>janna@doe.com</Text>
-        <View style={styles.sidebarDivider}></View>
-        <FlatList
-          style={{ width: "100%", marginLeft: 30 }}
-          data={this.state.routes}
-          renderItem={({ item }) => (
-            <Item item={item} navigate={this.props.navigation.navigate} />
-          )}
-          keyExtractor={(item) => item.name}
-        />
-      </View>
-    );
-  }
-}
+};
 
 const MainDrawer = createDrawerNavigator(
   {

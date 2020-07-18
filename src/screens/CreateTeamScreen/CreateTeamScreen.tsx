@@ -24,6 +24,7 @@ import Button from "../../components/Button";
 import FormikInput from "../../components/Formik/FormikInput";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
+import { DARK_ORANGE } from "../../constants/colors";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -232,7 +233,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                       setSearchText(text), console.log(searchText);
                     }}
                     style={{ backgroundColor: "transparent" }}
-                    theme={{ colors: { primary: "#e59400" } }}
+                    theme={{ colors: { primary: DARK_ORANGE } }}
                     autoCapitalize="none"
                   />
                 </TextInputContainer>

@@ -4,6 +4,7 @@ import styled from "styled-components/native";
 import { Caption } from "react-native-paper";
 import { UPVOTED, DOWNVOTED } from "../../constants/strings";
 import { FontAwesome } from "@expo/vector-icons";
+import { LIGHT_ORANGE, DARK_ORANGE } from "../../constants/colors";
 import {
   REMOVE_POST_INTERACTION,
   UPVOTE_POST,
@@ -103,7 +104,7 @@ const VoteBtn: React.FC<IProps> = ({
       >
         <FontAwesome
           name={"arrow-up"}
-          color={upvoteSelected ? "#ffae19" : "gray"}
+          color={upvoteSelected ? LIGHT_ORANGE : "gray"}
           size={20}
         />
       </IconContainer>
@@ -121,7 +122,7 @@ const VoteBtn: React.FC<IProps> = ({
       >
         <FontAwesome
           name={"arrow-down"}
-          color={downvoteSelected ? "#e59400" : "gray"}
+          color={downvoteSelected ? DARK_ORANGE : "gray"}
           size={20}
         />
       </IconContainer>

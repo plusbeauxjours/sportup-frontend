@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-native-paper";
+import { PRIMARY_COLOR } from "../constants/colors";
 
 export default ({
   onPress,
@@ -16,8 +17,11 @@ export default ({
       disabled={disabled}
       mode="outlined"
       style={{ width: long ? 200 : 100, margin: 10 }}
-      labelStyle={{ color: disabled ? "gray" : "#ffa500", fontWeight: "600" }}
-      color={"#ffa500"}
+      labelStyle={{
+        color: disabled ? "gray" : PRIMARY_COLOR,
+        fontWeight: "600",
+      }}
+      color={PRIMARY_COLOR}
       compact={true}
       uppercase={true}
       {...rest}

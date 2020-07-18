@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { TextInput, HelperText } from "react-native-paper";
 import { KeyboardTypeOptions } from "react-native";
+import { DARK_ORANGE } from "../../constants/colors";
 
 const Container = styled.View`
   width: 90%;
@@ -54,7 +55,7 @@ const FormikInput: React.FC<IProps> = ({
         multiline={multiline}
         autoCorrect={autoCorrect}
         style={{ backgroundColor: "transparent" }}
-        theme={{ colors: { primary: "#e59400" } }}
+        theme={{ colors: { primary: DARK_ORANGE } }}
         {...rest}
       />
       <HelperText type="error" visible={error}>
