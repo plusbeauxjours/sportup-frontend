@@ -249,6 +249,7 @@ const CreateEventScreen = ({ navigation }) => {
               />
               <Button
                 loading={createEventLoading}
+                disabled={createEventLoading}
                 disabled={!isValid || createEventLoading}
                 onPress={() => {
                   createEventFn({
@@ -258,8 +259,8 @@ const CreateEventScreen = ({ navigation }) => {
                       sportId: values.sportId,
                       startDate: Moment(startDate).format("YYYY-MM-DD"),
                       endDate: Moment(endDate).format("YYYY-MM-DD"),
-                      startTime: Moment(startTime).format("HH:MMa"),
-                      endTime: Moment(endTime).format("HH:MMa"),
+                      startTime: Moment(startTime).format("HH:MM"),
+                      endTime: Moment(endTime).format("HH:MM"),
                       minimumMembers: values.minimumMembers,
                       maximumMembers: values.maximumMembers,
                       expectedTeams: values.expectedTeamCount,
