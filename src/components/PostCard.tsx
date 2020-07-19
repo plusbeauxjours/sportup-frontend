@@ -35,7 +35,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 
 const Border = styled.View`
   border-color: #999;
-  border-width: 0.2px
+  border-width: 0.2px;
   border-radius: 10px;
   padding: 10px 0;
 `;
@@ -121,7 +121,6 @@ const PostCard: React.FC<IProps> = ({
         />
         {text && <Paragraph>{text}</Paragraph>}
       </Card.Content>
-      {!!postImg && <Card.Cover source={{ uri: postImg }} />}
       <Card.Actions>
         <VoteBtn postId={id} interaction={interaction} score={score} />
       </Card.Actions>

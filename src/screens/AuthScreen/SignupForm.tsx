@@ -146,7 +146,8 @@ const SignupForm = ({ navigation }) => {
           setUsername(values.handle);
           setPassword(values.password);
         }}
-        text={"Create account"}
+        long={true}
+        text={"Create new account"}
       />
     </React.Fragment>
   );

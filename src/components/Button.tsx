@@ -16,7 +16,7 @@ export default ({
       onPress={onPress}
       disabled={disabled}
       mode="outlined"
-      style={{ width: long ? 200 : 100, margin: 10 }}
+      style={{ width: long ? 240 : 120, margin: 10 }}
       labelStyle={{
         color: disabled ? "gray" : PRIMARY_COLOR,
         fontWeight: "600",

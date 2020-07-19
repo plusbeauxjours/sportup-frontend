@@ -24,7 +24,11 @@ const RatingChip: React.FC<IProps> = ({
       onPress={() => {
         onChipPress && onChipPress(sportId);
       }}
-      style={selected && { backgroundColor: PRIMARY_COLOR }}
+      style={{
+        backgroundColor: selected ? PRIMARY_COLOR : "transparent",
+        borderColor: selected ? PRIMARY_COLOR : "grey",
+        margin: 2,
+      }}
     >
       <Text>
         <Text style={selected && { color: "#fff" }}>{name}</Text>

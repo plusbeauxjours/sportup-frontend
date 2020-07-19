@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, ActivityIndicator } from "react-native";
 import { Appbar, Headline, Caption, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
 import { useQuery } from "react-apollo-hooks";
@@ -11,12 +11,16 @@ import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
-import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import Loader from "../../components/Loader";
+import RatingChip from "../../components/RatingChip";
 
 const View = styled.View`
   flex-direction: row;
+`;
+
+const LoadingContainer = styled.View`
+  height: 30px;
 `;
 
 const UserInfoContainer = styled.View`
@@ -28,6 +32,18 @@ const UserInfoContainer = styled.View`
 const Conatiner = styled.View`
   flex: 1;
   background-color: white;
+`;
+
+const WhiteSpace = styled.View`
+  height: 20px;
+`;
+
+const Row = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
 const MyProfileScreen = ({ navigation }) => {
@@ -79,7 +95,13 @@ const MyProfileScreen = ({ navigation }) => {
   }, []);
 
   const renderUserInfoArea = () => {
-    if (user) {
+    if (meLoading) {
+      return (
+        <LoadingContainer>
+          <ActivityIndicator size="small" />
+        </LoadingContainer>
+      );
+    } else if (user) {
       const connections = {
         teams: user?.teamsCount,
         followers: user?.followersCount,
@@ -99,8 +121,20 @@ const MyProfileScreen = ({ navigation }) => {
           />
           <Headline>{user?.name}</Headline>
           <Caption>{`@${user?.username}`}</Caption>
-          <Paragraph>{user?.bio}</Paragraph>
-          <SportsList sports={user?.sports} />
+          <Paragraph style={{ textAlign: "center", paddingHorizontal: 20 }}>
+            {user.bio}
+          </Paragraph>
+          <WhiteSpace />
+          <Row>
+            {user?.sports?.map((sport) => (
+              <RatingChip
+                sportId={sport.sportId}
+                name={sport.name}
+                key={sport.sportId}
+              />
+            ))}
+          </Row>
+          <WhiteSpace />
           <UserConnectionsCard
             {...connections}
             onTeamsPress={() => {
@@ -119,7 +153,7 @@ const MyProfileScreen = ({ navigation }) => {
       return null;
     }
   };
-  if (getMyFeedLoading || meLoading) {
+  if (getMyFeedLoading) {
     return <Loader />;
   } else {
     return (

@@ -17,6 +17,7 @@ const Container = styled.View`
 
 const Row = styled.View`
   flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
 `;
 
@@ -56,7 +57,7 @@ const FindPlayerScreen = ({ navigation }) => {
         contentContainerStyle={{
           flex: 1,
           justifyContent: "space-between",
-          marginBottom: 10,
+          marginTop: 50,
         }}
         keyboardShouldPersistTaps="handled"
       >

@@ -22,16 +22,38 @@ import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import UserInteractionCard from "../../components/UserInteractionCard";
-import SportsList from "../../components/SportsList";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import RatingDialog from "../../components/RatingDialog";
 import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
+import RatingChip from "../../components/RatingChip";
+import { ActivityIndicator } from "react-native";
 
 const UserInfoContainer = styled.View`
   align-items: center;
   margin: 1px 0;
   background-color: #fff;
+`;
+
+const LoadingContainer = styled.View`
+  height: 30px;
+`;
+
+const Row = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+const WhiteSpace = styled.View`
+  height: 20px;
+`;
+
+const Conatiner = styled.View`
+  flex: 1;
+  background-color: white;
 `;
 
 const UserProfileScreen = ({ navigation }) => {
@@ -101,7 +123,11 @@ const UserProfileScreen = ({ navigation }) => {
 
   const renderUserInfoArea = () => {
     if (getUserLoading) {
-      return <Loader />;
+      return (
+        <LoadingContainer>
+          <ActivityIndicator size="small" />
+        </LoadingContainer>
+      );
     } else if (user) {
       const connections = {
         teams: user.teamsCount,
@@ -122,7 +148,21 @@ const UserProfileScreen = ({ navigation }) => {
           />
           <Headline>{user.name}</Headline>
           <Caption>{`@${user.username}`}</Caption>
-          <Paragraph>{user.bio}</Paragraph>
+          <Paragraph style={{ textAlign: "center", paddingHorizontal: 20 }}>
+            {user.bio}
+          </Paragraph>
+          <WhiteSpace />
+          <Row>
+            {user?.sports?.map((sport) => (
+              <RatingChip
+                sportId={sport.sportId}
+                name={sport.name}
+                key={sport.sportId}
+                onChipPress={showDialog}
+              />
+            ))}
+          </Row>
+          <WhiteSpace />
           <UserInteractionCard
             senderUserId={me?.user.id}
             senderUsername={me?.user.username}
@@ -132,7 +172,7 @@ const UserProfileScreen = ({ navigation }) => {
             receiverPushToken={user.pushToken}
             isFollowing={user.isFollowing}
           />
-          <SportsList sports={user.sports} onChipPress={showDialog} />
+          <WhiteSpace />
           <UserConnectionsCard
             {...connections}
             onTeamsPress={() => {
@@ -155,7 +195,7 @@ const UserProfileScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <>
+      <Conatiner>
         <FeedList
           posts={posts}
           refreshing={networkStatus === 4}
@@ -202,7 +242,7 @@ const UserProfileScreen = ({ navigation }) => {
           close={closeDialog}
           onSubmit={onSubmit}
         />
-      </>
+      </Conatiner>
     );
   }
 };

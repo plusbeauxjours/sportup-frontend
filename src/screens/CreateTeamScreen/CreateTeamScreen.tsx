@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Subheading, Searchbar, Divider, TextInput } from "react-native-paper";
-import { ListItem } from "react-native-elements";
+import {
+  Subheading,
+  Searchbar,
+  Divider,
+  TextInput,
+  Caption,
+} from "react-native-paper";
+import { ListItem, Avatar } from "react-native-elements";
 import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation, useLazyQuery } from "react-apollo";
@@ -25,6 +31,21 @@ import FormikInput from "../../components/Formik/FormikInput";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
 import { DARK_ORANGE } from "../../constants/colors";
+
+const OuterUserInfoContainerStyle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+`;
+const InnerUserInfoContainerStyle = styled.View`
+  justify-content: center;
+  padding: 0 10px 0 10px;
+`;
+const TouchableOpacity = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -181,23 +202,27 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     </Picker>
                   </PickerContainer>
                   {membersList.map(({ id, userImg, name, username }, index) => (
-                    <ListItem
-                      key={id}
-                      leftAvatar={{
-                        rounded: true,
-                        source: {
-                          uri: userImg
-                            ? MEDIA_URL + userImg
-                            : NO_AVATAR_THUMBNAIL,
-                        },
-                      }}
-                      title={name}
-                      subtitle={username}
-                      rightIcon={{ name: "cancel" }}
-                      onPress={() => {
-                        removeMember(id);
-                      }}
-                    />
+                    <OuterUserInfoContainerStyle>
+                      <TouchableOpacity
+                        key={id}
+                        onPress={() => {
+                          removeMember(id);
+                        }}
+                      >
+                        <Avatar
+                          rounded
+                          source={{
+                            uri: userImg
+                              ? MEDIA_URL + userImg
+                              : NO_AVATAR_THUMBNAIL,
+                          }}
+                        />
+                        <InnerUserInfoContainerStyle>
+                          <Subheading>{name}</Subheading>
+                          <Caption>{`@${username}`}</Caption>
+                        </InnerUserInfoContainerStyle>
+                      </TouchableOpacity>
+                    </OuterUserInfoContainerStyle>
                   ))}
                   <ButtonContainer>
                     <Button
@@ -242,23 +267,28 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     <>
                       {users?.map(({ id, userImg, name, username }, index) => {
                         return (
-                          <ListItem
-                            key={id}
-                            leftAvatar={{
-                              rounded: true,
-                              source: {
-                                uri: userImg
-                                  ? MEDIA_URL + userImg
-                                  : NO_AVATAR_THUMBNAIL,
-                              },
-                            }}
-                            title={name}
-                            subtitle={username}
-                            onPress={() => {
-                              setSearchText("");
-                              onAddPress(client, username);
-                            }}
-                          />
+                          <OuterUserInfoContainerStyle>
+                            <TouchableOpacity
+                              key={id}
+                              onPress={() => {
+                                setSearchText("");
+                                onAddPress(client, username);
+                              }}
+                            >
+                              <Avatar
+                                rounded
+                                source={{
+                                  uri: userImg
+                                    ? MEDIA_URL + userImg
+                                    : NO_AVATAR_THUMBNAIL,
+                                }}
+                              />
+                              <InnerUserInfoContainerStyle>
+                                <Subheading>{name}</Subheading>
+                                <Caption>{`@${username}`}</Caption>
+                              </InnerUserInfoContainerStyle>
+                            </TouchableOpacity>
+                          </OuterUserInfoContainerStyle>
                         );
                       })}
                     </>

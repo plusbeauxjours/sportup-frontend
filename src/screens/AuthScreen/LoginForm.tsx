@@ -86,6 +86,7 @@ const LoginForm = ({ navigation }) => {
         onPress={() => {
           navigation.navigate("SignUp");
         }}
+        long={true}
         text={"Create new account"}
       />
     </React.Fragment>

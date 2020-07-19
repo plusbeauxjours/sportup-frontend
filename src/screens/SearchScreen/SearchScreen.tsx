@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import { Appbar, Headline, Divider } from "react-native-paper";
-import { ListItem } from "react-native-elements";
+import {
+  Appbar,
+  Headline,
+  Divider,
+  Subheading,
+  Caption,
+} from "react-native-paper";
+import { ListItem, Avatar } from "react-native-elements";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -19,6 +25,21 @@ const SectionTitle = styled.Text`
 const Container = styled.View`
   flex: 1;
   background-color: white;
+`;
+
+const OuterUserInfoContainerStyle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+`;
+const InnerUserInfoContainerStyle = styled.View`
+  justify-content: center;
+  padding: 0 10px 0 10px;
+`;
+const TouchableOpacity = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SearchScreen = ({ navigation }) => {
@@ -46,23 +67,26 @@ const SearchScreen = ({ navigation }) => {
     <>
       <SectionTitle>Users</SectionTitle>
       {users && users.length !== 0 ? (
-        users?.map((user) => (
-          <ListItem
-            key={user.id}
-            title={user?.name}
-            subtitle={`@${user?.username}`}
-            leftAvatar={{
-              rounded: true,
-              source: {
-                uri: user?.userImg
-                  ? MEDIA_URL + user?.userImg
-                  : NO_AVATAR_THUMBNAIL,
-              },
-            }}
-            onPress={() => {
-              navigation.push("UserProfileScreen", { userId: user?.id });
-            }}
-          />
+        users?.map(({ id, userImg, name, username }) => (
+          <OuterUserInfoContainerStyle>
+            <TouchableOpacity
+              key={id}
+              onPress={() => {
+                navigation.push("UserProfileScreen", { userId: id });
+              }}
+            >
+              <Avatar
+                rounded
+                source={{
+                  uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
+                }}
+              />
+              <InnerUserInfoContainerStyle>
+                <Subheading>{name}</Subheading>
+                <Caption>{`@${username}`}</Caption>
+              </InnerUserInfoContainerStyle>
+            </TouchableOpacity>
+          </OuterUserInfoContainerStyle>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
