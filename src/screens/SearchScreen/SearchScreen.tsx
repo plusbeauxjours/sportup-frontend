@@ -16,6 +16,11 @@ const SectionTitle = styled.Text`
   font-weight: 400;
 `;
 
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+
 const SearchScreen = ({ navigation }) => {
   const [searchText, setSearchText] = useState<string>("");
   const [
@@ -122,24 +127,26 @@ const SearchScreen = ({ navigation }) => {
         onChangeText={handleChange}
         value={searchText}
       />
-      {loading ? (
-        <ActivityIndicator size="small" />
-      ) : (
-        <KeyboardAwareScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            backgroundColor: "#fff",
-            padding: 10,
-          }}
-          keyboardShouldPersistTaps="handled"
-        >
-          <RenderUser />
-          <Divider />
-          <RenderTeam />
-          <Divider />
-          <RenderEvent />
-        </KeyboardAwareScrollView>
-      )}
+      <Container>
+        {loading ? (
+          <ActivityIndicator size="small" />
+        ) : (
+          <KeyboardAwareScrollView
+            contentContainerStyle={{
+              flexGrow: 1,
+              backgroundColor: "#fff",
+              padding: 10,
+            }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <RenderUser />
+            <Divider />
+            <RenderTeam />
+            <Divider />
+            <RenderEvent />
+          </KeyboardAwareScrollView>
+        )}
+      </Container>
     </React.Fragment>
   );
 };

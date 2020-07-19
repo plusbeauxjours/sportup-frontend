@@ -8,33 +8,34 @@ import SearchNavigation from "./SearchNavigation";
 import ChatNavigation from "./ChatNavigation";
 import { Icon, Avatar } from "react-native-elements";
 
-import { Text, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import styled from "styled-components/native";
 import { withNavigation } from "react-navigation";
 import { useMe } from "../context/meContext";
 
 const Title = styled.Text`
-  font-size: 14;
-  margin-left: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 30px;
 `;
 
 const ListItem = styled.TouchableOpacity`
-  margin-left: 10px;
-  height: 50;
+  margin-left: 20px;
+  height: 50px;
   align-items: center;
   flex-direction: row;
 `;
 
 const Container = styled.View`
   background-color: white;
-  padding-top: 40;
+  padding-top: 40px;
   align-items: center;
   flex: 1;
 `;
 
 const SidebarDivider = styled.View`
-  height: 1;
+  height: 1px;
   width: 100%;
   background-color: lightgray;
   margin: 10px 0;
@@ -42,8 +43,8 @@ const SidebarDivider = styled.View`
 
 const Name = styled.Text`
   font-weight: bold;
-  font-size: 16;
-  margin-top: 10;
+  font-size: 16px
+  margin-top: 10px;
 `;
 const Username = styled.Text`
   color: gray;

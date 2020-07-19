@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { FlatList } from "react-native";
 import { Divider, Appbar } from "react-native-paper";
-
+import styled from "styled-components/native";
 import * as firebase from "firebase/app";
 import "firebase/database";
 
 import ChatCard from "../../components/ChatCard";
 import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
+import ListFooterComponent from "../../components/ListFooterComponent";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 const ChatListScreen = () => {
   const { me, loading: meLoading } = useMe();
   const [chats, setChats] = useState<any>();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getChats = async () => {
+    setLoading(true);
     return new Promise<string>((resolve, reject) => {
       firebase
         .database()
@@ -25,6 +33,7 @@ const ChatListScreen = () => {
             setChats(Object.values(snapshot.val()));
           }
         });
+      setLoading(false);
     });
   };
   const amISender = (item) => {
@@ -47,7 +56,7 @@ const ChatListScreen = () => {
     return <Loader />;
   } else if (chats) {
     return (
-      <>
+      <Container>
         <FlatList
           data={chats}
           refreshing={refreshing}
@@ -87,8 +96,9 @@ const ChatListScreen = () => {
           keyExtractor={(_, index) => index.toString()}
           ItemSeparatorComponent={() => <Divider />}
           showsVerticalScrollIndicator={false}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
         />
-      </>
+      </Container>
     );
   }
   return null;

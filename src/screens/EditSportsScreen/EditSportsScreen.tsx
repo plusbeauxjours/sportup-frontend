@@ -16,9 +16,10 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 
 const Container = styled.View`
-  flex-direction: row;
+  flex: 1;
   justify-content: center;
   align-items: center;
+  background-color: white;
 `;
 
 const Row = styled.View`
@@ -86,7 +87,7 @@ const EditSportsScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <React.Fragment>
+      <Container>
         <Row>
           {sports?.map((sport) => (
             <RatingChip
@@ -98,22 +99,20 @@ const EditSportsScreen = ({ navigation }) => {
             />
           ))}
         </Row>
-        <Container>
-          <Button
-            onPress={() => {
-              updateSportsFn({
-                variables: {
-                  sportIds: selectedSportIds,
-                },
-              });
-              navigation.navigate("MyProfileScreen");
-            }}
-            loading={updateUserLoading}
-            disabled={updateUserLoading}
-            text={"Save"}
-          />
-        </Container>
-      </React.Fragment>
+        <Button
+          onPress={() => {
+            updateSportsFn({
+              variables: {
+                sportIds: selectedSportIds,
+              },
+            });
+            navigation.navigate("MyProfileScreen");
+          }}
+          loading={updateUserLoading}
+          disabled={updateUserLoading}
+          text={"Save"}
+        />
+      </Container>
     );
   }
 };

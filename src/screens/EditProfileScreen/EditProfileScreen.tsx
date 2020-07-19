@@ -19,6 +19,9 @@ import styled from "styled-components/native";
 const WhiteSpace = styled.View`
   height: 50px;
 `;
+const Container = styled.View`
+  background-color: white;
+`;
 
 const EditProfileScreen = ({ navigation }) => {
   const {
@@ -83,126 +86,128 @@ const EditProfileScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          backgroundColor: "#fff",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Formik
-          initialValues={{
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            bio: user?.bio,
-            password: "",
-            confirmPassword: "",
+      <Container>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            backgroundColor: "#fff",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-          onSubmit={() => {}}
-          validationSchema={validationSchema}
+          keyboardShouldPersistTaps="handled"
         >
-          {({
-            values,
-            setFieldValue,
-            setFieldTouched,
-            touched,
-            errors,
-            isValid,
-          }) => (
-            <React.Fragment>
-              <Avatar
-                size="large"
-                rounded
-                containerStyle={{ marginVertical: 40 }}
-                source={{
-                  uri: user?.userImg
-                    ? MEDIA_URL + user?.userImg
-                    : NO_AVATAR_THUMBNAIL,
-                }}
-              />
-              <FormikInput
-                label="First name"
-                value={values.firstName}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
-                name="firstName"
-                error={touched.firstName && errors.firstName}
-              />
-              <FormikInput
-                label="Last name"
-                value={values.lastName}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
-                name="lastName"
-                error={touched.lastName && errors.lastName}
-              />
-              <FormikInput
-                label="Bio"
-                value={values.bio}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
-                name="bio"
-                multiline={true}
-                error={touched.bio && errors.bio}
-              />
-              <FormikInput
-                label="Password"
-                autoCapitalize="none"
-                secureTextEntry
-                value={values.password}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
-                name="password"
-                error={touched.password && errors.password}
-              />
-              <FormikInput
-                label="Confirm password"
-                autoCapitalize="none"
-                secureTextEntry
-                value={values.confirmPassword}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
-                name="confirmPassword"
-                error={touched.confirmPassword && errors.confirmPassword}
-              />
-              <WhiteSpace />
+          <Formik
+            initialValues={{
+              firstName: user?.firstName,
+              lastName: user?.lastName,
+              bio: user?.bio,
+              password: "",
+              confirmPassword: "",
+            }}
+            onSubmit={() => {}}
+            validationSchema={validationSchema}
+          >
+            {({
+              values,
+              setFieldValue,
+              setFieldTouched,
+              touched,
+              errors,
+              isValid,
+            }) => (
+              <React.Fragment>
+                <Avatar
+                  size="large"
+                  rounded
+                  containerStyle={{ marginVertical: 40 }}
+                  source={{
+                    uri: user?.userImg
+                      ? MEDIA_URL + user?.userImg
+                      : NO_AVATAR_THUMBNAIL,
+                  }}
+                />
+                <FormikInput
+                  label="First name"
+                  value={values.firstName}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="firstName"
+                  error={touched.firstName && errors.firstName}
+                />
+                <FormikInput
+                  label="Last name"
+                  value={values.lastName}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="lastName"
+                  error={touched.lastName && errors.lastName}
+                />
+                <FormikInput
+                  label="Bio"
+                  value={values.bio}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="bio"
+                  multiline={true}
+                  error={touched.bio && errors.bio}
+                />
+                <FormikInput
+                  label="Password"
+                  autoCapitalize="none"
+                  secureTextEntry
+                  value={values.password}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="password"
+                  error={touched.password && errors.password}
+                />
+                <FormikInput
+                  label="Confirm password"
+                  autoCapitalize="none"
+                  secureTextEntry
+                  value={values.confirmPassword}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="confirmPassword"
+                  error={touched.confirmPassword && errors.confirmPassword}
+                />
+                <WhiteSpace />
 
-              <Button
-                disabled={!isValid || updateUserLoading}
-                loading={updateUserLoading}
-                onPress={() => {
-                  updateUserFn({
-                    variables: {
-                      firstName: values.firstName.trim(),
-                      lastName: values.lastName.trim(),
-                      bio: values.bio.trim(),
-                      password: values.password,
-                    },
-                  });
-                  navigation.goBack();
-                }}
-                text={"Save"}
-              />
-              <Divider text="OR" />
-              <Button
-                disabled={updateUserLoading}
-                onPress={onEditSportsPress}
-                text={"Edit sports"}
-                long={true}
-              />
-              <Button
-                disabled={updateUserLoading}
-                onPress={onCreateTeamPress}
-                text={"Create team"}
-                long={true}
-              />
-              <WhiteSpace />
-            </React.Fragment>
-          )}
-        </Formik>
-      </KeyboardAwareScrollView>
+                <Button
+                  disabled={!isValid || updateUserLoading}
+                  loading={updateUserLoading}
+                  onPress={() => {
+                    updateUserFn({
+                      variables: {
+                        firstName: values.firstName.trim(),
+                        lastName: values.lastName.trim(),
+                        bio: values.bio.trim(),
+                        password: values.password,
+                      },
+                    });
+                    navigation.goBack();
+                  }}
+                  text={"Save"}
+                />
+                <Divider text="OR" />
+                <Button
+                  disabled={updateUserLoading}
+                  onPress={onEditSportsPress}
+                  text={"Edit sports"}
+                  long={true}
+                />
+                <Button
+                  disabled={updateUserLoading}
+                  onPress={onCreateTeamPress}
+                  text={"Create team"}
+                  long={true}
+                />
+                <WhiteSpace />
+              </React.Fragment>
+            )}
+          </Formik>
+        </KeyboardAwareScrollView>
+      </Container>
     );
   }
 };
