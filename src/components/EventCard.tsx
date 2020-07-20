@@ -1,111 +1,113 @@
 import React from "react";
-import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import { formatDate, formatTime } from "../utils/time";
-import { Card, Headline, Caption } from "react-native-paper";
+import { Headline, Caption } from "react-native-paper";
+import styled from "styled-components/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const EventCard = ({
-  id,
-  cover,
-  name,
-  sport,
-  owner,
-  startDate,
-  endDate,
-  startTime,
-  endTime,
-  navigation,
-}) => {
-  const data = ["", "", ""];
+const Container = styled.View`
+  flex: 1;
+  z-index: 1;
+`;
+
+const Event = styled.View<ITheme>`
+  height: 250px;
+  border-bottom-left-radius: 100px;
+  margin-top: -100px;
+  padding-top: 100px;
+  overflow: hidden;
+  border-width: 1px;
+  border-color: red;
+  background-color: white;
+  z-index: ${(props) => props.length - props.index};
+`;
+
+interface ITheme {
+  length: any;
+  index: any;
+}
+
+const EventCard = ({ events, navigation }) => {
+  console.log(events);
   return (
-    // <View style={styles.container}>
-    //   {data.map((item, index) => (
-    //     <View style={[styles.item, { zIndex: data.length - index }]}>
-    //       <Text>jijiji</Text>
-    //     </View>
-    //   ))}
-    // </View>
-    <Card>
-      {cover ? <Card.Cover source={{ uri: cover }} /> : null}
-      <Card.Content>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("EventScreen", { eventId: id });
-          }}
-        >
-          <Headline>{name}</Headline>
-        </TouchableOpacity>
-        <RatingChip
-          sportId={sport.sportId}
-          name={sport.name}
-          onChipPress={() => {}}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("UserProfileScreent", { userId: owner.id });
-          }}
-        >
-          <Caption>
-            <Caption>Organized by </Caption>
-            <Caption style={{ fontWeight: "bold" }}>{owner.name}</Caption>
-          </Caption>
-        </TouchableOpacity>
-        <Caption>
-          {startDate && (
-            <React.Fragment>
-              <Caption>from </Caption>
-              <Caption style={{ fontWeight: "bold" }}>
-                {formatDate(startDate)}
+    <Container>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: "#fff",
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
+        {events?.map((event, index) => (
+          <Event length={events.length} index={index} key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("EventScreen", { eventId: event.id });
+              }}
+            >
+              <Headline>{event.name}</Headline>
+            </TouchableOpacity>
+            <RatingChip
+              sportId={event.sport.sportId}
+              name={event.sport.name}
+              onChipPress={() => {}}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("UserProfileScreent", {
+                  userId: event.owner.id,
+                });
+              }}
+            >
+              <Caption>
+                <Caption>Organized by </Caption>
+                <Caption style={{ fontWeight: "bold" }}>
+                  {event.owner.name}
+                </Caption>
               </Caption>
-            </React.Fragment>
-          )}
-          {endDate && (
-            <React.Fragment>
-              <Caption> to </Caption>
-              <Caption style={{ fontWeight: "bold" }}>
-                {formatDate(endDate)}
-              </Caption>
-            </React.Fragment>
-          )}
-          <Caption> | </Caption>
-          {startTime && (
-            <React.Fragment>
-              <Caption>from </Caption>
-              <Caption style={{ fontWeight: "bold" }}>
-                {formatTime(startTime)}
-              </Caption>
-            </React.Fragment>
-          )}
-          {endTime && (
-            <React.Fragment>
-              <Caption> to </Caption>
-              <Caption style={{ fontWeight: "bold" }}>
-                {formatTime(endTime)}
-              </Caption>
-            </React.Fragment>
-          )}
-        </Caption>
-      </Card.Content>
-    </Card>
+            </TouchableOpacity>
+            <Caption>
+              {event.startDate && (
+                <React.Fragment>
+                  <Caption>from </Caption>
+                  <Caption style={{ fontWeight: "bold" }}>
+                    {formatDate(event.startDate)}
+                  </Caption>
+                </React.Fragment>
+              )}
+              {event.endDate && (
+                <React.Fragment>
+                  <Caption> to </Caption>
+                  <Caption style={{ fontWeight: "bold" }}>
+                    {formatDate(event.endDate)}
+                  </Caption>
+                </React.Fragment>
+              )}
+              <Caption> | </Caption>
+              {event.startTime && (
+                <React.Fragment>
+                  <Caption>from </Caption>
+                  <Caption style={{ fontWeight: "bold" }}>
+                    {formatTime(event.startTime)}
+                  </Caption>
+                </React.Fragment>
+              )}
+              {event.endTime && (
+                <React.Fragment>
+                  <Caption> to </Caption>
+                  <Caption style={{ fontWeight: "bold" }}>
+                    {formatTime(event.endTime)}
+                  </Caption>
+                </React.Fragment>
+              )}
+            </Caption>
+          </Event>
+        ))}
+      </KeyboardAwareScrollView>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    zIndex: 1,
-  },
-  item: {
-    height: 250,
-    borderBottomLeftRadius: 100, // logic goes here
-    marginTop: -100, // move container
-    paddingTop: 100, // move inner item down
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "red",
-    backgroundColor: "white",
-  },
-});
 
 export default withNavigation(EventCard);

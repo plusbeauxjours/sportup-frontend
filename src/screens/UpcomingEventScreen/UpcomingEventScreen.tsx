@@ -10,6 +10,7 @@ import styled from "styled-components/native";
 const Container = styled.View`
   background-color: white;
 `;
+
 const UpcomingEvents = () => {
   const {
     data: { getUpcomingEvents: { events = null } = {} } = {},
@@ -23,24 +24,7 @@ const UpcomingEvents = () => {
   }
   return (
     <Container>
-      <FlatList
-        data={events}
-        renderItem={({ item }: any) => (
-          <EventCard
-            id={item.id}
-            cover={item.coverImg}
-            name={item.name}
-            sport={item.sport}
-            owner={item.owner}
-            startDate={item.startDate}
-            endDate={item.endDate}
-            startTime={item.startTime}
-            endTime={item.endTime}
-          />
-        )}
-        keyExtractor={(item: any) => item.id.toString()}
-        showsVerticalScrollIndicator={false}
-      />
+      <EventCard events={events} />
     </Container>
   );
 };
