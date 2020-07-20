@@ -5,7 +5,11 @@ import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
 import { GetUpcomingEvents } from "../../types/api";
 import Loader from "../../components/Loader";
+import styled from "styled-components/native";
 
+const Container = styled.View`
+  background-color: white;
+`;
 const UpcomingEvents = () => {
   const {
     data: { getUpcomingEvents: { events = null } = {} } = {},
@@ -18,24 +22,26 @@ const UpcomingEvents = () => {
     return <Loader />;
   }
   return (
-    <FlatList
-      data={events}
-      renderItem={({ item }: any) => (
-        <EventCard
-          id={item.id}
-          cover={item.coverImg}
-          name={item.name}
-          sport={item.sport}
-          owner={item.owner}
-          startDate={item.startDate}
-          endDate={item.endDate}
-          startTime={item.startTime}
-          endTime={item.endTime}
-        />
-      )}
-      keyExtractor={(item: any) => item.id.toString()}
-      showsVerticalScrollIndicator={false}
-    />
+    <Container>
+      <FlatList
+        data={events}
+        renderItem={({ item }: any) => (
+          <EventCard
+            id={item.id}
+            cover={item.coverImg}
+            name={item.name}
+            sport={item.sport}
+            owner={item.owner}
+            startDate={item.startDate}
+            endDate={item.endDate}
+            startTime={item.startTime}
+            endTime={item.endTime}
+          />
+        )}
+        keyExtractor={(item: any) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+      />
+    </Container>
   );
 };
 UpcomingEvents.navigationOptions = ({ navigation }) => ({

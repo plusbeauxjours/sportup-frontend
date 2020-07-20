@@ -36,7 +36,7 @@ const UserInfoContainer = styled.View`
 `;
 
 const LoadingContainer = styled.View`
-  height: 30px;
+  height: 150px;
 `;
 
 const Row = styled.View`
@@ -148,6 +148,7 @@ const UserProfileScreen = ({ navigation }) => {
           />
           <Headline>{user.name}</Headline>
           <Caption>{`@${user.username}`}</Caption>
+          <WhiteSpace />
           <Paragraph style={{ textAlign: "center", paddingHorizontal: 20 }}>
             {user.bio}
           </Paragraph>

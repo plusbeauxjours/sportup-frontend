@@ -56,8 +56,7 @@ const FindPlayerScreen = ({ navigation }) => {
       <KeyboardAwareScrollView
         contentContainerStyle={{
           flex: 1,
-          justifyContent: "space-between",
-          marginTop: 50,
+          justifyContent: "center",
         }}
         keyboardShouldPersistTaps="handled"
       >
