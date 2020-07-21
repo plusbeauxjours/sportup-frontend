@@ -1,8 +1,11 @@
 import gql from "graphql-tag";
 
 export const GET_UPCOMING_EVENTS = gql`
-  query GetUpcomingEvents {
-    getUpcomingEvents {
+  query GetUpcomingEvents($pageNum: Int) {
+    getUpcomingEvents(pageNum: $pageNum) {
+      pageNum
+      hasNextPage
+      count
       events {
         id
         name

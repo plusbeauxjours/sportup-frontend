@@ -238,7 +238,7 @@ export interface CreatePostVariables {
 
 export interface Login_tokenAuth {
   __typename: "ObtainJSONWebToken";
-  token: string | null;
+  token: string;
 }
 
 export interface Login {
@@ -1269,11 +1269,18 @@ export interface GetUpcomingEvents_getUpcomingEvents_events {
 
 export interface GetUpcomingEvents_getUpcomingEvents {
   __typename: "GetUpcomingEventsResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
+  count: number | null;
   events: (GetUpcomingEvents_getUpcomingEvents_events | null)[] | null;
 }
 
 export interface GetUpcomingEvents {
   getUpcomingEvents: GetUpcomingEvents_getUpcomingEvents;
+}
+
+export interface GetUpcomingEventsVariables {
+  pageNum?: number | null;
 }
 
 /* tslint:disable */

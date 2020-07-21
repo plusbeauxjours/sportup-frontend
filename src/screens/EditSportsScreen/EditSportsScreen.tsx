@@ -18,15 +18,11 @@ import Button from "../../components/Button";
 const Container = styled.View`
   flex: 1;
   justify-content: center;
-  align-items: center;
-  background-color: white;
 `;
 
 const Row = styled.View`
-  flex: 1;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   flex-wrap: wrap;
 `;
 

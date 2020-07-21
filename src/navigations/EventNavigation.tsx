@@ -7,7 +7,6 @@ import FollowingScreen from "../screens/FollowingScreen";
 import TeamsScreen from "../screens/TeamsScreen";
 import TeamProfileScreen from "../screens/TeamProfileScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
-import MainTournamentScreen from "../screens/MainTournamentScreen";
 import UpcomingEventScreen from "../screens/UpcomingEventScreen";
 import CreateEventScreen from "../screens/CreateEventScreen";
 import EventScreen from "../screens/EventScreen";
@@ -18,7 +17,6 @@ import ChatScreen from "../screens/ChatScreen/";
 
 const EventNavigation = createStackNavigator(
   {
-    MainTournamentScreen,
     UpcomingEventScreen,
     CreateEventScreen,
     EventScreen,
@@ -34,7 +32,7 @@ const EventNavigation = createStackNavigator(
     ChatScreen,
   },
   {
-    initialRouteName: "MainTournamentScreen",
+    initialRouteName: "UpcomingEventScreen",
     navigationOptions: {
       headerStyle: {
         backgroundColor: PRIMARY_COLOR,

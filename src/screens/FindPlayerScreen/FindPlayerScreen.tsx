@@ -11,8 +11,8 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 
 const Container = styled.View`
-  flex-direction: row;
-  align-items: center;
+  flex: 1;
+  justify-content: center;
 `;
 
 const Row = styled.View`
@@ -53,13 +53,7 @@ const FindPlayerScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "center",
-        }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <Container>
         <Row>
           {sports?.map((sport) => (
             <RatingChip
@@ -71,11 +65,19 @@ const FindPlayerScreen = ({ navigation }) => {
             />
           ))}
         </Row>
-        <Container>
-          <Button onPress={onFindTeamPress} text={"Find A Team"}></Button>
-          <Button onPress={onFindPlayerPress} text={"Find A Player"}></Button>
-        </Container>
-      </KeyboardAwareScrollView>
+        <Row>
+          <Button
+            onPress={onFindTeamPress}
+            long={true}
+            text={"Find A Team"}
+          ></Button>
+          <Button
+            onPress={onFindPlayerPress}
+            long={true}
+            text={"Find A Player"}
+          ></Button>
+        </Row>
+      </Container>
     );
   }
 };
