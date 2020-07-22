@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Appbar } from "react-native-paper";
 import styled from "styled-components/native";
+
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
 import FeedList from "../../components/FeedList";
@@ -17,7 +18,6 @@ const Conatiner = styled.View`
 
 const FeedScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
-
   const {
     data: { getMainFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
     loading: getMainFeedLoading,
@@ -76,6 +76,7 @@ const FeedScreen = () => {
             setLoading(false);
           }}
           disableNavigation={false}
+          stickyHeaderIndices={[0]}
         />
         <AddBtn onPress={onPress} />
       </Conatiner>

@@ -69,19 +69,19 @@ const ChatListScreen = () => {
               chatId={item._id}
               senderUsername={
                 amISender(item)
-                  ? item.sender.senderUsername
-                  : item.sender.receiverUsername
+                  ? item.receiver.receiverUsername
+                  : item.sender.senderUsername
               }
               senderUserId={amISender(item) ? item.sender._id : item.sender._id}
               senderPushToken={
                 amISender(item)
                   ? item.sender.senderPushToken
-                  : item.sender.receiverPushToken
+                  : item.receiver.receiverPushToken
               }
               receiverUsername={
                 amISender(item)
                   ? item.receiver.receiverUsername
-                  : item.receiver.senderUsername
+                  : item.sender.senderUsername
               }
               receiverUserId={
                 amISender(item) ? item.receiver._id : item.receiver._id
@@ -89,7 +89,7 @@ const ChatListScreen = () => {
               receiverPushToken={
                 amISender(item)
                   ? item.receiver.receiverPushToken
-                  : item.receiver.senderPushToken
+                  : item.sender.senderPushToken
               }
             />
           )}

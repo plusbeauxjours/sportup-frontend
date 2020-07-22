@@ -106,6 +106,7 @@ const Sidebar = () => {
         data={routes}
         renderItem={({ item }) => <Item item={item} />}
         keyExtractor={(item) => item.name}
+        scrollEnabled={false}
       />
     </Container>
   );

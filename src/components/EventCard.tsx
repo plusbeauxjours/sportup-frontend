@@ -1,9 +1,7 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
-import { Headline, Caption } from "react-native-paper";
+import { Headline } from "react-native-paper";
 import styled from "styled-components/native";
-import { Card } from "react-native-paper";
 import RatingChip from "./RatingChip";
 import { formatDate, formatTime } from "../utils/time";
 
@@ -19,10 +17,19 @@ const InnerUserInfoContainerStyle = styled.View`
   padding: 0 10px 0 10px;
 `;
 
+const Touchable = styled.TouchableOpacity`
+  padding: 3px;
+`;
+
 const Row = styled.View`
   flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
 `;
+
+const Text = styled.Text``;
 
 const EventCard = ({
   id,
@@ -36,67 +43,57 @@ const EventCard = ({
   navigation,
 }) => {
   return (
-    <TouchableOpacity
+    <Touchable
       onPress={() => {
         navigation.navigate("EventScreen", { eventId: id });
       }}
     >
-      <Card style={{ padding: 3 }}>
-        <Border>
-          <InnerUserInfoContainerStyle>
+      <Border>
+        <InnerUserInfoContainerStyle>
+          <Row>
             <Headline>{name}</Headline>
-            {sport && (
-              <Row>
-                <RatingChip
-                  sportId={sport.sportId}
-                  name={sport.name}
-                  onChipPress={() => {}}
-                />
-              </Row>
-            )}
-            <Caption>
-              <Caption>Organized by </Caption>
-              <Caption style={{ fontWeight: "bold" }}>{owner.name}</Caption>
-            </Caption>
-            <Caption>
-              {startDate && (
-                <React.Fragment>
-                  <Caption>from </Caption>
-                  <Caption style={{ fontWeight: "bold" }}>
-                    {formatDate(startDate)}
-                  </Caption>
-                </React.Fragment>
-              )}
-              {endDate && (
-                <React.Fragment>
-                  <Caption> to </Caption>
-                  <Caption style={{ fontWeight: "bold" }}>
-                    {formatDate(endDate)}
-                  </Caption>
-                </React.Fragment>
-              )}
-              <Caption> | </Caption>
-              {startTime && (
-                <React.Fragment>
-                  <Caption>from </Caption>
-                  <Caption style={{ fontWeight: "bold" }}>
-                    {formatTime(startTime)}
-                  </Caption>
-                </React.Fragment>
-              )}
-              {endTime && (
-                <React.Fragment>
-                  <Caption> to </Caption>
-                  <Caption style={{ fontWeight: "bold" }}>
-                    {formatTime(endTime)}
-                  </Caption>
-                </React.Fragment>
-              )}
-            </Caption>
-          </InnerUserInfoContainerStyle>
-        </Border>
-      </Card>
-    </TouchableOpacity>
+            <RatingChip
+              sportId={sport.sportId}
+              name={sport.name}
+              onChipPress={() => {}}
+            />
+          </Row>
+          <Text>
+            <Text>Organized by </Text>
+            <Text style={{ fontWeight: "bold" }}>{owner.name}</Text>
+          </Text>
+          {startDate && (
+            <>
+              <Text>from </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {formatDate(startDate)}
+              </Text>
+            </>
+          )}
+          {endDate && (
+            <>
+              <Text> to </Text>
+              <Text style={{ fontWeight: "bold" }}>{formatDate(endDate)}</Text>
+            </>
+          )}
+          <Text> | </Text>
+          {startTime && (
+            <>
+              <Text>from </Text>
+              <Text style={{ fontWeight: "bold" }}>
+                {formatTime(startTime)}
+              </Text>
+            </>
+          )}
+          {endTime && (
+            <>
+              <Text> to </Text>
+              <Text style={{ fontWeight: "bold" }}>{formatTime(endTime)}</Text>
+            </>
+          )}
+        </InnerUserInfoContainerStyle>
+      </Border>
+    </Touchable>
   );
 };
 

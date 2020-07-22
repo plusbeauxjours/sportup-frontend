@@ -117,7 +117,7 @@ const ChatContainer = ({ navigation }) => {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.push("UserProfile", {
+          navigation.push("UserProfileScreen", {
             userId: receiverUserId,
           })
         }

@@ -1,6 +1,25 @@
 import React from "react";
-import { Chip, Text, Caption } from "react-native-paper";
+import { Text, Caption } from "react-native-paper";
 import { PRIMARY_COLOR } from "../constants/colors";
+import styled from "styled-components/native";
+
+const Touchable = styled.TouchableOpacity<ITheme>`
+  margin: 2px;
+  padding: 5px;
+  background-color: ${(props) =>
+    props.selected ? PRIMARY_COLOR : "transparent"};
+  border-width: 0.3px;
+  border-color: ${(props) => (props.selected ? PRIMARY_COLOR : "grey")};
+  flex-wrap: wrap;
+  border-radius: 18px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+`;
+
+interface ITheme {
+  selected: boolean;
+}
 
 interface IProps {
   sportId: string;
@@ -19,22 +38,15 @@ const RatingChip: React.FC<IProps> = ({
   onChipPress = null,
 }) => {
   return (
-    <Chip
-      icon={icon && { uri: icon }}
+    <Touchable
+      selected={selected}
       onPress={() => {
         onChipPress && onChipPress(sportId);
       }}
-      style={{
-        backgroundColor: selected ? PRIMARY_COLOR : "transparent",
-        borderColor: selected ? PRIMARY_COLOR : "grey",
-        margin: 2,
-      }}
     >
-      <Text>
-        <Text style={selected && { color: "#fff" }}>{name}</Text>
-        {rating && <Caption> {rating}</Caption>}
-      </Text>
-    </Chip>
+      <Text style={selected && { color: "#fff" }}>{name}</Text>
+      {rating && <Caption> {rating}</Caption>}
+    </Touchable>
   );
 };
 

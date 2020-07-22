@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
-import { Divider } from "react-native-paper";
 import {
   CreatePost,
   CreatePostVariables,
@@ -16,9 +15,20 @@ import { GetMyFeed } from "../../types/api";
 import Button from "../../components/Button";
 
 const Container = styled.View`
-  height: 150px;
+  padding: 3px 3px 0 3px;
+  background-color: white;
+  margin-bottom: 3px;
+`;
+
+const Border = styled.View`
+  width: 100%;
+  height: 160px;
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding-top: 30px;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 const WritePost: React.FC = () => {
@@ -72,8 +82,8 @@ const WritePost: React.FC = () => {
     setText("");
   };
   return (
-    <>
-      <Container>
+    <Container>
+      <Border>
         <Input
           label={"Write post..."}
           style={{ height: 100 }}
@@ -89,9 +99,8 @@ const WritePost: React.FC = () => {
           onPress={onPress}
           text={"Post"}
         />
-      </Container>
-      <Divider />
-    </>
+      </Border>
+    </Container>
   );
 };
 

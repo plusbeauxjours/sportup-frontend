@@ -36,6 +36,7 @@ const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 10px;
+  width: 100%;
 `;
 const InnerUserInfoContainerStyle = styled.View`
   justify-content: center;
@@ -202,13 +203,13 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     </Picker>
                   </PickerContainer>
                   {membersList.map(({ id, userImg, name, username }, index) => (
-                    <OuterUserInfoContainerStyle>
-                      <TouchableOpacity
-                        key={id}
-                        onPress={() => {
-                          removeMember(id);
-                        }}
-                      >
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        removeMember(id);
+                      }}
+                    >
+                      <OuterUserInfoContainerStyle>
                         <Avatar
                           rounded
                           source={{
@@ -221,8 +222,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                           <Subheading>{name}</Subheading>
                           <Caption>{`@${username}`}</Caption>
                         </InnerUserInfoContainerStyle>
-                      </TouchableOpacity>
-                    </OuterUserInfoContainerStyle>
+                      </OuterUserInfoContainerStyle>
+                    </TouchableOpacity>
                   ))}
                   <ButtonContainer>
                     <Button
@@ -267,14 +268,14 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     <>
                       {users?.map(({ id, userImg, name, username }, index) => {
                         return (
-                          <OuterUserInfoContainerStyle>
-                            <TouchableOpacity
-                              key={id}
-                              onPress={() => {
-                                setSearchText("");
-                                onAddPress(client, username);
-                              }}
-                            >
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setSearchText("");
+                              onAddPress(client, username);
+                            }}
+                          >
+                            <OuterUserInfoContainerStyle>
                               <Avatar
                                 rounded
                                 source={{
@@ -287,8 +288,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                                 <Subheading>{name}</Subheading>
                                 <Caption>{`@${username}`}</Caption>
                               </InnerUserInfoContainerStyle>
-                            </TouchableOpacity>
-                          </OuterUserInfoContainerStyle>
+                            </OuterUserInfoContainerStyle>
+                          </TouchableOpacity>
                         );
                       })}
                     </>

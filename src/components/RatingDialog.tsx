@@ -27,7 +27,7 @@ const RatingDialog: React.FC<IProps> = ({
         onFinishRating={onStarRatingPress}
       />
     </Dialog.Content>
-    <Dialog.Actions>
+    <Dialog.Actions style={{ flexDirection: "row", justifyContent: "center" }}>
       <Button onPress={close} text={"Cancel"} />
       <Button onPress={onSubmit} text={"Submit"} />
     </Dialog.Actions>

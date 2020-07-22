@@ -12,6 +12,7 @@ interface IProps {
   onEndReached: () => void;
   onMomentumScrollBegin: () => void;
   onEndReachedThreshold: number;
+  onScroll?: (e) => void;
 }
 
 const FeedList: React.FC<IProps> = ({

@@ -59,6 +59,7 @@ const Conatiner = styled.View`
 const UserProfileScreen = ({ navigation }) => {
   const { me } = useMe();
   const userId = navigation.getParam("userId");
+  console.log(userId);
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
