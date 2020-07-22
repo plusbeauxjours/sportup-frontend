@@ -8,6 +8,7 @@ import ListFooterComponent from "../../components/ListFooterComponent";
 import WritePost from "../../components/WritePost/WritePost";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../../components/Loader";
+import AddBtn from "../../components/AddBtn";
 
 const Conatiner = styled.View`
   flex: 1;
@@ -27,6 +28,10 @@ const FeedScreen = () => {
     variables: { pageNum: 1 },
     fetchPolicy: "network-only",
   });
+
+  const onPress = () => {
+    console.log("onPress on FeedScreen");
+  };
 
   if (getMainFeedLoading) {
     return <Loader />;
@@ -72,6 +77,7 @@ const FeedScreen = () => {
           }}
           disableNavigation={false}
         />
+        <AddBtn onPress={onPress} />
       </Conatiner>
     );
   }

@@ -9,13 +9,14 @@ import { GetUpcomingEvents, GetUpcomingEventsVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { Appbar } from "react-native-paper";
+import AddBtn from "../../components/AddBtn";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-const UpcomingEvents = () => {
+const UpcomingEvents = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -33,6 +34,10 @@ const UpcomingEvents = () => {
       fetchPolicy: "network-only",
     }
   );
+
+  const onPress = () => {
+    navigation.navigate("CreateEventScreen");
+  };
 
   if (getUpcomingEventsLoading) {
     return <Loader />;
@@ -90,6 +95,7 @@ const UpcomingEvents = () => {
         showsVerticalScrollIndicator={false}
         keyExtractor={(event: any) => event.id.toString()}
       />
+      <AddBtn onPress={onPress} />
     </Container>
   );
 };

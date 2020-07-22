@@ -154,7 +154,7 @@ const MyProfileScreen = ({ navigation }) => {
       return null;
     }
   };
-  if (getMyFeedLoading) {
+  if (getMyFeedLoading || meLoading) {
     return <Loader />;
   } else {
     return (
