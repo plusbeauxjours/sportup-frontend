@@ -5,7 +5,6 @@ export const GET_UPCOMING_EVENTS = gql`
     getUpcomingEvents(pageNum: $pageNum) {
       pageNum
       hasNextPage
-      count
       events {
         id
         name

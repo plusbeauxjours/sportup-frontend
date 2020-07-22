@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
-import { GetUpcomingEvents } from "../../types/api";
+import { GetUpcomingEvents, GetUpcomingEventsVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { Appbar } from "react-native-paper";
@@ -20,16 +20,19 @@ const UpcomingEvents = () => {
 
   const {
     data: {
-      getUpcomingEvents: { events = null, hasNextPage, pageNum, count } = {},
+      getUpcomingEvents: { events = null, hasNextPage, pageNum } = {},
     } = {},
     loading: getUpcomingEventsLoading,
     fetchMore: getUpcomingEventsFetchMore,
     networkStatus,
     refetch: getUpcomingEve1ntsRefetch,
-  } = useQuery<GetUpcomingEvents>(GET_UPCOMING_EVENTS, {
-    variables: { pageNum: 1 },
-    fetchPolicy: "network-only",
-  });
+  } = useQuery<GetUpcomingEvents, GetUpcomingEventsVariables>(
+    GET_UPCOMING_EVENTS,
+    {
+      variables: { pageNum: 1 },
+      fetchPolicy: "network-only",
+    }
+  );
 
   if (getUpcomingEventsLoading) {
     return <Loader />;

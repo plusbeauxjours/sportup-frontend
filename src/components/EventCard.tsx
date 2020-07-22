@@ -45,13 +45,15 @@ const EventCard = ({
         <Border>
           <InnerUserInfoContainerStyle>
             <Headline>{name}</Headline>
-            <Row>
-              <RatingChip
-                sportId={sport.sportId}
-                name={sport.name}
-                onChipPress={() => {}}
-              />
-            </Row>
+            {sport && (
+              <Row>
+                <RatingChip
+                  sportId={sport.sportId}
+                  name={sport.name}
+                  onChipPress={() => {}}
+                />
+              </Row>
+            )}
             <Caption>
               <Caption>Organized by </Caption>
               <Caption style={{ fontWeight: "bold" }}>{owner.name}</Caption>

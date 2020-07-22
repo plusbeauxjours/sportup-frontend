@@ -113,6 +113,8 @@ const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
                 navigation.push("TeamProfileScreen", { teamId: id });
               }}
             >
+              <Title>{id}</Title>
+
               <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
                 {teamName}
               </Title>

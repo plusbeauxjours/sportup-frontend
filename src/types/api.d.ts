@@ -757,6 +757,8 @@ export interface GetUsersForGame_getUsersForGame_users {
 
 export interface GetUsersForGame_getUsersForGame {
   __typename: "GetUsersForGamesResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
   users: (GetUsersForGame_getUsersForGame_users | null)[] | null;
 }
 
@@ -766,6 +768,7 @@ export interface GetUsersForGame {
 
 export interface GetUsersForGameVariables {
   sportIds: (string | null)[];
+  pageNum?: number | null;
 }
 
 /* tslint:disable */
@@ -805,6 +808,8 @@ export interface GetTeamsForGame_getTeamsForGame_teams {
 
 export interface GetTeamsForGame_getTeamsForGame {
   __typename: "GetTeamsForGameResponse";
+  pageNum: number | null;
+  hasNextPage: boolean | null;
   teams: (GetTeamsForGame_getTeamsForGame_teams | null)[] | null;
 }
 
@@ -814,6 +819,7 @@ export interface GetTeamsForGame {
 
 export interface GetTeamsForGameVariables {
   sportIds: (string | null)[];
+  pageNum?: number | null;
 }
 
 /* tslint:disable */
@@ -1271,7 +1277,6 @@ export interface GetUpcomingEvents_getUpcomingEvents {
   __typename: "GetUpcomingEventsResponse";
   pageNum: number | null;
   hasNextPage: boolean | null;
-  count: number | null;
   events: (GetUpcomingEvents_getUpcomingEvents_events | null)[] | null;
 }
 
