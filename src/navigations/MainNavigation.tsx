@@ -9,9 +9,7 @@ const MainNavigation = createSwitchNavigator(
     Auth: AuthNavigation,
     Main: MainDrawer,
   },
-  {
-    initialRouteName: "AuthLoading",
-  }
+  { initialRouteName: "AuthLoading" }
 );
 
 export default createAppContainer(MainNavigation);

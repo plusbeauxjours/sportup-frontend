@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { PRIMARY_COLOR } from "../constants/colors";
 
 import FeedScreen from "../screens/FeedScreen";
 import UserProfileScreen from "../screens/UserProfileScreen";
@@ -27,15 +26,7 @@ const FeedNavigation = createStackNavigator(
     ChatSendLocationScreen,
     ChatScreen,
   },
-  {
-    initialRouteName: "FeedScreen",
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-      },
-      headerTintColor: "#fff",
-    },
-  }
+  { initialRouteName: "FeedScreen" }
 );
 
 export default FeedNavigation;

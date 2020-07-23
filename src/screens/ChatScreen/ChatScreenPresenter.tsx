@@ -8,11 +8,12 @@ import {
 } from "react-native-gifted-chat";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
-import { Platform, Modal as MapModal, SafeAreaView } from "react-native";
+import { Modal as MapModal, SafeAreaView } from "react-native";
 import KeyboardSpacer from "react-native-keyboard-spacer";
 import constants from "../../constants/dimensions";
 import { mapStyle } from "../../constants/mapStyle";
 import Loader from "../../components/Loader";
+import utils from "../../utils/utils";
 
 const View = styled.View``;
 
@@ -97,6 +98,7 @@ const ChatPresenter: React.FunctionComponent<IProps> = ({
   mapLoading,
 }) => {
   const [ready, setReady] = useState<boolean>(false);
+  const isAndroid = utils.isAndroid();
 
   const onMapReady = () => {
     if (!ready) {
@@ -156,7 +158,7 @@ const ChatPresenter: React.FunctionComponent<IProps> = ({
             />
             <MarkerContainer pointerEvents="none">
               <Ionicons
-                name={Platform.OS === "ios" ? "ios-pin" : "md-pin"}
+                name={isAndroid ? "md-pin" : "ios-pin"}
                 size={40}
                 color={"#3897f0"}
                 pointerEvents="none"

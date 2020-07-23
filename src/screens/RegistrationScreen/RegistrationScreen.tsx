@@ -4,6 +4,7 @@ import { ListItem } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
 import Loader from "../../components/Loader";
+import BackBtn from "../../components/BackBtn";
 import {
   GetRegistrations,
   GetRegistrationsVariables,
@@ -135,5 +136,8 @@ const RegistrationScreen = ({ navigation }) => {
 };
 RegistrationScreen.navigationOptions = ({ navigation }) => ({
   title: "Manage Registrations",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 });
+
 export default RegistrationScreen;

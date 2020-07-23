@@ -20,14 +20,6 @@ const ChatNavigation = createStackNavigator(
     TeamsScreen,
     TeamProfileScreen,
   },
-  {
-    initialRouteName: "ChatListScreen",
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-      },
-      headerTintColor: "#fff",
-    },
-  }
+  { initialRouteName: "ChatListScreen" }
 );
 export default ChatNavigation;

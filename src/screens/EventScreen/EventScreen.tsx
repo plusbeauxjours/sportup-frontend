@@ -10,6 +10,7 @@ import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const EventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
@@ -140,6 +141,8 @@ const EventScreen = ({ navigation }) => {
 };
 EventScreen.navigationOptions = () => ({
   title: "Event",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 });
 
 export default EventScreen;

@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { PRIMARY_COLOR } from "../constants/colors";
 
 import UserProfileScreen from "../screens/UserProfileScreen";
 import FollowersScreen from "../screens/FollowersScreen";
@@ -31,15 +30,7 @@ const EventNavigation = createStackNavigator(
     ChatSendLocationScreen,
     ChatScreen,
   },
-  {
-    initialRouteName: "UpcomingEventScreen",
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-      },
-      headerTintColor: "#fff",
-    },
-  }
+  { initialRouteName: "UpcomingEventScreen" }
 );
 
 export default EventNavigation;

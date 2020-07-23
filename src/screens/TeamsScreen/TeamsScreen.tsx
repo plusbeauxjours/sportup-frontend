@@ -9,6 +9,7 @@ import {
   NavigationStackScreenProps,
 } from "react-navigation-stack";
 import Loader from "../../components/Loader";
+import BackBtn from "../../components/BackBtn";
 
 interface IProps extends NavigationStackScreenProps {
   userId: string;
@@ -39,6 +40,8 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
 };
 TeamsScreen.navigationOptions = {
   title: "Teams",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default TeamsScreen;

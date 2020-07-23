@@ -15,6 +15,7 @@ import { UpdateUser, UpdateUserVariables, Me } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import styled from "styled-components/native";
+import BackBtn from "../../components/BackBtn";
 
 const WhiteSpace = styled.View`
   height: 50px;
@@ -214,6 +215,8 @@ const EditProfileScreen = ({ navigation }) => {
 
 EditProfileScreen.navigationOptions = {
   title: "Edit profile",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default EditProfileScreen;

@@ -8,6 +8,7 @@ import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
 import { RegisterTeam, RegisterTeamVariables } from "../../types/api";
 import FormikInput from "../../components/Formik/FormikInput";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const RegisterForEventScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
@@ -139,5 +140,7 @@ const RegisterForEventScreen = ({ navigation }) => {
 };
 RegisterForEventScreen.navigationOptions = ({ navigation }) => ({
   title: "Register For Event",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 });
 export default RegisterForEventScreen;

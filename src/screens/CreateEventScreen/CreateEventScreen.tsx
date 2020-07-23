@@ -23,6 +23,7 @@ import {
   CreateEventVariables,
 } from "../../types/api";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const sportsList = sports.slice(1);
 
@@ -285,5 +286,7 @@ const CreateEventScreen = ({ navigation }) => {
 };
 CreateEventScreen.navigationOptions = ({ navigation }) => ({
   title: "Create Events",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 });
 export default CreateEventScreen;

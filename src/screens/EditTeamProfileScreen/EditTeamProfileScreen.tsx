@@ -20,6 +20,7 @@ import { GET_TEAM } from "../TeamProfileScreen/TeamProfileScreenQueries";
 import { UPDATE_TEAM } from "./EditTeamProfileScreenQueries";
 import { GetAllSports, GetTeam, GetTeamVariables } from "../../types/api";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const PickerContainer = styled.View`
   padding: 0 20px;
@@ -175,6 +176,8 @@ const EditTeamProfileScreen = ({ navigation }) => {
 };
 EditTeamProfileScreen.navigationOptions = {
   title: "Edit Team",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default EditTeamProfileScreen;

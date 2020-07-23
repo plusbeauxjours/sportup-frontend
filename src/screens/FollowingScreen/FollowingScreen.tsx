@@ -7,6 +7,7 @@ import UserCardList from "../../components/UserCardList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserCard from "../../components/UserCard";
 import styled from "styled-components/native";
+import BackBtn from "../../components/BackBtn";
 import {
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
@@ -53,6 +54,8 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
 };
 FollowingScreen.navigationOptions = {
   title: "Following",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default FollowingScreen;

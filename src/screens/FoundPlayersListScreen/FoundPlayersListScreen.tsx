@@ -8,6 +8,7 @@ import PlayerCard from "../../components/PlayerCard";
 import { GetUsersForGameVariables, GetUsersForGame } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
+import BackBtn from "../../components/BackBtn";
 
 const FoundPlayersListScreen = ({ navigation }) => {
   const sportIds = navigation.getParam("selectedSportIds");
@@ -98,6 +99,8 @@ const FoundPlayersListScreen = ({ navigation }) => {
 };
 FoundPlayersListScreen.navigationOptions = {
   title: "Players",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default FoundPlayersListScreen;

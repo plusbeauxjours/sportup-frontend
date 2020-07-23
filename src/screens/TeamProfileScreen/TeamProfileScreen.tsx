@@ -14,19 +14,27 @@ import { useMutation } from "react-apollo";
 import { RateTeam, RateTeamVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const View = styled.View`
   align-items: center;
   padding: 5px;
 `;
+
 const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+const InfoContainer = styled.View`
   align-items: center;
   height: 150px;
 `;
+
 const Image = styled.Image`
   width: 100%;
   height: 150px;
 `;
+
 const Touchable = styled.TouchableOpacity``;
 
 interface IProps {
@@ -45,7 +53,7 @@ const TeamInfoArea: React.FC<IProps> = ({
   rating,
 }) => {
   return (
-    <Container>
+    <InfoContainer>
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
         <Touchable onPress={() => showDialog}>
@@ -59,7 +67,7 @@ const TeamInfoArea: React.FC<IProps> = ({
           onChipPress={() => {}}
         />
       </View>
-    </Container>
+    </InfoContainer>
   );
 };
 
@@ -100,7 +108,7 @@ const TeamProfileScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <>
+      <Container>
         <FlatList
           data={team.members}
           keyExtractor={(item) => item.id.toString()}
@@ -143,12 +151,14 @@ const TeamProfileScreen = ({ navigation }) => {
           close={closeDialog}
           onSubmit={onSubmit}
         />
-      </>
+      </Container>
     );
   }
 };
 TeamProfileScreen.navigationOptions = {
   title: "Team Profile",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default TeamProfileScreen;

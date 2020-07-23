@@ -14,6 +14,7 @@ import {
 import styled from "styled-components/native";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
   flex: 1;
@@ -114,6 +115,8 @@ const EditSportsScreen = ({ navigation }) => {
 };
 EditSportsScreen.navigationOptions = {
   title: "Edit Sport",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default EditSportsScreen;

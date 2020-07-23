@@ -2,14 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import {
-  Subheading,
-  Searchbar,
-  Divider,
-  TextInput,
-  Caption,
-} from "react-native-paper";
-import { ListItem, Avatar } from "react-native-elements";
+import { Subheading, Divider, TextInput, Caption } from "react-native-paper";
+import { Avatar } from "react-native-elements";
 import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { ApolloConsumer, useMutation, useLazyQuery } from "react-apollo";
@@ -31,6 +25,7 @@ import FormikInput from "../../components/Formik/FormikInput";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
 import { DARK_ORANGE } from "../../constants/colors";
+import BackBtn from "../../components/BackBtn";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -305,6 +300,8 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
 };
 CreateTeamScreen.navigationOptions = {
   title: "Create Team",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default CreateTeamScreen;

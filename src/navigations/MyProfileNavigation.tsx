@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { PRIMARY_COLOR } from "../constants/colors";
 
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
@@ -29,15 +28,7 @@ const MyProfileNavigation = createStackNavigator(
     ChatSendLocationScreen,
     ChatScreen,
   },
-  {
-    initialRouteName: "MyProfileScreen",
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-      },
-      headerTintColor: "#fff",
-    },
-  }
+  { initialRouteName: "MyProfileScreen" }
 );
 
 export default MyProfileNavigation;

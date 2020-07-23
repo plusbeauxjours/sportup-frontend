@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { PRIMARY_COLOR } from "../constants/colors";
 
 import UserProfileScreen from "../screens/UserProfileScreen";
 import FollowersScreen from "../screens/FollowersScreen";
@@ -25,15 +24,7 @@ const FindNavigation = createStackNavigator(
     ChatSendLocationScreen,
     ChatScreen,
   },
-  {
-    initialRouteName: "FindPlayerScreen",
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: PRIMARY_COLOR,
-      },
-      headerTintColor: "#fff",
-    },
-  }
+  { initialRouteName: "FindPlayerScreen" }
 );
 
 export default FindNavigation;

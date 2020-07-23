@@ -7,6 +7,7 @@ import { GET_TEAMS_FOR_GAME } from "./FoundTeamsListScreenQueries";
 import { GetTeamsForGame, GetTeamsForGameVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
+import BackBtn from "../../components/BackBtn";
 
 const FoundTeamsListScreen = ({ navigation }) => {
   const sportIds = navigation.getParam("selectedSportIds");
@@ -85,5 +86,7 @@ const FoundTeamsListScreen = ({ navigation }) => {
 };
 FoundTeamsListScreen.navigationOptions = {
   title: "Teams near you",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 export default FoundTeamsListScreen;

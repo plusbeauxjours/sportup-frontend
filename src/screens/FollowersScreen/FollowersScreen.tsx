@@ -11,6 +11,7 @@ import ListFooterComponent from "../../components/ListFooterComponent";
 import { Divider } from "react-native-paper";
 import UserCard from "../../components/UserCard";
 import styled from "styled-components/native";
+import BackBtn from "../../components/BackBtn";
 import {
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
@@ -59,6 +60,8 @@ const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
 };
 FollowersScreen.navigationOptions = {
   title: "Followers",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default FollowersScreen;

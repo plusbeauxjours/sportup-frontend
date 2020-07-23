@@ -28,6 +28,7 @@ import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
 import { ActivityIndicator } from "react-native";
+import BackBtn from "../../components/BackBtn";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -59,7 +60,6 @@ const Conatiner = styled.View`
 const UserProfileScreen = ({ navigation }) => {
   const { me } = useMe();
   const userId = navigation.getParam("userId");
-  console.log(userId);
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
@@ -250,6 +250,8 @@ const UserProfileScreen = ({ navigation }) => {
 };
 UserProfileScreen.navigationOptions = ({ navigation }) => ({
   title: "User Profile",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 });
 
 export default UserProfileScreen;
