@@ -14,6 +14,11 @@ export const GET_SEARCH_RESULTS = gql`
       teams {
         id
         teamName
+        rating
+        sport {
+          sportId
+          name
+        }
         createdBy {
           id
           name
@@ -26,6 +31,10 @@ export const GET_SEARCH_RESULTS = gql`
       events {
         id
         name
+        sport {
+          sportId
+          name
+        }
         owner {
           id
           name

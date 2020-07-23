@@ -19,6 +19,7 @@ const IconContainer = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   background-color: ${PRIMARY_COLOR};
+  box-shadow: 7px 10px 10px rgba(100, 100, 100, 0.5);
 `;
 
 interface IProps {

@@ -7,7 +7,7 @@ import {
   Subheading,
   Caption,
 } from "react-native-paper";
-import { ListItem, Avatar } from "react-native-elements";
+import { Avatar } from "react-native-elements";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -16,6 +16,7 @@ import { GET_SEARCH_RESULTS } from "./SearchQueries";
 import { useLazyQuery } from "react-apollo";
 import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import RatingChip from "../../components/RatingChip";
 
 const SectionTitle = styled.Text`
   font-size: 10px;
@@ -33,13 +34,21 @@ const OuterUserInfoContainerStyle = styled.View`
   padding: 10px;
 `;
 const InnerUserInfoContainerStyle = styled.View`
+  width: 100%;
+  flex-direction: column;
   justify-content: center;
-  padding: 0 10px 0 10px;
 `;
 const TouchableOpacity = styled.TouchableOpacity`
+  width: 100%;
+
   flex-direction: row;
   justify-content: center;
   align-items: center;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const SearchScreen = ({ navigation }) => {
@@ -67,23 +76,25 @@ const SearchScreen = ({ navigation }) => {
     <>
       <SectionTitle>Users</SectionTitle>
       {users && users.length !== 0 ? (
-        users?.map(({ id, userImg, name, username }) => (
-          <OuterUserInfoContainerStyle>
+        users?.map((user, index) => (
+          <OuterUserInfoContainerStyle key={index}>
             <TouchableOpacity
-              key={id}
               onPress={() => {
-                navigation.push("UserProfileScreen", { userId: id });
+                navigation.push("UserProfileScreen", { userId: user.id });
               }}
             >
               <Avatar
                 rounded
                 source={{
-                  uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
+                  uri: user.userImg
+                    ? MEDIA_URL + user.userImg
+                    : NO_AVATAR_THUMBNAIL,
                 }}
+                containerStyle={{ marginLeft: 30, marginRight: 10 }}
               />
               <InnerUserInfoContainerStyle>
-                <Subheading>{name}</Subheading>
-                <Caption>{`@${username}`}</Caption>
+                <Subheading>{user.name}</Subheading>
+                <Caption>{`@${user.username}`}</Caption>
               </InnerUserInfoContainerStyle>
             </TouchableOpacity>
           </OuterUserInfoContainerStyle>
@@ -100,15 +111,28 @@ const SearchScreen = ({ navigation }) => {
     <>
       <SectionTitle>Teams</SectionTitle>
       {teams && teams.length !== 0 ? (
-        teams?.map((team) => (
-          <ListItem
-            key={team.id}
-            title={team?.teamName}
-            subtitle={`Created by ${team?.createdBy.name} (@${team?.createdBy.username})`}
-            onPress={() => {
-              navigation.push("TeamProfileScreen", { teamId: team?.id });
-            }}
-          />
+        teams?.map((team, index) => (
+          <OuterUserInfoContainerStyle key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push("TeamProfileScreen", { teamId: team?.id });
+              }}
+            >
+              <InnerUserInfoContainerStyle>
+                <Row>
+                  <Subheading style={{ textTransform: "capitalize" }}>
+                    {team?.teamName}
+                  </Subheading>
+                  <RatingChip
+                    sportId={team.sport.sportId}
+                    name={team.sport.name}
+                    onChipPress={() => {}}
+                  />
+                </Row>
+                <Caption>{`Created by ${team?.createdBy.name} (@${team?.createdBy.username})`}</Caption>
+              </InnerUserInfoContainerStyle>
+            </TouchableOpacity>
+          </OuterUserInfoContainerStyle>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
@@ -122,15 +146,28 @@ const SearchScreen = ({ navigation }) => {
     <>
       <SectionTitle>Events</SectionTitle>
       {events && events.length !== 0 ? (
-        events?.map((event) => (
-          <ListItem
-            key={event.id}
-            title={event?.name}
-            subtitle={`Created by ${event?.owner.name} (@${event?.owner.username})`}
-            onPress={() => {
-              navigation.push("EvenctScreen", { eventId: event?.id });
-            }}
-          />
+        events?.map((event, index) => (
+          <OuterUserInfoContainerStyle key={index}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.push("EvenctScreen", { eventId: event?.id });
+              }}
+            >
+              <InnerUserInfoContainerStyle>
+                <Row>
+                  <Subheading style={{ textTransform: "capitalize" }}>
+                    {event?.name}
+                  </Subheading>
+                  <RatingChip
+                    sportId={event.sport.sportId}
+                    name={event.sport.name}
+                    onChipPress={() => {}}
+                  />
+                </Row>
+                <Caption>{`Created by ${event?.owner.name} (@${event?.owner.username})`}</Caption>
+              </InnerUserInfoContainerStyle>
+            </TouchableOpacity>
+          </OuterUserInfoContainerStyle>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>

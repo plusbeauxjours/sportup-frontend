@@ -76,7 +76,6 @@ const FeedScreen = () => {
             setLoading(false);
           }}
           disableNavigation={false}
-          stickyHeaderIndices={[0]}
         />
         <AddBtn onPress={onPress} />
       </Conatiner>

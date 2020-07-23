@@ -1045,6 +1045,12 @@ export interface GetSearchResults_getSearchUsers {
   users: (GetSearchResults_getSearchUsers_users | null)[] | null;
 }
 
+export interface GetSearchResults_getSearchTeams_teams_sport {
+  __typename: "SportType";
+  sportId: string | null;
+  name: string;
+}
+
 export interface GetSearchResults_getSearchTeams_teams_createdBy {
   __typename: "UserType";
   id: string;
@@ -1060,12 +1066,20 @@ export interface GetSearchResults_getSearchTeams_teams {
   __typename: "TeamType";
   id: string;
   teamName: string;
+  rating: number | null;
+  sport: GetSearchResults_getSearchTeams_teams_sport;
   createdBy: GetSearchResults_getSearchTeams_teams_createdBy;
 }
 
 export interface GetSearchResults_getSearchTeams {
   __typename: "GetSearchTeamsResponse";
   teams: (GetSearchResults_getSearchTeams_teams | null)[] | null;
+}
+
+export interface GetSearchResults_getSearchEvents_events_sport {
+  __typename: "SportType";
+  sportId: string | null;
+  name: string;
 }
 
 export interface GetSearchResults_getSearchEvents_events_owner {
@@ -1082,6 +1096,7 @@ export interface GetSearchResults_getSearchEvents_events {
   __typename: "EventType";
   id: string;
   name: string;
+  sport: GetSearchResults_getSearchEvents_events_sport;
   owner: GetSearchResults_getSearchEvents_events_owner;
 }
 

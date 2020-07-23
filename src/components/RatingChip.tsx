@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 
 const Touchable = styled.TouchableOpacity<ITheme>`
   margin: 2px;
-  padding: 5px;
+  padding: 5px 10px;
   background-color: ${(props) =>
     props.selected ? PRIMARY_COLOR : "transparent"};
   border-width: 0.3px;
@@ -45,7 +45,7 @@ const RatingChip: React.FC<IProps> = ({
       }}
     >
       <Text style={selected && { color: "#fff" }}>{name}</Text>
-      {rating && <Caption> {rating}</Caption>}
+      {rating && <Caption> ⭐️{rating}</Caption>}
     </Touchable>
   );
 };
