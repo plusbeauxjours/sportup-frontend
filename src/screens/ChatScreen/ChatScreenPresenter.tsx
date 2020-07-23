@@ -18,7 +18,7 @@ const View = styled.View``;
 
 const ChatContainer = styled.View`
   flex: 1;
-  background-color: transparent;
+  background-color: white;
 `;
 
 const Footer = styled.View`

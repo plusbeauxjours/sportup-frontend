@@ -6,9 +6,7 @@ import {
   FollowUserVariables,
   UnfollowUser,
   UnfollowUserVariables,
-  Me,
 } from "../../types/api";
-import { ME } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
 import {
   GetUserFollowing,
   GetUserFollowingVariables,
@@ -193,7 +191,6 @@ const FollowBtn: React.FC<IProps> = ({
         }
         setIsFollowing((isFollowing) => !isFollowing);
       }}
-      color={isFollowing && "gray"}
       text={isFollowing ? "Following" : "Follow"}
     />
   );
