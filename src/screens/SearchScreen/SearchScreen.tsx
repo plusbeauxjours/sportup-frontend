@@ -150,7 +150,7 @@ const SearchScreen = ({ navigation }) => {
           <OuterUserInfoContainerStyle key={index}>
             <TouchableOpacity
               onPress={() => {
-                navigation.push("EvenctScreen", { eventId: event?.id });
+                navigation.push("EventScreen", { eventId: event?.id });
               }}
             >
               <InnerUserInfoContainerStyle>

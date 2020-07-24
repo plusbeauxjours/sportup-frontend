@@ -11,8 +11,13 @@ const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+
 const View = styled.View`
   flex-direction: row;
+`;
+
+const WhiteSpace = styled.View`
+  height: 10px;
 `;
 interface IProps {
   id: string;
@@ -45,7 +50,9 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
 
   return (
     <React.Fragment>
+      <WhiteSpace />
       <SportsList sports={sports} />
+      <WhiteSpace />
       <View
         style={{
           flexDirection: "column",

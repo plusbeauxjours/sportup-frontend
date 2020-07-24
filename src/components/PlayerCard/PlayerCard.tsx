@@ -1,9 +1,17 @@
 import React from "react";
 import { useQuery } from "react-apollo";
-import { Card } from "react-native-elements";
 import UserCard from "../UserCard";
 import PlayerCardBottomSection from "../PlayerCardBottomSection";
 import { GET_TEAMS_FOR_PLAYER } from "./PlayerCardQueries";
+import styled from "styled-components/native";
+
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
 
 interface IProps {
   id: string;
@@ -32,7 +40,7 @@ const PlayerCard: React.FC<IProps> = ({
     }
   );
   return (
-    <Card>
+    <Border>
       <UserCard
         userId={id}
         userImg={userImg}
@@ -41,7 +49,7 @@ const PlayerCard: React.FC<IProps> = ({
         isFollowing={isFollowing}
       />
       <PlayerCardBottomSection id={id} sports={sports} teams={teams} />
-    </Card>
+    </Border>
   );
 };
 

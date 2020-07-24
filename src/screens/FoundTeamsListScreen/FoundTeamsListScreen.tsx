@@ -8,6 +8,11 @@ import { GetTeamsForGame, GetTeamsForGameVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import BackBtn from "../../components/BackBtn";
+import styled from "styled-components/native";
+
+const Container = styled.View`
+  background-color: white;
+`;
 
 const FoundTeamsListScreen = ({ navigation }) => {
   const sportIds = navigation.getParam("selectedSportIds");
@@ -28,59 +33,61 @@ const FoundTeamsListScreen = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <FlatList
-        data={teams}
-        renderItem={({ item }) => <TeamCard enableMessage {...item} />}
-        keyExtractor={(teams: any) => teams.id.toString()}
-        showsVerticalScrollIndicator={false}
-        ListEmptyComponent={() =>
-          !loading ? (
-            <View
-              style={{
-                padding: 20,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
-            </View>
-          ) : (
-            <ActivityIndicator size="small" />
-          )
-        }
-        refreshing={networkStatus === 4}
-        onRefresh={() => {
-          getTeamsForGameRefetch({ sportIds, pageNum: 1 });
-        }}
-        ListFooterComponent={() => <ListFooterComponent loading={loading} />}
-        onEndReached={() => {
-          if (!loading && hasNextPage) {
-            getTeamsForGameFetchMore({
-              variables: { sportIds, pageNum: pageNum + 1 },
-              updateQuery: (prev: any, { fetchMoreResult }: any) => {
-                if (!fetchMoreResult) return prev;
-                if (!fetchMoreResult.getTeamsForGame) return prev;
-                return Object.assign({}, prev, {
-                  getTeamsForGame: {
-                    ...prev.getTeamsForGame,
-                    pageNum: fetchMoreResult.getTeamsForGame.pageNum,
-                    hasNextPage: fetchMoreResult.getTeamsForGame.hasNextPage,
-                    teams: [
-                      ...prev.getTeamsForGame.teams,
-                      ...fetchMoreResult.getTeamsForGame.teams,
-                    ],
-                  },
-                });
-              },
-            });
-            setLoading(true);
+      <Container>
+        <FlatList
+          data={teams}
+          renderItem={({ item }) => <TeamCard enableMessage {...item} />}
+          keyExtractor={(teams: any) => teams.id.toString()}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() =>
+            !loading ? (
+              <View
+                style={{
+                  padding: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
+              </View>
+            ) : (
+              <ActivityIndicator size="small" />
+            )
           }
-        }}
-        onEndReachedThreshold={0.2}
-        onMomentumScrollBegin={() => {
-          setLoading(false);
-        }}
-      />
+          refreshing={networkStatus === 4}
+          onRefresh={() => {
+            getTeamsForGameRefetch({ sportIds, pageNum: 1 });
+          }}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
+          onEndReached={() => {
+            if (!loading && hasNextPage) {
+              getTeamsForGameFetchMore({
+                variables: { sportIds, pageNum: pageNum + 1 },
+                updateQuery: (prev: any, { fetchMoreResult }: any) => {
+                  if (!fetchMoreResult) return prev;
+                  if (!fetchMoreResult.getTeamsForGame) return prev;
+                  return Object.assign({}, prev, {
+                    getTeamsForGame: {
+                      ...prev.getTeamsForGame,
+                      pageNum: fetchMoreResult.getTeamsForGame.pageNum,
+                      hasNextPage: fetchMoreResult.getTeamsForGame.hasNextPage,
+                      teams: [
+                        ...prev.getTeamsForGame.teams,
+                        ...fetchMoreResult.getTeamsForGame.teams,
+                      ],
+                    },
+                  });
+                },
+              });
+              setLoading(true);
+            }
+          }}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setLoading(false);
+          }}
+        />
+      </Container>
     );
   }
 };

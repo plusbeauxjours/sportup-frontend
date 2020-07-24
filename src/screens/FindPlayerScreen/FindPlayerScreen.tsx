@@ -3,7 +3,6 @@ import { Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import { GetAllSports } from "../../types/api";
@@ -13,6 +12,7 @@ import Button from "../../components/Button";
 const Container = styled.View`
   flex: 1;
   justify-content: center;
+  background-color: white;
 `;
 
 const Row = styled.View`

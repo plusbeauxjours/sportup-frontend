@@ -19,6 +19,7 @@ import BackBtn from "../../components/BackBtn";
 const Container = styled.View`
   flex: 1;
   justify-content: center;
+  background-color: white;
 `;
 
 const Row = styled.View`
