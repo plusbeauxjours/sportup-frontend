@@ -35,6 +35,10 @@ const Image = styled.Image`
   z-index: 5;
 `;
 
+const WhiteSpace = styled.View`
+  height: 30px;
+`;
+
 const FindPlayerScreen = ({ navigation }) => {
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
@@ -79,6 +83,7 @@ const FindPlayerScreen = ({ navigation }) => {
             />
           ))}
         </Row>
+        <WhiteSpace />
         <Row>
           <IconContainer>
             <TouchableWithoutFeedback onPress={onFindTeamPress}>
@@ -98,7 +103,7 @@ const FindPlayerScreen = ({ navigation }) => {
   }
 };
 FindPlayerScreen.navigationOptions = ({ navigation }) => ({
-  title: "Play",
+  title: "Find",
   headerLeft: () => (
     <Appbar.Action
       icon="menu"

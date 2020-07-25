@@ -33,14 +33,15 @@ const OuterUserInfoContainerStyle = styled.View`
   align-items: center;
   padding: 10px;
 `;
+
 const InnerUserInfoContainerStyle = styled.View`
   width: 100%;
   flex-direction: column;
   justify-content: center;
 `;
+
 const TouchableOpacity = styled.TouchableOpacity`
   width: 100%;
-
   flex-direction: row;
   justify-content: center;
   align-items: center;

@@ -25,6 +25,7 @@ interface IProps {
   sportId: string;
   name?: string;
   icon?: string;
+  disabled?: boolean;
   rating?: number;
   selected?: boolean;
   onChipPress: (sportId: string) => void;
@@ -33,6 +34,7 @@ const RatingChip: React.FC<IProps> = ({
   sportId,
   name,
   icon,
+  disabled = false,
   rating = null,
   selected = false,
   onChipPress = null,
@@ -40,6 +42,7 @@ const RatingChip: React.FC<IProps> = ({
   return (
     <Touchable
       selected={selected}
+      disabled={disabled}
       onPress={() => {
         onChipPress && onChipPress(sportId);
       }}

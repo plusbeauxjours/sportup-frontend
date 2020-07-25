@@ -1,11 +1,30 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { Caption } from "react-native-paper";
+import { Caption, Subheading, Divider } from "react-native-paper";
 import SportsList from "./SportsList";
 import styled from "styled-components/native";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
-import Button from "./Button";
+import RatingChip from "./RatingChip";
+
+const OuterUserInfoContainerStyle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+`;
+
+const InnerUserInfoContainerStyle = styled.View`
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const TouchableOpacity = styled.TouchableOpacity`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Row = styled.View`
   flex-direction: row;
@@ -59,24 +78,31 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
         }}
       >
         {teams?.map((team, index) => (
-          <Row key={index}>
-            <View>
-              <Caption>Plays for </Caption>
-              <Caption
-                style={{ fontWeight: "bold" }}
+          <>
+            <Divider />
+            <OuterUserInfoContainerStyle key={index}>
+              <TouchableOpacity
                 onPress={() => {
-                  navigation.push("TeamProfileScreen", { teamId: team.id });
+                  navigation.push("TeamProfileScreen", { teamId: team?.id });
                 }}
               >
-                {team.teamName}
-              </Caption>
-            </View>
-            <Button
-              icon="message"
-              onPress={() => onPress(team)}
-              text={"Message"}
-            />
-          </Row>
+                <InnerUserInfoContainerStyle>
+                  <Row>
+                    <Subheading style={{ textTransform: "capitalize" }}>
+                      {team?.teamName}
+                    </Subheading>
+                    <RatingChip
+                      sportId={team.sport.sportId}
+                      name={team.sport.name}
+                      onChipPress={() => {}}
+                      disabled={true}
+                    />
+                  </Row>
+                  <Caption>{`Created by ${team?.createdBy.name} (@${team?.createdBy.username})`}</Caption>
+                </InnerUserInfoContainerStyle>
+              </TouchableOpacity>
+            </OuterUserInfoContainerStyle>
+          </>
         ))}
       </View>
     </React.Fragment>
