@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppLoading } from "expo";
 import { HttpLink } from "apollo-link-http";
 import { Asset } from "expo-asset";
-import { AsyncStorage } from "react-native";
+import { Image, AsyncStorage } from "react-native";
 import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
@@ -15,6 +15,15 @@ import { setContext } from "apollo-link-context";
 
 import { GRAPHQL_URL } from "./src/constants/urls";
 import AppContainer from "./src/components/AppContainer";
+
+const cacheImages = (images: any) =>
+  images.map((image: any) => {
+    if (typeof image === "string") {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
 
 export default function App() {
   const [client, setClient] = useState<any>(null);
@@ -51,7 +60,13 @@ export default function App() {
     }
   };
   const loadResourcesAsync = async () => {
-    await Asset.loadAsync([]);
+    const images = [
+      require("./assets/icon/playerIcon.png"),
+      require("./assets/icon/teamIcon.png"),
+    ];
+    const imagePromises = cacheImages(images);
+
+    return Promise.all([...imagePromises]);
   };
   const handleLoadingError = (error) => {
     console.warn(error);

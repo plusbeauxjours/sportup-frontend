@@ -17,8 +17,9 @@ export default ({
       disabled={disabled}
       mode="outlined"
       style={{
-        width: long ? 240 : 120,
+        width: long ? 240 : 140,
         margin: 10,
+        justifyContent: "space-between",
       }}
       labelStyle={{
         color: disabled ? "gray" : PRIMARY_COLOR,

@@ -8,6 +8,7 @@ import RatingChip from "../../components/RatingChip";
 import { GetAllSports } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
+import { TouchableWithoutFeedback } from "react-native";
 
 const Container = styled.View`
   flex: 1;
@@ -19,6 +20,19 @@ const Row = styled.View`
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
+`;
+
+const IconContainer = styled.View`
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Image = styled.Image`
+  bottom: -20px;
+  width: 100px;
+  height: 75px;
+  z-index: 5;
 `;
 
 const FindPlayerScreen = ({ navigation }) => {
@@ -66,16 +80,18 @@ const FindPlayerScreen = ({ navigation }) => {
           ))}
         </Row>
         <Row>
-          <Button
-            onPress={onFindTeamPress}
-            long={true}
-            text={"Find A Team"}
-          ></Button>
-          <Button
-            onPress={onFindPlayerPress}
-            long={true}
-            text={"Find A Player"}
-          ></Button>
+          <IconContainer>
+            <TouchableWithoutFeedback onPress={onFindTeamPress}>
+              <Image source={require("../../../assets/icon/teamIcon.png")} />
+            </TouchableWithoutFeedback>
+            <Button onPress={onFindTeamPress} text={"Find A Team"}></Button>
+          </IconContainer>
+          <IconContainer>
+            <TouchableWithoutFeedback onPress={onFindPlayerPress}>
+              <Image source={require("../../../assets/icon/playerIcon.png")} />
+            </TouchableWithoutFeedback>
+            <Button onPress={onFindPlayerPress} text={"Find A Player"}></Button>
+          </IconContainer>
         </Row>
       </Container>
     );
