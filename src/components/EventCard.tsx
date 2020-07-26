@@ -1,9 +1,15 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { Headline } from "react-native-paper";
 import styled from "styled-components/native";
 import RatingChip from "./RatingChip";
 import { formatDate, formatTime } from "../utils/time";
+import { Ionicons } from "@expo/vector-icons";
+import { PRIMARY_COLOR } from "../constants/colors";
+import utils from "../utils/utils";
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
 
 const Border = styled.View`
   border-color: #999;
@@ -29,6 +35,9 @@ const Row = styled.View`
   flex-wrap: wrap;
 `;
 
+const DateRow = styled(Row)`
+  justify-content: flex-start;
+`;
 const Text = styled.Text``;
 
 const EventCard = ({
@@ -42,6 +51,7 @@ const EventCard = ({
   endTime,
   navigation,
 }) => {
+  const isAndroid = utils.isAndroid();
   return (
     <Touchable
       onPress={() => {
@@ -51,46 +61,63 @@ const EventCard = ({
       <Border>
         <InnerUserInfoContainerStyle>
           <Row>
-            <Headline>{name}</Headline>
+            <NameText style={{ textTransform: "capitalize" }}>{name}</NameText>
             <RatingChip
               sportId={sport.sportId}
               name={sport.name}
               onChipPress={() => {}}
             />
           </Row>
-          <Text>
+          <DateRow>
+            <Ionicons
+              name={isAndroid ? "md-person" : "ios-person"}
+              size={24}
+              color={PRIMARY_COLOR}
+              style={{ marginRight: 10 }}
+            />
             <Text>Organized by </Text>
-            <Text style={{ fontWeight: "bold" }}>{owner.name}</Text>
-          </Text>
-          {startDate && (
-            <>
-              <Text>from </Text>
-              <Text style={{ fontWeight: "bold" }}>
-                {formatDate(startDate)}
-              </Text>
-            </>
-          )}
-          {endDate && (
-            <>
-              <Text> to </Text>
-              <Text style={{ fontWeight: "bold" }}>{formatDate(endDate)}</Text>
-            </>
-          )}
-          <Text> | </Text>
-          {startTime && (
-            <>
-              <Text>from </Text>
-              <Text style={{ fontWeight: "bold" }}>
-                {formatTime(startTime)}
-              </Text>
-            </>
-          )}
-          {endTime && (
-            <>
-              <Text> to </Text>
-              <Text style={{ fontWeight: "bold" }}>{formatTime(endTime)}</Text>
-            </>
-          )}
+            <Text>{owner.name}</Text>
+          </DateRow>
+          <DateRow>
+            {startDate && (
+              <>
+                <Ionicons
+                  name={isAndroid ? "md-calendar" : "ios-calendar"}
+                  size={24}
+                  color={PRIMARY_COLOR}
+                  style={{ marginRight: 10 }}
+                />
+                <Text>From </Text>
+                <Text>{formatDate(startDate)}</Text>
+              </>
+            )}
+            {endDate && (
+              <>
+                <Text> To </Text>
+                <Text>{formatDate(endDate)}</Text>
+              </>
+            )}
+          </DateRow>
+          <DateRow>
+            {startTime && (
+              <>
+                <Ionicons
+                  name={isAndroid ? "md-clock" : "ios-clock"}
+                  size={24}
+                  color={PRIMARY_COLOR}
+                  style={{ marginRight: 10 }}
+                />
+                <Text>From </Text>
+                <Text>{formatTime(startTime)}</Text>
+              </>
+            )}
+            {endTime && (
+              <>
+                <Text> To </Text>
+                <Text>{formatTime(endTime)}</Text>
+              </>
+            )}
+          </DateRow>
         </InnerUserInfoContainerStyle>
       </Border>
     </Touchable>

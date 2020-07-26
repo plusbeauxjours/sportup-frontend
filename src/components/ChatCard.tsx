@@ -2,7 +2,7 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import { Avatar } from "react-native-elements";
 import styled from "styled-components/native";
-import { Caption, Subheading, Paragraph } from "react-native-paper";
+import { Subheading, Paragraph } from "react-native-paper";
 
 import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { timeSince } from "../utils/time";
@@ -16,6 +16,12 @@ const TouchableOpacity = styled.TouchableOpacity`
 const RightContainer = styled.View`
   flex: 1;
   padding-left: 8px;
+`;
+
+const Caption = styled.Text`
+  width: 50px;
+  font-size: 10px;
+  color: #999;
 `;
 
 const UpperHalfContainer = styled.View`

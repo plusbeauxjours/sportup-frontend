@@ -10,6 +10,12 @@ import {
 } from "react-navigation-stack";
 import Loader from "../../components/Loader";
 import BackBtn from "../../components/BackBtn";
+import styled from "styled-components/native";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 interface IProps extends NavigationStackScreenProps {
   userId: string;
@@ -28,12 +34,14 @@ const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
   });
   if (!loading) {
     return (
-      <FlatList
-        data={user.teamSet}
-        renderItem={({ item }) => <TeamCard enableMessage {...item} />}
-        keyExtractor={(team) => team.id.toString()}
-        showsVerticalScrollIndicator={false}
-      />
+      <Container>
+        <FlatList
+          data={user.teamSet}
+          renderItem={({ item }) => <TeamCard enableMessage {...item} />}
+          keyExtractor={(team) => team.id.toString()}
+          showsVerticalScrollIndicator={false}
+        />
+      </Container>
     );
   }
   return <Loader />;
