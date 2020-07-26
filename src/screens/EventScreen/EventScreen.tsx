@@ -1,7 +1,8 @@
 import React from "react";
-import { ScrollView, Image, Alert, TouchableOpacity } from "react-native";
-import { Headline, Caption } from "react-native-paper";
+import { Image, Alert } from "react-native";
 import { useQuery } from "react-apollo";
+import styled from "styled-components/native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { MEDIA_URL } from "../../constants/urls";
 import { formatDate, formatTime } from "../../utils/time";
@@ -10,14 +11,43 @@ import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
-import styled from "styled-components/native";
+import { PRIMARY_COLOR } from "../../constants/colors";
+import utils from "../..//utils/utils";
 
 const Container = styled.View`
   flex: 1;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
 `;
 
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #959595;
+`;
+
+const DateRow = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+const DateBox = styled.View`
+  flex-direction: column;
+`;
+
+const WhiteSpace = styled.View`
+  height: 40px;
+`;
+
 const EventScreen = ({ navigation }) => {
+  const isAndroid = utils.isAndroid();
+
   const eventId = navigation.getParam("eventId");
   const {
     data: { getEvent: { event = null } = {} } = {},
@@ -33,100 +63,116 @@ const EventScreen = ({ navigation }) => {
   }
   return (
     <Container>
-      <ScrollView>
-        {event?.coverImg ? (
-          <Image
-            style={{ width: "100%", height: 150 }}
-            source={{ uri: MEDIA_URL + event.coverImg }}
+      <Image
+        style={{
+          position: "absolute",
+          zIndex: -1,
+          top: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        source={{ uri: MEDIA_URL + event.sport.sportImgUrl }}
+        resizeMode="cover"
+      />
+      <NameText style={{ textTransform: "capitalize" }}>{event.name}</NameText>
+      <WhiteSpace />
+      <DateRow>
+        <RatingChip
+          sportId={event.sport.sportId}
+          name={event.sport.name}
+          onPress={() => {}}
+        />
+      </DateRow>
+      <WhiteSpace />
+      <Caption>{event.description}</Caption>
+      <WhiteSpace />
+      <DateBox>
+        <DateRow>
+          <Ionicons
+            name={isAndroid ? "md-person" : "ios-person"}
+            size={16}
+            color={PRIMARY_COLOR}
+            style={{ marginRight: 10 }}
           />
-        ) : null}
-        <Headline>{event.name}</Headline>
-        <RatingChip {...event.sport} onPress={() => {}} />
-        <Caption>{event.description}</Caption>
-        <TouchableOpacity
+          <Caption>Organized by </Caption>
+          <Caption>{event.owner.name}</Caption>
+        </DateRow>
+        <DateRow>
+          {event?.startDate && (
+            <>
+              <Ionicons
+                name={isAndroid ? "md-calendar" : "ios-calendar"}
+                size={16}
+                color={PRIMARY_COLOR}
+                style={{ marginRight: 10 }}
+              />
+              <Caption>From </Caption>
+              <Caption>{formatDate(event.startDate)}</Caption>
+            </>
+          )}
+          {event?.endDate && (
+            <>
+              <Caption> To </Caption>
+              <Caption>{formatDate(event.endDate)}</Caption>
+            </>
+          )}
+        </DateRow>
+        <DateRow>
+          {event?.startTime && (
+            <>
+              <Ionicons
+                name={isAndroid ? "md-clock" : "ios-clock"}
+                size={16}
+                color={PRIMARY_COLOR}
+                style={{ marginRight: 10 }}
+              />
+              <Caption>From </Caption>
+              <Caption>{formatTime(event.startTime)}</Caption>
+            </>
+          )}
+          {event?.endTime && (
+            <>
+              <Caption> To </Caption>
+              <Caption>{formatTime(event.endTime)}</Caption>
+            </>
+          )}
+        </DateRow>
+      </DateBox>
+      <WhiteSpace />
+      <Caption>
+        <Caption style={{ fontWeight: "bold" }}>{event.expectedTeams}</Caption>
+        <Caption> teams exptected.</Caption>
+      </Caption>
+      <Caption>
+        <Caption>Minimum members per team: </Caption>
+        <Caption style={{ fontWeight: "bold" }}>{event.minimumMembers}</Caption>
+      </Caption>
+      <Caption>
+        <Caption>Maximum members per team: </Caption>
+        <Caption style={{ fontWeight: "bold" }}>{event.maximumMembers}</Caption>
+      </Caption>
+      <WhiteSpace />
+      {event.isOwner ? (
+        <Button
           onPress={() => {
-            navigation.navigate("UserProfileScreen", {
-              userId: event.owner.id,
+            navigation.navigate("RegistrationScreen", {
+              eventId: event.id,
             });
           }}
-        >
-          <Caption>
-            <Caption>Organized by{event.owner.name} </Caption>
-            <Caption style={{ fontWeight: "bold" }}>
-              {event?.owner.username}
-            </Caption>
-          </Caption>
-        </TouchableOpacity>
-        {event?.startDate && (
-          <Caption>
-            <Caption>Event dates: from </Caption>
-            <Caption style={{ fontWeight: "bold" }}>
-              {formatDate(event.startDate)}
-            </Caption>
-            {event.endDate && (
-              <React.Fragment>
-                <Caption> to </Caption>
-                <Caption style={{ fontWeight: "bold" }}>
-                  {formatDate(event.endDate)}
-                </Caption>
-              </React.Fragment>
-            )}
-          </Caption>
-        )}
-        {event?.startTime && (
-          <Caption>
-            <Caption>Event day timings: from </Caption>
-            <Caption style={{ fontWeight: "bold" }}>
-              {formatTime(event.startTime)}
-            </Caption>
-            {event.endTime && (
-              <React.Fragment>
-                <Caption> to </Caption>
-                <Caption style={{ fontWeight: "bold" }}>
-                  {formatTime(event.endTime)}
-                </Caption>
-              </React.Fragment>
-            )}
-          </Caption>
-        )}
-        <Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.expectedTeams}
-          </Caption>
-          <Caption> teams exptected.</Caption>
-        </Caption>
-        <Caption>
-          <Caption>Minimum members per team: </Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.minimumMembers}
-          </Caption>
-        </Caption>
-        <Caption>
-          <Caption>Maximum members per team: </Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.maximumMembers}
-          </Caption>
-        </Caption>
-        {event.isOwner ? (
-          <Button
-            onPress={() => {
-              navigation.navigate("RegistrationScreen", { eventId: event.id });
-            }}
-            text={"Manage registrations"}
-          />
-        ) : (
-          <Button
-            onPress={() => {
-              navigation.navigate("RegisterForEventScreen", {
-                eventId: event.id,
-                maximumMembers: event.maximumMembers,
-                minimumMembers: event.minimumMembers,
-              });
-            }}
-            text={"Register team"}
-          />
-        )}
-      </ScrollView>
+          text={"Manage registrations"}
+        />
+      ) : (
+        <Button
+          onPress={() => {
+            navigation.navigate("RegisterForEventScreen", {
+              eventId: event.id,
+              maximumMembers: event.maximumMembers,
+              minimumMembers: event.minimumMembers,
+            });
+          }}
+          text={"Register team"}
+        />
+      )}
     </Container>
   );
 };

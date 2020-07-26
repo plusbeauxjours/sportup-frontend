@@ -25,9 +25,12 @@ const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
+
 const InfoContainer = styled.View`
+  flex: 1;
+  justify-content: center;
   align-items: center;
-  height: 150px;
+  height: 250px;
 `;
 
 const Image = styled.Image`
@@ -35,7 +38,9 @@ const Image = styled.Image`
   height: 150px;
 `;
 
-const Touchable = styled.TouchableOpacity``;
+const Touchable = styled.TouchableOpacity`
+  align-items: center;
+`;
 
 interface IProps {
   coverImg: string;
@@ -57,9 +62,8 @@ const TeamInfoArea: React.FC<IProps> = ({
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
         <Touchable onPress={() => showDialog}>
-          <Headline>
-            {teamName}⭐️{rating}
-          </Headline>
+          <Headline>{teamName}</Headline>
+          <Headline>⭐️{rating}</Headline>
         </Touchable>
         <RatingChip
           sportId={sport.sportId}

@@ -10,6 +10,7 @@ export const GET_EVENT = gql`
         sport {
           sportId
           name
+          sportImgUrl
         }
         coverImg
         startDate

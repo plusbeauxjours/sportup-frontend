@@ -48,7 +48,7 @@ const Row = styled.View`
 const DateRow = styled(Row)`
   justify-content: flex-start;
 `;
-const Text = styled.Text``;
+
 const Caption = styled.Text`
   font-size: 10px;
   color: #999;
@@ -86,9 +86,8 @@ const EventCard = ({ event, navigation }) => {
               <Caption>Organized by </Caption>
               <Caption>{event.owner.name}</Caption>
             </DateRow>
-            {console.log(event)}
             <DateRow>
-              {event.startDate && (
+              {event?.startDate && (
                 <>
                   <Ionicons
                     name={isAndroid ? "md-calendar" : "ios-calendar"}
@@ -100,7 +99,7 @@ const EventCard = ({ event, navigation }) => {
                   <Caption>{formatDate(event.startDate)}</Caption>
                 </>
               )}
-              {event.endDate && (
+              {event?.endDate && (
                 <>
                   <Caption> To </Caption>
                   <Caption>{formatDate(event.endDate)}</Caption>
@@ -108,7 +107,7 @@ const EventCard = ({ event, navigation }) => {
               )}
             </DateRow>
             <DateRow>
-              {event.startTime && (
+              {event?.startTime && (
                 <>
                   <Ionicons
                     name={isAndroid ? "md-clock" : "ios-clock"}
@@ -120,7 +119,7 @@ const EventCard = ({ event, navigation }) => {
                   <Caption>{formatTime(event.startTime)}</Caption>
                 </>
               )}
-              {event.endTime && (
+              {event?.endTime && (
                 <>
                   <Caption> To </Caption>
                   <Caption>{formatTime(event.endTime)}</Caption>
