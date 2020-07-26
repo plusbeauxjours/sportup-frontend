@@ -59,17 +59,7 @@ const SearchScreen = ({ navigation }) => {
     <>
       <SectionTitle>Users</SectionTitle>
       {users && users.length !== 0 ? (
-        users?.map((user, index) => (
-          <Border key={index}>
-            <UserCard
-              userId={user.id}
-              userImg={user.userImg}
-              name={user.name}
-              username={user.username}
-              isFollowing={user.isFollowing}
-            />
-          </Border>
-        ))
+        users?.map((user, index) => <UserCard user={user} />)
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
           &middot;

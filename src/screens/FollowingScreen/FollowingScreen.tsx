@@ -48,13 +48,7 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item }) => (
           <Border>
-            <UserCard
-              userId={item.id}
-              userImg={item.userImg}
-              name={item.name}
-              username={item.username}
-              isFollowing={item.isFollowing}
-            />
+            <UserCard user={item} />
           </Border>
         )}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}

@@ -5,6 +5,7 @@ import { Avatar } from "react-native-elements";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { useMe } from "../context/meContext";
 import FollowBtn from "../components/FollowBtn";
+import PlayerCardBottomSection from "./PlayerCardBottomSection";
 
 const InnerUserInfoContainer = styled.View`
   flex: 1;
@@ -13,19 +14,28 @@ const InnerUserInfoContainer = styled.View`
   align-items: center;
 `;
 
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
+
+const OuterUserInfoContainerStyle = styled.View`
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  align-items: center;
+  padding: 10px;
+`;
+
 const Header = styled.View`
   flex-direction: column;
   margin-left: 15px;
 `;
 
-const TouchableOpacity = styled.TouchableOpacity`
-  flex: 1;
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
-  margin: 10px 0 10px 0;
-  padding: 0 5px 0 5px;
-`;
+const TouchableOpacity = styled.TouchableOpacity``;
 
 const NameText = styled.Text`
   font-size: 18px;
@@ -36,47 +46,44 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-interface IProps {
-  userId?: string;
-  userImg?: string;
-  name: string;
-  username: string;
-  isFollowing?: boolean;
-  navigation;
-}
-
-const UserCard: React.FC<IProps> = ({
-  userId,
-  userImg = null,
-  name,
-  username,
-  isFollowing,
-  navigation,
-}) => {
+const UserCard = ({ user, bottomSection = false, navigation }) => {
   const { me, loading: meLoading } = useMe();
   const onPress = () => {
-    me?.user?.id === userId
+    me?.user?.id === user.id
       ? navigation.navigate("MyProfileScreen")
-      : navigation.navigate("UserProfileScreen", { userId });
+      : navigation.navigate("UserProfileScreen", { userId: user.id });
   };
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Avatar
-        rounded
-        source={{
-          uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
-        }}
-        onPress={onPress}
-      />
-      <InnerUserInfoContainer>
-        <Header>
-          <NameText>{name}</NameText>
-          <Caption>{`@${username}`}</Caption>
-        </Header>
-        {me?.user?.id !== userId && (
-          <FollowBtn isFollowing={isFollowing} userId={userId} />
-        )}
-      </InnerUserInfoContainer>
+    <TouchableOpacity key={user.id} onPress={onPress}>
+      <Border>
+        <OuterUserInfoContainerStyle>
+          <Avatar
+            rounded
+            source={{
+              uri: user.userImg
+                ? MEDIA_URL + user.userImg
+                : NO_AVATAR_THUMBNAIL,
+            }}
+            onPress={onPress}
+          />
+          <InnerUserInfoContainer>
+            <Header>
+              <NameText>{user.name}</NameText>
+              <Caption>{`@${user.username}`}</Caption>
+            </Header>
+            {me?.user?.id !== user.id && (
+              <FollowBtn isFollowing={user.isFollowing} userId={user.id} />
+            )}
+          </InnerUserInfoContainer>
+          {bottomSection && (
+            <PlayerCardBottomSection
+              id={user.id}
+              sports={user.sports}
+              teams={user.teams}
+            />
+          )}
+        </OuterUserInfoContainerStyle>
+      </Border>
     </TouchableOpacity>
   );
 };

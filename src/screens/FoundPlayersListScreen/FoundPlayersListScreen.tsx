@@ -42,17 +42,7 @@ const FoundPlayersListScreen = ({ navigation }) => {
         <FlatList
           data={users}
           renderItem={({ item }: any) => {
-            return (
-              <PlayerCard
-                id={item.id}
-                userImg={item.userImg}
-                name={item.name}
-                username={item.username}
-                isFollowing={item.isFollowing}
-                sports={item.sports}
-                sportIds={sportIds}
-              />
-            );
+            return <PlayerCard user={item} sportIds={sportIds} />;
           }}
           keyExtractor={(player: any) => player.id.toString()}
           showsVerticalScrollIndicator={false}

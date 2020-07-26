@@ -2,7 +2,7 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
-import { get_or_create_chat } from "../constants/firebase";
+// import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
 
 const Border = styled.View`
