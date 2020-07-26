@@ -13,14 +13,22 @@ import {
   NavigationStackScreenProps,
 } from "react-navigation-stack";
 
-interface IProps extends NavigationStackScreenProps {
-  userId: string;
-}
-
 const Container = styled.View`
 flex:1
   background-color: white;
 `;
+
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
+
+interface IProps extends NavigationStackScreenProps {
+  userId: string;
+}
 
 const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
   navigation,
@@ -39,13 +47,15 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <Divider />}
         renderItem={({ item }) => (
-          <UserCard
-            userId={item.id}
-            userImg={item.userImg}
-            name={item.name}
-            username={item.username}
-            isFollowing={item.isFollowing}
-          />
+          <Border>
+            <UserCard
+              userId={item.id}
+              userImg={item.userImg}
+              name={item.name}
+              username={item.username}
+              isFollowing={item.isFollowing}
+            />
+          </Border>
         )}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
       />

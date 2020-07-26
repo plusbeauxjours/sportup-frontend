@@ -8,6 +8,7 @@ export const GET_SEARCH_RESULTS = gql`
         name
         username
         userImg
+        isFollowing
       }
     }
     getSearchTeams(searchText: $searchText) {

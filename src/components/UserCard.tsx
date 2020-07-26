@@ -1,7 +1,6 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
 import styled from "styled-components/native";
-import { Subheading, Caption } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { useMe } from "../context/meContext";
@@ -26,6 +25,15 @@ const TouchableOpacity = styled.TouchableOpacity`
   align-items: center;
   margin: 10px 0 10px 0;
   padding: 0 5px 0 5px;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 interface IProps {
@@ -62,8 +70,8 @@ const UserCard: React.FC<IProps> = ({
       />
       <InnerUserInfoContainer>
         <Header>
-          <Subheading numberOfLines={1}>{name}</Subheading>
-          <Caption numberOfLines={1}>{`@${username}`}</Caption>
+          <NameText>{name}</NameText>
+          <Caption>{`@${username}`}</Caption>
         </Header>
         {me?.user?.id !== userId && (
           <FollowBtn isFollowing={isFollowing} userId={userId} />

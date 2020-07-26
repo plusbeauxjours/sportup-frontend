@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
 import { Appbar, Headline, Divider } from "react-native-paper";
-import { Avatar } from "react-native-elements";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
 
-import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GET_SEARCH_RESULTS } from "./SearchQueries";
 import { useLazyQuery } from "react-apollo";
 import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RatingChip from "../../components/RatingChip";
+import { useMe } from "../../context/meContext";
+import FollowBtn from "../../components/FollowBtn";
+import UserCard from "../../components/UserCard";
 
 const Border = styled.View`
   border-color: #999;
@@ -19,6 +20,12 @@ const Border = styled.View`
   padding: 10px;
   margin: 3px;
 `;
+
+const Header = styled.View`
+  flex-direction: column;
+  margin-left: 15px;
+`;
+
 const SectionTitle = styled.Text`
   text-transform: uppercase;
   margin-left: 10px;
@@ -40,13 +47,20 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const OuterUserInfoContainerStyle = styled.View`
+const OuterUserInfoContainer = styled.View`
   flex-direction: row;
   align-items: center;
   padding: 10px;
 `;
 
-const InnerUserInfoContainerStyle = styled.View`
+const InnerUserInfoContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const InnerInfoContainer = styled.View`
   width: 100%;
   flex-direction: column;
   justify-content: center;
@@ -66,6 +80,7 @@ const Row = styled.View`
 `;
 
 const SearchScreen = ({ navigation }) => {
+  const { me, loading: meLoading } = useMe();
   const [searchText, setSearchText] = useState<string>("");
   const [
     search,
@@ -91,28 +106,14 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Users</SectionTitle>
       {users && users.length !== 0 ? (
         users?.map((user, index) => (
-          <Border>
-            <OuterUserInfoContainerStyle key={index}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.push("UserProfileScreen", { userId: user.id });
-                }}
-              >
-                <Avatar
-                  rounded
-                  source={{
-                    uri: user.userImg
-                      ? MEDIA_URL + user.userImg
-                      : NO_AVATAR_THUMBNAIL,
-                  }}
-                  containerStyle={{ marginLeft: 30, marginRight: 10 }}
-                />
-                <InnerUserInfoContainerStyle>
-                  <NameText>{user.name}</NameText>
-                  <Caption>{`@${user.username}`}</Caption>
-                </InnerUserInfoContainerStyle>
-              </TouchableOpacity>
-            </OuterUserInfoContainerStyle>
+          <Border key={index}>
+            <UserCard
+              userId={user.id}
+              userImg={user.userImg}
+              name={user.name}
+              username={user.username}
+              isFollowing={user.isFollowing}
+            />
           </Border>
         ))
       ) : (
@@ -128,14 +129,14 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Teams</SectionTitle>
       {teams && teams.length !== 0 ? (
         teams?.map((team, index) => (
-          <Border>
-            <OuterUserInfoContainerStyle key={index}>
+          <Border key={index}>
+            <OuterUserInfoContainer>
               <TouchableOpacity
                 onPress={() => {
                   navigation.push("TeamProfileScreen", { teamId: team?.id });
                 }}
               >
-                <InnerUserInfoContainerStyle>
+                <InnerInfoContainer>
                   <Row>
                     <NameText style={{ textTransform: "capitalize" }}>
                       {team?.teamName}
@@ -149,9 +150,9 @@ const SearchScreen = ({ navigation }) => {
                   </Row>
                   {team.rating && <Caption>{`⭐️ ${team?.rating}`}</Caption>}
                   <Caption>{`Created by ${team.createdBy.name} (@${team.createdBy.username})`}</Caption>
-                </InnerUserInfoContainerStyle>
+                </InnerInfoContainer>
               </TouchableOpacity>
-            </OuterUserInfoContainerStyle>
+            </OuterUserInfoContainer>
           </Border>
         ))
       ) : (
@@ -167,14 +168,14 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Events</SectionTitle>
       {events && events.length !== 0 ? (
         events?.map((event, index) => (
-          <Border>
-            <OuterUserInfoContainerStyle key={index}>
+          <Border key={index}>
+            <OuterUserInfoContainer>
               <TouchableOpacity
                 onPress={() => {
                   navigation.push("EventScreen", { eventId: event?.id });
                 }}
               >
-                <InnerUserInfoContainerStyle>
+                <InnerInfoContainer>
                   <Row>
                     <NameText style={{ textTransform: "capitalize" }}>
                       {event?.name}
@@ -186,9 +187,9 @@ const SearchScreen = ({ navigation }) => {
                     />
                   </Row>
                   <Caption>{`Created by ${event?.owner.name} (@${event?.owner.username})`}</Caption>
-                </InnerUserInfoContainerStyle>
+                </InnerInfoContainer>
               </TouchableOpacity>
-            </OuterUserInfoContainerStyle>
+            </OuterUserInfoContainer>
           </Border>
         ))
       ) : (

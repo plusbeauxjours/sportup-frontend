@@ -16,6 +16,14 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
 
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
+
 const View = styled.View`
   align-items: center;
   padding: 5px;
@@ -114,13 +122,15 @@ const TeamProfileScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <UserCard
-              userId={item.id}
-              name={item.name}
-              username={item.username}
-              userImg={item.userImg}
-              isFollowing={item.isFollowing}
-            />
+            <Border>
+              <UserCard
+                userId={item.id}
+                name={item.name}
+                username={item.username}
+                userImg={item.userImg}
+                isFollowing={item.isFollowing}
+              />
+            </Border>
           )}
           ItemSeparatorComponent={() => <Divider />}
           ListHeaderComponent={() => (

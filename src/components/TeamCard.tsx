@@ -106,36 +106,6 @@ const TeamCard: React.FC<IProps> = ({
         </TouchableOpacity>
       </OuterUserInfoContainerStyle>
     </Border>
-
-    // <Card>
-    //   <Card.Content>
-    //     <Container>
-    //       <TouchableOpacity
-    //         onPress={() => {
-    //           navigation.push("TeamProfileScreen", { teamId: id });
-    //         }}
-    //       >
-    //         <NameText numberOfLines={1} style={{ fontWeight: "bold" }}>
-    //           {teamName}
-    //         </NameText>
-    //       </TouchableOpacity>
-    //       {enableMessage && (
-    //         <Button
-    //           icon="message"
-    //           onPress={() => onPress(createdBy)}
-    //           text={"Message"}
-    //         />
-    //       )}
-    //     </Container>
-    //     <View>
-    //       <RatingChip
-    //         sportId={sport.sportId}
-    //         name={sport.name}
-    //         onChipPress={() => {}}
-    //       />
-    //     </View>
-    //   </Card.Content>
-    // </Card>
   );
 };
 

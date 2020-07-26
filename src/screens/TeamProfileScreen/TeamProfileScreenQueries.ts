@@ -15,6 +15,7 @@ export const GET_TEAM = gql`
         }
         sport {
           sportId
+          sportImgUrl
           name
         }
         rating

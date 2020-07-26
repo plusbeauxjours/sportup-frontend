@@ -1038,6 +1038,7 @@ export interface GetSearchResults_getSearchUsers_users {
    */
   username: string;
   userImg: string | null;
+  isFollowing: boolean | null;
 }
 
 export interface GetSearchResults_getSearchUsers {
@@ -1137,6 +1138,7 @@ export interface GetTeam_getTeam_team_createdBy {
 export interface GetTeam_getTeam_team_sport {
   __typename: "SportType";
   sportId: string | null;
+  sportImgUrl: string | null;
   name: string;
 }
 
