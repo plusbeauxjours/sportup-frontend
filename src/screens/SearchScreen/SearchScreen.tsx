@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import {
-  Appbar,
-  Headline,
-  Divider,
-  Subheading,
-  Caption,
-} from "react-native-paper";
+import { Appbar, Headline, Divider } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
@@ -18,9 +12,27 @@ import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RatingChip from "../../components/RatingChip";
 
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
 const SectionTitle = styled.Text`
+  text-transform: uppercase;
+  margin-left: 10px;
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 600;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 const Container = styled.View`
@@ -50,6 +62,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const SearchScreen = ({ navigation }) => {
@@ -78,27 +91,29 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Users</SectionTitle>
       {users && users.length !== 0 ? (
         users?.map((user, index) => (
-          <OuterUserInfoContainerStyle key={index}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push("UserProfileScreen", { userId: user.id });
-              }}
-            >
-              <Avatar
-                rounded
-                source={{
-                  uri: user.userImg
-                    ? MEDIA_URL + user.userImg
-                    : NO_AVATAR_THUMBNAIL,
+          <Border>
+            <OuterUserInfoContainerStyle key={index}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("UserProfileScreen", { userId: user.id });
                 }}
-                containerStyle={{ marginLeft: 30, marginRight: 10 }}
-              />
-              <InnerUserInfoContainerStyle>
-                <Subheading>{user.name}</Subheading>
-                <Caption>{`@${user.username}`}</Caption>
-              </InnerUserInfoContainerStyle>
-            </TouchableOpacity>
-          </OuterUserInfoContainerStyle>
+              >
+                <Avatar
+                  rounded
+                  source={{
+                    uri: user.userImg
+                      ? MEDIA_URL + user.userImg
+                      : NO_AVATAR_THUMBNAIL,
+                  }}
+                  containerStyle={{ marginLeft: 30, marginRight: 10 }}
+                />
+                <InnerUserInfoContainerStyle>
+                  <NameText>{user.name}</NameText>
+                  <Caption>{`@${user.username}`}</Caption>
+                </InnerUserInfoContainerStyle>
+              </TouchableOpacity>
+            </OuterUserInfoContainerStyle>
+          </Border>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
@@ -113,27 +128,31 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Teams</SectionTitle>
       {teams && teams.length !== 0 ? (
         teams?.map((team, index) => (
-          <OuterUserInfoContainerStyle key={index}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push("TeamProfileScreen", { teamId: team?.id });
-              }}
-            >
-              <InnerUserInfoContainerStyle>
-                <Row>
-                  <Subheading style={{ textTransform: "capitalize" }}>
-                    {team?.teamName}
-                  </Subheading>
-                  <RatingChip
-                    sportId={team.sport.sportId}
-                    name={team.sport.name}
-                    onChipPress={() => {}}
-                  />
-                </Row>
-                <Caption>{`Created by ${team?.createdBy.name} (@${team?.createdBy.username})`}</Caption>
-              </InnerUserInfoContainerStyle>
-            </TouchableOpacity>
-          </OuterUserInfoContainerStyle>
+          <Border>
+            <OuterUserInfoContainerStyle key={index}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("TeamProfileScreen", { teamId: team?.id });
+                }}
+              >
+                <InnerUserInfoContainerStyle>
+                  <Row>
+                    <NameText style={{ textTransform: "capitalize" }}>
+                      {team?.teamName}
+                    </NameText>
+                    <RatingChip
+                      sportId={team.sport.sportId}
+                      name={team.sport.name}
+                      onChipPress={() => {}}
+                      disabled={true}
+                    />
+                  </Row>
+                  {team.rating && <Caption>{`⭐️ ${team?.rating}`}</Caption>}
+                  <Caption>{`Created by ${team.createdBy.name} (@${team.createdBy.username})`}</Caption>
+                </InnerUserInfoContainerStyle>
+              </TouchableOpacity>
+            </OuterUserInfoContainerStyle>
+          </Border>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
@@ -148,27 +167,29 @@ const SearchScreen = ({ navigation }) => {
       <SectionTitle>Events</SectionTitle>
       {events && events.length !== 0 ? (
         events?.map((event, index) => (
-          <OuterUserInfoContainerStyle key={index}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push("EventScreen", { eventId: event?.id });
-              }}
-            >
-              <InnerUserInfoContainerStyle>
-                <Row>
-                  <Subheading style={{ textTransform: "capitalize" }}>
-                    {event?.name}
-                  </Subheading>
-                  <RatingChip
-                    sportId={event.sport.sportId}
-                    name={event.sport.name}
-                    onChipPress={() => {}}
-                  />
-                </Row>
-                <Caption>{`Created by ${event?.owner.name} (@${event?.owner.username})`}</Caption>
-              </InnerUserInfoContainerStyle>
-            </TouchableOpacity>
-          </OuterUserInfoContainerStyle>
+          <Border>
+            <OuterUserInfoContainerStyle key={index}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.push("EventScreen", { eventId: event?.id });
+                }}
+              >
+                <InnerUserInfoContainerStyle>
+                  <Row>
+                    <NameText style={{ textTransform: "capitalize" }}>
+                      {event?.name}
+                    </NameText>
+                    <RatingChip
+                      sportId={event.sport.sportId}
+                      name={event.sport.name}
+                      onChipPress={() => {}}
+                    />
+                  </Row>
+                  <Caption>{`Created by ${event?.owner.name} (@${event?.owner.username})`}</Caption>
+                </InnerUserInfoContainerStyle>
+              </TouchableOpacity>
+            </OuterUserInfoContainerStyle>
+          </Border>
         ))
       ) : (
         <Headline style={{ fontWeight: "bold", textAlign: "center" }}>
@@ -197,7 +218,6 @@ const SearchScreen = ({ navigation }) => {
             contentContainerStyle={{
               flexGrow: 1,
               backgroundColor: "#fff",
-              padding: 10,
             }}
             keyboardShouldPersistTaps="handled"
           >

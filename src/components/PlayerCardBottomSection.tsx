@@ -29,6 +29,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const View = styled.View`

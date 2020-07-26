@@ -1,22 +1,52 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { TouchableOpacity } from "react-native";
-import { Title, Card } from "react-native-paper";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
 import { GetUser_getUser_user_sports } from "../types/api";
 import { NavigationStackScreenProps } from "react-navigation-stack";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
-import Button from "./Button";
 
-const Container = styled.View`
+const Border = styled.View`
+  border-color: #999;
+  border-width: 0.2px;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 3px;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
+`;
+
+const OuterUserInfoContainerStyle = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+`;
+
+const InnerUserInfoContainerStyle = styled.View`
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const TouchableOpacity = styled.TouchableOpacity`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Row = styled.View`
   flex-direction: row;
   justify-content: space-between;
-`;
-const View = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
+  align-items: center;
 `;
 
 interface IProps extends NavigationStackScreenProps {
@@ -24,128 +54,89 @@ interface IProps extends NavigationStackScreenProps {
   teamName: string;
   coverImg?: string;
   sport: GetUser_getUser_user_sports;
+  rating?: number;
   enableMessage?: boolean;
+  createdBy?: any;
   navigation;
 }
 
-const TeamCardWithCover: React.FC<IProps> = withNavigation(
-  ({
-    id,
-    rating,
-    teamName,
-    createdBy,
-    coverImg,
-    enableMessage,
-    sport,
-    navigation,
-  }) => {
-    const { me, loading: meLoading } = useMe();
-    const onPress = async (createdBy) => {
-      const new_key_chats = await get_or_create_chat();
-      if (new_key_chats) {
-        navigation.push("ChatScreen", {
-          chatId: new_key_chats,
-          senderUserId: me?.user.id,
-          senderUsername: me?.user.username,
-          senderPushToken: me?.user.pushToken,
-          receiverUserId: createdBy.id,
-          receiverUsername: createdBy.username,
-          receiverPushToken: createdBy.pushToken,
-        });
-      }
-    };
-    return (
-      <Card>
-        {coverImg && <Card.Cover source={{ uri: coverImg }} />}
-        <Card.Content>
-          <Container>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push("TeamProfileScreen", { id });
-              }}
-            >
-              <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
+const TeamCard: React.FC<IProps> = ({
+  id,
+  teamName,
+  createdBy,
+  rating,
+  enableMessage,
+  sport,
+  navigation,
+}) => {
+  const { me, loading: meLoading } = useMe();
+  const onPress = async (createdBy) => {
+    const new_key_chats = await get_or_create_chat();
+    if (new_key_chats) {
+      navigation.push("ChatScreen", {
+        chatId: new_key_chats,
+        senderUserId: me?.user.id,
+        senderUsername: me?.user.username,
+        senderPushToken: me?.user.pushToken,
+        receiverUserId: createdBy.id,
+        receiverUsername: createdBy.username,
+        receiverPushToken: createdBy.pushToken,
+      });
+    }
+  };
+  return (
+    <Border>
+      <OuterUserInfoContainerStyle key={id}>
+        <TouchableOpacity onPress={onPress}>
+          <InnerUserInfoContainerStyle>
+            <Row>
+              <NameText style={{ textTransform: "capitalize" }}>
                 {teamName}
-              </Title>
-            </TouchableOpacity>
-            {enableMessage && (
-              <Button
-                icon="message"
-                onPress={() => onPress(createdBy)}
-                text={"Message"}
+              </NameText>
+              <RatingChip
+                sportId={sport.sportId}
+                name={sport.name}
+                onChipPress={() => {}}
+                disabled={true}
               />
-            )}
-          </Container>
-          <RatingChip
-            sportId={sport.sportId}
-            name={sport.name}
-            onChipPress={() => {}}
-          />
-        </Card.Content>
-      </Card>
-    );
-  }
-);
+            </Row>
+            {rating && <Caption>{`⭐️ ${rating}`}</Caption>}
+            <Caption>{`Created by ${createdBy.name} (@${createdBy.username})`}</Caption>
+          </InnerUserInfoContainerStyle>
+        </TouchableOpacity>
+      </OuterUserInfoContainerStyle>
+    </Border>
 
-const TeamCardWithoutCover: React.FC<IProps> = withNavigation(
-  ({ id, rating, teamName, createdBy, enableMessage, sport, navigation }) => {
-    const { me, loading: meLoading } = useMe();
-    const onPress = async (createdBy) => {
-      const new_key_chats = await get_or_create_chat();
-      if (new_key_chats) {
-        navigation.push("ChatScreen", {
-          chatId: new_key_chats,
-          senderUserId: me?.user.id,
-          senderUsername: me?.user.username,
-          senderPushToken: me?.user.pushToken,
-          receiverUserId: createdBy.id,
-          receiverUsername: createdBy.username,
-          receiverPushToken: createdBy.pushToken,
-        });
-      }
-    };
-    return (
-      <Card>
-        <Card.Content>
-          <Container>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.push("TeamProfileScreen", { teamId: id });
-              }}
-            >
-              <Title>{id}</Title>
-
-              <Title numberOfLines={1} style={{ fontWeight: "bold" }}>
-                {teamName}
-              </Title>
-            </TouchableOpacity>
-            {enableMessage && (
-              <Button
-                icon="message"
-                onPress={() => onPress(createdBy)}
-                text={"Message"}
-              />
-            )}
-          </Container>
-          <View>
-            <RatingChip
-              sportId={sport.sportId}
-              name={sport.name}
-              onChipPress={() => {}}
-            />
-          </View>
-        </Card.Content>
-      </Card>
-    );
-  }
-);
-
-const TeamCard = (props) => {
-  return props.coverImg ? (
-    <TeamCardWithCover {...props} />
-  ) : (
-    <TeamCardWithoutCover {...props} />
+    // <Card>
+    //   <Card.Content>
+    //     <Container>
+    //       <TouchableOpacity
+    //         onPress={() => {
+    //           navigation.push("TeamProfileScreen", { teamId: id });
+    //         }}
+    //       >
+    //         <NameText numberOfLines={1} style={{ fontWeight: "bold" }}>
+    //           {teamName}
+    //         </NameText>
+    //       </TouchableOpacity>
+    //       {enableMessage && (
+    //         <Button
+    //           icon="message"
+    //           onPress={() => onPress(createdBy)}
+    //           text={"Message"}
+    //         />
+    //       )}
+    //     </Container>
+    //     <View>
+    //       <RatingChip
+    //         sportId={sport.sportId}
+    //         name={sport.name}
+    //         onChipPress={() => {}}
+    //       />
+    //     </View>
+    //   </Card.Content>
+    // </Card>
   );
 };
 
-export default TeamCard;
+export default withNavigation(TeamCard);

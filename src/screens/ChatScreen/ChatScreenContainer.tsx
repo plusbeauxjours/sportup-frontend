@@ -32,6 +32,7 @@ import {
   update_message_info,
 } from "../../constants/firebase";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
+import BackBtn from "../../components/BackBtn";
 
 const ChatContainer = ({ navigation }) => {
   const chatId = navigation.getParam("chatId");
@@ -415,6 +416,11 @@ const ChatContainer = ({ navigation }) => {
       mapLoading={mapLoading}
     />
   );
+};
+ChatContainer.navigationOptions = {
+  title: "Chat",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
 };
 
 export default withNavigation(ChatContainer);

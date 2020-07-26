@@ -19,6 +19,7 @@ const Container = styled.View`
 const Row = styled.View`
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 `;
 

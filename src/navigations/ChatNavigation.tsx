@@ -1,5 +1,4 @@
 import { createStackNavigator } from "react-navigation-stack";
-import { PRIMARY_COLOR } from "../constants/colors";
 import ChatListScreen from "../screens/ChatListScreen";
 import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
 import ChatScreen from "../screens/ChatScreen";
