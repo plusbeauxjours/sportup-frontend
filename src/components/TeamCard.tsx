@@ -2,8 +2,6 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
-import { GetUser_getUser_user_sports } from "../types/api";
-import { NavigationStackScreenProps } from "react-navigation-stack";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
 
@@ -25,7 +23,9 @@ const Caption = styled.Text`
 `;
 
 const OuterUserInfoContainerStyle = styled.View`
+  width: 100%;
   flex-direction: row;
+  align-items: center;
   align-items: center;
   padding: 10px;
 `;
@@ -36,12 +36,7 @@ const InnerUserInfoContainerStyle = styled.View`
   justify-content: center;
 `;
 
-const TouchableOpacity = styled.TouchableOpacity`
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
+const TouchableOpacity = styled.TouchableOpacity``;
 
 const Row = styled.View`
   flex-direction: row;
@@ -49,63 +44,47 @@ const Row = styled.View`
   align-items: center;
 `;
 
-interface IProps extends NavigationStackScreenProps {
-  id: string;
-  teamName: string;
-  coverImg?: string;
-  sport: GetUser_getUser_user_sports;
-  rating?: number;
-  enableMessage?: boolean;
-  createdBy?: any;
-  navigation;
-}
-
-const TeamCard: React.FC<IProps> = ({
-  id,
-  teamName,
-  createdBy,
-  rating,
-  enableMessage,
-  sport,
-  navigation,
-}) => {
+const TeamCard = ({ team, navigation }) => {
   const { me, loading: meLoading } = useMe();
-  const onPress = async (createdBy) => {
-    const new_key_chats = await get_or_create_chat();
-    if (new_key_chats) {
-      navigation.push("ChatScreen", {
-        chatId: new_key_chats,
-        senderUserId: me?.user.id,
-        senderUsername: me?.user.username,
-        senderPushToken: me?.user.pushToken,
-        receiverUserId: createdBy.id,
-        receiverUsername: createdBy.username,
-        receiverPushToken: createdBy.pushToken,
-      });
-    }
+  // const onPress = async (createdBy) => {
+  //   const new_key_chats = await get_or_create_chat();
+  //   if (new_key_chats) {
+  //     navigation.push("ChatScreen", {
+  //       chatId: new_key_chats,
+  //       senderUserId: me?.user.id,
+  //       senderUsername: me?.user.username,
+  //       senderPushToken: me?.user.pushToken,
+  //       receiverUserId: createdBy.id,
+  //       receiverUsername: createdBy.username,
+  //       receiverPushToken: createdBy.pushToken,
+  //     });
+  //   }
+  // };
+  const onPress = () => {
+    navigation.push("TeamProfileScreen", { teamId: team?.id });
   };
   return (
-    <Border>
-      <OuterUserInfoContainerStyle key={id}>
-        <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <Border key={team?.id}>
+        <OuterUserInfoContainerStyle>
           <InnerUserInfoContainerStyle>
             <Row>
               <NameText style={{ textTransform: "capitalize" }}>
-                {teamName}
+                {team?.teamName}
               </NameText>
               <RatingChip
-                sportId={sport.sportId}
-                name={sport.name}
+                sportId={team?.sport.sportId}
+                name={team?.sport.name}
                 onChipPress={() => {}}
                 disabled={true}
               />
             </Row>
-            {rating && <Caption>{`⭐️ ${rating}`}</Caption>}
-            <Caption>{`Created by ${createdBy.name} (@${createdBy.username})`}</Caption>
+            {team?.rating && <Caption>{`⭐️ ${team?.rating}`}</Caption>}
+            <Caption>{`Created by ${team?.createdBy.name} (@${team?.createdBy.username})`}</Caption>
           </InnerUserInfoContainerStyle>
-        </TouchableOpacity>
-      </OuterUserInfoContainerStyle>
-    </Border>
+        </OuterUserInfoContainerStyle>
+      </Border>
+    </TouchableOpacity>
   );
 };
 

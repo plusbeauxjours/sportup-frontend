@@ -41,6 +41,10 @@ export const GET_SEARCH_RESULTS = gql`
           name
           username
         }
+        startDate
+        endDate
+        startTime
+        endTime
       }
     }
   }

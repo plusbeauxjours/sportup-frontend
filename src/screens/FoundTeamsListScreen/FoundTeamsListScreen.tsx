@@ -36,7 +36,7 @@ const FoundTeamsListScreen = ({ navigation }) => {
       <Container>
         <FlatList
           data={teams}
-          renderItem={({ item }) => <TeamCard enableMessage {...item} />}
+          renderItem={({ item }) => <TeamCard enableMessage team={item} />}
           keyExtractor={(teams: any) => teams.id.toString()}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() =>

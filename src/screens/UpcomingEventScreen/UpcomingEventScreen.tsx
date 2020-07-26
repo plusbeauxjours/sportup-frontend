@@ -51,18 +51,7 @@ const UpcomingEvents = ({ navigation }) => {
           getUpcomingEve1ntsRefetch({ pageNum: 1 });
         }}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
-        renderItem={({ item, index }: any) => (
-          <EventCard
-            id={item.id}
-            name={item.name}
-            sport={item.sport}
-            owner={item.owner}
-            startDate={item.startDate}
-            endDate={item.endDate}
-            startTime={item.startTime}
-            endTime={item.endTime}
-          />
-        )}
+        renderItem={({ item, index }: any) => <EventCard event={item} />}
         onEndReached={() => {
           if (!loading && hasNextPage) {
             getUpcomingEventsFetchMore({
