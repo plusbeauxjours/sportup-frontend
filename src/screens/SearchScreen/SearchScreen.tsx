@@ -114,6 +114,7 @@ const SearchScreen = ({ navigation }) => {
               flexGrow: 1,
               backgroundColor: "#fff",
             }}
+            showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
             <RenderUser />

@@ -150,6 +150,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
       <Container>
         <KeyboardAwareScrollView
           contentContainerStyle={{ flexGrow: 1, backgroundColor: "#fff" }}
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <Formik

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { FlatList } from "react-native";
-import { Headline, Divider } from "react-native-paper";
+import { FlatList, StyleSheet } from "react-native";
+import { BlurView } from "expo-blur";
+import { Divider } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
 import { GetTeam, GetTeamVariables } from "../../types/api";
@@ -35,6 +36,7 @@ const InfoContainer = styled.View`
   justify-content: center;
   align-items: center;
   height: 250px;
+  margin-top: 100px;
 `;
 
 const Image = styled.Image`
@@ -44,6 +46,10 @@ const Image = styled.Image`
 
 const Touchable = styled.TouchableOpacity`
   align-items: center;
+`;
+
+const WhiteSpace = styled.View`
+  height: 40px;
 `;
 
 interface IProps {
@@ -69,10 +75,16 @@ const TeamInfoArea: React.FC<IProps> = ({
           <NameText style={{ textTransform: "capitalize" }}>
             {teamName}
           </NameText>
-          <NameText style={{ textTransform: "capitalize" }}>
-            ⭐️{rating}
-          </NameText>
+          {rating && (
+            <>
+              <WhiteSpace />
+              <NameText style={{ textTransform: "capitalize" }}>
+                ⭐️{rating}
+              </NameText>
+            </>
+          )}
         </Touchable>
+        <WhiteSpace />
         <RatingChip
           sportId={sport.sportId}
           name={sport.name}
@@ -121,40 +133,58 @@ const TeamProfileScreen = ({ navigation }) => {
   } else {
     return (
       <Container>
-        <FlatList
-          data={team.members}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <UserCard user={item} />}
-          ItemSeparatorComponent={() => <Divider />}
-          ListHeaderComponent={() => (
-            <TeamInfoArea
-              coverImg={team.coverImg}
-              teamName={team.teamName}
-              sport={team.sport}
-              showDialog={showDialog}
-              rating={team.rating}
-            />
-          )}
-          ListFooterComponent={
-            team.isAdmin && (
-              <Button
-                disabled={loading || rateTeamLoading}
-                onPress={() => {
-                  navigation.navigate("EditTeamProfileScreen", { team });
-                }}
-                text={"Edit team"}
+        <BlurView intensity={80} tint="light" style={StyleSheet.absoluteFill}>
+          <Image
+            style={{
+              position: "absolute",
+              zIndex: -1,
+              top: 0,
+              width: "100%",
+              height: "100%",
+            }}
+            source={require("../../../assets/roomDefault.jpeg")}
+            // source={{ uri: MEDIA_URL + event.sport.sportImgUrl }}
+            resizeMode="cover"
+          />
+          <FlatList
+            data={team.members}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <>
+                <UserCard user={item} />
+              </>
+            )}
+            ItemSeparatorComponent={() => <Divider />}
+            ListHeaderComponent={() => (
+              <TeamInfoArea
+                coverImg={team.coverImg}
+                teamName={team.teamName}
+                sport={team.sport}
+                showDialog={showDialog}
+                rating={team.rating}
               />
-            )
-          }
-        />
-        <RatingDialog
-          visible={dialogVisible}
-          rating={rating}
-          onStarRatingPress={onStarRatingPress}
-          close={closeDialog}
-          onSubmit={onSubmit}
-        />
+            )}
+            ListFooterComponent={
+              team.isAdmin && (
+                <Button
+                  disabled={loading || rateTeamLoading}
+                  onPress={() => {
+                    navigation.navigate("EditTeamProfileScreen", { team });
+                  }}
+                  text={"Edit team"}
+                />
+              )
+            }
+          />
+          <RatingDialog
+            visible={dialogVisible}
+            rating={rating}
+            onStarRatingPress={onStarRatingPress}
+            close={closeDialog}
+            onSubmit={onSubmit}
+          />
+        </BlurView>
       </Container>
     );
   }
@@ -163,6 +193,10 @@ TeamProfileScreen.navigationOptions = {
   title: "Team Profile",
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
+  headerTransparent: true,
+  headerBackground: () => (
+    <BlurView intensity={70} tint="light" style={StyleSheet.absoluteFill} />
+  ),
 };
 
 export default TeamProfileScreen;

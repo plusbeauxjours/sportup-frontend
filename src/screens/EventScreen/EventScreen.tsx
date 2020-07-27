@@ -194,6 +194,7 @@ const EventScreen = ({ navigation }) => {
               });
             }}
             text={"Register team"}
+            long={true}
           />
         )}
       </ContextContainer>

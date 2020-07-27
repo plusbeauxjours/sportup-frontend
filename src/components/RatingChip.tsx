@@ -7,7 +7,7 @@ const Touchable = styled.TouchableOpacity<ITheme>`
   margin: 2px;
   padding: 5px 10px;
   background-color: ${(props) =>
-    props.selected ? PRIMARY_COLOR : "transparent"};
+    props.selected ? PRIMARY_COLOR : "rgba(255, 255, 255, 0.5)"};
   border-width: 0.3px;
   border-color: ${(props) => (props.selected ? PRIMARY_COLOR : "grey")};
   flex-wrap: wrap;

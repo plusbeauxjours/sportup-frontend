@@ -20,6 +20,7 @@ const Border = styled.View`
   border-radius: 20px;
   padding: 10px;
   margin: 3px;
+  background-color: rgba(255, 255, 255, 0.5);
 `;
 
 const OuterUserInfoContainerStyle = styled.View`

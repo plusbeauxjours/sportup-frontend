@@ -9,6 +9,7 @@ const AddIcon = styled.Text`
   color: white;
   padding-bottom: 3px;
 `;
+
 const IconContainer = styled.TouchableOpacity`
   position: absolute;
   bottom: 50px;
@@ -27,7 +28,7 @@ interface IProps {
 }
 const AddBtn: React.FC<IProps> = ({ onPress }) => {
   return (
-    <IconContainer onPress={onPress}>
+    <IconContainer onPress={onPress} activeOpacity={1}>
       <AddIcon>+</AddIcon>
     </IconContainer>
   );

@@ -101,6 +101,7 @@ const EditTeamProfileScreen = ({ navigation }) => {
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flexGrow: 1, backgroundColor: "#fff" }}
+      showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
       <React.Fragment>

@@ -5,25 +5,25 @@ export const CREATE_EVENT = gql`
     $name: String!
     $description: String
     $sportId: String!
-    $maximumMembers: Int!
-    $minimumMembers: Int!
-    $expectedTeams: Int
     $startDate: Date
     $endDate: Date
     $startTime: Time
     $endTime: Time
+    $maximumMembers: Int!
+    $minimumMembers: Int!
+    $expectedTeams: Int
   ) {
     createEvent(
       name: $name
       description: $description
       sportId: $sportId
-      maximumMembers: $maximumMembers
-      minimumMembers: $minimumMembers
-      expectedTeams: $expectedTeams
       startDate: $startDate
       endDate: $endDate
       startTime: $startTime
       endTime: $endTime
+      maximumMembers: $maximumMembers
+      minimumMembers: $minimumMembers
+      expectedTeams: $expectedTeams
     ) {
       event {
         id

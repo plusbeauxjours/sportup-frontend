@@ -95,6 +95,7 @@ const EditProfileScreen = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "center",
           }}
+          showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
         >
           <Formik

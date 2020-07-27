@@ -20,6 +20,7 @@ export default ({
         width: long ? 240 : 140,
         margin: 10,
         justifyContent: "space-between",
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
       }}
       labelStyle={{
         color: disabled ? "gray" : PRIMARY_COLOR,

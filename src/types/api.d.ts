@@ -334,13 +334,13 @@ export interface CreateEventVariables {
   name: string;
   description?: string | null;
   sportId: string;
-  maximumMembers: number;
-  minimumMembers: number;
-  expectedTeams?: number | null;
   startDate?: any | null;
   endDate?: any | null;
   startTime?: any | null;
   endTime?: any | null;
+  maximumMembers: number;
+  minimumMembers: number;
+  expectedTeams?: number | null;
 }
 
 /* tslint:disable */
@@ -531,6 +531,7 @@ export interface GetEvent_getEvent_event_sport {
   __typename: "SportType";
   sportId: string | null;
   name: string;
+  sportImgUrl: string | null;
 }
 
 export interface GetEvent_getEvent_event_owner {
@@ -1099,6 +1100,10 @@ export interface GetSearchResults_getSearchEvents_events {
   name: string;
   sport: GetSearchResults_getSearchEvents_events_sport;
   owner: GetSearchResults_getSearchEvents_events_owner;
+  startDate: any | null;
+  endDate: any | null;
+  startTime: any | null;
+  endTime: any | null;
 }
 
 export interface GetSearchResults_getSearchEvents {
@@ -1281,7 +1286,6 @@ export interface GetUpcomingEvents_getUpcomingEvents_events {
   __typename: "EventType";
   id: string;
   name: string;
-  coverImg: string | null;
   sport: GetUpcomingEvents_getUpcomingEvents_events_sport;
   owner: GetUpcomingEvents_getUpcomingEvents_events_owner;
   startDate: any | null;
