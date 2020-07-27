@@ -75,14 +75,14 @@ const UserCard = ({ user, bottomSection = false, navigation }) => {
               <FollowBtn isFollowing={user.isFollowing} userId={user.id} />
             )}
           </InnerUserInfoContainer>
-          {bottomSection && (
-            <PlayerCardBottomSection
-              id={user.id}
-              sports={user.sports}
-              teams={user.teams}
-            />
-          )}
         </OuterUserInfoContainerStyle>
+        {bottomSection && (
+          <PlayerCardBottomSection
+            id={user.id}
+            sports={user.sports}
+            teams={user.teams}
+          />
+        )}
       </Border>
     </TouchableOpacity>
   );

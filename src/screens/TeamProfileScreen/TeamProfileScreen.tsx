@@ -26,6 +26,10 @@ const Container = styled.View`
   background-color: white;
 `;
 
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
 const InfoContainer = styled.View`
   flex: 1;
   justify-content: center;
@@ -62,8 +66,12 @@ const TeamInfoArea: React.FC<IProps> = ({
       {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
         <Touchable onPress={() => showDialog}>
-          <Headline>{teamName}</Headline>
-          <Headline>⭐️{rating}</Headline>
+          <NameText style={{ textTransform: "capitalize" }}>
+            {teamName}
+          </NameText>
+          <NameText style={{ textTransform: "capitalize" }}>
+            ⭐️{rating}
+          </NameText>
         </Touchable>
         <RatingChip
           sportId={sport.sportId}

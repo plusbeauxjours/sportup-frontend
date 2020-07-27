@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
-import { Headline } from "react-native-paper";
+import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
 
@@ -12,11 +11,8 @@ import ListFooterComponent from "../../components/ListFooterComponent";
 import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
+  flex: 1;
   background-color: white;
-`;
-
-const WhiteSpace = styled.View`
-  height: 50px;
 `;
 
 const FoundPlayersListScreen = ({ navigation }) => {
@@ -46,21 +42,6 @@ const FoundPlayersListScreen = ({ navigation }) => {
           }}
           keyExtractor={(player: any) => player.id.toString()}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() =>
-            !getUsersForGameLoading ? (
-              <View
-                style={{
-                  padding: 20,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
-              </View>
-            ) : (
-              <ActivityIndicator size="small" />
-            )
-          }
           refreshing={networkStatus === 4}
           onRefresh={() => {
             getUsersForGameRefetch({ sportIds, pageNum: 1 });

@@ -74,6 +74,7 @@ const EventCard = ({ event, navigation }) => {
                 sportId={event.sport.sportId}
                 name={event.sport.name}
                 onChipPress={() => {}}
+                disabled={true}
               />
             </Row>
             <DateRow>

@@ -11,6 +11,7 @@ import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
 
 const Container = styled.View`
+  flex: 1;
   background-color: white;
 `;
 
@@ -39,21 +40,6 @@ const FoundTeamsListScreen = ({ navigation }) => {
           renderItem={({ item }) => <TeamCard enableMessage team={item} />}
           keyExtractor={(teams: any) => teams.id.toString()}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() =>
-            !loading ? (
-              <View
-                style={{
-                  padding: 20,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Headline style={{ fontWeight: "bold" }}>&middot;</Headline>
-              </View>
-            ) : (
-              <ActivityIndicator size="small" />
-            )
-          }
           refreshing={networkStatus === 4}
           onRefresh={() => {
             getTeamsForGameRefetch({ sportIds, pageNum: 1 });
