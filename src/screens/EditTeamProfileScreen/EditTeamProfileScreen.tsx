@@ -1,61 +1,99 @@
-import React, { useState } from "react";
-import { useMutation } from "react-apollo";
+import React, { useState, useEffect } from "react";
+import { useMutation, useLazyQuery, ApolloConsumer } from "react-apollo";
 import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
-import { ListItem } from "react-native-elements";
+import { Avatar } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Subheading, TextInput } from "react-native-paper";
+import { Subheading, TextInput, Caption, Divider } from "react-native-paper";
 import styled from "styled-components/native";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-import {
-  UpdateTeam,
-  UpdateTeamVariables,
-  GetUserFromUsername,
-  GetUserFromUsernameVariables,
-} from "../../types/api";
+import { UpdateTeam, UpdateTeamVariables } from "../../types/api";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GET_USER_FROM_USERNAME } from "../CreateTeamScreen/CreateTeamScreenQueries";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import { GET_TEAM } from "../TeamProfileScreen/TeamProfileScreenQueries";
 import { UPDATE_TEAM } from "./EditTeamProfileScreenQueries";
-import { GetAllSports, GetTeam, GetTeamVariables } from "../../types/api";
+import {
+  GetAllSports,
+  GetTeam,
+  GetTeamVariables,
+  GetSearchResults,
+  GetSearchResultsVariables,
+} from "../../types/api";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
+import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
+import Loader from "../../components/Loader";
+import { DARK_ORANGE } from "../../constants/colors";
+import FormikInput from "../../components/Formik/FormikInput";
+import FormikPicker from "../../components/Formik/FormikPicker";
 
-const PickerContainer = styled.View`
-  padding: 0 20px;
+const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
+`;
+const InnerUserInfoContainerStyle = styled.View`
+  justify-content: center;
+  padding: 0 10px 0 10px;
+`;
+const TouchableOpacity = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
 `;
 
-const EditTeamProfileScreen = ({ navigation }) => {
+const WhiteSpace = styled.View`
+  height: 40px;
+`;
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
+
+const TextInputContainer = styled.View`
+  width: 90%;
+  align-self: center;
+`;
+
+const ButtonContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+`;
+
+const EditTeamProfileScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const team = navigation.getParam("team");
-  const [teamName, setTeamName] = useState<string>(team?.teamName || "");
-  const [sportId, setSportId] = useState<string>(team?.sport?.sportId || "1");
-  const [membersList, setMembersList] = useState<any>(team?.members || []);
-  const [addUser, setAddUser] = useState<string>("");
-  const {
-    data: { getUserFromUsername: { user = null } = {} } = {},
-    loading: getUserFromUsernameLoading,
-  } = useQuery<GetUserFromUsername, GetUserFromUsernameVariables>(
-    GET_USER_FROM_USERNAME,
-    { variables: { username: addUser.trim() } }
+  const [userLoading, setUserLoading] = useState<boolean>(false);
+  const [membersList, setMembersList] = useState<any>(team.members);
+  const [searchText, setSearchText] = useState<string>("");
+  const [
+    search,
+    { data: { getSearchUsers: { users = null } = {} } = {}, loading },
+  ] = useLazyQuery<GetSearchResults, GetSearchResultsVariables>(
+    GET_SEARCH_RESULTS,
+    { variables: { searchText } }
   );
+
+  const validationSchema = Yup.object().shape({
+    teamName: Yup.string().required("Team name is required"),
+  });
+
   const {
     data: { getAllSports: { sports = null } = {} } = {},
     loading: getAllSportsLoading,
   } = useQuery<GetAllSports>(GET_ALL_SPORTS);
+
   const [updateTeamFn, { loading: updateTeamLoading }] = useMutation<
     UpdateTeam,
     UpdateTeamVariables
   >(UPDATE_TEAM, {
-    variables: {
-      teamId: team.id,
-      teamName,
-      sportId,
-      memberIds: membersList.map(({ id }) => parseInt(id, 10)),
-    },
     update(cache, { data: { updateTeam } }) {
       try {
         const data = cache.readQuery<GetTeam, GetTeamVariables>({
@@ -90,90 +128,177 @@ const EditTeamProfileScreen = ({ navigation }) => {
     setMembersList([...membersList, user]);
   };
 
-  const onAddPress = async () => {
-    onUserFetched(user);
+  const onAddPress = async (client, username) => {
+    setUserLoading(true);
+    try {
+      const { data } = await client.query({
+        query: GET_USER_FROM_USERNAME,
+        variables: { username: username.trim() },
+      });
+      onUserFetched(data.getUserFromUsername.user);
+    } catch (e) {
+      console.log(e);
+    }
+    setUserLoading(false);
   };
 
-  const removeMember = (index) => {
-    setMembersList(membersList.filter((_, idx) => idx !== index));
+  const removeMember = (id) => {
+    setMembersList((membersList) =>
+      membersList.filter((member) => member.id !== id)
+    );
   };
+  useEffect(() => {
+    search();
+  }, [searchText]);
 
-  return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1, backgroundColor: "#fff" }}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled"
-    >
-      <React.Fragment>
-        <TextInput
-          label="Team name"
-          value={teamName}
-          onChangeText={(teamName) => {
-            setTeamName(teamName);
-          }}
-          style={{ width: "90%", alignSelf: "center" }}
-        />
-        <PickerContainer>
-          <Subheading style={{ fontWeight: "bold" }}>Sport</Subheading>
-          <Picker
-            selectedValue={sportId}
-            style={{ width: 200 }}
-            onValueChange={(value) => {
-              setSportId(value);
+  if (getAllSportsLoading) {
+    return <Loader />;
+  } else {
+    return (
+      <Container>
+        <KeyboardAwareScrollView
+          contentContainerStyle={{ flexGrow: 1, backgroundColor: "#fff" }}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Formik
+            initialValues={{
+              teamName: team.teamName,
+              username: "",
+              sportId: team.sport.sportId,
             }}
+            onSubmit={() => {}}
+            validationSchema={validationSchema}
           >
-            {sports?.map(({ sportId, name }) => (
-              <Picker.Item key={sportId} label={name} value={sportId} />
-            ))}
-          </Picker>
-        </PickerContainer>
-        <TextInput
-          label="Add member"
-          placeholder="Enter username..."
-          autoCapitalize="none"
-          value={addUser}
-          onChangeText={(username) => setAddUser(username)}
-          style={{ width: "90%", alignSelf: "center" }}
-        />
-        <Button
-          loading={getUserFromUsernameLoading}
-          disabled={getUserFromUsernameLoading || !addUser}
-          onPress={() => {
-            onAddPress();
-          }}
-          text={"Add"}
-        />
-        {membersList.map(({ id, userImg, name, username }, index) => (
-          <ListItem
-            key={id}
-            leftAvatar={{
-              rounded: true,
-              source: {
-                uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
-              },
-            }}
-            title={name}
-            subtitle={username}
-            rightIcon={{ name: "cancel" }}
-            onPress={() => {
-              removeMember(index);
-            }}
-          />
-        ))}
-        <Button
-          loading={updateTeamLoading}
-          disabled={
-            getUserFromUsernameLoading || !teamName || updateTeamLoading
-          }
-          onPress={() => {
-            updateTeamFn();
-            navigation.goBack();
-          }}
-          text={"Save"}
-        />
-      </React.Fragment>
-    </KeyboardAwareScrollView>
-  );
+            {({
+              values,
+              setFieldValue,
+              setFieldTouched,
+              touched,
+              errors,
+              isValid,
+            }) => (
+              <React.Fragment>
+                <WhiteSpace />
+                <FormikInput
+                  label="Team name"
+                  value={values.teamName}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="teamName"
+                  autoCapitalize="none"
+                  error={touched.teamName && errors.teamName}
+                />
+                <FormikPicker
+                  label="Team sport:"
+                  selectedValue={values.sportId}
+                  onChange={setFieldValue}
+                  name="sportId"
+                >
+                  {sports.map(({ sportId, name }) => (
+                    <Picker.Item key={sportId} label={name} value={sportId} />
+                  ))}
+                </FormikPicker>
+                {membersList.map(({ id, userImg, name, username }, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      removeMember(id);
+                    }}
+                  >
+                    <OuterUserInfoContainerStyle>
+                      <Avatar
+                        rounded
+                        source={{
+                          uri: userImg
+                            ? MEDIA_URL + userImg
+                            : NO_AVATAR_THUMBNAIL,
+                        }}
+                      />
+                      <InnerUserInfoContainerStyle>
+                        <Subheading>{name}</Subheading>
+                        <Caption>{`@${username}`}</Caption>
+                      </InnerUserInfoContainerStyle>
+                    </OuterUserInfoContainerStyle>
+                  </TouchableOpacity>
+                ))}
+                <ButtonContainer>
+                  <Button
+                    loading={updateTeamLoading}
+                    disabled={
+                      !isValid ||
+                      userLoading ||
+                      !values.teamName ||
+                      updateTeamLoading
+                    }
+                    onPress={() => {
+                      updateTeamFn({
+                        variables: {
+                          teamId: team.id,
+                          teamName: values.teamName,
+                          sportId: values.sportId,
+                          memberIds: membersList.map(({ id }) => id),
+                        },
+                      });
+                      navigation.navigate("MyProfileScreen");
+                    }}
+                    text={"Save"}
+                  />
+                </ButtonContainer>
+                <WhiteSpace />
+                <Divider />
+                <WhiteSpace />
+                <TextInputContainer>
+                  <TextInput
+                    label="Search user"
+                    value={searchText}
+                    onChangeText={(text: string) => {
+                      setSearchText(text), console.log(searchText);
+                    }}
+                    style={{ backgroundColor: "transparent" }}
+                    theme={{ colors: { primary: DARK_ORANGE } }}
+                    autoCapitalize="none"
+                  />
+                </TextInputContainer>
+                <ApolloConsumer>
+                  {(client) => (
+                    <>
+                      {users?.map(({ id, userImg, name, username }, index) => {
+                        return (
+                          <TouchableOpacity
+                            key={index}
+                            onPress={() => {
+                              setSearchText("");
+                              onAddPress(client, username);
+                            }}
+                          >
+                            <OuterUserInfoContainerStyle>
+                              <Avatar
+                                rounded
+                                source={{
+                                  uri: userImg
+                                    ? MEDIA_URL + userImg
+                                    : NO_AVATAR_THUMBNAIL,
+                                }}
+                              />
+                              <InnerUserInfoContainerStyle>
+                                <Subheading>{name}</Subheading>
+                                <Caption>{`@${username}`}</Caption>
+                              </InnerUserInfoContainerStyle>
+                            </OuterUserInfoContainerStyle>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </>
+                  )}
+                </ApolloConsumer>
+              </React.Fragment>
+            )}
+          </Formik>
+        </KeyboardAwareScrollView>
+      </Container>
+    );
+  }
 };
 EditTeamProfileScreen.navigationOptions = {
   title: "Edit Team",

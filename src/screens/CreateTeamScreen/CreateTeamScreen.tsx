@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
-import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Subheading, Divider, TextInput, Caption } from "react-native-paper";
 import { Avatar } from "react-native-elements";
@@ -16,6 +15,7 @@ import {
   GetSearchResults,
   GetSearchResultsVariables,
 } from "../../types/api";
+import { GET_USER_FROM_USERNAME, CREATE_TEAM } from "./CreateTeamScreenQueries";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import { GetAllSports, CreateTeam, CreateTeamVariables } from "../../types/api";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
@@ -44,13 +44,6 @@ const TouchableOpacity = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const PickerContainer = styled.View`
-  padding: 0 20px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
 const WhiteSpace = styled.View`
   height: 50px;
 `;
@@ -69,7 +62,6 @@ const ButtonContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
-const ImageView = styled.View``;
 
 const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [userLoading, setUserLoading] = useState<boolean>(false);
@@ -91,6 +83,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
     data: { getAllSports: { sports = null } = {} } = {},
     loading: getAllSportsLoading,
   } = useQuery<GetAllSports>(GET_ALL_SPORTS);
+
   const [createTeamFn, { loading: createTeamLoading }] = useMutation<
     CreateTeam,
     CreateTeamVariables
@@ -171,74 +164,72 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               isValid,
             }) => (
               <React.Fragment>
-                <ImageView>
-                  <WhiteSpace />
-                  <FormikInput
-                    label="Team name"
-                    value={values.teamName}
-                    onChange={setFieldValue}
-                    onTouch={setFieldTouched}
-                    name="teamName"
-                    autoCapitalize="none"
-                    error={touched.teamName && errors.teamName}
-                  />
-                  <FormikPicker
-                    label="Team sport:"
-                    selectedValue={values.sportId}
-                    onChange={setFieldValue}
-                    name="sportId"
-                  >
-                    {sports.map(({ sportId, name }) => (
-                      <Picker.Item key={sportId} label={name} value={sportId} />
-                    ))}
-                  </FormikPicker>
-                  {membersList.map(({ id, userImg, name, username }, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => {
-                        removeMember(id);
-                      }}
-                    >
-                      <OuterUserInfoContainerStyle>
-                        <Avatar
-                          rounded
-                          source={{
-                            uri: userImg
-                              ? MEDIA_URL + userImg
-                              : NO_AVATAR_THUMBNAIL,
-                          }}
-                        />
-                        <InnerUserInfoContainerStyle>
-                          <Subheading>{name}</Subheading>
-                          <Caption>{`@${username}`}</Caption>
-                        </InnerUserInfoContainerStyle>
-                      </OuterUserInfoContainerStyle>
-                    </TouchableOpacity>
+                <WhiteSpace />
+                <FormikInput
+                  label="Team name"
+                  value={values.teamName}
+                  onChange={setFieldValue}
+                  onTouch={setFieldTouched}
+                  name="teamName"
+                  autoCapitalize="none"
+                  error={touched.teamName && errors.teamName}
+                />
+                <FormikPicker
+                  label="Team sport:"
+                  selectedValue={values.sportId}
+                  onChange={setFieldValue}
+                  name="sportId"
+                >
+                  {sports.map(({ sportId, name }) => (
+                    <Picker.Item key={sportId} label={name} value={sportId} />
                   ))}
-                  <ButtonContainer>
-                    <Button
-                      loading={createTeamLoading}
-                      disabled={
-                        !isValid ||
-                        userLoading ||
-                        !values.teamName ||
-                        createTeamLoading
-                      }
-                      onPress={() => {
-                        createTeamFn({
-                          variables: {
-                            teamName: values.teamName,
-                            sportId: values.sportId,
-                            memberIds: membersList.map(({ id }) => id),
-                          },
-                        });
-                        navigation.navigate("MyProfileScreen");
-                      }}
-                      text={"Save"}
-                    />
-                  </ButtonContainer>
-                  <WhiteSpace />
-                </ImageView>
+                </FormikPicker>
+                {membersList.map(({ id, userImg, name, username }, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      removeMember(id);
+                    }}
+                  >
+                    <OuterUserInfoContainerStyle>
+                      <Avatar
+                        rounded
+                        source={{
+                          uri: userImg
+                            ? MEDIA_URL + userImg
+                            : NO_AVATAR_THUMBNAIL,
+                        }}
+                      />
+                      <InnerUserInfoContainerStyle>
+                        <Subheading>{name}</Subheading>
+                        <Caption>{`@${username}`}</Caption>
+                      </InnerUserInfoContainerStyle>
+                    </OuterUserInfoContainerStyle>
+                  </TouchableOpacity>
+                ))}
+                <ButtonContainer>
+                  <Button
+                    loading={createTeamLoading}
+                    disabled={
+                      !isValid ||
+                      userLoading ||
+                      !values.teamName ||
+                      createTeamLoading
+                    }
+                    onPress={() => {
+                      createTeamFn({
+                        variables: {
+                          teamName: values.teamName,
+                          sportId: values.sportId,
+                          memberIds: membersList.map(({ id }) => id),
+                        },
+                      });
+                      navigation.navigate("MyProfileScreen");
+                    }}
+                    text={"Save"}
+                  />
+                </ButtonContainer>
+                <WhiteSpace />
                 <Divider />
                 <WhiteSpace />
                 <TextInputContainer>
