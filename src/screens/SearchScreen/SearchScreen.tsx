@@ -8,7 +8,6 @@ import { GET_SEARCH_RESULTS } from "./SearchQueries";
 import { useLazyQuery } from "react-apollo";
 import { GetSearchResults, GetSearchResultsVariables } from "../../types/api";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useMe } from "../../context/meContext";
 import UserCard from "../../components/UserCard";
 import TeamCard from "../../components/TeamCard";
 import EventCard from "../../components/EventCard";
@@ -34,7 +33,6 @@ const Container = styled.View`
 `;
 
 const SearchScreen = ({ navigation }) => {
-  const { me, loading: meLoading } = useMe();
   const [searchText, setSearchText] = useState<string>("");
   const [
     search,

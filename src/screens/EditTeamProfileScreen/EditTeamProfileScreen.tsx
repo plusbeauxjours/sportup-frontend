@@ -27,9 +27,12 @@ import BackBtn from "../../components/BackBtn";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import Loader from "../../components/Loader";
-import { DARK_ORANGE } from "../../constants/colors";
+import { DARK_ORANGE, PRIMARY_COLOR } from "../../constants/colors";
 import FormikInput from "../../components/Formik/FormikInput";
 import FormikPicker from "../../components/Formik/FormikPicker";
+import { Ionicons } from "@expo/vector-icons";
+import utils from "../../utils/utils";
+import { useMe } from "../../context/meContext";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -66,10 +69,21 @@ const ButtonContainer = styled.View`
   align-items: center;
 `;
 
+const IconContainer = styled.TouchableOpacity`
+  position: absolute;
+  right: 10px;
+  width: 50px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
 const EditTeamProfileScreen: NavigationStackScreenComponent = ({
   navigation,
 }) => {
+  const isAndroid = utils.isAndroid();
   const team = navigation.getParam("team");
+  const { me, loading: meLoading } = useMe();
   const [userLoading, setUserLoading] = useState<boolean>(false);
   const [membersList, setMembersList] = useState<any>(team.members);
   const [searchText, setSearchText] = useState<string>("");
@@ -147,6 +161,13 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
       membersList.filter((member) => member.id !== id)
     );
   };
+
+  const onPress = (userId) => {
+    me?.user?.id === userId
+      ? navigation.navigate("MyProfileScreen")
+      : navigation.navigate("UserProfileScreen", { userId });
+  };
+
   useEffect(() => {
     search();
   }, [searchText]);
@@ -200,12 +221,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                   ))}
                 </FormikPicker>
                 {membersList.map(({ id, userImg, name, username }, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => {
-                      removeMember(id);
-                    }}
-                  >
+                  <TouchableOpacity key={index} onPress={() => onPress(id)}>
                     <OuterUserInfoContainerStyle>
                       <Avatar
                         rounded
@@ -219,6 +235,21 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                         <Subheading>{name}</Subheading>
                         <Caption>{`@${username}`}</Caption>
                       </InnerUserInfoContainerStyle>
+                      <IconContainer
+                        onPress={() => {
+                          removeMember(id);
+                        }}
+                      >
+                        <Ionicons
+                          name={
+                            isAndroid
+                              ? "md-close-circle-outline"
+                              : "ios-close-circle-outline"
+                          }
+                          size={24}
+                          color={PRIMARY_COLOR}
+                        />
+                      </IconContainer>
                     </OuterUserInfoContainerStyle>
                   </TouchableOpacity>
                 ))}
@@ -267,10 +298,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                         return (
                           <TouchableOpacity
                             key={index}
-                            onPress={() => {
-                              setSearchText("");
-                              onAddPress(client, username);
-                            }}
+                            onPress={() => onPress(id)}
                           >
                             <OuterUserInfoContainerStyle>
                               <Avatar
@@ -285,10 +313,27 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                                 <Subheading>{name}</Subheading>
                                 <Caption>{`@${username}`}</Caption>
                               </InnerUserInfoContainerStyle>
+                              <IconContainer
+                                onPress={() => {
+                                  setSearchText("");
+                                  onAddPress(client, username);
+                                }}
+                              >
+                                <Ionicons
+                                  name={
+                                    isAndroid
+                                      ? "md-add-circle-outline"
+                                      : "ios-add-circle-outline"
+                                  }
+                                  size={24}
+                                  color={PRIMARY_COLOR}
+                                />
+                              </IconContainer>
                             </OuterUserInfoContainerStyle>
                           </TouchableOpacity>
                         );
                       })}
+                      <WhiteSpace />
                     </>
                   )}
                 </ApolloConsumer>
