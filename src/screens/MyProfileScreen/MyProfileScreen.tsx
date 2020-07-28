@@ -132,6 +132,7 @@ const MyProfileScreen = ({ navigation }) => {
                 sportId={sport.sportId}
                 name={sport.name}
                 key={sport.sportId}
+                disabled={true}
               />
             ))}
           </Row>

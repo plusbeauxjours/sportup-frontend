@@ -23,17 +23,15 @@ interface ITheme {
 
 interface IProps {
   sportId: string;
-  name?: string;
-  icon?: string;
+  name: string;
   disabled?: boolean;
   rating?: number;
   selected?: boolean;
-  onChipPress: (sportId: string) => void;
+  onChipPress?: (sportId: string) => void;
 }
 const RatingChip: React.FC<IProps> = ({
   sportId,
   name,
-  icon,
   disabled = false,
   rating = null,
   selected = false,

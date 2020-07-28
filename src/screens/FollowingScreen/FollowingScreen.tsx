@@ -2,28 +2,19 @@ import React from "react";
 import { GetUserFollowing, GetUserFollowingVariables } from "../../types/api";
 import { useQuery } from "react-apollo";
 import { GET_USER_FOLLOWING } from "./FollowingScreenQueries";
-import { Divider } from "react-native-paper";
-import UserCardList from "../../components/UserCardList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserCard from "../../components/UserCard";
 import styled from "styled-components/native";
 import BackBtn from "../../components/BackBtn";
+import { FlatList } from "react-native";
 import {
   NavigationStackScreenComponent,
   NavigationStackScreenProps,
 } from "react-navigation-stack";
 
 const Container = styled.View`
-flex:1
+  flex: 1;
   background-color: white;
-`;
-
-const Border = styled.View`
-  border-color: #999;
-  border-width: 0.2px;
-  border-radius: 20px;
-  padding: 10px;
-  margin: 3px;
 `;
 
 interface IProps extends NavigationStackScreenProps {
@@ -42,15 +33,11 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
   );
   return (
     <Container>
-      <UserCardList
-        users={following}
+      <FlatList
+        data={following}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id.toString()}
-        ItemSeparatorComponent={() => <Divider />}
-        renderItem={({ item }) => (
-          <Border>
-            <UserCard user={item} />
-          </Border>
-        )}
+        renderItem={({ item }) => <UserCard user={item} />}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
       />
     </Container>

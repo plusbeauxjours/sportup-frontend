@@ -26,6 +26,7 @@ import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
 import { DARK_ORANGE } from "../../constants/colors";
 import BackBtn from "../../components/BackBtn";
+import FormikPicker from "../../components/Formik/FormikPicker";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -72,7 +73,6 @@ const ImageView = styled.View``;
 
 const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [userLoading, setUserLoading] = useState<boolean>(false);
-  const [sportId, setSportId] = useState<string>("1");
   const [membersList, setMembersList] = useState<any>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [
@@ -157,6 +157,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
             initialValues={{
               teamName: "",
               username: "",
+              sportId: "1",
             }}
             onSubmit={() => {}}
             validationSchema={validationSchema}
@@ -181,23 +182,16 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     autoCapitalize="none"
                     error={touched.teamName && errors.teamName}
                   />
-                  <PickerContainer>
-                    <Picker
-                      selectedValue={sportId}
-                      style={{ width: 200 }}
-                      onValueChange={(value) => {
-                        setSportId(value);
-                      }}
-                    >
-                      {sports.map(({ sportId, name }) => (
-                        <Picker.Item
-                          key={sportId}
-                          label={name}
-                          value={sportId}
-                        />
-                      ))}
-                    </Picker>
-                  </PickerContainer>
+                  <FormikPicker
+                    label="Team sport:"
+                    selectedValue={values.sportId}
+                    onChange={setFieldValue}
+                    name="sportId"
+                  >
+                    {sports.map(({ sportId, name }) => (
+                      <Picker.Item key={sportId} label={name} value={sportId} />
+                    ))}
+                  </FormikPicker>
                   {membersList.map(({ id, userImg, name, username }, index) => (
                     <TouchableOpacity
                       key={index}
@@ -234,7 +228,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                         createTeamFn({
                           variables: {
                             teamName: values.teamName,
-                            sportId,
+                            sportId: values.sportId,
                             memberIds: membersList.map(({ id }) => id),
                           },
                         });

@@ -97,7 +97,7 @@ const EventScreen = ({ navigation }) => {
           <RatingChip
             sportId={event.sport.sportId}
             name={event.sport.name}
-            onPress={() => {}}
+            disabled={true}
           />
         </DateRow>
         <WhiteSpace />

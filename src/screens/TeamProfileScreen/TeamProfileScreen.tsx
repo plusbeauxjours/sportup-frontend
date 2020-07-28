@@ -52,6 +52,13 @@ const WhiteSpace = styled.View`
   height: 40px;
 `;
 
+const Center = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 40px;
+`;
+
 interface IProps {
   coverImg: string;
   teamName: string;
@@ -88,7 +95,7 @@ const TeamInfoArea: React.FC<IProps> = ({
         <RatingChip
           sportId={sport.sportId}
           name={sport.name}
-          onChipPress={() => {}}
+          onChipPress={() => showDialog()}
         />
       </View>
     </InfoContainer>
@@ -150,12 +157,7 @@ const TeamProfileScreen = ({ navigation }) => {
             data={team.members}
             keyExtractor={(item) => item.id.toString()}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <>
-                <UserCard user={item} />
-              </>
-            )}
-            ItemSeparatorComponent={() => <Divider />}
+            renderItem={({ item }) => <UserCard user={item} />}
             ListHeaderComponent={() => (
               <TeamInfoArea
                 coverImg={team.coverImg}
@@ -167,13 +169,15 @@ const TeamProfileScreen = ({ navigation }) => {
             )}
             ListFooterComponent={
               team.isAdmin && (
-                <Button
-                  disabled={loading || rateTeamLoading}
-                  onPress={() => {
-                    navigation.navigate("EditTeamProfileScreen", { team });
-                  }}
-                  text={"Edit team"}
-                />
+                <Center>
+                  <Button
+                    disabled={loading || rateTeamLoading}
+                    onPress={() => {
+                      navigation.navigate("EditTeamProfileScreen", { team });
+                    }}
+                    text={"Edit team"}
+                  />
+                </Center>
               )
             }
           />
