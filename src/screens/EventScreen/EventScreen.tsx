@@ -101,7 +101,11 @@ const EventScreen = ({ navigation }) => {
           />
         </DateRow>
         <WhiteSpace />
-        <Description>{event.description}</Description>
+        <Description>
+          {event.description} {event.expectedTeams} teams exptected. Minimum
+          members per team: {event.minimumMembers}. Maximum members per team:{" "}
+          {event.maximumMembers}.
+        </Description>
         <WhiteSpace />
         <DateBox>
           <DateRow>
@@ -156,25 +160,7 @@ const EventScreen = ({ navigation }) => {
           </DateRow>
         </DateBox>
         <WhiteSpace />
-        <Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.expectedTeams}
-          </Caption>
-          <Caption> teams exptected.</Caption>
-        </Caption>
-        <Caption>
-          <Caption>Minimum members per team: </Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.minimumMembers}
-          </Caption>
-        </Caption>
-        <Caption>
-          <Caption>Maximum members per team: </Caption>
-          <Caption style={{ fontWeight: "bold" }}>
-            {event.maximumMembers}
-          </Caption>
-        </Caption>
-        <WhiteSpace />
+
         {event.isOwner ? (
           <Button
             onPress={() => {
