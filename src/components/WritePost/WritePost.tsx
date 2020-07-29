@@ -15,20 +15,27 @@ import { GetMyFeed } from "../../types/api";
 import Button from "../../components/Button";
 
 const Container = styled.View`
+  flex: 1;
   padding: 3px 3px 0 3px;
   background-color: white;
+  width: 100%;
   margin-bottom: 3px;
+`;
+
+const ButtonContainer = styled.View`
+  position: absolute;
+  bottom: 40px;
 `;
 
 const Border = styled.View`
   width: 100%;
-  height: 160px;
+  height: 100%;
   border-color: #999;
   border-width: 0.2px;
   border-radius: 20px;
-  padding-top: 30px;
+  padding: 30px 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 const WritePost: React.FC = () => {
@@ -93,12 +100,14 @@ const WritePost: React.FC = () => {
           onChangeText={(text) => setText(text)}
           multiline
         />
-        <Button
-          loading={createPostLoading}
-          disabled={text === ""}
-          onPress={onPress}
-          text={"Post"}
-        />
+        <ButtonContainer>
+          <Button
+            loading={createPostLoading}
+            disabled={text === ""}
+            onPress={onPress}
+            text={"Post"}
+          />
+        </ButtonContainer>
       </Border>
     </Container>
   );

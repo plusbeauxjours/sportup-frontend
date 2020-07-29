@@ -7,7 +7,6 @@ interface IProps {
   refreshing: boolean;
   disableNavigation: boolean;
   onRefresh: () => void;
-  ListHeaderComponent: () => JSX.Element;
   ListFooterComponent: () => JSX.Element;
   onEndReached: () => void;
   onMomentumScrollBegin: () => void;
