@@ -13,12 +13,17 @@ import { GET_MAIN_FEED } from "../../screens/FeedScreen/FeedScreenQueries";
 import { MY_FEED } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
 import { GetMyFeed } from "../../types/api";
 import Button from "../../components/Button";
+import constants from "../../constants/dimensions";
+import { useHeaderHeight } from "react-navigation-stack";
 
-const Container = styled.View`
-  flex: 1;
+const Container = styled.View<ITheme>`
+  position: absolute;
+  right: 0;
+  bottom: 0;
   padding: 3px 3px 0 3px;
   background-color: white;
-  width: 100%;
+  width: 50%;
+  height: ${(props) => props.height - props.headerHeight}px;
   margin-bottom: 3px;
 `;
 
@@ -38,7 +43,22 @@ const Border = styled.View`
   justify-content: center;
 `;
 
-const WritePost: React.FC = () => {
+const WhiteSpace = styled.View<ITheme>`
+  height: ${(props) => props.headerHeight}px;
+`;
+
+interface ITheme {
+  height?: number;
+  headerHeight?: number;
+}
+
+interface IProps {
+  scrollRef: any;
+}
+
+const WritePost: React.FC<IProps> = ({ scrollRef }) => {
+  const headerHeight = useHeaderHeight();
+  const { height } = constants;
   const [text, setText] = useState<string>("");
   const [createPostFn, { loading: createPostLoading }] = useMutation<
     CreatePost,
@@ -87,29 +107,36 @@ const WritePost: React.FC = () => {
   const onPress = () => {
     createPostFn();
     setText("");
+    scrollRef.current &&
+      scrollRef.current?.getNode()?.scrollToStart({ animated: true });
   };
   return (
-    <Container>
-      <Border>
-        <Input
-          label={"Write post..."}
-          style={{ height: 100 }}
-          value={text}
-          autoCorrect={false}
-          autoCapitalize="none"
-          onChangeText={(text) => setText(text)}
-          multiline
-        />
-        <ButtonContainer>
-          <Button
-            loading={createPostLoading}
-            disabled={text === ""}
-            onPress={onPress}
-            text={"Post"}
+    <>
+      <WhiteSpace headerHeight={headerHeight} />
+      <Container headerHeight={headerHeight} height={height}>
+        <Border>
+          <Input
+            label={"Write post..."}
+            style={{ height: 100, zIndex: 10 }}
+            value={text}
+            autoCorrect={false}
+            autoFocus={true}
+            autoCapitalize="none"
+            onChangeText={(text) => setText(text)}
+            multiline
           />
-        </ButtonContainer>
-      </Border>
-    </Container>
+          <WhiteSpace headerHeight={headerHeight} />
+          <ButtonContainer>
+            <Button
+              loading={createPostLoading}
+              disabled={text === ""}
+              onPress={onPress}
+              text={"Post"}
+            />
+          </ButtonContainer>
+        </Border>
+      </Container>
+    </>
   );
 };
 

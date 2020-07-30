@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Appbar } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
@@ -23,15 +23,15 @@ const Conatiner = styled.View`
 `;
 
 const ListConatiner = styled.View`
-  flex-direction: row;
+  width: 50%;
 `;
 
 const WhiteSpace = styled.View<ITheme>`
-  height: ${(props) => props.height}px;
+  height: ${(props) => props.headerHeight}px;
 `;
 
 interface ITheme {
-  height: number;
+  headerHeight: number;
 }
 
 const {
@@ -45,12 +45,15 @@ const {
 } = Animated;
 
 const FeedScreen = () => {
+  let writeMode = false;
   const x = new Value(0);
+  const scrollRef = useRef(null);
   const { width } = constants;
   const headerHeight = useHeaderHeight();
   const isAndroid = utils.isAndroid();
   const perspective = isAndroid ? undefined : 1000;
   const [loading, setLoading] = useState<boolean>(false);
+
   const {
     data: { getMainFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
     loading: getMainFeedLoading,
@@ -63,7 +66,15 @@ const FeedScreen = () => {
   });
 
   const onPress = () => {
-    console.log("onPress on FeedScreen");
+    if (writeMode) {
+      scrollRef.current &&
+        scrollRef.current?.getNode()?.scrollTo({ x: 0, animated: true });
+      writeMode = false;
+    } else {
+      scrollRef.current &&
+        scrollRef.current?.getNode()?.scrollTo({ x: width, animated: true });
+      writeMode = true;
+    }
   };
 
   const rotateYAsDeg = interpolate(x, {
@@ -87,6 +98,7 @@ const FeedScreen = () => {
     return (
       <Conatiner>
         <Animated.ScrollView
+          ref={scrollRef}
           style={StyleSheet.absoluteFillObject}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ width: width * 2 }}
@@ -111,19 +123,18 @@ const FeedScreen = () => {
               transform: [{ perspective }, { rotateY: "180deg" }, { rotateY }],
             }}
           >
-            <WhiteSpace height={headerHeight} />
-            <WritePost />
+            <WritePost scrollRef={scrollRef} />
           </Animated.View>
           <Animated.View
             style={{
               ...StyleSheet.absoluteFillObject,
-              opacity,
+              opacity: backOpacity,
               backfaceVisibility: "hidden",
               transform: [{ perspective }, { rotateY }],
             }}
           >
+            <WhiteSpace headerHeight={headerHeight} />
             <ListConatiner>
-              <WhiteSpace height={headerHeight} />
               <FeedList
                 posts={posts}
                 refreshing={networkStatus === 4}
