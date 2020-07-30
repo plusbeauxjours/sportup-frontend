@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import styled from "styled-components/native";
 import { BlurView } from "expo-blur";
 import { useHeaderHeight } from "react-navigation-stack";
-import Animated from "react-native-reanimated";
+import Animated, { Easing } from "react-native-reanimated";
 
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
@@ -47,6 +47,7 @@ const {
 const FeedScreen = () => {
   let writeMode = false;
   const x = new Value(0);
+  const rotate = new Value(0);
   const scrollRef = useRef(null);
   const { width } = constants;
   const headerHeight = useHeaderHeight();
@@ -69,13 +70,28 @@ const FeedScreen = () => {
     if (writeMode) {
       scrollRef.current &&
         scrollRef.current?.getNode()?.scrollTo({ x: 0, animated: true });
+      Animated.timing(rotate, {
+        toValue: 0,
+        duration: 50,
+        easing: Easing.bounce,
+      }).start();
       writeMode = false;
     } else {
       scrollRef.current &&
         scrollRef.current?.getNode()?.scrollTo({ x: width, animated: true });
+      Animated.timing(rotate, {
+        toValue: 45,
+        duration: 50,
+        easing: Easing.bounce,
+      }).start();
       writeMode = true;
     }
   };
+
+  const rotateIcon = rotate.interpolate({
+    inputRange: [0, 45],
+    outputRange: [0, 51],
+  });
 
   const rotateYAsDeg = interpolate(x, {
     inputRange: [0, width],
@@ -179,7 +195,7 @@ const FeedScreen = () => {
             </ListConatiner>
           </Animated.View>
         </Animated.ScrollView>
-        <AddBtn onPress={onPress} />
+        <AddBtn onPress={onPress} rotateIcon={rotateIcon} />
       </Conatiner>
     );
   }

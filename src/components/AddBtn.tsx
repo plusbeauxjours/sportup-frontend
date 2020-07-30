@@ -1,4 +1,5 @@
 import React from "react";
+import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 import { PRIMARY_COLOR } from "../constants/colors";
@@ -24,12 +25,20 @@ const IconContainer = styled.TouchableOpacity`
 `;
 
 interface IProps {
+  rotateIcon?: any;
   onPress: () => void;
 }
-const AddBtn: React.FC<IProps> = ({ onPress }) => {
+
+const AddBtn: React.FC<IProps> = ({ onPress, rotateIcon }) => {
   return (
     <IconContainer onPress={onPress} activeOpacity={1}>
-      <AddIcon>+</AddIcon>
+      <Animated.View
+        style={{
+          transform: [{ rotate: rotateIcon }],
+        }}
+      >
+        <AddIcon>+</AddIcon>
+      </Animated.View>
     </IconContainer>
   );
 };
