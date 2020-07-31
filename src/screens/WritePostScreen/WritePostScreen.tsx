@@ -29,7 +29,7 @@ const Box = styled.View`
   justify-content: center;
 `;
 
-const WritePostScreen = () => {
+const WritePostScreen = ({ navigation }) => {
   const [text, setText] = useState<string>("");
   const [createPostFn, { loading: createPostLoading }] = useMutation<
     CreatePost,
@@ -78,6 +78,7 @@ const WritePostScreen = () => {
   const onPress = () => {
     createPostFn();
     setText("");
+    navigation.navigate("FeedScreen");
   };
   return (
     <Container>

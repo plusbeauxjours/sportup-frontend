@@ -188,6 +188,31 @@ export interface RemovePostInteractionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AppleConnect
+// ====================================================
+
+export interface AppleConnect_appleConnect {
+  __typename: "AppleConnectResponse";
+  token: string | null;
+}
+
+export interface AppleConnect {
+  appleConnect: AppleConnect_appleConnect;
+}
+
+export interface AppleConnectVariables {
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  appleId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: Login
 // ====================================================
 
@@ -527,6 +552,31 @@ export interface GetEvent {
 
 export interface GetEventVariables {
   eventId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: FacebookConnect
+// ====================================================
+
+export interface FacebookConnect_facebookConnect {
+  __typename: "FacebookConnectResponse";
+  token: string | null;
+}
+
+export interface FacebookConnect {
+  facebookConnect: FacebookConnect_facebookConnect;
+}
+
+export interface FacebookConnectVariables {
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  fbId: string;
 }
 
 /* tslint:disable */
@@ -1189,6 +1239,7 @@ export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   id: string;
   teamName: string;
+  rating: number | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
   createdBy: GetUserTeams_getUser_user_teamSet_createdBy;
 }

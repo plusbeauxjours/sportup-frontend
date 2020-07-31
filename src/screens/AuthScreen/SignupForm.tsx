@@ -138,7 +138,9 @@ const SignupForm = ({ navigation }) => {
         error={touched.confirmPassword && errors.confirmPassword}
       />
       <Button
-        disabled={!isValid || LoginLoading || SignupLoading}
+        disabled={
+          !isValid || LoginLoading || SignupLoading || values.handle === ""
+        }
         loading={LoginLoading || SignupLoading}
         onPress={() => {
           SignupFn({

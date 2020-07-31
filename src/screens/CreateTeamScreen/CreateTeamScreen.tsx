@@ -37,10 +37,16 @@ const OuterUserInfoContainerStyle = styled.View`
   padding: 10px;
   width: 100%;
 `;
+
 const InnerUserInfoContainerStyle = styled.View`
   justify-content: center;
   padding: 0 10px 0 10px;
 `;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
 const TouchableOpacity = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: center;

@@ -3394,6 +3394,11 @@ expo-app-loader-provider@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-app-loader-provider/-/expo-app-loader-provider-8.0.0.tgz#c18ef20a24153f5a0dbb297106ef0bcb5de57180"
 
+expo-apple-authentication@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/expo-apple-authentication/-/expo-apple-authentication-2.0.0.tgz#ac4fc06619990ffc388312cf34883c861384c004"
+  integrity sha512-vzFNzsVrv4eYuXV5PG0rKmNdwFvk7bVQH/DzsZ98vD9wuBRY9vBgAnF1TyKG/foY01dlCH1zb+3lhAyp2nAg/Q==
+
 expo-asset@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-asset/-/expo-asset-8.0.0.tgz#400c7cf8693711ddc87da02d20a7d47bd517afeb"
@@ -3418,6 +3423,11 @@ expo-constants@~8.0.0:
 expo-error-recovery@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-1.0.0.tgz#2ca9d59fcd16c5c881af877993731056f2d46afe"
+
+expo-facebook@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-facebook/-/expo-facebook-8.0.0.tgz#d337a56459a3833488a879b925349b30c06a0afd"
+  integrity sha512-fF+lwFLWkB/mrr/xu4aIZ3HhpsITUTC1Dut4fD7ZzBPpQ3x2s1KpdNOOrb6FQFlE0thFlLAASRe0HDhFD7EN4w==
 
 expo-file-system@~8.0.0:
   version "8.0.0"

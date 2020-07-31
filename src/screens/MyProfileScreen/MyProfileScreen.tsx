@@ -14,6 +14,7 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
+import { useMe } from "../../context/meContext";
 
 const View = styled.View`
   flex-direction: row;
@@ -52,6 +53,7 @@ const Caption = styled.Text`
 `;
 
 const MyProfileScreen = ({ navigation }) => {
+  const { me, loading: meContextLoading } = useMe();
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -106,7 +108,7 @@ const MyProfileScreen = ({ navigation }) => {
           <ActivityIndicator size="small" />
         </LoadingContainer>
       );
-    } else if (user) {
+    } else {
       const connections = {
         teams: user?.teamsCount,
         followers: user?.followersCount,
@@ -156,8 +158,6 @@ const MyProfileScreen = ({ navigation }) => {
           />
         </UserInfoContainer>
       );
-    } else {
-      return null;
     }
   };
   if (getMyFeedLoading || meLoading) {

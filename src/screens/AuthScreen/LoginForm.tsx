@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Platform } from "react-native";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import Divider from "../../components/Divider";
@@ -12,6 +12,7 @@ import { Login, LoginVariables } from "../../types/api";
 import Button from "../../components/Button";
 import styled from "styled-components/native";
 import BackBtn from "../../components/BackBtn";
+import AppleApproach from "../AppleApproach/index";
 
 const Container = styled.View`
   flex: 1;
@@ -74,7 +75,7 @@ const LoginForm = ({ navigation }) => {
         error={touched.password && errors.password}
       />
       <Button
-        disabled={!isValid || LoginLoading}
+        disabled={!isValid || LoginLoading || values.username === ""}
         loading={LoginLoading}
         onPress={() => {
           client.resetStore();
@@ -85,8 +86,10 @@ const LoginForm = ({ navigation }) => {
             },
           });
         }}
-        text={"Log in"}
+        long={true}
+        text={"Continue with Account"}
       />
+      {Platform.OS === "ios" && <AppleApproach />}
       <Divider text="OR" />
       <Button
         disabled={LoginLoading}
