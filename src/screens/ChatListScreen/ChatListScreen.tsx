@@ -10,6 +10,7 @@ import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { get_last_chat_status } from "../../constants/firebase";
+import chat from "src/temp/chat";
 
 const Container = styled.View`
   flex: 1;
@@ -18,7 +19,7 @@ const Container = styled.View`
 
 const ChatListScreen = () => {
   const { me, loading: meLoading } = useMe();
-  const [chats, setChats] = useState<any>();
+  const [chats, setChats] = useState<any>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -30,9 +31,14 @@ const ChatListScreen = () => {
         .ref()
         .child("chats")
         .once("value", (snapshot) => {
-          if (snapshot.val()) {
-            setChats(Object.values(snapshot.val()));
-          }
+          snapshot.forEach((child) => {
+            if (
+              child.val()["receiver"]["_id"] === me?.user.id ||
+              child.val()["sender"]["_id"] === me?.user.id
+            ) {
+              setChats((i) => [...i, child.val()]);
+            }
+          });
         });
       setLoading(false);
     });
@@ -43,7 +49,6 @@ const ChatListScreen = () => {
   const onRefresh = () => {
     try {
       setRefreshing(true);
-      getChats();
     } catch (e) {
       console.log(e);
     } finally {
@@ -52,14 +57,14 @@ const ChatListScreen = () => {
   };
   useEffect(() => {
     getChats();
-  });
+  }, []);
   if (meLoading) {
     return <Loader />;
   } else if (chats) {
     return (
       <Container>
         <FlatList
-          data={chats}
+          data={chats.sort((a, b) => a.createdAt.localeCompare(b.createdAt))}
           refreshing={refreshing}
           onRefresh={onRefresh}
           renderItem={({ item }: any) => (
