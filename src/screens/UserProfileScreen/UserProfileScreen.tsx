@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 import { useMutation } from "react-apollo";
 import { Avatar } from "react-native-elements";
 import { useQuery } from "react-apollo-hooks";
-import { Headline, Caption, Paragraph } from "react-native-paper";
+import { Headline, Paragraph } from "react-native-paper";
 
 import {
   GetUser,
@@ -55,6 +55,11 @@ const WhiteSpace = styled.View`
 const Conatiner = styled.View`
   flex: 1;
   background-color: white;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 const UserProfileScreen = ({ navigation }) => {

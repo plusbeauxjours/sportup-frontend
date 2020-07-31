@@ -1,6 +1,5 @@
 import React from "react";
 import { Picker } from "react-native";
-import { Subheading } from "react-native-paper";
 import styled from "styled-components/native";
 
 const View = styled.View`
@@ -8,6 +7,15 @@ const View = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 interface IProps {
@@ -29,7 +37,7 @@ const FormikPicker: React.FC<IProps> = ({
   };
   return (
     <View>
-      <Subheading style={{ fontWeight: "bold" }}>{label}</Subheading>
+      <NameText style={{ fontWeight: "bold" }}>{label}</NameText>
       <Picker
         style={{ width: 200 }}
         onValueChange={handleChange}

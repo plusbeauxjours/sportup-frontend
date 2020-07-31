@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Avatar } from "react-native-elements";
-import { Card, Subheading, Caption, Paragraph } from "react-native-paper";
+import { Card, Paragraph } from "react-native-paper";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { NavigationScreenProp, withNavigation } from "react-navigation";
 
@@ -38,6 +38,15 @@ const Border = styled.View`
   border-width: 0.5px;
   border-radius: 20px;
   padding: 10px 0;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 interface UserInfoAreaProps {
@@ -89,7 +98,7 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
             }}
           />
           <InnerUserInfoContainerStyle>
-            <Subheading>{name}</Subheading>
+            <NameText>{name}</NameText>
             <Caption>{`@${username}`}</Caption>
           </InnerUserInfoContainerStyle>
         </TouchableOpacity>

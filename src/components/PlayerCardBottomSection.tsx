@@ -1,6 +1,6 @@
 import React from "react";
 import { withNavigation } from "react-navigation";
-import { Caption, Subheading, Divider } from "react-native-paper";
+import { Divider } from "react-native-paper";
 import SportsList from "./SportsList";
 import styled from "styled-components/native";
 import { get_or_create_chat } from "../constants/firebase";
@@ -39,6 +39,16 @@ const View = styled.View`
 const WhiteSpace = styled.View`
   height: 10px;
 `;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
+`;
+
 interface IProps {
   id: string;
   sports: any;
@@ -89,9 +99,9 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
               >
                 <InnerUserInfoContainerStyle>
                   <Row>
-                    <Subheading style={{ textTransform: "capitalize" }}>
+                    <NameText style={{ textTransform: "capitalize" }}>
                       {team?.teamName}
-                    </Subheading>
+                    </NameText>
                     <RatingChip
                       sportId={team.sport.sportId}
                       name={team.sport.name}

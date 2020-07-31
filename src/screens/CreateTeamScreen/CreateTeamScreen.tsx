@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Subheading, Divider, TextInput, Caption } from "react-native-paper";
+import { Divider, TextInput, Caption } from "react-native-paper";
 import { Avatar } from "react-native-elements";
 import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
@@ -216,7 +216,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                         }}
                       />
                       <InnerUserInfoContainerStyle>
-                        <Subheading>{name}</Subheading>
+                        <NameText>{name}</NameText>
                         <Caption>{`@${username}`}</Caption>
                       </InnerUserInfoContainerStyle>
                       <IconContainer
@@ -267,7 +267,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                     label="Search user"
                     value={searchText}
                     onChangeText={(text: string) => {
-                      setSearchText(text), console.log(searchText);
+                      setSearchText(text);
                     }}
                     style={{ backgroundColor: "transparent" }}
                     theme={{ colors: { primary: DARK_ORANGE } }}
@@ -293,7 +293,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
                                 }}
                               />
                               <InnerUserInfoContainerStyle>
-                                <Subheading>{name}</Subheading>
+                                <NameText>{name}</NameText>
                                 <Caption>{`@${username}`}</Caption>
                               </InnerUserInfoContainerStyle>
                               <IconContainer

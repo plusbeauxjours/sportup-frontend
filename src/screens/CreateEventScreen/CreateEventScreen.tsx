@@ -271,20 +271,10 @@ const CreateEventScreen = ({ navigation }) => {
                 <Center>
                   <Button
                     loading={createEventLoading}
-                    disabled={createEventLoading}
+                    disabled={
+                      !isValid || values.name === "" || createEventLoading
+                    }
                     onPress={() => {
-                      console.log(
-                        values.name,
-                        values.description,
-                        values.sportId,
-                        startDate,
-                        endDate,
-                        startTime,
-                        endTime,
-                        values.minimumMembers,
-                        values.maximumMembers,
-                        values.expectedTeamCount
-                      );
                       createEventFn({
                         variables: {
                           name: values.name,

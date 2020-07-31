@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AsyncStorage, ActivityIndicator } from "react-native";
-import { Appbar, Headline, Caption, Paragraph } from "react-native-paper";
+import { Appbar, Headline, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
 import { useQuery } from "react-apollo-hooks";
 import { Avatar } from "react-native-elements";
@@ -44,6 +44,11 @@ const Row = styled.View`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 const MyProfileScreen = ({ navigation }) => {

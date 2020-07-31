@@ -128,7 +128,6 @@ const TeamProfileScreen = ({ navigation }) => {
     return (
       <Container>
         <BlurView intensity={90} tint="light" style={StyleSheet.absoluteFill}>
-          {console.log(team)}
           <Image
             style={{
               position: "absolute",

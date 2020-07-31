@@ -2,7 +2,7 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import { Avatar } from "react-native-elements";
 import styled from "styled-components/native";
-import { Subheading, Paragraph } from "react-native-paper";
+import { Paragraph } from "react-native-paper";
 
 import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { timeSince } from "../utils/time";
@@ -29,6 +29,10 @@ const UpperHalfContainer = styled.View`
   justify-content: space-between;
   flex: 1;
   align-items: center;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
 `;
 
 interface IProps {
@@ -80,12 +84,12 @@ const ChatCard: React.FC<IProps> = ({
         {status === "false" ? (
           <>
             <UpperHalfContainer>
-              <Subheading
+              <NameText
                 numberOfLines={1}
                 style={{ color: "#000", fontWeight: "bold" }}
               >
-                {senderUsername}
-              </Subheading>
+                @{senderUsername}
+              </NameText>
               <Caption style={{ color: "#000", fontWeight: "bold" }}>
                 {timeSince(createdAt)}
               </Caption>
@@ -100,7 +104,7 @@ const ChatCard: React.FC<IProps> = ({
         ) : (
           <>
             <UpperHalfContainer>
-              <Subheading numberOfLines={1}>{senderUsername}</Subheading>
+              <NameText numberOfLines={1}>@{senderUsername}</NameText>
               <Caption>{timeSince(createdAt)}</Caption>
             </UpperHalfContainer>
             <Paragraph numberOfLines={1} style={{ color: "darkgray" }}>

@@ -4,7 +4,7 @@ import { Picker } from "react-native";
 import { useQuery } from "react-apollo-hooks";
 import { Avatar } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Subheading, TextInput, Caption, Divider } from "react-native-paper";
+import { TextInput, Divider } from "react-native-paper";
 import styled from "styled-components/native";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -67,6 +67,15 @@ const TextInputContainer = styled.View`
 const ButtonContainer = styled.View`
   justify-content: center;
   align-items: center;
+`;
+
+const NameText = styled.Text`
+  font-size: 18px;
+`;
+
+const Caption = styled.Text`
+  font-size: 10px;
+  color: #999;
 `;
 
 const IconContainer = styled.TouchableOpacity`
@@ -231,7 +240,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                         }}
                       />
                       <InnerUserInfoContainerStyle>
-                        <Subheading>{name}</Subheading>
+                        <NameText>{name}</NameText>
                         <Caption>{`@${username}`}</Caption>
                       </InnerUserInfoContainerStyle>
                       <IconContainer
@@ -283,7 +292,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                     label="Search user"
                     value={searchText}
                     onChangeText={(text: string) => {
-                      setSearchText(text), console.log(searchText);
+                      setSearchText(text);
                     }}
                     style={{ backgroundColor: "transparent" }}
                     theme={{ colors: { primary: DARK_ORANGE } }}
@@ -309,7 +318,7 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                                 }}
                               />
                               <InnerUserInfoContainerStyle>
-                                <Subheading>{name}</Subheading>
+                                <NameText>{name}</NameText>
                                 <Caption>{`@${username}`}</Caption>
                               </InnerUserInfoContainerStyle>
                               <IconContainer
