@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { AsyncStorage, ActivityIndicator } from "react-native";
+import {
+  AsyncStorage,
+  ActivityIndicator,
+  Platform,
+  Alert,
+  Linking,
+} from "react-native";
 import { Appbar, Headline, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
-import { useQuery, useApolloClient } from "react-apollo-hooks";
+import { useQuery, useApolloClient, useMutation } from "react-apollo-hooks";
 import { Avatar } from "react-native-elements";
+import { Notifications } from "expo";
+import Constants from "expo-constants";
+import * as IntentLauncher from "expo-intent-launcher";
+import * as Permissions from "expo-permissions";
 
-import { ME, MY_FEED } from "./MyProfileScreenQueries";
-import { Me, GetMyFeed, GetMyFeedVariables } from "../../types/api";
+import { ME, MY_FEED, REGISTER_PUSH } from "./MyProfileScreenQueries";
+import {
+  Me,
+  GetMyFeed,
+  GetMyFeedVariables,
+  RegisterPush,
+  RegisterPushVariables,
+} from "../../types/api";
 import FeedList from "../../components/FeedList";
 import ListFooterComponent from "../../components/ListFooterComponent";
 
@@ -73,6 +89,11 @@ const MyProfileScreen = ({ navigation }) => {
     fetchPolicy: "network-only",
   });
 
+  const [registerPushFn, { loading: registerPushLoading }] = useMutation<
+    RegisterPush,
+    RegisterPushVariables
+  >(REGISTER_PUSH);
+
   const onTeamsPress = (userId) => {
     navigation.push("TeamsScreen", {
       userId,
@@ -96,8 +117,62 @@ const MyProfileScreen = ({ navigation }) => {
     await AsyncStorage.clear();
     navigation.navigate("Auth");
   };
+  const askPermission = async () => {
+    const { status: notificationStatus } = await Permissions.askAsync(
+      Permissions.NOTIFICATIONS
+    );
+    if (Platform.OS === "ios" && notificationStatus !== "granted") {
+      Alert.alert(
+        "Permission Denied",
+        "To enable notification, tap Open Settings, then tap on Notifications, and finally tap on Allow Notifications.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Open Settings",
+            onPress: () => {
+              Linking.openURL("app-settings:");
+            },
+          },
+        ]
+      );
+    } else if (Platform.OS === "android" && notificationStatus !== "granted") {
+      Alert.alert(
+        "Permission Denied",
+        "To enable notification, tap Open Settings, then tap on Notifications, and finally tap on Allow Notifications.",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Open Settings",
+            onPress: () => {
+              const pkg = Constants.manifest.releaseChannel
+                ? Constants.manifest.android.package
+                : "host.exp.exponent";
+              IntentLauncher.startActivityAsync(
+                IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS,
+                { data: "package:" + pkg }
+              );
+            },
+          },
+        ]
+      );
+    } else if (notificationStatus === "granted") {
+      let pushToken = await Notifications.getExpoPushTokenAsync();
+      const { data: serverData } = await registerPushFn({
+        variables: { pushToken },
+      });
+    } else {
+      return;
+    }
+  };
 
   useEffect(() => {
+    askPermission();
     navigation.setParams({
       logout: handleLogout,
     });

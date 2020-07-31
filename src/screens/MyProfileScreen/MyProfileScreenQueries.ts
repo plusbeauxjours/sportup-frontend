@@ -49,3 +49,11 @@ export const MY_FEED = gql`
     }
   }
 `;
+
+export const REGISTER_PUSH = gql`
+  mutation RegisterPush($pushToken: String!) {
+    registerPush(pushToken: $pushToken) {
+      ok
+    }
+  }
+`;

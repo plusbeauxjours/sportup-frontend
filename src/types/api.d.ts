@@ -925,6 +925,28 @@ export interface GetMyFeedVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: RegisterPush
+// ====================================================
+
+export interface RegisterPush_registerPush {
+  __typename: "RegisterPushResponse";
+  ok: boolean | null;
+}
+
+export interface RegisterPush {
+  registerPush: RegisterPush_registerPush;
+}
+
+export interface RegisterPushVariables {
+  pushToken: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: RegisterTeam
 // ====================================================
 
