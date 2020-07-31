@@ -9,6 +9,7 @@ import ChatCard from "../../components/ChatCard";
 import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
+import { get_last_chat_status } from "../../constants/firebase";
 
 const Container = styled.View`
   flex: 1;
@@ -63,7 +64,7 @@ const ChatListScreen = () => {
           onRefresh={onRefresh}
           renderItem={({ item }: any) => (
             <ChatCard
-              status={item.status}
+              status={get_last_chat_status(item._id, me.user.id)}
               createdAt={item.createdAt}
               lastMessage={item.lastMessage}
               chatId={item._id}

@@ -3,8 +3,8 @@ import { FlatList } from "react-native";
 import { ListItem } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
-import Loader from "../../components/Loader";
-import BackBtn from "../../components/BackBtn";
+import styled from "styled-components/native";
+
 import {
   GetRegistrations,
   GetRegistrationsVariables,
@@ -16,6 +16,13 @@ import {
   APPROVE_REGISTRATION,
   DISAPPROVE_REGISTRATION,
 } from "./RegistrationScreenQueries";
+import Loader from "../../components/Loader";
+import BackBtn from "../../components/BackBtn";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 const RegistrationScreen = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
@@ -115,23 +122,25 @@ const RegistrationScreen = ({ navigation }) => {
     return <Loader />;
   }
   return (
-    <FlatList
-      data={registrations}
-      showsVerticalScrollIndicator={false}
-      renderItem={({ item, index }) => (
-        <ListItem
-          key={item?.id}
-          title={item?.name}
-          subtitle={`Registered by ${item?.registeredBy.username}`}
-          rightIcon={{
-            name: "check",
-            color: item?.approved ? "green" : "gray",
-            onPress: () => onPress(item.id, index, item.approved),
-          }}
-        />
-      )}
-      keyExtractor={(item) => item.id.toString()}
-    />
+    <Container>
+      <FlatList
+        data={registrations}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <ListItem
+            key={item?.id}
+            title={item?.name}
+            subtitle={`Registered by ${item?.registeredBy.username}`}
+            rightIcon={{
+              name: "check",
+              color: item?.approved ? "green" : "gray",
+              onPress: () => onPress(item.id, index, item.approved),
+            }}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </Container>
   );
 };
 RegistrationScreen.navigationOptions = ({ navigation }) => ({

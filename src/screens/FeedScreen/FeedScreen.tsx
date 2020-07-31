@@ -72,7 +72,7 @@ const FeedScreen = () => {
         scrollRef.current?.getNode()?.scrollTo({ x: 0, animated: true });
       Animated.timing(rotate, {
         toValue: 0,
-        duration: 50,
+        duration: 100,
         easing: Easing.bounce,
       }).start();
       writeMode = false;
@@ -81,7 +81,7 @@ const FeedScreen = () => {
         scrollRef.current?.getNode()?.scrollTo({ x: width, animated: true });
       Animated.timing(rotate, {
         toValue: 45,
-        duration: 50,
+        duration: 100,
         easing: Easing.bounce,
       }).start();
       writeMode = true;

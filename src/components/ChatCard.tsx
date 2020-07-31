@@ -32,7 +32,7 @@ const UpperHalfContainer = styled.View`
 `;
 
 interface IProps {
-  status: string;
+  status: any;
   createdAt: string;
   lastMessage: string;
   chatId: string;
