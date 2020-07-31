@@ -13,6 +13,7 @@ import Button from "../../components/Button";
 import styled from "styled-components/native";
 import BackBtn from "../../components/BackBtn";
 import AppleApproach from "../AppleApproach/index";
+import FacebookApproach from "../FacebookApproach";
 
 const Container = styled.View`
   flex: 1;
@@ -90,6 +91,7 @@ const LoginForm = ({ navigation }) => {
         text={"Continue with Account"}
       />
       {Platform.OS === "ios" && <AppleApproach />}
+      <FacebookApproach />
       <Divider text="OR" />
       <Button
         disabled={LoginLoading}

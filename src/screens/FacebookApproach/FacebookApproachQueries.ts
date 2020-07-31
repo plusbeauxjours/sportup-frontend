@@ -13,6 +13,7 @@ export const FACEBOOK_CONNECT = gql`
       email: $email
       fbId: $fbId
     ) {
+      ok
       token
     }
   }

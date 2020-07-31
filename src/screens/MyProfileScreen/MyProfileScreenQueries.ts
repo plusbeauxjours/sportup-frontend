@@ -19,6 +19,8 @@ export const ME = gql`
         followersCount
         followingCount
         pushToken
+        fbId
+        appleId
       }
     }
   }

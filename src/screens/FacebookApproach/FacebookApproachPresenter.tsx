@@ -8,7 +8,7 @@ const Touchable = styled.TouchableOpacity``;
 
 const Container = styled.View`
   background-color: #2d4da7;
-  width: 260px;
+  width: 240px;
   height: 40px;
   border-radius: 5px;
   align-items: center;
@@ -17,7 +17,7 @@ const Container = styled.View`
 `;
 
 const LoginTextContainer = styled.View`
-  width: 200px;
+  width: 210px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
@@ -55,10 +55,10 @@ const FacebookApproachPresenter: React.FC<IProps> = ({
             <FontAwesome
               name={"facebook"}
               color={"white"}
-              size={25}
+              size={20}
               style={{ marginRight: 10 }}
             />
-            <Text>Continue with Facebook</Text>
+            <Text>CONTINUE WITH FACEBOOK</Text>
           </LoginTextContainer>
         )}
       </Container>

@@ -1,34 +1,30 @@
 import React, { useState } from "react";
-
+import { AsyncStorage } from "react-native";
 import * as Facebook from "expo-facebook";
 import { useMutation } from "react-apollo-hooks";
+import { withNavigation } from "react-navigation";
 
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
 import { FacebookConnect, FacebookConnectVariables } from "../../types/api";
 
-interface IProps {
-  cityId: string;
-  countryCode: string;
-}
-
-const FacebookApproachContainer: React.FC<IProps> = () => {
+const FacebookApproachContainer = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
-  const [facebookConnectFn, { loading: facebookConnectLoading }] = useMutation<
+  const [facebookConnectFn] = useMutation<
     FacebookConnect,
     FacebookConnectVariables
   >(FACEBOOK_CONNECT);
 
   const fbLogin = async () => {
     try {
-      await Facebook.initializeAsync("242663513281642", "Pinner");
+      await Facebook.initializeAsync("215367199809278", "SportUp");
       const authResult = await Facebook.logInWithReadPermissionsAsync({
         permissions: ["public_profile", "email"],
       });
       if (authResult.type === "success") {
         const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${authResult.token}&fields=id,name,last_name,first_name,email,gender`
+          `https://graph.facebook.com/me?access_token=${authResult.token}&fields=id,name,last_name,first_name,email`
         );
         const { id, email, first_name, last_name } = await response.json();
         const {
@@ -41,7 +37,11 @@ const FacebookApproachContainer: React.FC<IProps> = () => {
             fbId: id,
           },
         });
-        await logIn(facebookConnect);
+        await AsyncStorage.setItem("jwt", facebookConnect.token);
+        if (facebookConnect.token) {
+          await setLoading(false);
+          navigation.navigate("Main");
+        }
       }
     } catch ({ message }) {
       console.log(`Facebook Login Error: ${message}`);
@@ -59,4 +59,4 @@ const FacebookApproachContainer: React.FC<IProps> = () => {
   );
 };
 
-export default FacebookApproachContainer;
+export default withNavigation(FacebookApproachContainer);

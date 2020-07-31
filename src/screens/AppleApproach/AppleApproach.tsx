@@ -60,7 +60,6 @@ export default withNavigation(({ navigation }) => {
             appleId: credential.user,
           },
         });
-        console.log(appleConnect);
         await AsyncStorage.setItem("jwt", appleConnect.token);
         if (appleConnect.token) {
           await setLoading(false);

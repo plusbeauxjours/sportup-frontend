@@ -193,6 +193,7 @@ export interface RemovePostInteractionVariables {
 
 export interface AppleConnect_appleConnect {
   __typename: "AppleConnectResponse";
+  ok: boolean | null;
   token: string | null;
 }
 
@@ -565,6 +566,7 @@ export interface GetEventVariables {
 
 export interface FacebookConnect_facebookConnect {
   __typename: "FacebookConnectResponse";
+  ok: boolean | null;
   token: string | null;
 }
 
@@ -858,6 +860,8 @@ export interface Me_me_user {
   followersCount: number | null;
   followingCount: number | null;
   pushToken: string | null;
+  fbId: string | null;
+  appleId: string | null;
 }
 
 export interface Me_me {
@@ -1345,6 +1349,8 @@ export interface GetUser_getUser_user {
   followersCount: number | null;
   followingCount: number | null;
   pushToken: string | null;
+  fbId: string | null;
+  appleId: string | null;
 }
 
 export interface GetUser_getUser {

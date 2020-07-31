@@ -13,6 +13,7 @@ export const APPLE_CONNECT = gql`
       email: $email
       appleId: $appleId
     ) {
+      ok
       token
     }
   }

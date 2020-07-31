@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AsyncStorage, ActivityIndicator } from "react-native";
 import { Appbar, Headline, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useApolloClient } from "react-apollo-hooks";
 import { Avatar } from "react-native-elements";
 
 import { ME, MY_FEED } from "./MyProfileScreenQueries";
@@ -53,6 +53,7 @@ const Caption = styled.Text`
 `;
 
 const MyProfileScreen = ({ navigation }) => {
+  const client = useApolloClient();
   const { me, loading: meContextLoading } = useMe();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -91,6 +92,7 @@ const MyProfileScreen = ({ navigation }) => {
   };
 
   const handleLogout = async () => {
+    client.resetStore();
     await AsyncStorage.clear();
     navigation.navigate("Auth");
   };
@@ -130,7 +132,7 @@ const MyProfileScreen = ({ navigation }) => {
           <Caption>{`@${user?.username}`}</Caption>
           <WhiteSpace />
           <Paragraph style={{ textAlign: "center", paddingHorizontal: 20 }}>
-            {user.bio}
+            {user?.bio}
           </Paragraph>
           <WhiteSpace />
           <Row>

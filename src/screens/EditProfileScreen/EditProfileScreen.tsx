@@ -153,28 +153,31 @@ const EditProfileScreen = ({ navigation }) => {
                   multiline={true}
                   error={touched.bio && errors.bio}
                 />
-                <FormikInput
-                  label="Password"
-                  autoCapitalize="none"
-                  secureTextEntry
-                  value={values.password}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="password"
-                  error={touched.password && errors.password}
-                />
-                <FormikInput
-                  label="Confirm password"
-                  autoCapitalize="none"
-                  secureTextEntry
-                  value={values.confirmPassword}
-                  onChange={setFieldValue}
-                  onTouch={setFieldTouched}
-                  name="confirmPassword"
-                  error={touched.confirmPassword && errors.confirmPassword}
-                />
+                {!user.fbId && !user.appleId && (
+                  <>
+                    <FormikInput
+                      label="Password"
+                      autoCapitalize="none"
+                      secureTextEntry
+                      value={values.password}
+                      onChange={setFieldValue}
+                      onTouch={setFieldTouched}
+                      name="password"
+                      error={touched.password && errors.password}
+                    />
+                    <FormikInput
+                      label="Confirm password"
+                      autoCapitalize="none"
+                      secureTextEntry
+                      value={values.confirmPassword}
+                      onChange={setFieldValue}
+                      onTouch={setFieldTouched}
+                      name="confirmPassword"
+                      error={touched.confirmPassword && errors.confirmPassword}
+                    />
+                  </>
+                )}
                 <WhiteSpace />
-
                 <Button
                   disabled={!isValid || updateUserLoading}
                   loading={updateUserLoading}
