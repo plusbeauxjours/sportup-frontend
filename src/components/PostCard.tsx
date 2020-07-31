@@ -35,7 +35,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 
 const Border = styled.View`
   border-color: #999;
-  border-width: 0.2px;
+  border-width: 0.5px;
   border-radius: 20px;
   padding: 10px 0;
 `;

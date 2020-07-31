@@ -11,10 +11,12 @@ import TeamProfileScreen from "../screens/TeamProfileScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen";
 import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
 import ChatScreen from "../screens/ChatScreen/";
+import WritePostScreen from "../screens/WritePostScreen/index";
 
 const FeedNavigation = createStackNavigator(
   {
     FeedScreen,
+    WritePostScreen,
     MyProfileScreen,
     EditProfileScreen,
     UserProfileScreen,

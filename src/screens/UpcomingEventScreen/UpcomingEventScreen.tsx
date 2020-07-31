@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useQuery } from "react-apollo";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
+import { Appbar } from "react-native-paper";
 
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
 import { GetUpcomingEvents, GetUpcomingEventsVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import { Appbar } from "react-native-paper";
 import AddBtn from "../../components/AddBtn";
 
 const Container = styled.View`

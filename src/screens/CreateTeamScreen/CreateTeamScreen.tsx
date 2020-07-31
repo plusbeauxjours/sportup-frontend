@@ -48,7 +48,7 @@ const TouchableOpacity = styled.TouchableOpacity`
 `;
 
 const WhiteSpace = styled.View`
-  height: 50px;
+  height: 40px;
 `;
 
 const Container = styled.View`
@@ -322,6 +322,7 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
               </React.Fragment>
             )}
           </Formik>
+          <WhiteSpace />
         </KeyboardAwareScrollView>
       </Container>
     );

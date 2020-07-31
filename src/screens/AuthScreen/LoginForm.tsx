@@ -10,6 +10,13 @@ import Divider from "../../components/Divider";
 import { LOGIN } from "./AuthScreenQueries";
 import { Login, LoginVariables } from "../../types/api";
 import Button from "../../components/Button";
+import styled from "styled-components/native";
+import BackBtn from "../../components/BackBtn";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 const initialValues = { username: "", password: "" };
 const validationSchema = Yup.object().shape({
@@ -93,25 +100,32 @@ const LoginForm = ({ navigation }) => {
   );
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={() => {}}
+    <Container>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: "#fff",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        {renderForm}
-      </Formik>
-    </KeyboardAwareScrollView>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={() => {}}
+        >
+          {renderForm}
+        </Formik>
+      </KeyboardAwareScrollView>
+    </Container>
   );
 };
+LoginForm.navigationOptions = ({ navigation }) => ({
+  title: "Log In",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
+});
 
 export default LoginForm;

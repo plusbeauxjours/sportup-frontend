@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { FlatList, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
-import { Divider } from "react-native-paper";
 import { useQuery } from "react-apollo-hooks";
 
 import { GetTeam, GetTeamVariables } from "../../types/api";
-import { MEDIA_URL } from "../../constants/urls";
 import RatingChip from "../../components/RatingChip";
 import { GET_TEAM, RATE_TEAM } from "./TeamProfileScreenQueries";
 import UserCard from "../../components/UserCard";
@@ -44,10 +42,6 @@ const Image = styled.Image`
   height: 150px;
 `;
 
-const Touchable = styled.TouchableOpacity`
-  align-items: center;
-`;
-
 const WhiteSpace = styled.View`
   height: 40px;
 `;
@@ -76,21 +70,16 @@ const TeamInfoArea: React.FC<IProps> = ({
 }) => {
   return (
     <InfoContainer>
-      {coverImg ? <Image source={{ uri: MEDIA_URL + coverImg }} /> : null}
       <View>
-        <Touchable onPress={() => showDialog}>
-          <NameText style={{ textTransform: "capitalize" }}>
-            {teamName}
-          </NameText>
-          {rating && (
-            <>
-              <WhiteSpace />
-              <NameText style={{ textTransform: "capitalize" }}>
-                ⭐️{rating}
-              </NameText>
-            </>
-          )}
-        </Touchable>
+        <NameText style={{ textTransform: "capitalize" }}>{teamName}</NameText>
+        {rating && (
+          <>
+            <WhiteSpace />
+            <NameText style={{ textTransform: "capitalize" }}>
+              ⭐️{rating}
+            </NameText>
+          </>
+        )}
         <WhiteSpace />
         <RatingChip
           sportId={sport.sportId}
@@ -140,7 +129,8 @@ const TeamProfileScreen = ({ navigation }) => {
   } else {
     return (
       <Container>
-        <BlurView intensity={80} tint="light" style={StyleSheet.absoluteFill}>
+        <BlurView intensity={90} tint="light" style={StyleSheet.absoluteFill}>
+          {console.log(team)}
           <Image
             style={{
               position: "absolute",
@@ -149,8 +139,9 @@ const TeamProfileScreen = ({ navigation }) => {
               width: "100%",
               height: "100%",
             }}
-            source={require("../../../assets/roomDefault.jpeg")}
-            // source={{ uri: MEDIA_URL + event.sport.sportImgUrl }}
+            source={
+              team?.sport?.sportImgUrl && { uri: team?.sport?.sportImgUrl }
+            }
             resizeMode="cover"
           />
           <FlatList

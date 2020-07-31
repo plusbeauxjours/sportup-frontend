@@ -63,8 +63,11 @@ const Touchable = styled.TouchableOpacity`
   padding: 0 20px;
 `;
 
+const WhiteSpace = styled.View`
+  height: 40px;
+`;
+
 const Container = styled.View`
-  padding: 40px 0;
   background-color: white;
 `;
 
@@ -308,6 +311,7 @@ const CreateEventScreen = ({ navigation }) => {
               </>
             )}
           </Formik>
+          <WhiteSpace />
         </KeyboardAwareScrollView>
       </Container>
     );
@@ -318,4 +322,5 @@ CreateEventScreen.navigationOptions = ({ navigation }) => ({
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
 });
+
 export default CreateEventScreen;

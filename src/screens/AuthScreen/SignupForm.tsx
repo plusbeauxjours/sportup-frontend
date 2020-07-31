@@ -14,6 +14,13 @@ import {
   SignupVariables,
 } from "../../types/api";
 import Button from "../../components/Button";
+import BackBtn from "../../components/BackBtn";
+import styled from "styled-components/native";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: white;
+`;
 
 const initialValues = {
   firstName: "",
@@ -152,25 +159,32 @@ const SignupForm = ({ navigation }) => {
     </React.Fragment>
   );
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Formik
-        initialValues={initialValues}
-        onSubmit={() => {}}
-        validationSchema={validationSchema}
+    <Container>
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          backgroundColor: "#fff",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        {renderForm}
-      </Formik>
-    </KeyboardAwareScrollView>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {}}
+          validationSchema={validationSchema}
+        >
+          {renderForm}
+        </Formik>
+      </KeyboardAwareScrollView>
+    </Container>
   );
 };
+SignupForm.navigationOptions = ({ navigation }) => ({
+  title: "Sign Up",
+  headerBackTitleVisible: false,
+  headerBackImage: () => <BackBtn />,
+});
 
 export default SignupForm;

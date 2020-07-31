@@ -13,6 +13,7 @@ import RegisterForEventScreen from "../screens/RegisterForEventScreen";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
 import ChatScreen from "../screens/ChatScreen/";
+import MyProfileScreen from "../screens/MyProfileScreen/MyProfileScreen";
 
 const EventNavigation = createStackNavigator(
   {
@@ -21,6 +22,7 @@ const EventNavigation = createStackNavigator(
     EventScreen,
     RegisterForEventScreen,
     RegistrationScreen,
+    MyProfileScreen,
     UserProfileScreen,
     FollowersScreen,
     FollowingScreen,

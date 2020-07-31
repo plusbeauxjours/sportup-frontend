@@ -12,14 +12,6 @@ import UserCard from "../../components/UserCard";
 import TeamCard from "../../components/TeamCard";
 import EventCard from "../../components/EventCard";
 
-const Border = styled.View`
-  border-color: #999;
-  border-width: 0.2px;
-  border-radius: 20px;
-  padding: 10px;
-  margin: 3px;
-`;
-
 const SectionTitle = styled.Text`
   text-transform: uppercase;
   margin-left: 10px;

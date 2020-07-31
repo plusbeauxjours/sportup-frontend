@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppLoading } from "expo";
 import { HttpLink } from "apollo-link-http";
 import { Asset } from "expo-asset";
-import { Image, AsyncStorage } from "react-native";
+import { Image, AsyncStorage, StatusBar } from "react-native";
 import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
@@ -74,6 +74,7 @@ export default function App() {
   const handleFinishLoading = () => {
     setLoadingComplete(true);
   };
+  StatusBar.setBarStyle("dark-content", true);
   useEffect(() => {
     makeClient();
   }, []);

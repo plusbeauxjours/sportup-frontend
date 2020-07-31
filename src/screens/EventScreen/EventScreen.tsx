@@ -1,19 +1,19 @@
 import React from "react";
-import { StyleSheet, Image, Alert } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import { useQuery } from "react-apollo";
 import { BlurView } from "expo-blur";
 import styled from "styled-components/native";
+import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 
-import { MEDIA_URL } from "../../constants/urls";
-import { formatDate, formatTime } from "../../utils/time";
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
 import { PRIMARY_COLOR } from "../../constants/colors";
-import utils from "../..//utils/utils";
+import { formatDate, formatTime } from "../../utils/time";
+import utils from "../../utils/utils";
 
 const Container = styled.View`
   flex: 1;
@@ -74,17 +74,16 @@ const EventScreen = ({ navigation }) => {
   }
   return (
     <Container>
-      <BlurView intensity={80} tint="light" style={StyleSheet.absoluteFill}>
+      <BlurView intensity={90} tint="light" style={StyleSheet.absoluteFill}>
         <Image
-          style={{
+          containerStyle={{
             position: "absolute",
             zIndex: -1,
             top: 0,
             width: "100%",
             height: "100%",
           }}
-          source={require("../../../assets/roomDefault.jpeg")}
-          // source={{ uri: MEDIA_URL + event.sport.sportImgUrl }}
+          source={event.sport.sportImgUrl && { uri: event.sport.sportImgUrl }}
           resizeMode="cover"
         />
       </BlurView>
