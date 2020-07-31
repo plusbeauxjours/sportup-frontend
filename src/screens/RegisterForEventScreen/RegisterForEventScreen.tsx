@@ -109,19 +109,17 @@ const RegisterForEventScreen = ({ navigation }) => {
               {Object.keys(initialValues)
                 .slice(3)
                 .map((field, index) => (
-                  <>
-                    <FormikInput
-                      label={`Player ${index + 1} name${
-                        index >= minimumMembers - 1 ? " (optional)" : ""
-                      }`}
-                      value={values[field]}
-                      onChange={setFieldValue}
-                      onTouch={setFieldTouched}
-                      name={field}
-                      error={touched[field] && errors[field]}
-                      key={index}
-                    />
-                  </>
+                  <FormikInput
+                    label={`Player ${index + 1} name${
+                      index >= minimumMembers - 1 ? " (optional)" : ""
+                    }`}
+                    value={values[field]}
+                    onChange={setFieldValue}
+                    onTouch={setFieldTouched}
+                    name={field}
+                    error={touched[field] && errors[field]}
+                    key={index}
+                  />
                 ))}
               <Button
                 disabled={

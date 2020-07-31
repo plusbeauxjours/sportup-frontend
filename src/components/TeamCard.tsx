@@ -2,8 +2,6 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
-// import { get_or_create_chat } from "../constants/firebase";
-import { useMe } from "../context/meContext";
 
 const Border = styled.View`
   border-color: #999;
@@ -45,27 +43,12 @@ const Row = styled.View`
 `;
 
 const TeamCard = ({ team, navigation }) => {
-  const { me, loading: meLoading } = useMe();
-  // const onPress = async (createdBy) => {
-  //   const new_key_chats = await get_or_create_chat();
-  //   if (new_key_chats) {
-  //     navigation.push("ChatScreen", {
-  //       chatId: new_key_chats,
-  //       senderUserId: me?.user.id,
-  //       senderUsername: me?.user.username,
-  //       senderPushToken: me?.user.pushToken,
-  //       receiverUserId: createdBy.id,
-  //       receiverUsername: createdBy.username,
-  //       receiverPushToken: createdBy.pushToken,
-  //     });
-  //   }
-  // };
   const onPress = () => {
     navigation.push("TeamProfileScreen", { teamId: team?.id });
   };
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Border key={team?.id}>
+    <TouchableOpacity onPress={onPress} key={team?.id}>
+      <Border>
         <OuterUserInfoContainerStyle>
           <InnerUserInfoContainerStyle>
             <Row>

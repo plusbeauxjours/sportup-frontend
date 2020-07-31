@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useMutation } from "react-apollo";
 import { useMe } from "../../context/meContext";
 import {
+  Me,
   FollowUser,
   FollowUserVariables,
   UnfollowUser,
   UnfollowUserVariables,
-} from "../../types/api";
-import {
   GetUserFollowing,
   GetUserFollowingVariables,
   GetUserFollowers,
@@ -17,6 +16,7 @@ import { GET_USER_FOLLOWING } from "../../screens/FollowingScreen/FollowingScree
 import { FOLLOW_USER, UNFOLLOW_USER } from "./FollowBtnQueries";
 import { GET_USER_FOLLOWERS } from "../../screens/FollowersScreen/FollowersScreenQueries";
 import Button from "../Button";
+import { ME } from "../../screens/MyProfileScreen/MyProfileScreenQueries";
 
 interface IProps {
   isFollowing: boolean;
@@ -35,22 +35,20 @@ const FollowBtn: React.FC<IProps> = ({
   >(FOLLOW_USER, {
     variables: { userId },
     update(cache, { data: { followUser } }) {
-      // try {
-      //   const { me } = cache.readQuery<Me>({
-      //     query: ME,
-      //   });
-      //   cache.writeQuery({
-      //     query: ME,
-      //     data: {
-      //       me: {
-      //         ...me,
-      //         user: { ...me.user, followingCount: me.user.followingCount + 1 },
-      //       },
-      //     },
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      try {
+        const { me } = cache.readQuery<Me>({ query: ME });
+        cache.writeQuery({
+          query: ME,
+          data: {
+            me: {
+              ...me,
+              user: { ...me.user, followingCount: me.user.followingCount + 1 },
+            },
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
       try {
         const data = cache.readQuery<
           GetUserFollowing,
@@ -109,19 +107,20 @@ const FollowBtn: React.FC<IProps> = ({
   >(UNFOLLOW_USER, {
     variables: { userId },
     update(cache, { data: { unfollowUser } }) {
-      // try {
-      //   cache.writeQuery({
-      //     query: ME,
-      //     data: {
-      //       me: {
-      //         ...me,
-      //         user: { ...me.user, followingCount: me.user.followingCount - 1 },
-      //       },
-      //     },
-      //   });
-      // } catch (e) {
-      //   console.log(e);
-      // }
+      try {
+        const { me } = cache.readQuery<Me>({ query: ME });
+        cache.writeQuery({
+          query: ME,
+          data: {
+            me: {
+              ...me,
+              user: { ...me.user, followingCount: me.user.followingCount - 1 },
+            },
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
       try {
         const data = cache.readQuery<
           GetUserFollowing,

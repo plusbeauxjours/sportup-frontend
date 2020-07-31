@@ -79,9 +79,9 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
         }}
       >
         {teams?.map((team, index) => (
-          <>
+          <React.Fragment key={index}>
             <Divider />
-            <OuterUserInfoContainerStyle key={index}>
+            <OuterUserInfoContainerStyle>
               <TouchableOpacity
                 onPress={() => {
                   navigation.push("TeamProfileScreen", { teamId: team?.id });
@@ -103,7 +103,7 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
                 </InnerUserInfoContainerStyle>
               </TouchableOpacity>
             </OuterUserInfoContainerStyle>
-          </>
+          </React.Fragment>
         ))}
       </View>
     </React.Fragment>
