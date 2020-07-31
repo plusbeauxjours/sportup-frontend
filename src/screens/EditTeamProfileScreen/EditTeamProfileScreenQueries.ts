@@ -16,10 +16,9 @@ export const UPDATE_TEAM = gql`
       team {
         id
         teamName
-        coverImg
         sport {
           sportId
-          sportimgurl
+          sportImgUrl
           name
         }
         members {

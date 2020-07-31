@@ -6,7 +6,6 @@ export const GET_TEAM = gql`
       team {
         id
         teamName
-        coverImg
         isAdmin
         createdBy{
           id

@@ -12,7 +12,6 @@ export const GET_EVENT = gql`
           name
           sportImgUrl
         }
-        coverImg
         startDate
         endDate
         startTime

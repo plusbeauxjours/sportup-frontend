@@ -97,7 +97,6 @@ export interface GetTeamsForPlayer_getTeamsForPlayer_teams {
   __typename: "TeamType";
   id: string;
   teamName: string;
-  coverImg: string | null;
   sport: GetTeamsForPlayer_getTeamsForPlayer_teams_sport;
   rating: number | null;
   createdBy: GetTeamsForPlayer_getTeamsForPlayer_teams_createdBy;
@@ -181,50 +180,6 @@ export interface RemovePostInteraction {
 
 export interface RemovePostInteractionVariables {
   postId: string;
-}
-
-/* tslint:disable */
-/* eslint-disable */
-// @generated
-// This file was automatically generated and should not be edited.
-
-// ====================================================
-// GraphQL mutation operation: CreatePost
-// ====================================================
-
-export interface CreatePost_createPost_post_postedBy {
-  __typename: "UserType";
-  id: string;
-  name: string | null;
-  /**
-   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
-   */
-  username: string;
-  userImg: string | null;
-}
-
-export interface CreatePost_createPost_post {
-  __typename: "PostType";
-  id: string;
-  text: string | null;
-  postImg: string | null;
-  createdAt: any;
-  score: number;
-  interaction: string | null;
-  postedBy: CreatePost_createPost_post_postedBy;
-}
-
-export interface CreatePost_createPost {
-  __typename: "CreatePostReponse";
-  post: CreatePost_createPost_post | null;
-}
-
-export interface CreatePost {
-  createPost: CreatePost_createPost;
-}
-
-export interface CreatePostVariables {
-  text: string;
 }
 
 /* tslint:disable */
@@ -477,6 +432,7 @@ export interface UpdateSportsVariables {
 export interface UpdateTeam_updateTeam_team_sport {
   __typename: "SportType";
   sportId: string | null;
+  sportImgUrl: string | null;
   name: string;
 }
 
@@ -497,7 +453,6 @@ export interface UpdateTeam_updateTeam_team {
   __typename: "TeamType";
   id: string;
   teamName: string;
-  coverImg: string | null;
   sport: UpdateTeam_updateTeam_team_sport;
   members: UpdateTeam_updateTeam_team_members[];
 }
@@ -550,7 +505,6 @@ export interface GetEvent_getEvent_event {
   name: string;
   description: string | null;
   sport: GetEvent_getEvent_event_sport;
-  coverImg: string | null;
   startDate: any | null;
   endDate: any | null;
   startTime: any | null;
@@ -802,7 +756,6 @@ export interface GetTeamsForGame_getTeamsForGame_teams {
   id: string;
   teamName: string;
   rating: number | null;
-  coverImg: string | null;
   sport: GetTeamsForGame_getTeamsForGame_teams_sport;
   createdBy: GetTeamsForGame_getTeamsForGame_teams_createdBy;
 }
@@ -1164,7 +1117,6 @@ export interface GetTeam_getTeam_team {
   __typename: "TeamType";
   id: string;
   teamName: string;
-  coverImg: string | null;
   isAdmin: boolean | null;
   createdBy: GetTeam_getTeam_team_createdBy;
   sport: GetTeam_getTeam_team_sport;
@@ -1237,7 +1189,6 @@ export interface GetUserTeams_getUser_user_teamSet {
   __typename: "TeamType";
   id: string;
   teamName: string;
-  coverImg: string | null;
   sport: GetUserTeams_getUser_user_teamSet_sport;
   createdBy: GetUserTeams_getUser_user_teamSet_createdBy;
 }
@@ -1427,6 +1378,50 @@ export interface RateUserSportVariables {
   userId: string;
   sportId: string;
   rating: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: CreatePost
+// ====================================================
+
+export interface CreatePost_createPost_post_postedBy {
+  __typename: "UserType";
+  id: string;
+  name: string | null;
+  /**
+   * Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+   */
+  username: string;
+  userImg: string | null;
+}
+
+export interface CreatePost_createPost_post {
+  __typename: "PostType";
+  id: string;
+  text: string | null;
+  postImg: string | null;
+  createdAt: any;
+  score: number;
+  interaction: string | null;
+  postedBy: CreatePost_createPost_post_postedBy;
+}
+
+export interface CreatePost_createPost {
+  __typename: "CreatePostReponse";
+  post: CreatePost_createPost_post | null;
+}
+
+export interface CreatePost {
+  createPost: CreatePost_createPost;
+}
+
+export interface CreatePostVariables {
+  text: string;
 }
 
 /* tslint:disable */

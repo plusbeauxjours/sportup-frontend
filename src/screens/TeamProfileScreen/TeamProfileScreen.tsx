@@ -54,7 +54,6 @@ const Center = styled.View`
 `;
 
 interface IProps {
-  coverImg: string;
   teamName: string;
   sport: any;
   showDialog: () => void;
@@ -62,7 +61,6 @@ interface IProps {
 }
 
 const TeamInfoArea: React.FC<IProps> = ({
-  coverImg,
   teamName,
   sport,
   showDialog,
@@ -151,7 +149,6 @@ const TeamProfileScreen = ({ navigation }) => {
             renderItem={({ item }) => <UserCard user={item} />}
             ListHeaderComponent={() => (
               <TeamInfoArea
-                coverImg={team.coverImg}
                 teamName={team.teamName}
                 sport={team.sport}
                 showDialog={showDialog}

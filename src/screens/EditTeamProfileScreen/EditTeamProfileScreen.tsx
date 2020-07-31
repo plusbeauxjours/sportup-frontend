@@ -124,7 +124,6 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
                 team: {
                   ...data.getTeam.team,
                   teamName: updateTeam.team.teamName,
-                  coverImg: updateTeam.team.coverImg,
                   sport: updateTeam.team.sport,
                   members: updateTeam.team.members,
                 },

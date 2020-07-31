@@ -9,7 +9,6 @@ export const GET_TEAMS_FOR_GAME = gql`
         id
         teamName
         rating
-        coverImg
         sport {
           sportId
           name
