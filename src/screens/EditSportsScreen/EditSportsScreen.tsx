@@ -23,7 +23,12 @@ const Container = styled.View`
   background-color: white;
 `;
 
+const WhiteSpace = styled.View`
+  height: 30px;
+`;
+
 const Row = styled.View`
+  max-width: 900px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -99,6 +104,7 @@ const EditSportsScreen = ({ navigation }) => {
             />
           ))}
         </Row>
+        <WhiteSpace />
         <Button
           onPress={() => {
             updateSportsFn({

@@ -13,10 +13,12 @@ import { TouchableWithoutFeedback } from "react-native";
 const Container = styled.View`
   flex: 1;
   justify-content: center;
+  align-items: center;
   background-color: white;
 `;
 
 const Row = styled.View`
+  max-width: 900px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
