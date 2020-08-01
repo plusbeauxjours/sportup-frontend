@@ -10,7 +10,6 @@ import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import { get_last_chat_status } from "../../constants/firebase";
-import chat from "src/temp/chat";
 
 const Container = styled.View`
   flex: 1;
@@ -43,9 +42,11 @@ const ChatListScreen = () => {
       setLoading(false);
     });
   };
+
   const amISender = (item) => {
     return item.sender._id === me?.user?.id;
   };
+
   const onRefresh = () => {
     try {
       setRefreshing(true);
@@ -55,12 +56,14 @@ const ChatListScreen = () => {
       setRefreshing(false);
     }
   };
+
   useEffect(() => {
     getChats();
   }, []);
+
   if (meLoading) {
     return <Loader />;
-  } else if (chats) {
+  } else {
     return (
       <Container>
         <FlatList
@@ -75,8 +78,8 @@ const ChatListScreen = () => {
               chatId={item._id}
               senderUsername={
                 amISender(item)
-                  ? item.receiver.receiverUsername
-                  : item.sender.senderUsername
+                  ? item.sender.senderUsername
+                  : item.receiver.receiverUsername
               }
               senderUserId={amISender(item) ? item.sender._id : item.sender._id}
               senderPushToken={
@@ -107,7 +110,6 @@ const ChatListScreen = () => {
       </Container>
     );
   }
-  return null;
 };
 ChatListScreen.navigationOptions = ({ navigation }) => ({
   title: "Chat",

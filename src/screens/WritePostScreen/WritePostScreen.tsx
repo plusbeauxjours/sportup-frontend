@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
   CreatePost,
@@ -20,6 +19,10 @@ import BackBtn from "../../components/BackBtn";
 const Container = styled.View`
   flex: 1;
   background-color: white;
+`;
+
+const WhiteSpace = styled.View`
+  height: 40px;
 `;
 
 const Box = styled.View`
@@ -82,10 +85,6 @@ const WritePostScreen = ({ navigation }) => {
   };
   return (
     <Container>
-      <KeyboardAwareScrollView
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
-      />
       <Box>
         <Input
           label={"Write post..."}
@@ -97,6 +96,7 @@ const WritePostScreen = ({ navigation }) => {
           onChangeText={(text) => setText(text)}
           multiline
         />
+        <WhiteSpace />
         <Button
           loading={createPostLoading}
           disabled={text === ""}

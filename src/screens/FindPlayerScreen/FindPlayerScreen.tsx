@@ -9,11 +9,10 @@ import { GetAllSports } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import { TouchableWithoutFeedback } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
-  align-items: center;
   background-color: white;
 `;
 
@@ -75,32 +74,47 @@ const FindPlayerScreen = ({ navigation }) => {
   } else {
     return (
       <Container>
-        <Row>
-          {sports?.map((sport) => (
-            <RatingChip
-              sportId={sport.sportId}
-              name={sport.name}
-              selected={selectedSportIds.includes(sport.sportId)}
-              key={sport.sportId}
-              onChipPress={() => toggleSportChip(sport.sportId)}
-            />
-          ))}
-        </Row>
-        <WhiteSpace />
-        <Row>
-          <IconContainer>
-            <TouchableWithoutFeedback onPress={onFindTeamPress}>
-              <Image source={require("../../../assets/icon/teamIcon.png")} />
-            </TouchableWithoutFeedback>
-            <Button onPress={onFindTeamPress} text={"Find A Team"}></Button>
-          </IconContainer>
-          <IconContainer>
-            <TouchableWithoutFeedback onPress={onFindPlayerPress}>
-              <Image source={require("../../../assets/icon/playerIcon.png")} />
-            </TouchableWithoutFeedback>
-            <Button onPress={onFindPlayerPress} text={"Find A Player"}></Button>
-          </IconContainer>
-        </Row>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Row>
+            {sports?.map((sport) => (
+              <RatingChip
+                sportId={sport.sportId}
+                name={sport.name}
+                selected={selectedSportIds.includes(sport.sportId)}
+                key={sport.sportId}
+                onChipPress={() => toggleSportChip(sport.sportId)}
+              />
+            ))}
+          </Row>
+          <WhiteSpace />
+          <Row>
+            <IconContainer>
+              <TouchableWithoutFeedback onPress={onFindTeamPress}>
+                <Image source={require("../../../assets/icon/teamIcon.png")} />
+              </TouchableWithoutFeedback>
+              <Button onPress={onFindTeamPress} text={"Find A Team"}></Button>
+            </IconContainer>
+            <IconContainer>
+              <TouchableWithoutFeedback onPress={onFindPlayerPress}>
+                <Image
+                  source={require("../../../assets/icon/playerIcon.png")}
+                />
+              </TouchableWithoutFeedback>
+              <Button
+                onPress={onFindPlayerPress}
+                text={"Find A Player"}
+              ></Button>
+            </IconContainer>
+          </Row>
+        </ScrollView>
       </Container>
     );
   }
