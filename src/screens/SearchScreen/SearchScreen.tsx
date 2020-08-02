@@ -3,6 +3,7 @@ import { ActivityIndicator } from "react-native";
 import { Appbar, Headline, Divider } from "react-native-paper";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_SEARCH_RESULTS } from "./SearchQueries";
 import { useLazyQuery } from "react-apollo";
@@ -24,7 +25,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const SearchScreen = ({ navigation }) => {
+const SearchScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [searchText, setSearchText] = useState<string>("");
   const [
     search,

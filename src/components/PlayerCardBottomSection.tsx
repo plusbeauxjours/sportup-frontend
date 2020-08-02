@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { get_or_create_chat } from "../constants/firebase";
 import { useMe } from "../context/meContext";
 import RatingChip from "./RatingChip";
+import { GetUser_getUser_user_sports } from "../types/api";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -51,7 +52,7 @@ const Caption = styled.Text`
 
 interface IProps {
   id: string;
-  sports: any;
+  sports: GetUser_getUser_user_sports;
   teams: any;
   navigation;
 }

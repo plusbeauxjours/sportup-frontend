@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_USERS_FOR_GAME } from "./FoundPlayersListScreenQueries";
 import PlayerCard from "../../components/PlayerCard";
@@ -15,7 +16,9 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const FoundPlayersListScreen = ({ navigation }) => {
+const FoundPlayersListScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const sportIds = navigation.getParam("selectedSportIds");
   const [loading, setLoading] = useState<boolean>(false);
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { FlatList, View, ActivityIndicator } from "react-native";
+import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
-import { Headline } from "react-native-paper";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import TeamCard from "../../components/TeamCard";
 import { GET_TEAMS_FOR_GAME } from "./FoundTeamsListScreenQueries";
 import { GetTeamsForGame, GetTeamsForGameVariables } from "../../types/api";
@@ -15,7 +16,9 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const FoundTeamsListScreen = ({ navigation }) => {
+const FoundTeamsListScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const sportIds = navigation.getParam("selectedSportIds");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -82,4 +85,5 @@ FoundTeamsListScreen.navigationOptions = {
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
 };
+
 export default FoundTeamsListScreen;

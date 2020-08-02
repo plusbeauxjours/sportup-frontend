@@ -5,6 +5,7 @@ import { BlurView } from "expo-blur";
 import styled from "styled-components/native";
 import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
@@ -56,7 +57,7 @@ const ContextContainer = styled.View`
   align-items: center;
 `;
 
-const EventScreen = ({ navigation }) => {
+const EventScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const isAndroid = utils.isAndroid();
 
   const eventId = navigation.getParam("eventId");

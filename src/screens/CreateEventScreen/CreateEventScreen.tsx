@@ -7,13 +7,13 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as Yup from "yup";
 import styled from "styled-components/native";
 import DatePickerModal from "react-native-modal-datetime-picker";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import FormikPicker from "../../components/Formik/FormikPicker";
 import sports from "../../constants/sports";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
 import { CREATE_EVENT } from "./CreateEventScreenQueries";
-
 import { formatDate, formatTime } from "../../utils/time";
 import Loader from "../../components/Loader";
 import {
@@ -88,7 +88,7 @@ const Center = styled.View`
   justify-content: center;
 `;
 
-const CreateEventScreen = ({ navigation }) => {
+const CreateEventScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);
   const [startTime, setStartTime] = useState<any>(null);

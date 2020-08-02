@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "react-apollo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
@@ -25,7 +26,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const EditProfileScreen = ({ navigation }) => {
+const EditProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const {
     data: { me: { user = null } = {} } = {},
     loading: meLoading,

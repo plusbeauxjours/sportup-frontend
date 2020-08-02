@@ -4,6 +4,7 @@ import * as Permissions from "expo-permissions";
 import * as IntentLauncher from "expo-intent-launcher";
 import * as moment from "moment-timezone";
 import { withNavigation } from "react-navigation";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import { Avatar } from "react-native-elements";
@@ -34,7 +35,7 @@ import {
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import BackBtn from "../../components/BackBtn";
 
-const ChatContainer = ({ navigation }) => {
+const ChatContainer: NavigationStackScreenComponent = ({ navigation }) => {
   const chatId = navigation.getParam("chatId");
   const senderUserId = navigation.getParam("senderUserId");
   const senderUsername = navigation.getParam("senderUsername");

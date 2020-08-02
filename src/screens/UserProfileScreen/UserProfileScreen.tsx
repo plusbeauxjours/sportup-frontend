@@ -29,6 +29,7 @@ import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
 import { ActivityIndicator } from "react-native";
 import BackBtn from "../../components/BackBtn";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -62,7 +63,7 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const UserProfileScreen = ({ navigation }) => {
+const UserProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const { me } = useMe();
   const userId = navigation.getParam("userId");
   const [loading, setLoading] = useState<boolean>(false);

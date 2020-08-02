@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
 import { AsyncStorage } from "react-native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
@@ -30,6 +31,7 @@ const initialValues = {
   password: "",
   confirmPassword: "",
 };
+
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
@@ -48,7 +50,7 @@ const validationSchema = Yup.object().shape({
     .required("Please re-enter your password"),
 });
 
-const SignupForm = ({ navigation }) => {
+const SignupForm: NavigationStackScreenComponent = ({ navigation }) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [LoginFn, { client: LoginClient, loading: LoginLoading }] = useMutation<

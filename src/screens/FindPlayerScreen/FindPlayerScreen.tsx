@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_ALL_SPORTS } from "./FindPlayerScreenQueries";
 import RatingChip from "../../components/RatingChip";
@@ -41,7 +42,7 @@ const WhiteSpace = styled.View`
   height: 30px;
 `;
 
-const FindPlayerScreen = ({ navigation }) => {
+const FindPlayerScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
   const {

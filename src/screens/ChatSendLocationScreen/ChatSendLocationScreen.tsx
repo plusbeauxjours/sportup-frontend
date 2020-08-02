@@ -3,6 +3,7 @@ import { View, Alert } from "react-native";
 import MapView from "react-native-maps";
 import { Icon } from "react-native-elements";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import Button from "../../components/Button";
 
@@ -25,7 +26,9 @@ const MarkerContainer = styled.View`
   background-color: "transparent";
 `;
 
-const ChatSendLocationScreen = ({ navigation }) => {
+const ChatSendLocationScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const mapRef = useRef(null);
   const [ready, setReady] = useState<boolean>(false);
   const [region, setRegion] = useState<any>(INITIAL_REGION);

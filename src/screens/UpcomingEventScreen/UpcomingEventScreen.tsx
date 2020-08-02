@@ -3,6 +3,7 @@ import { useQuery } from "react-apollo";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import { Appbar } from "react-native-paper";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
@@ -16,7 +17,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const UpcomingEvents = ({ navigation }) => {
+const UpcomingEvents: NavigationStackScreenComponent = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -51,7 +52,7 @@ const UpcomingEvents = ({ navigation }) => {
           getUpcomingEve1ntsRefetch({ pageNum: 1 });
         }}
         ListFooterComponent={() => <ListFooterComponent loading={loading} />}
-        renderItem={({ item, index }: any) => <EventCard event={item} />}
+        renderItem={({ item, index }) => <EventCard event={item} />}
         onEndReached={() => {
           if (!loading && hasNextPage) {
             getUpcomingEventsFetchMore({
@@ -82,7 +83,7 @@ const UpcomingEvents = ({ navigation }) => {
           setLoading(false);
         }}
         showsVerticalScrollIndicator={false}
-        keyExtractor={(event: any) => event.id.toString()}
+        keyExtractor={(event) => event.id.toString()}
       />
       <AddBtn onPress={onPress} />
     </Container>

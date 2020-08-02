@@ -3,8 +3,13 @@ import styled from "styled-components/native";
 import { FlatList, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 import { useQuery } from "react-apollo-hooks";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
-import { GetTeam, GetTeamVariables } from "../../types/api";
+import {
+  GetTeam,
+  GetTeamVariables,
+  GetTeam_getTeam_team_sport,
+} from "../../types/api";
 import RatingChip from "../../components/RatingChip";
 import { GET_TEAM, RATE_TEAM } from "./TeamProfileScreenQueries";
 import UserCard from "../../components/UserCard";
@@ -55,7 +60,7 @@ const Center = styled.View`
 
 interface IProps {
   teamName: string;
-  sport: any;
+  sport: GetTeam_getTeam_team_sport;
   showDialog: () => void;
   rating: number;
 }
@@ -89,7 +94,7 @@ const TeamInfoArea: React.FC<IProps> = ({
   );
 };
 
-const TeamProfileScreen = ({ navigation }) => {
+const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const teamId = navigation.getParam("teamId");
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import {
   CreatePost,
@@ -32,7 +33,7 @@ const Box = styled.View`
   justify-content: center;
 `;
 
-const WritePostScreen = ({ navigation }) => {
+const WritePostScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [text, setText] = useState<string>("");
   const [createPostFn, { loading: createPostLoading }] = useMutation<
     CreatePost,

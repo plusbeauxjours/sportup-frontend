@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Appbar } from "react-native-paper";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";
@@ -15,7 +16,7 @@ const Conatiner = styled.View`
   background-color: white;
 `;
 
-const FeedScreen = ({ navigation }) => {
+const FeedScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const {

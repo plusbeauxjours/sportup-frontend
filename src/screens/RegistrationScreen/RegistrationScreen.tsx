@@ -4,6 +4,7 @@ import { ListItem } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import {
   GetRegistrations,
@@ -24,7 +25,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const RegistrationScreen = ({ navigation }) => {
+const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const eventId = navigation.getParam("eventId");
   const {
     data: { getRegistrations: { registrations = null } = {} } = {},

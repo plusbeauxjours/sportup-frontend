@@ -3,6 +3,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
 import { RegisterTeam, RegisterTeamVariables } from "../../types/api";
@@ -20,7 +21,9 @@ const WhiteSpace = styled.View`
   height: 50px;
 `;
 
-const RegisterForEventScreen = ({ navigation }) => {
+const RegisterForEventScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => {
   const eventId = navigation.getParam("eventId");
   const maximumMembers = navigation.getParam("maximumMembers");
   const minimumMembers = navigation.getParam("minimumMembers");
@@ -156,4 +159,5 @@ RegisterForEventScreen.navigationOptions = ({ navigation }) => ({
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
 });
+
 export default RegisterForEventScreen;

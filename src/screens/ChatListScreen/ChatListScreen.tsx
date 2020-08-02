@@ -4,6 +4,7 @@ import { Divider, Appbar } from "react-native-paper";
 import styled from "styled-components/native";
 import * as firebase from "firebase/app";
 import "firebase/database";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import ChatCard from "../../components/ChatCard";
 import { useMe } from "../../context/meContext";
@@ -16,7 +17,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const ChatListScreen = () => {
+const ChatListScreen: NavigationStackScreenComponent = () => {
   const { me, loading: meLoading } = useMe();
   const [chats, setChats] = useState<any>([]);
   const [refreshing, setRefreshing] = useState<boolean>(false);

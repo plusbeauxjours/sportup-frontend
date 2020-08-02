@@ -1,6 +1,8 @@
 import React from "react";
 import { Appbar } from "react-native-paper";
 import styled from "styled-components/native";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import Button from "../../components/Button";
 
 const Container = styled.View`
@@ -9,7 +11,9 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const MainTournamentScreen = ({ navigation }) => (
+const MainTournamentScreen: NavigationStackScreenComponent = ({
+  navigation,
+}) => (
   <Container>
     <Button
       style={{ marginBottom: 10 }}

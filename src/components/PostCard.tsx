@@ -65,7 +65,6 @@ interface IProps {
   score?: number;
   text?: string;
   interaction?: string;
-  postImg?: string;
   createdAt?: any;
   disableNavigation: boolean;
 }
@@ -116,7 +115,6 @@ const PostCard: React.FC<IProps> = ({
   score,
   text,
   interaction,
-  postImg,
   createdAt,
   disableNavigation,
 }) => (

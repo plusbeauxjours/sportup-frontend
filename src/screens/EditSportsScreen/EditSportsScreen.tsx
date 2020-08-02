@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "react-apollo";
+import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_ALL_SPORTS } from "../FindPlayerScreen/FindPlayerScreenQueries";
@@ -35,7 +36,7 @@ const Row = styled.View`
   flex-wrap: wrap;
 `;
 
-const EditSportsScreen = ({ navigation }) => {
+const EditSportsScreen: NavigationStackScreenComponent = ({ navigation }) => {
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
   const {
