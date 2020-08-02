@@ -8,7 +8,7 @@ exports.sendNotification = functions.database
     .ref("messages/{roomId}/{messageId}")
     .onCreate((event: any) => {
         let sendMsg
-        const senderUsername = event._data.sender.senderUsername;
+        const senderUsername = event._data.user.senderUsername;
         const receiverPushToken = event._data.receiver.receiverPushToken;
         if (event._data.text) {
             sendMsg = event._data.text

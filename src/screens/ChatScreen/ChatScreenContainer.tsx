@@ -76,7 +76,7 @@ const ChatContainer = ({ navigation }) => {
     if (msg) {
       msg._id = get_new_key("messages");
       msg.status = false;
-      msg.sender = sender;
+      msg.user = sender;
       msg.receiver = receiver;
       chat_send(chatId, msg).catch((e) => console.log(e));
       setMessages((previousMsg) => GiftedChat.append(previousMsg, msg));
@@ -99,7 +99,7 @@ const ChatContainer = ({ navigation }) => {
       _id: new_key,
       createdAt: new Date(),
       status: false,
-      sender,
+      user: sender,
       receiver,
       location: { latitude, longitude },
     };
@@ -376,10 +376,11 @@ const ChatContainer = ({ navigation }) => {
       .startAt(start_key)
       .on("child_added", (child) => {
         /* tslint:disable:no-string-literal */
+        console.log(child);
         if (child && child.val()) {
           let message_container = [];
           let new_message = child.val();
-          if (new_message.system || new_message.sender._id !== senderUserId) {
+          if (new_message.system || new_message.user._id !== senderUserId) {
             update_message_info(new_message, chatId, senderUserId).then(
               (updated_message) => {
                 message_container.push(new_message);

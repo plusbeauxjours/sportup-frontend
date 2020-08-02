@@ -40,7 +40,7 @@ export interface ChatMessage {
   text?: string;
   createdAt: Date;
   status: boolean;
-  sender: SenderChatMessage;
+  user: SenderChatMessage;
   receiver: ReceiverChatMessage;
   location?: LocationChatMessage;
 }
@@ -83,8 +83,8 @@ export const chat_send = (chat_id: string, message: ChatMessage) => {
   let updates = {};
   updates[`/messages/${chat_id}/${new_key_messages}/`] = message;
   updates[`/chats/${chat_id}/_id/`] = chat_id;
-  updates[`/chats/${chat_id}/lastSender/`] = `${message.sender._id}`;
-  updates[`/chats/${chat_id}/sender/`] = message.sender
+  updates[`/chats/${chat_id}/lastSender/`] = `${message.user._id}`;
+  updates[`/chats/${chat_id}/sender/`] = message.user
   updates[`/chats/${chat_id}/receiver/`] = message.receiver
   updates[`/chats/${chat_id}/createdAt/`] = `${message.createdAt}`;
   if (message.text) {
@@ -112,7 +112,7 @@ export const update_message_info = async (
     }
     let updated_message: ChatMessage;
     let updates = {};
-    if (msg.sender._id !== user_id && msg.status === false) {
+    if (msg.user._id !== user_id && msg.status === false) {
       msg.status = true;
       updated_message = msg;
       resolve(updated_message);

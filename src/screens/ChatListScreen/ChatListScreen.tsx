@@ -81,7 +81,9 @@ const ChatListScreen = () => {
                   ? item.sender.senderUsername
                   : item.receiver.receiverUsername
               }
-              senderUserId={amISender(item) ? item.sender._id : item.sender._id}
+              senderUserId={
+                amISender(item) ? item.sender._id : item.receiver._id
+              }
               senderPushToken={
                 amISender(item)
                   ? item.sender.senderPushToken
@@ -93,7 +95,7 @@ const ChatListScreen = () => {
                   : item.sender.senderUsername
               }
               receiverUserId={
-                amISender(item) ? item.receiver._id : item.receiver._id
+                amISender(item) ? item.receiver._id : item.sender._id
               }
               receiverPushToken={
                 amISender(item)
