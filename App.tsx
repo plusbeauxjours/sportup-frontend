@@ -7,6 +7,8 @@ import { persistCache } from "apollo-cache-persist";
 import { Provider as PaperProvider } from "react-native-paper";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
 import { ApolloProvider } from "react-apollo";
+import * as Sentry from "sentry-expo";
+import Constants from "expo-constants";
 
 import apolloClientOptions from "./apollo";
 import { ApolloClient } from "apollo-client";
@@ -28,6 +30,17 @@ const cacheImages = (images) =>
 export default function App() {
   const [client, setClient] = useState<any>(null);
   const [isLoadingComplete, setLoadingComplete] = useState<boolean>(false);
+  const setSentry = () => {
+    Sentry.init({
+      dsn:
+        "https://4cd297182f9a4004932378e55e028c79@o282599.ingest.sentry.io/5375822",
+      enableInExpoDevelopment: true,
+      debug: true,
+    });
+    Sentry.setRelease(
+      Constants.manifest.revisionId ? Constants.manifest.revisionId : ""
+    );
+  };
   const makeClient = async () => {
     try {
       const cache = new InMemoryCache();
@@ -77,6 +90,7 @@ export default function App() {
   StatusBar.setBarStyle("dark-content", true);
   useEffect(() => {
     makeClient();
+    setSentry();
   }, []);
   if (isLoadingComplete && client !== null) {
     return (

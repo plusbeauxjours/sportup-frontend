@@ -13,6 +13,7 @@
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/datetimepicker": "2.1.0",
     "@react-native-community/masked-view": "0.1.5",
+    "@sentry/react-native": "^1.7.1",
     "apollo": "^2.25.0",
     "apollo-cache-hermes": "^0.8.10",
     "apollo-cache-inmemory": "^1.6.5",
@@ -54,6 +55,7 @@
     "react-navigation-drawer": "^2.4.8",
     "react-navigation-stack": "^2.3.8",
     "react-navigation-tabs": "^2.8.8",
+    "sentry-expo": "^2.1.2",
     "styled-components": "^5.1.1",
     "yup": "^0.28.3"
   },

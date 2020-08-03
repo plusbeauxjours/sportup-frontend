@@ -43,7 +43,7 @@ const SidebarDivider = styled.View`
 
 const Name = styled.Text`
   font-weight: bold;
-  font-size: 16px
+  font-size: 16px;
   margin-top: 10px;
 `;
 const Username = styled.Text`
