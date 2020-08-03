@@ -65,7 +65,7 @@ interface IProps {
   score?: number;
   text?: string;
   interaction?: string;
-  createdAt?: any;
+  createdAt?: string;
   disableNavigation: boolean;
 }
 

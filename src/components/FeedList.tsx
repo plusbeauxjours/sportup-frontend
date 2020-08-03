@@ -24,7 +24,7 @@ const FeedList: React.FC<IProps> = ({
     <FlatList
       data={posts}
       refreshing={refreshing}
-      renderItem={({ item }: any) => (
+      renderItem={({ item }) => (
         <PostCard
           id={item.id}
           postedBy={item.postedBy}
@@ -37,7 +37,7 @@ const FeedList: React.FC<IProps> = ({
         />
       )}
       showsVerticalScrollIndicator={false}
-      keyExtractor={(post: any) => post.id.toString()}
+      keyExtractor={(post) => post.id.toString()}
       {...rest}
     />
   </>

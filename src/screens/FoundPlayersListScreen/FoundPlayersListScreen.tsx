@@ -40,10 +40,10 @@ const FoundPlayersListScreen: NavigationStackScreenComponent = ({
       <Container>
         <FlatList
           data={users}
-          renderItem={({ item }: any) => {
+          renderItem={({ item }) => {
             return <PlayerCard user={item} sportIds={sportIds} />;
           }}
-          keyExtractor={(player: any) => player.id.toString()}
+          keyExtractor={(player) => player.id.toString()}
           showsVerticalScrollIndicator={false}
           refreshing={networkStatus === 4}
           onRefresh={() => {

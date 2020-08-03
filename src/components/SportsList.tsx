@@ -16,7 +16,7 @@ const SportsList: React.FC<IProps> = ({
   <FlatList
     horizontal
     data={sports}
-    renderItem={({ item }: any) => (
+    renderItem={({ item }) => (
       <RatingChip
         sportId={item.sportId}
         name={item.name}
@@ -24,7 +24,7 @@ const SportsList: React.FC<IProps> = ({
         onChipPress={onChipPress}
       />
     )}
-    keyExtractor={(sport: any) => sport.sportId.toString()}
+    keyExtractor={(sport) => sport.sportId.toString()}
     showsVerticalScrollIndicator={false}
     showsHorizontalScrollIndicator={false}
     {...rest}

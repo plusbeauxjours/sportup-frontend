@@ -6,7 +6,7 @@ admin.initializeApp(functions.config().firebase);
 
 exports.sendNotification = functions.database
     .ref("messages/{roomId}/{messageId}")
-    .onCreate((event: any) => {
+    .onCreate((event) => {
         let sendMsg
         const senderUsername = event._data.user.senderUsername;
         const receiverPushToken = event._data.receiver.receiverPushToken;

@@ -16,8 +16,8 @@ import { setContext } from "apollo-link-context";
 import { GRAPHQL_URL } from "./src/constants/urls";
 import AppContainer from "./src/components/AppContainer";
 
-const cacheImages = (images: any) =>
-  images.map((image: any) => {
+const cacheImages = (images) =>
+  images.map((image) => {
     if (typeof image === "string") {
       return Image.prefetch(image);
     } else {
@@ -40,7 +40,7 @@ export default function App() {
       let httpLink = new HttpLink({
         uri: GRAPHQL_URL as string,
       });
-      let authLink = setContext(async (_: any, { headers }: any) => {
+      let authLink = setContext(async (_, { headers }) => {
         const token = await AsyncStorage.getItem("jwt");
         return {
           headers: {
