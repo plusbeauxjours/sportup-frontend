@@ -51,66 +51,68 @@ const Username = styled.Text`
   margin-bottom: 10px;
 `;
 
-const Item = withNavigation(({ item, navigation }) => {
-  return (
-    <ListItem onPress={() => navigation.navigate(item.name)}>
-      <Icon name={item.icon} size={20} />
-      <Title>{item.name}</Title>
-    </ListItem>
-  );
-});
+// const Item = withNavigation(({ item, navigation }) => {
+//   return (
+//     <ListItem onPress={() => navigation.navigate(item.name)}>
+//       <Icon name={item.icon} size={20} />
+//       <Title>{item.name}</Title>
+//     </ListItem>
+//   );
+// });
 
-const Sidebar = () => {
-  const { me } = useMe();
-  const routes = [
-    {
-      name: "Me",
-      icon: "person",
-    },
-    {
-      name: "Feed",
-      icon: "timeline",
-    },
-    {
-      name: "Find",
-      icon: "games",
-    },
-    {
-      name: "Chat",
-      icon: "chat",
-    },
-    {
-      name: "Events",
-      icon: "event",
-    },
-    {
-      name: "Search",
-      icon: "search",
-    },
-  ];
-  return (
-    <Container>
-      <Avatar
-        size="large"
-        rounded
-        containerStyle={{ marginTop: 40 }}
-        source={{
-          uri: NO_AVATAR_THUMBNAIL,
-        }}
-      />
-      <Name>{me?.user.name}</Name>
-      <Username>@{me?.user.username}</Username>
-      <SidebarDivider />
-      <FlatList
-        style={{ width: "100%", marginLeft: 30 }}
-        data={routes}
-        renderItem={({ item }) => <Item item={item} />}
-        keyExtractor={(item) => item.name}
-        scrollEnabled={false}
-      />
-    </Container>
-  );
-};
+// const Sidebar = () => {
+//   const { me, loading: meLoading } = useMe();
+//   const routes = [
+//     {
+//       name: "Me",
+//       icon: "person",
+//     },
+//     {
+//       name: "Feed",
+//       icon: "timeline",
+//     },
+//     {
+//       name: "Find",
+//       icon: "games",
+//     },
+//     {
+//       name: "Chat",
+//       icon: "chat",
+//     },
+//     {
+//       name: "Events",
+//       icon: "event",
+//     },
+//     {
+//       name: "Search",
+//       icon: "search",
+//     },
+//   ];
+//   if (!meLoading) {
+//     return (
+//       <Container>
+//         <Avatar
+//           size="large"
+//           rounded
+//           containerStyle={{ marginTop: 40 }}
+//           source={{
+//             uri: NO_AVATAR_THUMBNAIL,
+//           }}
+//         />
+//         <Name>{me?.user.name}</Name>
+//         <Username>@{me?.user.username}</Username>
+//         <SidebarDivider />
+//         <FlatList
+//           style={{ width: "100%", marginLeft: 30 }}
+//           data={routes}
+//           renderItem={({ item }) => <Item item={item} />}
+//           keyExtractor={(item) => item.name}
+//           scrollEnabled={false}
+//         />
+//       </Container>
+//     );
+//   }
+// };
 
 const MainDrawer = createDrawerNavigator(
   {
@@ -161,8 +163,8 @@ const MainDrawer = createDrawerNavigator(
   },
   {
     initialRouteName: "Me",
-    unmountInactiveRoutes: true,
-    contentComponent: (props) => <Sidebar {...props} />,
+    // unmountInactiveRoutes: true,
+    // contentComponent: (props) => <Sidebar {...props} />,
   }
 );
 

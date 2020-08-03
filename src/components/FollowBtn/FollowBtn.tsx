@@ -35,20 +35,20 @@ const FollowBtn: React.FC<IProps> = ({
   >(FOLLOW_USER, {
     variables: { userId },
     update(cache, { data: { followUser } }) {
-      try {
-        const { me } = cache.readQuery<Me>({ query: ME });
-        cache.writeQuery({
-          query: ME,
-          data: {
-            me: {
-              ...me,
-              user: { ...me.user, followingCount: me.user.followingCount + 1 },
-            },
-          },
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   const { me } = cache.readQuery<Me>({ query: ME });
+      //   cache.writeQuery({
+      //     query: ME,
+      //     data: {
+      //       me: {
+      //         ...me,
+      //         user: { ...me.user, followingCount: me.user.followingCount + 1 },
+      //       },
+      //     },
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
       try {
         const data = cache.readQuery<
           GetUserFollowing,
@@ -75,30 +75,6 @@ const FollowBtn: React.FC<IProps> = ({
       } catch (e) {
         console.log(e);
       }
-      try {
-        const data = cache.readQuery<
-          GetUserFollowers,
-          GetUserFollowersVariables
-        >({
-          query: GET_USER_FOLLOWERS,
-          variables: { userId: me?.user.id },
-        });
-        const followers = data.getUser.user.followers.find(
-          (i) => i.id === userId
-        );
-        if (followers) {
-          followers.isFollowing = true;
-        }
-        if (data) {
-          cache.writeQuery({
-            query: GET_USER_FOLLOWERS,
-            variables: { userId: me?.user.id },
-            data,
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
     },
   });
   const [unfollowUserFn, { loading: unfollowUserLoading }] = useMutation<
@@ -107,20 +83,20 @@ const FollowBtn: React.FC<IProps> = ({
   >(UNFOLLOW_USER, {
     variables: { userId },
     update(cache, { data: { unfollowUser } }) {
-      try {
-        const { me } = cache.readQuery<Me>({ query: ME });
-        cache.writeQuery({
-          query: ME,
-          data: {
-            me: {
-              ...me,
-              user: { ...me.user, followingCount: me.user.followingCount - 1 },
-            },
-          },
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      // try {
+      //   const { me } = cache.readQuery<Me>({ query: ME });
+      //   cache.writeQuery({
+      //     query: ME,
+      //     data: {
+      //       me: {
+      //         ...me,
+      //         user: { ...me.user, followingCount: me.user.followingCount - 1 },
+      //       },
+      //     },
+      //   });
+      // } catch (e) {
+      //   console.log(e);
+      // }
       try {
         const data = cache.readQuery<
           GetUserFollowing,
@@ -140,32 +116,6 @@ const FollowBtn: React.FC<IProps> = ({
         if (data) {
           cache.writeQuery({
             query: GET_USER_FOLLOWING,
-            variables: { userId: me?.user.id },
-            data,
-          });
-        }
-      } catch (e) {
-        console.log(e);
-      }
-      try {
-        const data = cache.readQuery<
-          GetUserFollowers,
-          GetUserFollowersVariables
-        >({
-          query: GET_USER_FOLLOWERS,
-          variables: { userId: me?.user.id },
-        });
-        const followers = data.getUser.user.followers.find(
-          (i) => i.id === userId
-        );
-        if (followers) {
-          followers.isFollowing = false;
-        } else {
-          data.getUser.user.followers.push(unfollowUser.following);
-        }
-        if (data) {
-          cache.writeQuery({
-            query: GET_USER_FOLLOWERS,
             variables: { userId: me?.user.id },
             data,
           });
