@@ -243,54 +243,75 @@ const MyProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
     return <Loader />;
   } else {
     return (
-      <>
-        <MyprofileCustomHeader title={"Me"} />
-        <Conatiner>
-          <FeedList
-            posts={posts}
-            refreshing={networkStatus === 4}
-            onRefresh={() => {
-              getMyFeedRefetch({ pageNum: 1 });
-            }}
-            ListHeaderComponent={renderUserInfoArea}
-            ListFooterComponent={() => (
-              <ListFooterComponent loading={loading} />
-            )}
-            onEndReached={() => {
-              if (!loading && hasNextPage) {
-                getMyFeedFetchMore({
-                  variables: {
-                    pageNum: pageNum + 1,
-                  },
-                  updateQuery: (prev, { fetchMoreResult }) => {
-                    if (!fetchMoreResult) return prev;
-                    if (!fetchMoreResult.getMyFeed) return prev;
-                    return Object.assign({}, prev, {
-                      getMyFeed: {
-                        ...prev.getMyFeed,
-                        pageNum: fetchMoreResult.getMyFeed.pageNum,
-                        hasNextPage: fetchMoreResult.getMyFeed.hasNextPage,
-                        posts: [
-                          ...prev.getMyFeed.posts,
-                          ...fetchMoreResult.getMyFeed.posts,
-                        ],
-                      },
-                    });
-                  },
-                });
-                setLoading(true);
-              }
-            }}
-            onEndReachedThreshold={0.2}
-            onMomentumScrollBegin={() => {
-              setLoading(false);
-            }}
-            disableNavigation={true}
-          />
-        </Conatiner>
-      </>
+      // <MyprofileCustomHeader title={"Me"} />
+      <Conatiner>
+        <FeedList
+          posts={posts}
+          refreshing={networkStatus === 4}
+          onRefresh={() => {
+            getMyFeedRefetch({ pageNum: 1 });
+          }}
+          ListHeaderComponent={renderUserInfoArea}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
+          onEndReached={() => {
+            if (!loading && hasNextPage) {
+              getMyFeedFetchMore({
+                variables: {
+                  pageNum: pageNum + 1,
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                  if (!fetchMoreResult) return prev;
+                  if (!fetchMoreResult.getMyFeed) return prev;
+                  return Object.assign({}, prev, {
+                    getMyFeed: {
+                      ...prev.getMyFeed,
+                      pageNum: fetchMoreResult.getMyFeed.pageNum,
+                      hasNextPage: fetchMoreResult.getMyFeed.hasNextPage,
+                      posts: [
+                        ...prev.getMyFeed.posts,
+                        ...fetchMoreResult.getMyFeed.posts,
+                      ],
+                    },
+                  });
+                },
+              });
+              setLoading(true);
+            }
+          }}
+          onEndReachedThreshold={0.2}
+          onMomentumScrollBegin={() => {
+            setLoading(false);
+          }}
+          disableNavigation={true}
+        />
+      </Conatiner>
     );
   }
 };
+MyProfileScreen.navigationOptions = ({ navigation }) => ({
+  title: "Me",
+  headerLeft: () => (
+    <Appbar.Action
+      icon="menu"
+      onPress={() => {
+        navigation.toggleDrawer();
+      }}
+    />
+  ),
+  headerRight: () => (
+    <View>
+      <Appbar.Action
+        icon="square-edit-outline"
+        onPress={() => {
+          navigation.navigate("EditProfileScreen");
+        }}
+      />
+      <Appbar.Action
+        icon="exit-to-app"
+        onPress={navigation.getParam("logout")}
+      />
+    </View>
+  ),
+});
 
 export default MyProfileScreen;

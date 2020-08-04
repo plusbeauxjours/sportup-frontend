@@ -111,6 +111,8 @@ const Sidebar = () => {
         />
       </Container>
     );
+  } else {
+    return null;
   }
 };
 
