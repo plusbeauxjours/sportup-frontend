@@ -258,6 +258,8 @@ UserProfileScreen.navigationOptions = ({ navigation }) => ({
   title: "User Profile",
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
+  // headerBackTitle: null,
+  // headerBackImage: <BackBtn />,
 });
 
 export default UserProfileScreen;
