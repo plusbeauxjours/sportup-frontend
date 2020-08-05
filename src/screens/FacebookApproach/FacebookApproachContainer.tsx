@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import * as Facebook from "expo-facebook";
 import { useMutation } from "react-apollo-hooks";
-import { withNavigation } from "react-navigation";
 
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
@@ -59,4 +58,4 @@ const FacebookApproachContainer = ({ navigation }) => {
   );
 };
 
-export default withNavigation(FacebookApproachContainer);
+export default FacebookApproachContainer;

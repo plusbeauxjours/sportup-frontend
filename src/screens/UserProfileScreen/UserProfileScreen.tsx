@@ -30,6 +30,7 @@ import RatingChip from "../../components/RatingChip";
 import { ActivityIndicator } from "react-native";
 import BackBtn from "../../components/BackBtn";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 const UserInfoContainer = styled.View`
   align-items: center;
@@ -63,8 +64,9 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const UserProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const UserProfileScreen: NavigationStackScreenComponent = () => {
   const { me } = useMe();
+  const navigation = useNavigation();
   const userId = navigation.getParam("userId");
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
@@ -98,15 +100,15 @@ const UserProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   });
 
   const onTeamsPress = (userId) => {
-    navigation.push("TeamsScreen", { userId });
+    navigation.navigate("TeamsScreen", { userId });
   };
 
   const onFollowersPress = (userId) => {
-    navigation.push("FollowersScreen", { userId });
+    navigation.navigate("FollowersScreen", { userId });
   };
 
   const onFollowingPress = (userId) => {
-    navigation.push("FollowingScreen", { userId });
+    navigation.navigate("FollowingScreen", { userId });
   };
 
   const showDialog = (sportId) => {

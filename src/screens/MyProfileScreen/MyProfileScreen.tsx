@@ -32,7 +32,7 @@ import UserConnectionsCard from "../../components/UserConnectionsCard";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
 import { useMe } from "../../context/meContext";
-import MyprofileCustomHeader from "../../components/MyprofileCustomHeader";
+import { useNavigation } from "@react-navigation/native";
 
 const View = styled.View`
   flex-direction: row;
@@ -70,8 +70,9 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const MyProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const MyProfileScreen: NavigationStackScreenComponent = () => {
   const client = useApolloClient();
+  const navigation = useNavigation();
   const { me, loading: meContextLoading } = useMe();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -97,19 +98,19 @@ const MyProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
   >(REGISTER_PUSH);
 
   const onTeamsPress = (userId) => {
-    navigation.push("TeamsScreen", {
+    navigation.navigate("TeamsScreen", {
       userId,
     });
   };
 
   const onFollowersPress = (userId) => {
-    navigation.push("FollowersScreen", {
+    navigation.navigate("FollowersScreen", {
       userId,
     });
   };
 
   const onFollowingPress = (userId) => {
-    navigation.push("FollowingScreen", {
+    navigation.navigate("FollowingScreen", {
       userId,
     });
   };
@@ -288,30 +289,5 @@ const MyProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
     );
   }
 };
-MyProfileScreen.navigationOptions = ({ navigation }) => ({
-  title: "Me",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-  headerRight: () => (
-    <View>
-      <Appbar.Action
-        icon="square-edit-outline"
-        onPress={() => {
-          navigation.navigate("EditProfileScreen");
-        }}
-      />
-      <Appbar.Action
-        icon="exit-to-app"
-        onPress={navigation.getParam("logout")}
-      />
-    </View>
-  ),
-});
 
 export default MyProfileScreen;

@@ -1,15 +1,14 @@
-import { createSwitchNavigator, createAppContainer } from "react-navigation";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
 import MainDrawer from "./MainDrawer";
-import AuthLoadingContainer from "../components/AuthLoadingContainer";
 import AuthNavigation from "./AuthNavigation";
 
-const MainNavigation = createSwitchNavigator(
-  {
-    AuthLoading: AuthLoadingContainer,
-    Auth: AuthNavigation,
-    Main: MainDrawer,
-  },
-  { initialRouteName: "AuthLoading" }
-);
-
-export default createAppContainer(MainNavigation);
+export default () => {
+  return (
+    <NavigationContainer>
+      {/* <AuthLoadingContainer /> */}
+      <MainDrawer />
+      {/* <AuthNavigation /> */}
+    </NavigationContainer>
+  );
+};

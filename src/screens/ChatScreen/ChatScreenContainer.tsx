@@ -377,7 +377,6 @@ const ChatContainer: NavigationStackScreenComponent = ({ navigation }) => {
       .startAt(start_key)
       .on("child_added", (child) => {
         /* tslint:disable:no-string-literal */
-        console.log(child);
         if (child && child.val()) {
           let message_container = [];
           let new_message = child.val();

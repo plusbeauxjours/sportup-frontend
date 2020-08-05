@@ -3,12 +3,12 @@ import styled from "styled-components/native";
 import { Avatar } from "react-native-elements";
 import { Card, Paragraph } from "react-native-paper";
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
-import { NavigationScreenProp, withNavigation } from "react-navigation";
 
 import { timeSince } from "../utils/time";
 import { GetMyFeed_getMyFeed_posts_postedBy } from "../types/api";
 import VoteBtn from "./VoteBtn/VoteBtn";
 import { useMe } from "../context/meContext";
+import { useNavigation } from "@react-navigation/native";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -56,7 +56,6 @@ interface UserInfoAreaProps {
   userImg?: string;
   createdAt: string;
   disableNavigation: boolean;
-  navigation?: NavigationScreenProp<any, any>;
 }
 
 interface IProps {
@@ -69,45 +68,43 @@ interface IProps {
   disableNavigation: boolean;
 }
 
-const UserInfoArea: React.FC<UserInfoAreaProps> = withNavigation(
-  ({
-    id,
-    name,
-    username,
-    userImg,
-    createdAt,
-    navigation,
-    disableNavigation,
-  }) => {
-    const { me, loading: meLoading } = useMe();
-    return (
-      <OuterUserInfoContainerStyle>
-        <TouchableOpacity
-          disabled={disableNavigation}
-          onPress={() => {
-            me?.user.id === id
-              ? navigation.push("MyProfileScreen")
-              : navigation.push("UserProfileScreen", { userId: id });
+const UserInfoArea: React.FC<UserInfoAreaProps> = ({
+  id,
+  name,
+  username,
+  userImg,
+  createdAt,
+  disableNavigation,
+}) => {
+  const navigation = useNavigation();
+  const { me, loading: meLoading } = useMe();
+  return (
+    <OuterUserInfoContainerStyle>
+      <TouchableOpacity
+        disabled={disableNavigation}
+        onPress={() => {
+          me?.user.id === id
+            ? navigation.push("MyProfileScreen")
+            : navigation.push("UserProfileScreen", { userId: id });
+        }}
+      >
+        <Avatar
+          rounded
+          source={{
+            uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
           }}
-        >
-          <Avatar
-            rounded
-            source={{
-              uri: userImg ? MEDIA_URL + userImg : NO_AVATAR_THUMBNAIL,
-            }}
-          />
-          <InnerUserInfoContainerStyle>
-            <NameText>{name}</NameText>
-            <Caption>{`@${username}`}</Caption>
-          </InnerUserInfoContainerStyle>
-        </TouchableOpacity>
-        <TimeContainer>
-          <Caption>{timeSince(createdAt)}</Caption>
-        </TimeContainer>
-      </OuterUserInfoContainerStyle>
-    );
-  }
-);
+        />
+        <InnerUserInfoContainerStyle>
+          <NameText>{name}</NameText>
+          <Caption>{`@${username}`}</Caption>
+        </InnerUserInfoContainerStyle>
+      </TouchableOpacity>
+      <TimeContainer>
+        <Caption>{timeSince(createdAt)}</Caption>
+      </TimeContainer>
+    </OuterUserInfoContainerStyle>
+  );
+};
 
 const PostCard: React.FC<IProps> = ({
   id,

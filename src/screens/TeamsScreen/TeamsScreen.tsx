@@ -11,6 +11,7 @@ import {
 import Loader from "../../components/Loader";
 import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -21,10 +22,9 @@ interface IProps extends NavigationStackScreenProps {
   userId: string;
 }
 
-const TeamsScreen: NavigationStackScreenComponent<IProps> = ({
-  navigation,
-}) => {
-  const userId = navigation.getParam("userId");
+const TeamsScreen: NavigationStackScreenComponent<IProps> = () => {
+  const navigation = useNavigation();
+  // const userId = navigation.getParam("userId");
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserTeams,
     GetUserTeamsVariables

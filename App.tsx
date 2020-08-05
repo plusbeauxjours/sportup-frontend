@@ -48,7 +48,7 @@ export default function App() {
         cache,
         storage: AsyncStorage,
       });
-      // await AsyncStorage.clear();
+      await AsyncStorage.clear();
       cache.reset();
       let httpLink = new HttpLink({
         uri: GRAPHQL_URL as string,
