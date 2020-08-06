@@ -88,10 +88,11 @@ const IconContainer = styled.TouchableOpacity`
 `;
 
 const EditTeamProfileScreen: NavigationStackScreenComponent = ({
+  route,
   navigation,
 }) => {
   const isAndroid = utils.isAndroid();
-  const team = navigation.getParam("team");
+  const { team } = route.params;
   const { me, loading: meLoading } = useMe();
   const [userLoading, setUserLoading] = useState<boolean>(false);
   const [membersList, setMembersList] = useState<any>(team.members);

@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Header } from "react-native-elements";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useApolloClient } from "react-apollo-hooks";
 import { AsyncStorage } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+import utils from "..//utils/utils";
 
 const IconContainer = styled.TouchableOpacity`
   align-items: center;
@@ -29,11 +31,19 @@ interface IProps {
   subTitle?: string;
 }
 export const LeftComponent = () => {
+  const isAndroid = utils.isAndroid();
   const navigation = useNavigation();
 
   return (
-    <IconContainer onPress={() => navigation.toggleDrawer()}>
-      <FontAwesome size={24} name={"navicon"} />
+    <IconContainer
+      style={{ marginLeft: 5 }}
+      onPress={() => navigation.toggleDrawer()}
+    >
+      {isAndroid ? (
+        <Ionicons size={24} name={"md-menu"} />
+      ) : (
+        <Ionicons size={24} name={"ios-menu"} />
+      )}
     </IconContainer>
   );
 };

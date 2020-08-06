@@ -57,10 +57,9 @@ const ContextContainer = styled.View`
   align-items: center;
 `;
 
-const EventScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const EventScreen: NavigationStackScreenComponent = ({ route, navigation }) => {
   const isAndroid = utils.isAndroid();
-
-  const eventId = navigation.getParam("eventId");
+  const { eventId } = route.params;
   const {
     data: { getEvent: { event = null } = {} } = {},
     error,

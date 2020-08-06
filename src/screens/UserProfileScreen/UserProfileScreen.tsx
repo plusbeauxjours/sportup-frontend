@@ -64,10 +64,10 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const UserProfileScreen: NavigationStackScreenComponent = () => {
+const UserProfileScreen: NavigationStackScreenComponent = ({ route }) => {
   const { me } = useMe();
   const navigation = useNavigation();
-  const userId = navigation.getParam("userId");
+  const { userId } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);

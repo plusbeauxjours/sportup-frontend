@@ -26,7 +26,7 @@ const Container = styled.View`
 `;
 
 const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const eventId = navigation.getParam("eventId");
+  const { eventId } = route.params;
   const {
     data: { getRegistrations: { registrations = null } = {} } = {},
     loading: getRegistrationsLoading,
@@ -57,7 +57,7 @@ const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
             cache.writeQuery({
               query: GET_REGISTRATIONS,
               variables: {
-                eventId: navigation.getParam("eventId"),
+                eventId,
               },
               data: {
                 ...data,
@@ -94,7 +94,7 @@ const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
             cache.writeQuery({
               query: GET_REGISTRATIONS,
               variables: {
-                eventId: navigation.getParam("eventId"),
+                eventId,
               },
               data: {
                 ...data,

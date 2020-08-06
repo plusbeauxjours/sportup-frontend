@@ -17,9 +17,10 @@ const Container = styled.View`
 `;
 
 const FoundTeamsListScreen: NavigationStackScreenComponent = ({
+  route,
   navigation,
 }) => {
-  const sportIds = navigation.getParam("selectedSportIds");
+  const { selectedSportIds: sportIds } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
 
   const {

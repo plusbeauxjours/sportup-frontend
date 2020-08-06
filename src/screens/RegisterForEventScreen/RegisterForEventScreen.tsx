@@ -22,11 +22,10 @@ const WhiteSpace = styled.View`
 `;
 
 const RegisterForEventScreen: NavigationStackScreenComponent = ({
+  route,
   navigation,
 }) => {
-  const eventId = navigation.getParam("eventId");
-  const maximumMembers = navigation.getParam("maximumMembers");
-  const minimumMembers = navigation.getParam("minimumMembers");
+  const { maximumMembers, minimumMembers } = route.params;
   const [registerTeamFn, { loading: registerTeamLoading }] = useMutation<
     RegisterTeam,
     RegisterTeamVariables

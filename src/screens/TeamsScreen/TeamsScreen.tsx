@@ -3,28 +3,19 @@ import { useQuery } from "react-apollo-hooks";
 import { GetUserTeams, GetUserTeamsVariables } from "../../types/api";
 import { GET_USER_TEAMS } from "./TeamsScreenQueries";
 import { FlatList } from "react-native";
+
 import TeamCard from "../../components/TeamCard";
-import {
-  NavigationStackScreenComponent,
-  NavigationStackScreenProps,
-} from "react-navigation-stack";
 import Loader from "../../components/Loader";
 import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-interface IProps extends NavigationStackScreenProps {
-  userId: string;
-}
-
-const TeamsScreen: NavigationStackScreenComponent<IProps> = () => {
-  const navigation = useNavigation();
-  // const userId = navigation.getParam("userId");
+const TeamsScreen = ({ route }) => {
+  const { userId } = route.params;
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserTeams,
     GetUserTeamsVariables

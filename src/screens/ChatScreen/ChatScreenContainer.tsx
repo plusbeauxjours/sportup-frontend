@@ -35,19 +35,21 @@ import {
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import BackBtn from "../../components/BackBtn";
 
-const ChatContainer: NavigationStackScreenComponent = ({ navigation }) => {
-  const chatId = navigation.getParam("chatId");
-  const senderUserId = navigation.getParam("senderUserId");
-  const senderUsername = navigation.getParam("senderUsername");
-  const senderPushToken = navigation.getParam("senderPushToken") || null;
-  const receiverUserId = navigation.getParam("receiverUserId");
-  const receiverUsername = navigation.getParam("receiverUsername");
-  const receiverPushToken = navigation.getParam("receiverPushToken") || null;
+const ChatContainer: NavigationStackScreenComponent = ({
+  route,
+  navigation,
+}) => {
+  const {
+    chatId,
+    senderUserId,
+    senderUsername,
+    senderPushToken,
+    receiverUserId,
+    receiverUsername,
+    receiverPushToken,
+  } = route.params;
 
-  const dbref = firebase
-    .database()
-    .ref("messages")
-    .child(navigation.getParam("chatId"));
+  const dbref = firebase.database().ref("messages").child(chatId);
   const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
   const [region, setRegion] = useState<any>({
     latitude: 20,

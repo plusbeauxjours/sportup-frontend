@@ -26,9 +26,11 @@ const Container = styled.View`
 `;
 
 const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
+  route,
   navigation,
 }) => {
-  const userId = navigation.getParam("userId");
+  const { userId } = route.params;
+
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<
     GetUserFollowers,
     GetUserFollowersVariables

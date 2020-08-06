@@ -94,8 +94,11 @@ const TeamInfoArea: React.FC<IProps> = ({
   );
 };
 
-const TeamProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
-  const teamId = navigation.getParam("teamId");
+const TeamProfileScreen: NavigationStackScreenComponent = ({
+  route,
+  navigation,
+}) => {
+  const { teamId } = route.params;
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
   const { data: { getTeam: { team = null } = {} } = {}, loading } = useQuery<

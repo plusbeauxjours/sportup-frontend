@@ -22,14 +22,16 @@ interface IProps extends NavigationStackScreenProps {
 }
 
 const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
+  route,
   navigation,
 }) => {
+  const { userId } = route.params;
   const {
     data: { getUser: { user: { following = null } = {} } = {} } = {},
     loading,
   } = useQuery<GetUserFollowing, GetUserFollowingVariables>(
     GET_USER_FOLLOWING,
-    { variables: { userId: navigation.getParam("userId") } }
+    { variables: { userId } }
   );
   return (
     <Container>
