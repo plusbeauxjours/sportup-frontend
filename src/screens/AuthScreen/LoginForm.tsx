@@ -15,6 +15,7 @@ import styled from "styled-components/native";
 import BackBtn from "../../components/BackBtn";
 import AppleApproach from "../AppleApproach/index";
 import FacebookApproach from "../FacebookApproach";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -34,7 +35,8 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const LoginForm: NavigationStackScreenComponent = ({ navigation }) => {
+const LoginForm: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [LoginFn, { client, loading: LoginLoading }] = useMutation<
     Login,
     LoginVariables
@@ -128,10 +130,5 @@ const LoginForm: NavigationStackScreenComponent = ({ navigation }) => {
     </Container>
   );
 };
-LoginForm.navigationOptions = ({ navigation }) => ({
-  title: "Log In",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default LoginForm;

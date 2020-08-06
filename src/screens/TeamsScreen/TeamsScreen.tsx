@@ -39,10 +39,5 @@ const TeamsScreen = ({ route }) => {
   }
   return <Loader />;
 };
-TeamsScreen.navigationOptions = {
-  title: "Teams",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
 export default TeamsScreen;

@@ -153,10 +153,5 @@ const RegisterForEventScreen: NavigationStackScreenComponent = ({
     </Container>
   );
 };
-RegisterForEventScreen.navigationOptions = ({ navigation }) => ({
-  title: "Register For Event",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default RegisterForEventScreen;

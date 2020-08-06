@@ -16,7 +16,8 @@ const Conatiner = styled.View`
   background-color: white;
 `;
 
-const FeedScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const FeedScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -82,16 +83,5 @@ const FeedScreen: NavigationStackScreenComponent = ({ navigation }) => {
     );
   }
 };
-FeedScreen.navigationOptions = ({ navigation }) => ({
-  title: "Feed",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default FeedScreen;

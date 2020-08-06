@@ -83,10 +83,5 @@ const FoundPlayersListScreen: NavigationStackScreenComponent = ({
     );
   }
 };
-FoundPlayersListScreen.navigationOptions = {
-  title: "Players",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
 export default FoundPlayersListScreen;

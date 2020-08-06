@@ -129,8 +129,5 @@ const ChatSendLocationScreen: NavigationStackScreenComponent = ({
     </View>
   );
 };
-ChatSendLocationScreen.navigationOptions = () => ({
-  header: null,
-});
 
 export default ChatSendLocationScreen;

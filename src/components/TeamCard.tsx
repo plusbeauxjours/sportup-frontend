@@ -1,7 +1,7 @@
 import React from "react";
-import { withNavigation } from "react-navigation";
 import RatingChip from "./RatingChip";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Border = styled.View`
   border-color: #999;
@@ -42,9 +42,10 @@ const Row = styled.View`
   align-items: center;
 `;
 
-const TeamCard = ({ team, navigation }) => {
+const TeamCard = ({ team }) => {
+  const navigation = useNavigation();
   const onPress = () => {
-    navigation.push("TeamProfileScreen", { teamId: team?.id });
+    navigation.navigate("TeamProfileScreen", { teamId: team?.id });
   };
   return (
     <TouchableOpacity onPress={onPress} key={team?.id}>
@@ -71,4 +72,4 @@ const TeamCard = ({ team, navigation }) => {
   );
 };
 
-export default withNavigation(TeamCard);
+export default TeamCard;

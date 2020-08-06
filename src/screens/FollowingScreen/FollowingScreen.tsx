@@ -45,10 +45,5 @@ const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
     </Container>
   );
 };
-FollowingScreen.navigationOptions = {
-  title: "Following",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
 export default FollowingScreen;

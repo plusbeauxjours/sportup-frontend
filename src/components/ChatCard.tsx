@@ -1,11 +1,11 @@
 import React from "react";
-import { withNavigation } from "react-navigation";
 import { Avatar } from "react-native-elements";
 import styled from "styled-components/native";
 import { Paragraph } from "react-native-paper";
 
 import { NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { timeSince } from "../utils/time";
+import { useNavigation } from "@react-navigation/native";
 
 const TouchableOpacity = styled.TouchableOpacity`
   flex-direction: row;
@@ -63,7 +63,8 @@ const ChatCard: React.FC<IProps> = ({
   navigation,
 }) => {
   const gotoChat = () => {
-    navigation.push("ChatScreen", {
+    const navigation = useNavigation();
+    navigation.navigate("ChatScreen", {
       chatId,
       senderUsername,
       senderUserId,
@@ -117,4 +118,4 @@ const ChatCard: React.FC<IProps> = ({
   );
 };
 
-export default withNavigation(ChatCard);
+export default ChatCard;

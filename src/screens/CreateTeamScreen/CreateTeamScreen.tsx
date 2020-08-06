@@ -81,7 +81,8 @@ const IconContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const CreateTeamScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const isAndroid = utils.isAndroid();
   const { me, loading: meLoading } = useMe();
   const [userLoading, setUserLoading] = useState<boolean>(false);
@@ -333,11 +334,6 @@ const CreateTeamScreen: NavigationStackScreenComponent = ({ navigation }) => {
       </Container>
     );
   }
-};
-CreateTeamScreen.navigationOptions = {
-  title: "Create Team",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
 };
 
 export default CreateTeamScreen;

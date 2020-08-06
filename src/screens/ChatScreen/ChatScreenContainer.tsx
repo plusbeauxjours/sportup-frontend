@@ -3,7 +3,6 @@ import { GiftedChat } from "react-native-gifted-chat";
 import * as Permissions from "expo-permissions";
 import * as IntentLauncher from "expo-intent-launcher";
 import * as moment from "moment-timezone";
-import { withNavigation } from "react-navigation";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
@@ -34,11 +33,9 @@ import {
 } from "../../constants/firebase";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import BackBtn from "../../components/BackBtn";
+import { useNavigation } from "@react-navigation/native";
 
-const ChatContainer: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const ChatContainer: NavigationStackScreenComponent = ({ route }) => {
   const {
     chatId,
     senderUserId,
@@ -48,7 +45,7 @@ const ChatContainer: NavigationStackScreenComponent = ({
     receiverUsername,
     receiverPushToken,
   } = route.params;
-
+  const navigation = useNavigation();
   const dbref = firebase.database().ref("messages").child(chatId);
   const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
   const [region, setRegion] = useState<any>({
@@ -121,7 +118,7 @@ const ChatContainer: NavigationStackScreenComponent = ({
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.push("UserProfileScreen", {
+          navigation.navigate("UserProfileScreen", {
             userId: receiverUserId,
           })
         }
@@ -178,7 +175,7 @@ const ChatContainer: NavigationStackScreenComponent = ({
     return date1 < date2 ? 1 : date2 < date1 ? -1 : 0;
   };
 
-  const didBlurSubscription = navigation.addListener("didBlur", (payload) => {
+  const didBlurSubscription = navigation.addListener("blur", (payload) => {
     BackHandler.removeEventListener("hardwareBackPress", () => {
       return;
     });
@@ -420,10 +417,5 @@ const ChatContainer: NavigationStackScreenComponent = ({
     />
   );
 };
-ChatContainer.navigationOptions = {
-  title: "Chat",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
-export default withNavigation(ChatContainer);
+export default ChatContainer;

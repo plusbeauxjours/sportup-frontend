@@ -4,6 +4,7 @@ import { Appbar, Headline, Divider } from "react-native-paper";
 import { Searchbar } from "react-native-paper";
 import styled from "styled-components/native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import { GET_SEARCH_RESULTS } from "./SearchQueries";
 import { useLazyQuery } from "react-apollo";
@@ -25,7 +26,8 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const SearchScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const SearchScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [searchText, setSearchText] = useState<string>("");
   const [
     search,
@@ -119,16 +121,5 @@ const SearchScreen: NavigationStackScreenComponent = ({ navigation }) => {
     </React.Fragment>
   );
 };
-SearchScreen.navigationOptions = ({ navigation }) => ({
-  title: "Search",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default SearchScreen;

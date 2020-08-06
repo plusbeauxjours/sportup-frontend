@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import styled from "styled-components/native";
 import DatePickerModal from "react-native-modal-datetime-picker";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import BackBtn from "../../components/BackBtn";
+import { useNavigation } from "@react-navigation/native";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import FormikPicker from "../../components/Formik/FormikPicker";
@@ -22,7 +24,6 @@ import {
   CreateEventVariables,
 } from "../../types/api";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 
 const sportsList = sports.slice(1);
 
@@ -88,7 +89,8 @@ const Center = styled.View`
   justify-content: center;
 `;
 
-const CreateEventScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const CreateEventScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);
   const [startTime, setStartTime] = useState<any>(null);
@@ -307,10 +309,5 @@ const CreateEventScreen: NavigationStackScreenComponent = ({ navigation }) => {
     );
   }
 };
-CreateEventScreen.navigationOptions = ({ navigation }) => ({
-  title: "Create Events",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default CreateEventScreen;

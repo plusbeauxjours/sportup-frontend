@@ -6,6 +6,7 @@ import { APPLE_CONNECT } from "./AppleApproachQueries";
 import { ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { FontAwesome } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import { AppleConnect, AppleConnectVariables } from "../../types/api";
 
@@ -33,7 +34,8 @@ const Text = styled.Text`
   font-weight: 600;
 `;
 
-export default ({ navigation }) => {
+export default () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [appleConnectFn, { loading: appleConnectLoading }] = useMutation<
     AppleConnect,

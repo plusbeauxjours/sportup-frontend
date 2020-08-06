@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
@@ -57,7 +58,8 @@ const ContextContainer = styled.View`
   align-items: center;
 `;
 
-const EventScreen: NavigationStackScreenComponent = ({ route, navigation }) => {
+const EventScreen: NavigationStackScreenComponent = ({ route }) => {
+  const navigation = useNavigation();
   const isAndroid = utils.isAndroid();
   const { eventId } = route.params;
   const {

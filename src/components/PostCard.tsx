@@ -84,8 +84,8 @@ const UserInfoArea: React.FC<UserInfoAreaProps> = ({
         disabled={disableNavigation}
         onPress={() => {
           me?.user.id === id
-            ? navigation.push("MyProfileScreen")
-            : navigation.push("UserProfileScreen", { userId: id });
+            ? navigation.navigate("MyProfileScreen")
+            : navigation.navigate("UserProfileScreen", { userId: id });
         }}
       >
         <Avatar

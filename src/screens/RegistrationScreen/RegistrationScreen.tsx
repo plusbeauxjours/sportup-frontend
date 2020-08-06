@@ -5,6 +5,7 @@ import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components/native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   GetRegistrations,
@@ -25,7 +26,8 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const RegistrationScreen: NavigationStackScreenComponent = ({ route }) => {
+  const navigation = useNavigation();
   const { eventId } = route.params;
   const {
     data: { getRegistrations: { registrations = null } = {} } = {},
@@ -144,10 +146,5 @@ const RegistrationScreen: NavigationStackScreenComponent = ({ navigation }) => {
     </Container>
   );
 };
-RegistrationScreen.navigationOptions = ({ navigation }) => ({
-  title: "Manage Registrations",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default RegistrationScreen;

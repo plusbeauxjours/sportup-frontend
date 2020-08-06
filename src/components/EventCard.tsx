@@ -1,6 +1,7 @@
 import React from "react";
-import { withNavigation } from "react-navigation";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
+
 import RatingChip from "./RatingChip";
 import { formatDate, formatTime } from "../utils/time";
 import { Ionicons } from "@expo/vector-icons";
@@ -54,8 +55,9 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const EventCard = ({ event, navigation }) => {
+const EventCard = ({ event }) => {
   const isAndroid = utils.isAndroid();
+  const navigation = useNavigation();
   return (
     <Touchable
       key={event.id}
@@ -134,4 +136,4 @@ const EventCard = ({ event, navigation }) => {
   );
 };
 
-export default withNavigation(EventCard);
+export default EventCard;

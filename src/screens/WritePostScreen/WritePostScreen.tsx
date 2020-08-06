@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   CreatePost,
@@ -33,7 +34,8 @@ const Box = styled.View`
   justify-content: center;
 `;
 
-const WritePostScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const WritePostScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [text, setText] = useState<string>("");
   const [createPostFn, { loading: createPostLoading }] = useMutation<
     CreatePost,
@@ -108,10 +110,5 @@ const WritePostScreen: NavigationStackScreenComponent = ({ navigation }) => {
     </Container>
   );
 };
-WritePostScreen.navigationOptions = ({ navigation }) => ({
-  title: "Write Post",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default WritePostScreen;

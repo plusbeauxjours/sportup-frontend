@@ -51,10 +51,5 @@ const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
     </Container>
   );
 };
-FollowersScreen.navigationOptions = {
-  title: "Followers",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
 export default FollowersScreen;

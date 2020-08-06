@@ -114,16 +114,5 @@ const ChatListScreen: NavigationStackScreenComponent = () => {
     );
   }
 };
-ChatListScreen.navigationOptions = ({ navigation }) => ({
-  title: "Chat",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default ChatListScreen;

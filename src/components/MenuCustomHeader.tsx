@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Header } from "react-native-elements";
-import { withNavigation } from "react-navigation";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const IconContainer = styled.TouchableOpacity`
   align-items: center;
@@ -26,13 +26,14 @@ interface IProps {
   title: string;
   subTitle?: string;
 }
-const LeftComponent = withNavigation(({ navigation }) => {
+const LeftComponent = () => {
+  const navigation = useNavigation();
   return (
     <IconContainer onPress={() => navigation.toggleDrawer()}>
       <Ionicons size={24} name={"ios-menu"} />
     </IconContainer>
   );
-});
+};
 
 const CenterComponent = ({ title, subTitle }) => {
   return (

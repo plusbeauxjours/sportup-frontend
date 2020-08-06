@@ -1,9 +1,9 @@
 import React from "react";
-import { withNavigation } from "react-navigation";
 import { Divider } from "react-native-paper";
-import SportsList from "./SportsList";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
-import { get_or_create_chat } from "../constants/firebase";
+
+import SportsList from "./SportsList";
 import { useMe } from "../context/meContext";
 import RatingChip from "./RatingChip";
 import { GetUser_getUser_user_sports } from "../types/api";
@@ -57,27 +57,9 @@ interface IProps {
   navigation;
 }
 
-const PlayerCardBottomSection: React.FC<IProps> = ({
-  id,
-  sports,
-  teams,
-  navigation,
-}) => {
+const PlayerCardBottomSection: React.FC<IProps> = ({ id, sports, teams }) => {
   const { me, loading: meLoading } = useMe();
-  const onPress = async (team) => {
-    const new_key_chats = await get_or_create_chat();
-    if (new_key_chats) {
-      navigation.push("ChatScreen", {
-        chatId: new_key_chats,
-        senderUserId: me?.user.id,
-        senderUsername: me?.user.username,
-        senderPushToken: me?.user.pushToken,
-        receiverUserId: team.createdBy.id,
-        receiverUsername: team.createdBy.username,
-        receiverPushToken: team.createdBy.pushToken,
-      });
-    }
-  };
+  const navigation = useNavigation();
 
   return (
     <React.Fragment>
@@ -95,7 +77,9 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
             <OuterUserInfoContainerStyle>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.push("TeamProfileScreen", { teamId: team?.id });
+                  navigation.navigate("TeamProfileScreen", {
+                    teamId: team?.id,
+                  });
                 }}
               >
                 <InnerUserInfoContainerStyle>
@@ -121,4 +105,4 @@ const PlayerCardBottomSection: React.FC<IProps> = ({
   );
 };
 
-export default withNavigation(PlayerCardBottomSection);
+export default PlayerCardBottomSection;

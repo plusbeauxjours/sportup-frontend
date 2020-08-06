@@ -17,6 +17,7 @@ import {
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -50,7 +51,8 @@ const validationSchema = Yup.object().shape({
     .required("Please re-enter your password"),
 });
 
-const SignupForm: NavigationStackScreenComponent = ({ navigation }) => {
+const SignupForm: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [LoginFn, { client: LoginClient, loading: LoginLoading }] = useMutation<
@@ -185,10 +187,5 @@ const SignupForm: NavigationStackScreenComponent = ({ navigation }) => {
     </Container>
   );
 };
-SignupForm.navigationOptions = ({ navigation }) => ({
-  title: "Sign Up",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-});
 
 export default SignupForm;

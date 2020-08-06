@@ -1,7 +1,8 @@
 import React from "react";
-import { withNavigation } from "react-navigation";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 import { Avatar } from "react-native-elements";
+
 import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../constants/urls";
 import { useMe } from "../context/meContext";
 import FollowBtn from "../components/FollowBtn";
@@ -47,8 +48,9 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const UserCard = ({ user, bottomSection = false, navigation }) => {
+const UserCard = ({ user, bottomSection = false }) => {
   const { me, loading: meLoading } = useMe();
+  const navigation = useNavigation();
   const onPress = () => {
     me?.user?.id === user.id
       ? navigation.navigate("MyProfileScreen")
@@ -89,4 +91,4 @@ const UserCard = ({ user, bottomSection = false, navigation }) => {
   );
 };
 
-export default withNavigation(UserCard);
+export default UserCard;

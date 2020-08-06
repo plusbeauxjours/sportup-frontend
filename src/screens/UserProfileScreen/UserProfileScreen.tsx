@@ -28,7 +28,6 @@ import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
 import { ActivityIndicator } from "react-native";
-import BackBtn from "../../components/BackBtn";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useNavigation } from "@react-navigation/native";
 
@@ -256,12 +255,5 @@ const UserProfileScreen: NavigationStackScreenComponent = ({ route }) => {
     );
   }
 };
-UserProfileScreen.navigationOptions = ({ navigation }) => ({
-  title: "User Profile",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-  // headerBackTitle: null,
-  // headerBackImage: <BackBtn />,
-});
 
 export default UserProfileScreen;

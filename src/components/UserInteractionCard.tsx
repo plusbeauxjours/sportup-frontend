@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
+
 import FollowBtn from "./FollowBtn";
 import { get_or_create_chat } from "../constants/firebase";
-import { withNavigation } from "react-navigation";
 import Button from "./Button";
 
 const View = styled.View`
@@ -34,9 +35,10 @@ const UserInteractionCard: React.FC<IProps> = ({
   navigation,
 }) => {
   const onPress = async () => {
+    const navigation = useNavigation();
     const new_key_chats = await get_or_create_chat();
     if (new_key_chats) {
-      navigation.push("ChatScreen", {
+      navigation.navigate("ChatScreen", {
         chatId: new_key_chats,
         senderUserId,
         senderUsername,
@@ -55,4 +57,4 @@ const UserInteractionCard: React.FC<IProps> = ({
   );
 };
 
-export default withNavigation(UserInteractionCard);
+export default UserInteractionCard;

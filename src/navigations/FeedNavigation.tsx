@@ -24,7 +24,7 @@ import {
 
 const FeedNavigation = createStackNavigator();
 
-export default ({ navigation }) => {
+export default () => {
   return (
     <FeedNavigation.Navigator
       screenOptions={{

@@ -354,10 +354,5 @@ const EditTeamProfileScreen: NavigationStackScreenComponent = ({
     );
   }
 };
-EditTeamProfileScreen.navigationOptions = {
-  title: "Edit Team",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
-};
 
 export default EditTeamProfileScreen;

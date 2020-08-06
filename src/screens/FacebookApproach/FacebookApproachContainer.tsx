@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import * as Facebook from "expo-facebook";
 import { useMutation } from "react-apollo-hooks";
+import { useNavigation } from "@react-navigation/native";
 
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
 import { FacebookConnect, FacebookConnectVariables } from "../../types/api";
 
-const FacebookApproachContainer = ({ navigation }) => {
+const FacebookApproachContainer = () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
 
   const [facebookConnectFn] = useMutation<

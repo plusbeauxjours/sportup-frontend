@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery } from "react-apollo";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
-import { Appbar } from "react-native-paper";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
@@ -11,13 +10,15 @@ import { GetUpcomingEvents, GetUpcomingEventsVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import AddBtn from "../../components/AddBtn";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-const UpcomingEvents: NavigationStackScreenComponent = ({ navigation }) => {
+const UpcomingEvents: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -89,16 +90,5 @@ const UpcomingEvents: NavigationStackScreenComponent = ({ navigation }) => {
     </Container>
   );
 };
-UpcomingEvents.navigationOptions = ({ navigation }) => ({
-  title: "Upcoming Events",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
 
 export default UpcomingEvents;

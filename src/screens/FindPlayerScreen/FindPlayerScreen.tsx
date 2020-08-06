@@ -11,6 +11,7 @@ import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import { TouchableWithoutFeedback } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -42,7 +43,8 @@ const WhiteSpace = styled.View`
   height: 30px;
 `;
 
-const FindPlayerScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const FindPlayerScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 
   const {
@@ -120,15 +122,5 @@ const FindPlayerScreen: NavigationStackScreenComponent = ({ navigation }) => {
     );
   }
 };
-FindPlayerScreen.navigationOptions = ({ navigation }) => ({
-  title: "Find",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
+
 export default FindPlayerScreen;

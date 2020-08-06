@@ -31,15 +31,5 @@ const MainTournamentScreen: NavigationStackScreenComponent = ({
     />
   </Container>
 );
-MainTournamentScreen.navigationOptions = ({ navigation }) => ({
-  title: "Events",
-  headerLeft: () => (
-    <Appbar.Action
-      icon="menu"
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
-  ),
-});
+
 export default MainTournamentScreen;

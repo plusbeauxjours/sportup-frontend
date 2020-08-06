@@ -5,6 +5,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import FormikInput from "../../components/Formik/FormikInput";
 import { UPDATE_USER } from "./EditProfileScreenQueries";
@@ -26,7 +27,8 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const EditProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
+const EditProfileScreen: NavigationStackScreenComponent = () => {
+  const navigation = useNavigation();
   const {
     data: { me: { user = null } = {} } = {},
     loading: meLoading,
@@ -217,12 +219,6 @@ const EditProfileScreen: NavigationStackScreenComponent = ({ navigation }) => {
       </Container>
     );
   }
-};
-
-EditProfileScreen.navigationOptions = {
-  title: "Edit profile",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
 };
 
 export default EditProfileScreen;
