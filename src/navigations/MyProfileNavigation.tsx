@@ -1,10 +1,5 @@
 import React from "react";
-import { Appbar } from "react-native-paper";
-import { useApolloClient } from "react-apollo-hooks";
-import { AsyncStorage } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import styled from "styled-components/native";
 
 import MyProfileScreen from "../screens/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
@@ -19,21 +14,14 @@ import EditSportsScreen from "../screens/EditSportsScreen";
 import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
 import ChatScreen from "../screens/ChatScreen/";
 import BackBtn from "../components/BackBtn";
-
-const Row = styled.View`
-  flex-direction: row;
-`;
+import {
+  RigthComponent,
+  LeftComponent,
+} from "../components/MyprofileCustomHeader";
 
 const MyProfileNavigation = createStackNavigator();
 
 export default () => {
-  const client = useApolloClient();
-  const navigation = useNavigation();
-  const handleLogout = async () => {
-    client.resetStore();
-    await AsyncStorage.clear();
-    navigation.navigate("Auth");
-  };
   return (
     <MyProfileNavigation.Navigator
       screenOptions={{
@@ -46,28 +34,8 @@ export default () => {
         component={MyProfileScreen}
         options={{
           title: "Me",
-          headerLeft: () => (
-            <Appbar.Action
-              icon="menu"
-              onPress={() => {
-                navigation.toggleDrawer();
-              }}
-            />
-          ),
-          headerRight: () => (
-            <Row>
-              <Appbar.Action
-                icon="square-edit-outline"
-                onPress={() => {
-                  navigation.navigate("EditProfileScreen");
-                }}
-              />
-              <Appbar.Action
-                icon="exit-to-app"
-                onPress={() => handleLogout()}
-              />
-            </Row>
-          ),
+          headerLeft: () => <LeftComponent />,
+          headerRight: () => <RigthComponent />,
         }}
       />
       <MyProfileNavigation.Screen

@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Header } from "react-native-elements";
-import { withNavigation } from "react-navigation";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { useApolloClient } from "react-apollo-hooks";
+import { AsyncStorage } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const IconContainer = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: 40px;
 `;
-const View = styled.View`
+const Row = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: baseline;
@@ -26,35 +28,45 @@ interface IProps {
   title: string;
   subTitle?: string;
 }
-const LeftComponent = withNavigation(({ navigation }) => {
+export const LeftComponent = () => {
+  const navigation = useNavigation();
+
   return (
     <IconContainer onPress={() => navigation.toggleDrawer()}>
-      <Ionicons size={24} name={"ios-menu"} />
+      <FontAwesome size={24} name={"navicon"} />
     </IconContainer>
-  );
-});
-
-const CenterComponent = ({ title, subTitle }) => {
-  return (
-    <View>
-      <Text>{title}</Text>
-      <SmallText>{subTitle}</SmallText>
-    </View>
   );
 };
 
-const RigthComponent = withNavigation(({ navigation }) => {
+const CenterComponent = ({ title, subTitle }) => {
   return (
-    <>
-      <IconContainer onPress={() => navigation.navigate("EditProfileScreen")}>
-        <Ionicons size={24} name={"square-edit-outline"} />
-      </IconContainer>
-      <IconContainer onPress={() => navigation.getParam("logout")}>
-        <Ionicons size={24} name={"exit-to-app"} />
-      </IconContainer>
-    </>
+    <Row>
+      <Text>{title}</Text>
+      <SmallText>{subTitle}</SmallText>
+    </Row>
   );
-});
+};
+
+export const RigthComponent = () => {
+  const client = useApolloClient();
+  const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    client.resetStore();
+    await AsyncStorage.clear();
+    navigation.navigate("Auth");
+  };
+  return (
+    <Row>
+      <IconContainer onPress={() => navigation.navigate("EditProfileScreen")}>
+        <FontAwesome size={24} name={"edit"} />
+      </IconContainer>
+      <IconContainer onPress={() => handleLogout()}>
+        <FontAwesome size={24} name={"sign-out"} />
+      </IconContainer>
+    </Row>
+  );
+};
 
 const MyprofileCustomHeader: React.FC<IProps> = ({ title, subTitle }) => {
   return (

@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { Appbar } from "react-native-paper";
-import { useApolloClient } from "react-apollo-hooks";
-import { AsyncStorage } from "react-native";
+import React from "react";
+
 import { createStackNavigator } from "@react-navigation/stack";
 
 import FeedScreen from "../screens/FeedScreen";
@@ -19,21 +17,14 @@ import WritePostScreen from "../screens/WritePostScreen/index";
 import EditSportsScreen from "../screens/EditSportsScreen/EditSportsScreen";
 import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeamScreen";
 import BackBtn from "../components/BackBtn";
+import {
+  LeftComponent,
+  RigthComponent,
+} from "../components/MyprofileCustomHeader";
 
 const FeedNavigation = createStackNavigator();
 
 export default ({ navigation }) => {
-  const client = useApolloClient();
-  const handleLogout = async () => {
-    client.resetStore();
-    await AsyncStorage.clear();
-    navigation.navigate("Auth");
-  };
-  useEffect(() => {
-    navigation.setParams({
-      logout: handleLogout,
-    });
-  }, []);
   return (
     <FeedNavigation.Navigator
       screenOptions={{
@@ -46,14 +37,7 @@ export default ({ navigation }) => {
         component={FeedScreen}
         options={{
           title: "Feed",
-          headerLeft: () => (
-            <Appbar.Action
-              icon="menu"
-              onPress={() => {
-                navigation.toggleDrawer();
-              }}
-            />
-          ),
+          headerLeft: () => <LeftComponent />,
         }}
       />
       <FeedNavigation.Screen
@@ -61,20 +45,7 @@ export default ({ navigation }) => {
         component={MyProfileScreen}
         options={{
           title: "Me",
-          headerRight: () => (
-            // <>
-            <Appbar.Action
-              icon="square-edit-outline"
-              onPress={() => {
-                navigation.navigate("EditProfileScreen");
-              }}
-            />
-            // <Appbar.Action
-            //   icon="exit-to-app"
-            //   onPress={navigation.getParam("logout")}
-            // />
-            // </>
-          ),
+          headerRight: () => <RigthComponent />,
         }}
       />
       <FeedNavigation.Screen
