@@ -3,6 +3,7 @@ import { AsyncStorage } from "react-native";
 import * as Facebook from "expo-facebook";
 import { useMutation } from "react-apollo-hooks";
 import { useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
@@ -41,7 +42,12 @@ const FacebookApproachContainer = () => {
         await AsyncStorage.setItem("jwt", facebookConnect.token);
         if (facebookConnect.token) {
           await setLoading(false);
-          navigation.navigate("Main");
+          // navigation.reset({
+          //   index: 0,
+          //   routes: [{ name: "MainDrawer" }],
+          // });
+          navigation.navigate("MainNavigation");
+          // navigation.dispatch(StackActions.replace("MainDrawer"));
         }
       }
     } catch ({ message }) {

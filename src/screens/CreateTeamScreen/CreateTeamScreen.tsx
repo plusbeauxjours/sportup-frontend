@@ -25,11 +25,11 @@ import FormikInput from "../../components/Formik/FormikInput";
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
 import { DARK_ORANGE, PRIMARY_COLOR } from "../../constants/colors";
-import BackBtn from "../../components/BackBtn";
 import FormikPicker from "../../components/Formik/FormikPicker";
 import { Ionicons } from "@expo/vector-icons";
 import utils from "../../utils/utils";
 import { useMe } from "../../context/meContext";
+import { useNavigation } from "@react-navigation/native";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;

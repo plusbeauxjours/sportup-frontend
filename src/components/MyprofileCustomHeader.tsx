@@ -60,12 +60,15 @@ const CenterComponent = ({ title, subTitle }) => {
 export const RigthComponent = () => {
   const client = useApolloClient();
   const navigation = useNavigation();
-
   const handleLogout = async () => {
     client.resetStore();
     await AsyncStorage.clear();
-    navigation.navigate("Auth");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "AuthNavigation" }],
+    });
   };
+
   return (
     <Row>
       <IconContainer onPress={() => navigation.navigate("EditProfileScreen")}>

@@ -10,36 +10,16 @@ import ChatNavigation from "./ChatNavigation";
 
 const Drawer = createDrawerNavigator();
 export default () => (
-  <Drawer.Navigator>
-    <Drawer.Screen
-      name="Me"
-      component={MyProfileNavigation}
-      options={{ drawerLabel: "Me" }}
-    />
-    <Drawer.Screen
-      name="Feed"
-      component={FeedNavigation}
-      // options={{ drawerLabel: "Feed" }}
-    />
-    <Drawer.Screen
-      name="Find"
-      component={FindNavigation}
-      // options={{ drawerLabel: "Find" }}
-    />
-    <Drawer.Screen
-      name="Chat"
-      component={ChatNavigation}
-      // options={{ drawerLabel: "Chat" }}
-    />
-    <Drawer.Screen
-      name="Events"
-      component={EventNavigation}
-      // options={{ drawerLabel: "Events" }}
-    />
-    <Drawer.Screen
-      name="Search"
-      component={SearchNavigation}
-      // options={{ drawerLabel: "Search" }}
-    />
+  <Drawer.Navigator
+    initialRouteName="Me"
+    drawerStyle={{ backgroundColor: "#8fd3fe" }}
+    drawerContentOptions={{ labelStyle: { color: "#FFF" } }}
+  >
+    <Drawer.Screen name="Me" component={MyProfileNavigation} />
+    <Drawer.Screen name="Feed" component={FeedNavigation} />
+    <Drawer.Screen name="Find" component={FindNavigation} />
+    <Drawer.Screen name="Chat" component={ChatNavigation} />
+    <Drawer.Screen name="Events" component={EventNavigation} />
+    <Drawer.Screen name="Search" component={SearchNavigation} />
   </Drawer.Navigator>
 );

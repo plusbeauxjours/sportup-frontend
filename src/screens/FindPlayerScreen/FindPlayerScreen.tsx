@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Appbar } from "react-native-paper";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";

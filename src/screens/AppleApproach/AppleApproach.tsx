@@ -64,7 +64,7 @@ export default () => {
         await AsyncStorage.setItem("jwt", appleConnect.token);
         if (appleConnect.token) {
           await setLoading(false);
-          navigation.navigate("Main");
+          navigation.navigate("MyProfileScreen");
         }
       } catch ({ message }) {
         console.log(`Apple Login Error: ${message}`);

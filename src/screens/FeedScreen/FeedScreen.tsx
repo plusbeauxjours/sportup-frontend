@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Appbar } from "react-native-paper";
 import styled from "styled-components/native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
+import { useNavigation } from "@react-navigation/native";
 
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
 import { GetMainFeed, GetMainFeedVariables } from "../../types/api";

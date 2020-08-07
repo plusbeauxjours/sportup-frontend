@@ -74,7 +74,7 @@ const SignupForm: NavigationStackScreenComponent = () => {
   const handleLoginComplete = async ({ tokenAuth }) => {
     const { token } = tokenAuth;
     await AsyncStorage.setItem("jwt", token);
-    navigation.navigate("Main");
+    navigation.navigate("MyProfileScreen");
   };
 
   const renderForm = ({

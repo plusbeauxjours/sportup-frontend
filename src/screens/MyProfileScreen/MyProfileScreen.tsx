@@ -118,7 +118,7 @@ const MyProfileScreen: NavigationStackScreenComponent = () => {
   const handleLogout = async () => {
     client.resetStore();
     await AsyncStorage.clear();
-    navigation.navigate("Auth");
+    navigation.navigate("AuthNavigation");
   };
   const askPermission = async () => {
     const { status: notificationStatus } = await Permissions.askAsync(

@@ -24,6 +24,7 @@ const MyProfileNavigation = createStackNavigator();
 export default () => {
   return (
     <MyProfileNavigation.Navigator
+      initialRouteName="MyProfileScreen"
       screenOptions={{
         headerBackTitleVisible: false,
         headerBackImage: () => <BackBtn />,
