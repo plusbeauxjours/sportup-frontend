@@ -44,57 +44,56 @@ export default () => {
       <MyProfileNavigation.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
-        options={{ title: "EditProfileScreen" }}
+        options={{ title: "Edit Profile" }}
       />
       <MyProfileNavigation.Screen
         name="UserProfileScreen"
         component={UserProfileScreen}
-        options={{ title: "UserProfileScreen" }}
+        options={{ title: "User Profile" }}
       />
       <MyProfileNavigation.Screen
         name="FollowersScreen"
         component={FollowersScreen}
-        options={{ title: "FollowersScreen" }}
+        options={{ title: "Followers" }}
       />
       <MyProfileNavigation.Screen
         name="FollowingScreen"
         component={FollowingScreen}
-        options={{ title: "FollowingScreen" }}
+        options={{ title: "Following" }}
       />
       <MyProfileNavigation.Screen
         name="TeamsScreen"
         component={TeamsScreen}
-        options={{ title: "TeamsScreen" }}
+        options={{ title: "Teams" }}
       />
       <MyProfileNavigation.Screen
         name="TeamProfileScreen"
         component={TeamProfileScreen}
-        options={{ title: "TeamProfileScreen" }}
+        options={{ title: "Team Profile" }}
       />
       <MyProfileNavigation.Screen
         name="CreateTeamScreen"
         component={CreateTeamScreen}
-        options={{ title: "CreateTeamScreen" }}
+        options={{ title: "Create Team" }}
       />
       <MyProfileNavigation.Screen
         name="EditTeamProfileScreen"
         component={EditTeamProfileScreen}
-        options={{ title: "EditTeamProfileScreen" }}
+        options={{ title: "EditTeam Profile" }}
       />
       <MyProfileNavigation.Screen
         name="EditSportsScreen"
         component={EditSportsScreen}
-        options={{ title: "EditSportsScreen" }}
+        options={{ title: "Edit Sports" }}
       />
       <MyProfileNavigation.Screen
         name="ChatSendLocationScreen"
         component={ChatSendLocationScreen}
-        options={{ title: "ChatSendLocationScreen" }}
       />
       <MyProfileNavigation.Screen
         name="ChatScreen"
         component={ChatScreen}
-        options={{ title: "ChatScreen" }}
+        options={{ title: "Chat" }}
       />
     </MyProfileNavigation.Navigator>
   );

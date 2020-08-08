@@ -75,7 +75,7 @@ const SignupForm: NavigationStackScreenComponent = () => {
     const { token } = tokenAuth;
     await AsyncStorage.setItem("jwt", token);
     navigation.reset({
-      index: 1,
+      index: 0,
       routes: [{ name: "MainDrawer" }],
     });
   };

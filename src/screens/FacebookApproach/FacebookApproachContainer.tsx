@@ -44,7 +44,7 @@ const FacebookApproachContainer = () => {
         if (facebookConnect.token) {
           await setLoading(false);
           navigation.reset({
-            index: 1,
+            index: 0,
             routes: [{ name: "MainDrawer" }],
           });
         }

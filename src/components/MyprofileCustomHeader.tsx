@@ -61,7 +61,7 @@ export const RigthComponent = () => {
     client.resetStore();
     await AsyncStorage.clear();
     navigation.reset({
-      index: 1,
+      index: 0,
       routes: [{ name: "AuthNavigation" }],
     });
   };

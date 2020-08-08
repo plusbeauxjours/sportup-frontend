@@ -65,7 +65,7 @@ export default () => {
         if (appleConnect.token) {
           await setLoading(false);
           navigation.reset({
-            index: 1,
+            index: 0,
             routes: [{ name: "MainDrawer" }],
           });
         }
