@@ -13,7 +13,7 @@ import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
-import { PRIMARY_COLOR } from "../../constants/colors";
+import { PRIMARY_COLOR, DARK_ORANGE } from "../../constants/colors";
 import { formatDate, formatTime } from "../../utils/time";
 import utils from "../../utils/utils";
 
@@ -193,6 +193,7 @@ EventScreen.navigationOptions = () => ({
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
   headerTransparent: true,
+  headerTintColor: DARK_ORANGE,
   headerBackground: () => (
     <BlurView intensity={70} tint="light" style={StyleSheet.absoluteFill} />
   ),

@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Header } from "react-native-elements";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Entypo, FontAwesome } from "@expo/vector-icons";
 import { useApolloClient } from "react-apollo-hooks";
 import { AsyncStorage } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import utils from "..//utils/utils";
+import { DARK_ORANGE } from "../constants/colors";
 
 const IconContainer = styled.TouchableOpacity`
   align-items: center;
@@ -39,11 +40,7 @@ export const LeftComponent = () => {
       style={{ marginLeft: 5 }}
       onPress={() => navigation.toggleDrawer()}
     >
-      {isAndroid ? (
-        <Ionicons size={24} name={"md-menu"} />
-      ) : (
-        <Ionicons size={24} name={"ios-menu"} />
-      )}
+      <Entypo size={28} name={"menu"} color={DARK_ORANGE} />
     </IconContainer>
   );
 };
@@ -64,7 +61,7 @@ export const RigthComponent = () => {
     client.resetStore();
     await AsyncStorage.clear();
     navigation.reset({
-      index: 0,
+      index: 1,
       routes: [{ name: "AuthNavigation" }],
     });
   };
@@ -72,10 +69,10 @@ export const RigthComponent = () => {
   return (
     <Row>
       <IconContainer onPress={() => navigation.navigate("EditProfileScreen")}>
-        <FontAwesome size={24} name={"edit"} />
+        <FontAwesome size={24} name={"edit"} color={DARK_ORANGE} />
       </IconContainer>
       <IconContainer onPress={() => handleLogout()}>
-        <FontAwesome size={24} name={"sign-out"} />
+        <FontAwesome size={24} name={"sign-out"} color={DARK_ORANGE} />
       </IconContainer>
     </Row>
   );

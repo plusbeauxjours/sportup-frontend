@@ -19,6 +19,7 @@ import { RateTeam, RateTeamVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
 import BackBtn from "../../components/BackBtn";
+import { DARK_ORANGE } from "../../constants/colors";
 
 const View = styled.View`
   align-items: center;
@@ -193,6 +194,7 @@ TeamProfileScreen.navigationOptions = {
   headerBackTitleVisible: false,
   headerBackImage: () => <BackBtn />,
   headerTransparent: true,
+  headerTintColor: DARK_ORANGE,
   headerBackground: () => (
     <BlurView intensity={70} tint="light" style={StyleSheet.absoluteFill} />
   ),

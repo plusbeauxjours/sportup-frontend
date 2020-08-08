@@ -17,6 +17,7 @@ import WritePostScreen from "../screens/WritePostScreen/index";
 import EditSportsScreen from "../screens/EditSportsScreen/EditSportsScreen";
 import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeamScreen";
 import BackBtn from "../components/BackBtn";
+import { DARK_ORANGE } from "../constants/colors";
 import {
   LeftComponent,
   RigthComponent,
@@ -29,6 +30,7 @@ export default () => {
     <FeedNavigation.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTintColor: DARK_ORANGE,
         headerBackImage: () => <BackBtn />,
       }}
     >

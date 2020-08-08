@@ -12,7 +12,7 @@ const Drawer = createDrawerNavigator();
 export default () => (
   <Drawer.Navigator
     initialRouteName="Me"
-    drawerStyle={{ backgroundColor: "#8fd3fe" }}
+    drawerStyle={{ backgroundColor: "#ffae19" }}
     drawerContentOptions={{ labelStyle: { color: "#FFF" } }}
   >
     <Drawer.Screen name="Me" component={MyProfileNavigation} />

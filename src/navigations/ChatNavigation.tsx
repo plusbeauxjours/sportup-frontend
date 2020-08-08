@@ -17,6 +17,7 @@ import FoundTeamsListScreen from "../screens/FoundTeamsListScreen/FoundTeamsList
 import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeamScreen";
 import EditTeamProfileScreen from "../screens/EditTeamProfileScreen/EditTeamProfileScreen";
 import EditSportsScreen from "../screens/EditSportsScreen/EditSportsScreen";
+import { DARK_ORANGE } from "../constants/colors";
 import {
   LeftComponent,
   RigthComponent,
@@ -29,6 +30,7 @@ export default () => {
     <ChatNavigation.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTintColor: DARK_ORANGE,
         headerBackImage: () => <BackBtn />,
       }}
     >
@@ -36,7 +38,7 @@ export default () => {
         name="ChatListScreen"
         component={ChatListScreen}
         options={{
-          title: "Chatt",
+          title: "Chat",
           headerLeft: () => <LeftComponent />,
         }}
       />

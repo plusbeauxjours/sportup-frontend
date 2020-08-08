@@ -31,9 +31,21 @@ export default () => {
     <NavigationContainer>
       <RootStack.Navigator headerMode="none">
         {userToken ? (
-          <RootStack.Screen name="MainDrawer" component={MainDrawer} />
+          <>
+            <RootStack.Screen name="MainDrawer" component={MainDrawer} />
+            <RootStack.Screen
+              name="AuthNavigation"
+              component={AuthNavigation}
+            />
+          </>
         ) : (
-          <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
+          <>
+            <RootStack.Screen
+              name="AuthNavigation"
+              component={AuthNavigation}
+            />
+            <RootStack.Screen name="MainDrawer" component={MainDrawer} />
+          </>
         )}
       </RootStack.Navigator>
     </NavigationContainer>

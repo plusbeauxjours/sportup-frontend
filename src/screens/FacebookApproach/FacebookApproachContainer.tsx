@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import * as Facebook from "expo-facebook";
 import { useMutation } from "react-apollo-hooks";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { StackActions } from "@react-navigation/native";
 
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
 import { FacebookConnect, FacebookConnectVariables } from "../../types/api";
+import MyProfileScreen from "../MyProfileScreen/MyProfileScreen";
 
 const FacebookApproachContainer = () => {
   const navigation = useNavigation();
@@ -42,12 +43,10 @@ const FacebookApproachContainer = () => {
         await AsyncStorage.setItem("jwt", facebookConnect.token);
         if (facebookConnect.token) {
           await setLoading(false);
-          // navigation.reset({
-          //   index: 0,
-          //   routes: [{ name: "MainDrawer" }],
-          // });
-          navigation.navigate("MainNavigation");
-          // navigation.dispatch(StackActions.replace("MainDrawer"));
+          navigation.reset({
+            index: 1,
+            routes: [{ name: "MainDrawer" }],
+          });
         }
       }
     } catch ({ message }) {

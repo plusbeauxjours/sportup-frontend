@@ -19,6 +19,7 @@ import EditSportsScreen from "../screens/EditSportsScreen/EditSportsScreen";
 import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeamScreen";
 import EditProfileScreen from "../screens/EditProfileScreen/EditProfileScreen";
 import BackBtn from "../components/BackBtn";
+import { DARK_ORANGE } from "../constants/colors";
 import {
   LeftComponent,
   RigthComponent,
@@ -31,6 +32,7 @@ export default () => {
     <EventNavigation.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTintColor: DARK_ORANGE,
         headerBackImage: () => <BackBtn />,
       }}
     >

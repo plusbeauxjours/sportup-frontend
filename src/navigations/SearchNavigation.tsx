@@ -19,6 +19,7 @@ import CreateTeamScreen from "../screens/CreateTeamScreen/CreateTeamScreen";
 import MyProfileScreen from "../screens/MyProfileScreen/MyProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen/EditProfileScreen";
 import CreateEventScreen from "../screens/CreateEventScreen/CreateEventScreen";
+import { DARK_ORANGE } from "../constants/colors";
 import {
   LeftComponent,
   RigthComponent,
@@ -31,6 +32,7 @@ export default () => {
     <SearchNavigation.Navigator
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTintColor: DARK_ORANGE,
         headerBackImage: () => <BackBtn />,
       }}
     >

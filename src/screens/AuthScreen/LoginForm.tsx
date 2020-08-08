@@ -47,7 +47,10 @@ const LoginForm: NavigationStackScreenComponent = () => {
   const handleLoginComplete = async ({ tokenAuth }) => {
     const { token } = tokenAuth;
     await AsyncStorage.setItem("jwt", token);
-    navigation.navigate("MyProfileScreen");
+    navigation.reset({
+      index: 1,
+      routes: [{ name: "MainDrawer" }],
+    });
   };
 
   const renderForm = ({

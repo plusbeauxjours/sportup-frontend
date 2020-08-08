@@ -14,6 +14,7 @@ import EditSportsScreen from "../screens/EditSportsScreen";
 import ChatSendLocationScreen from "../screens/ChatSendLocationScreen";
 import ChatScreen from "../screens/ChatScreen/";
 import BackBtn from "../components/BackBtn";
+import { DARK_ORANGE } from "../constants/colors";
 import {
   RigthComponent,
   LeftComponent,
@@ -27,6 +28,7 @@ export default () => {
       initialRouteName="MyProfileScreen"
       screenOptions={{
         headerBackTitleVisible: false,
+        headerTintColor: DARK_ORANGE,
         headerBackImage: () => <BackBtn />,
       }}
     >
