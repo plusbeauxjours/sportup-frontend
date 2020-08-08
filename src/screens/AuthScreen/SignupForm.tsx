@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
 import { AsyncStorage } from "react-native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormikInput from "../../components/Formik/FormikInput";
@@ -15,7 +14,6 @@ import {
   SignupVariables,
 } from "../../types/api";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -51,7 +49,7 @@ const validationSchema = Yup.object().shape({
     .required("Please re-enter your password"),
 });
 
-const SignupForm: NavigationStackScreenComponent = () => {
+const SignupForm = () => {
   const navigation = useNavigation();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");

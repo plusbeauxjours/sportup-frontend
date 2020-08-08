@@ -4,7 +4,6 @@ import { ListItem } from "react-native-elements";
 import { useMutation } from "react-apollo";
 import { useQuery } from "react-apollo-hooks";
 import styled from "styled-components/native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useNavigation } from "@react-navigation/native";
 
 import {
@@ -19,14 +18,13 @@ import {
   DISAPPROVE_REGISTRATION,
 } from "./RegistrationScreenQueries";
 import Loader from "../../components/Loader";
-import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-const RegistrationScreen: NavigationStackScreenComponent = ({ route }) => {
+const RegistrationScreen: React.FC = ({ route }) => {
   const navigation = useNavigation();
   const { eventId } = route.params;
   const {

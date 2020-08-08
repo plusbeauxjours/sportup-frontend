@@ -29,24 +29,12 @@ export default () => {
   }
   return (
     <NavigationContainer>
-      <RootStack.Navigator headerMode="none">
-        {userToken ? (
-          <>
-            <RootStack.Screen name="MainDrawer" component={MainDrawer} />
-            <RootStack.Screen
-              name="AuthNavigation"
-              component={AuthNavigation}
-            />
-          </>
-        ) : (
-          <>
-            <RootStack.Screen
-              name="AuthNavigation"
-              component={AuthNavigation}
-            />
-            <RootStack.Screen name="MainDrawer" component={MainDrawer} />
-          </>
-        )}
+      <RootStack.Navigator
+        headerMode="none"
+        initialRouteName={userToken ? "MainDrawer" : "AuthNavigation"}
+      >
+        <RootStack.Screen name="MainDrawer" component={MainDrawer} />
+        <RootStack.Screen name="AuthNavigation" component={AuthNavigation} />
       </RootStack.Navigator>
     </NavigationContainer>
   );

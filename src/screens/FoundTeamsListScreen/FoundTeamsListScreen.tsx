@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+import styled from "styled-components/native";
 
 import TeamCard from "../../components/TeamCard";
 import { GET_TEAMS_FOR_GAME } from "./FoundTeamsListScreenQueries";
 import { GetTeamsForGame, GetTeamsForGameVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import BackBtn from "../../components/BackBtn";
-import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-const FoundTeamsListScreen: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const FoundTeamsListScreen: React.FC = ({ route }) => {
   const { selectedSportIds: sportIds } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -80,11 +75,6 @@ const FoundTeamsListScreen: NavigationStackScreenComponent = ({
       </Container>
     );
   }
-};
-FoundTeamsListScreen.navigationOptions = {
-  title: "Teams near you",
-  headerBackTitleVisible: false,
-  headerBackImage: () => <BackBtn />,
 };
 
 export default FoundTeamsListScreen;

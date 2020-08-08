@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useQuery } from "react-apollo";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_UPCOMING_EVENTS } from "./UpcomingEventQueries";
 import EventCard from "../../components/EventCard";
@@ -17,7 +16,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const UpcomingEvents: NavigationStackScreenComponent = () => {
+const UpcomingEvents: React.FC = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
 

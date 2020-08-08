@@ -23,9 +23,8 @@ import {
   GetSearchResultsVariables,
 } from "../../types/api";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 import { GET_SEARCH_RESULTS } from "../SearchScreen/SearchQueries";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import Loader from "../../components/Loader";
 import { DARK_ORANGE, PRIMARY_COLOR } from "../../constants/colors";
 import FormikInput from "../../components/Formik/FormikInput";
@@ -33,6 +32,7 @@ import FormikPicker from "../../components/Formik/FormikPicker";
 import { Ionicons } from "@expo/vector-icons";
 import utils from "../../utils/utils";
 import { useMe } from "../../context/meContext";
+import { useNavigation } from "@react-navigation/native";
 
 const OuterUserInfoContainerStyle = styled.View`
   flex-direction: row;
@@ -87,11 +87,9 @@ const IconContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const EditTeamProfileScreen: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const EditTeamProfileScreen: React.FC = ({ route }) => {
   const isAndroid = utils.isAndroid();
+  const navigation = useNavigation();
   const { team } = route.params;
   const { me, loading: meLoading } = useMe();
   const [userLoading, setUserLoading] = useState<boolean>(false);

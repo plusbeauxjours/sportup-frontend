@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "react-apollo";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import { useNavigation } from "@react-navigation/native";
 
 import { ME } from "../MyProfileScreen/MyProfileScreenQueries";
@@ -16,7 +16,6 @@ import {
 import styled from "styled-components/native";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
   flex: 1;
@@ -37,7 +36,7 @@ const Row = styled.View`
   flex-wrap: wrap;
 `;
 
-const EditSportsScreen: NavigationStackScreenComponent = () => {
+const EditSportsScreen: React.FC = () => {
   const navigation = useNavigation();
   const [selectedSportIds, setSelectedSportsIds] = useState<any>([]);
 

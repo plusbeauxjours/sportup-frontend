@@ -14,7 +14,6 @@ import { Notifications } from "expo";
 import Constants from "expo-constants";
 import * as IntentLauncher from "expo-intent-launcher";
 import * as Permissions from "expo-permissions";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { ME, MY_FEED, REGISTER_PUSH } from "./MyProfileScreenQueries";
 import {
@@ -70,7 +69,7 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const MyProfileScreen: NavigationStackScreenComponent = () => {
+const MyProfileScreen: React.FC = () => {
   const client = useApolloClient();
   const navigation = useNavigation();
   const { me, loading: meContextLoading } = useMe();

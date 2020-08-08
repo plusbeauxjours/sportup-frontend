@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import { useNavigation } from "@react-navigation/native";
 
 import { GET_MAIN_FEED } from "./FeedScreenQueries";
@@ -16,7 +16,7 @@ const Conatiner = styled.View`
   background-color: white;
 `;
 
-const FeedScreen: NavigationStackScreenComponent = () => {
+const FeedScreen: React.FC = () => {
   const navigation = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
 

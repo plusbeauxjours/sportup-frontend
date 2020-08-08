@@ -28,7 +28,7 @@ import { useMe } from "../../context/meContext";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
 import { ActivityIndicator } from "react-native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import { useNavigation } from "@react-navigation/native";
 
 const UserInfoContainer = styled.View`
@@ -63,7 +63,7 @@ const Caption = styled.Text`
   color: #999;
 `;
 
-const UserProfileScreen: NavigationStackScreenComponent = ({ route }) => {
+const UserProfileScreen: React.FC = ({ route }) => {
   const { me } = useMe();
   const navigation = useNavigation();
   const { userId } = route.params;

@@ -5,14 +5,12 @@ import { BlurView } from "expo-blur";
 import styled from "styled-components/native";
 import { Image } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useNavigation } from "@react-navigation/native";
 
 import { GET_EVENT } from "./EventScreenQueries";
 import RatingChip from "../../components/RatingChip";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 import { PRIMARY_COLOR, DARK_ORANGE } from "../../constants/colors";
 import { formatDate, formatTime } from "../../utils/time";
 import utils from "../../utils/utils";
@@ -58,7 +56,7 @@ const ContextContainer = styled.View`
   align-items: center;
 `;
 
-const EventScreen: NavigationStackScreenComponent = ({ route }) => {
+const EventScreen: React.FC = ({ route }) => {
   const navigation = useNavigation();
   const isAndroid = utils.isAndroid();
   const { eventId } = route.params;

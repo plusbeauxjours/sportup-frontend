@@ -2,8 +2,6 @@ import React from "react";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 
 import MyProfileNavigation from "./MyProfileNavigation";
@@ -70,7 +68,6 @@ const Item = ({ item }) => {
 
 const CustomDrawerContent = (props) => {
   const { me, loading: meLoading } = useMe();
-  const navigation = useNavigation();
   const routes = [
     {
       name: "Me",
@@ -97,34 +94,34 @@ const CustomDrawerContent = (props) => {
       icon: "search",
     },
   ];
-  if (!meLoading) {
-    return (
-      <DrawerContentScrollView {...props}>
-        <Container>
-          <Avatar
-            size="large"
-            rounded
-            containerStyle={{ borderColor: "white", borderWidth: 2 }}
-            source={{
-              uri: NO_AVATAR_THUMBNAIL,
-            }}
-          />
-          <Name>{me?.user.name}</Name>
-          <Username>@{me?.user.username}</Username>
-        </Container>
-        <SidebarDivider />
-        <FlatList
-          style={{ width: "100%", marginLeft: 30 }}
-          data={routes}
-          renderItem={({ item }) => <Item item={item} />}
-          keyExtractor={(item) => item.name}
-          scrollEnabled={false}
-        />
-      </DrawerContentScrollView>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <DrawerContentScrollView {...props}>
+      {me && (
+        <>
+          <Container>
+            <Avatar
+              size="large"
+              rounded
+              containerStyle={{ borderColor: "white", borderWidth: 2 }}
+              source={{
+                uri: NO_AVATAR_THUMBNAIL,
+              }}
+            />
+            <Name>{me?.user.name}</Name>
+            <Username>@{me?.user.username}</Username>
+          </Container>
+          <SidebarDivider />
+        </>
+      )}
+      <FlatList
+        style={{ width: "100%", marginLeft: 30 }}
+        data={routes}
+        renderItem={({ item }) => <Item item={item} />}
+        keyExtractor={(item) => item.name}
+        scrollEnabled={false}
+      />
+    </DrawerContentScrollView>
+  );
 };
 
 const Drawer = createDrawerNavigator();

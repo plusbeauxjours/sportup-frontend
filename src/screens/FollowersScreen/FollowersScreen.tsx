@@ -9,14 +9,9 @@ import { GET_USER_FOLLOWERS } from "./FollowersScreenQueries";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserCard from "../../components/UserCard";
 import styled from "styled-components/native";
-import BackBtn from "../../components/BackBtn";
 import { FlatList } from "react-native";
-import {
-  NavigationStackScreenComponent,
-  NavigationStackScreenProps,
-} from "react-navigation-stack";
 
-interface IProps extends NavigationStackScreenProps {
+interface IProps {
   userId: string;
 }
 
@@ -25,10 +20,7 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const FollowersScreen: NavigationStackScreenComponent<IProps> = ({
-  route,
-  navigation,
-}) => {
+const FollowersScreen: React.FC<IProps> = ({ route }) => {
   const { userId } = route.params;
 
   const { data: { getUser: { user = null } = {} } = {}, loading } = useQuery<

@@ -30,7 +30,7 @@ interface IProps {
 const LeftComponent = () => {
   const navigation = useNavigation();
   return (
-    <IconContainer onPress={() => navigation.goBack(null)}>
+    <IconContainer onPress={() => navigation.goBack()}>
       <Ionicons size={24} name={"ios-arrow-back"} />
     </IconContainer>
   );

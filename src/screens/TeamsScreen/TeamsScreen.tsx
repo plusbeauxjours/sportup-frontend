@@ -3,11 +3,10 @@ import { useQuery } from "react-apollo-hooks";
 import { GetUserTeams, GetUserTeamsVariables } from "../../types/api";
 import { GET_USER_TEAMS } from "./TeamsScreenQueries";
 import { FlatList } from "react-native";
+import styled from "styled-components/native";
 
 import TeamCard from "../../components/TeamCard";
 import Loader from "../../components/Loader";
-import BackBtn from "../../components/BackBtn";
-import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;

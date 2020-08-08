@@ -2,24 +2,19 @@ import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { useQuery } from "react-apollo";
 import styled from "styled-components/native";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { GET_USERS_FOR_GAME } from "./FoundPlayersListScreenQueries";
 import PlayerCard from "../../components/PlayerCard";
 import { GetUsersForGameVariables, GetUsersForGame } from "../../types/api";
 import Loader from "../../components/Loader";
 import ListFooterComponent from "../../components/ListFooterComponent";
-import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-const FoundPlayersListScreen: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const FoundPlayersListScreen: React.FC = ({ route }) => {
   const { selectedSportIds: sportIds } = route.params;
   const [loading, setLoading] = useState<boolean>(false);
 

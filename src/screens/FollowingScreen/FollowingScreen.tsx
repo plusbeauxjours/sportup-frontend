@@ -5,26 +5,18 @@ import { GET_USER_FOLLOWING } from "./FollowingScreenQueries";
 import ListFooterComponent from "../../components/ListFooterComponent";
 import UserCard from "../../components/UserCard";
 import styled from "styled-components/native";
-import BackBtn from "../../components/BackBtn";
 import { FlatList } from "react-native";
-import {
-  NavigationStackScreenComponent,
-  NavigationStackScreenProps,
-} from "react-navigation-stack";
 
 const Container = styled.View`
   flex: 1;
   background-color: white;
 `;
 
-interface IProps extends NavigationStackScreenProps {
+interface IProps {
   userId: string;
 }
 
-const FollowingScreen: NavigationStackScreenComponent<IProps> = ({
-  route,
-  navigation,
-}) => {
+const FollowingScreen: React.FC<IProps> = ({ route }) => {
   const { userId } = route.params;
   const {
     data: { getUser: { user: { following = null } = {} } = {} } = {},

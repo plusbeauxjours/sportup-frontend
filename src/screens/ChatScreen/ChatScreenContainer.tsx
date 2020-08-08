@@ -3,7 +3,6 @@ import { GiftedChat } from "react-native-gifted-chat";
 import * as Permissions from "expo-permissions";
 import * as IntentLauncher from "expo-intent-launcher";
 import * as moment from "moment-timezone";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import { Avatar } from "react-native-elements";
@@ -32,10 +31,9 @@ import {
   update_message_info,
 } from "../../constants/firebase";
 import { NO_AVATAR_THUMBNAIL } from "../../constants/urls";
-import BackBtn from "../../components/BackBtn";
 import { useNavigation } from "@react-navigation/native";
 
-const ChatContainer: NavigationStackScreenComponent = ({ route }) => {
+const ChatContainer: React.FC = ({ route }) => {
   const {
     chatId,
     senderUserId,

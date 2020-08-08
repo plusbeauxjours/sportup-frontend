@@ -7,8 +7,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as Yup from "yup";
 import styled from "styled-components/native";
 import DatePickerModal from "react-native-modal-datetime-picker";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
-import BackBtn from "../../components/BackBtn";
 import { useNavigation } from "@react-navigation/native";
 
 import FormikInput from "../../components/Formik/FormikInput";
@@ -89,7 +87,7 @@ const Center = styled.View`
   justify-content: center;
 `;
 
-const CreateEventScreen: NavigationStackScreenComponent = () => {
+const CreateEventScreen: React.FC = () => {
   const navigation = useNavigation();
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);

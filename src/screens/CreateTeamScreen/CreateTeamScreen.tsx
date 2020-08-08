@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
+
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Divider, TextInput, Caption } from "react-native-paper";
 import { Avatar } from "react-native-elements";
@@ -81,7 +81,7 @@ const IconContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const CreateTeamScreen: NavigationStackScreenComponent = () => {
+const CreateTeamScreen: React.FC = () => {
   const navigation = useNavigation();
   const isAndroid = utils.isAndroid();
   const { me, loading: meLoading } = useMe();

@@ -3,14 +3,13 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "react-apollo";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import { REGISTER_TEAM } from "./RegisterForEventScreenQueries";
 import { RegisterTeam, RegisterTeamVariables } from "../../types/api";
 import FormikInput from "../../components/Formik/FormikInput";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   flex: 1;
@@ -21,10 +20,8 @@ const WhiteSpace = styled.View`
   height: 50px;
 `;
 
-const RegisterForEventScreen: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const RegisterForEventScreen: React.FC = ({ route }) => {
+  const navigation = useNavigation();
   const { maximumMembers, minimumMembers } = route.params;
   const [registerTeamFn, { loading: registerTeamLoading }] = useMutation<
     RegisterTeam,

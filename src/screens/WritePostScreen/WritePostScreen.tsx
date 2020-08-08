@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components/native";
 import { Input } from "react-native-elements";
 import { useMutation } from "react-apollo";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useNavigation } from "@react-navigation/native";
 
 import {
@@ -16,7 +15,6 @@ import { GET_MAIN_FEED } from "../FeedScreen/FeedScreenQueries";
 import { MY_FEED } from "../MyProfileScreen/MyProfileScreenQueries";
 import { GetMyFeed } from "../../types/api";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 
 const Container = styled.View`
   flex: 1;
@@ -34,7 +32,7 @@ const Box = styled.View`
   justify-content: center;
 `;
 
-const WritePostScreen: NavigationStackScreenComponent = () => {
+const WritePostScreen: React.FC = () => {
   const navigation = useNavigation();
   const [text, setText] = useState<string>("");
   const [createPostFn, { loading: createPostLoading }] = useMutation<

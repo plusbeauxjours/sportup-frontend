@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 import { FlatList, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 import { useQuery } from "react-apollo-hooks";
-import { NavigationStackScreenComponent } from "react-navigation-stack";
 
 import {
   GetTeam,
@@ -18,8 +17,8 @@ import { useMutation } from "react-apollo";
 import { RateTeam, RateTeamVariables } from "../../types/api";
 import Loader from "../../components/Loader";
 import Button from "../../components/Button";
-import BackBtn from "../../components/BackBtn";
 import { DARK_ORANGE } from "../../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const View = styled.View`
   align-items: center;
@@ -95,10 +94,8 @@ const TeamInfoArea: React.FC<IProps> = ({
   );
 };
 
-const TeamProfileScreen: NavigationStackScreenComponent = ({
-  route,
-  navigation,
-}) => {
+const TeamProfileScreen: React.FC = ({ route }) => {
+  const navigation = useNavigation();
   const { teamId } = route.params;
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(0);
