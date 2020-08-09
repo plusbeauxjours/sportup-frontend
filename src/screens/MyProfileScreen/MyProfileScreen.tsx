@@ -6,7 +6,7 @@ import {
   Alert,
   Linking,
 } from "react-native";
-import { Appbar, Headline, Paragraph } from "react-native-paper";
+import { Headline, Paragraph } from "react-native-paper";
 import styled from "styled-components/native";
 import { useQuery, useApolloClient, useMutation } from "react-apollo-hooks";
 import { Avatar } from "react-native-elements";
@@ -30,15 +30,13 @@ import { MEDIA_URL, NO_AVATAR_THUMBNAIL } from "../../constants/urls";
 import UserConnectionsCard from "../../components/UserConnectionsCard";
 import Loader from "../../components/Loader";
 import RatingChip from "../../components/RatingChip";
-import { useMe } from "../../context/meContext";
 import { useNavigation } from "@react-navigation/native";
-
-const View = styled.View`
-  flex-direction: row;
-`;
+import { useLazyQuery } from "react-apollo";
 
 const LoadingContainer = styled.View`
   height: 150px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const UserInfoContainer = styled.View`
@@ -72,13 +70,16 @@ const Caption = styled.Text`
 const MyProfileScreen: React.FC = () => {
   const client = useApolloClient();
   const navigation = useNavigation();
-  const { me, loading: meContextLoading } = useMe();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const {
-    data: { me: { user = null } = {} } = {},
-    loading: meLoading,
-  } = useQuery<Me>(ME);
+  const [
+    meData,
+    {
+      data: { me: { user = null } = {} } = {},
+      loading: meLoading,
+      refetch: meRefetch,
+    },
+  ] = useLazyQuery<Me>(ME);
 
   const {
     data: { getMyFeed: { posts = null, hasNextPage, pageNum } = {} } = {},
@@ -174,6 +175,7 @@ const MyProfileScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    meData();
     askPermission();
     navigation.setParams({
       logout: handleLogout,
@@ -181,13 +183,7 @@ const MyProfileScreen: React.FC = () => {
   }, []);
 
   const renderUserInfoArea = () => {
-    if (meLoading) {
-      return (
-        <LoadingContainer>
-          <ActivityIndicator size="small" />
-        </LoadingContainer>
-      );
-    } else if (user) {
+    if (user) {
       const connections = {
         teams: user?.teamsCount,
         followers: user?.followersCount,
@@ -237,18 +233,24 @@ const MyProfileScreen: React.FC = () => {
           />
         </UserInfoContainer>
       );
+    } else {
+      return (
+        <LoadingContainer>
+          <ActivityIndicator size="small" />
+        </LoadingContainer>
+      );
     }
   };
   if (getMyFeedLoading || meLoading) {
     return <Loader />;
   } else {
     return (
-      // <MyprofileCustomHeader title={"Me"} />
       <Conatiner>
         <FeedList
           posts={posts}
           refreshing={networkStatus === 4}
           onRefresh={() => {
+            meRefetch();
             getMyFeedRefetch({ pageNum: 1 });
           }}
           ListHeaderComponent={renderUserInfoArea}
