@@ -7,6 +7,7 @@ import styled from "styled-components/native";
 
 import TeamCard from "../../components/TeamCard";
 import Loader from "../../components/Loader";
+import ListFooterComponent from "../../components/ListFooterComponent";
 
 const Container = styled.View`
   flex: 1;
@@ -27,11 +28,12 @@ const TeamsScreen = ({ route }) => {
       <Container>
         <FlatList
           data={user.teamSet}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(team) => team.id.toString()}
           renderItem={({ item }) => (
             <TeamCard enableMessage={true} team={item} />
           )}
-          keyExtractor={(team) => team.id.toString()}
-          showsVerticalScrollIndicator={false}
+          ListFooterComponent={() => <ListFooterComponent loading={loading} />}
         />
       </Container>
     );
