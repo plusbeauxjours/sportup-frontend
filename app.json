@@ -10,7 +10,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -39,7 +39,7 @@
       "userInterfaceStyle": "light"
     },
     "android": {
-      "versionCode": 11,
+      "versionCode": 12,
       "package": "sportup.plusbeauxjours",
       "permissions": [
         "ACCESS_COARSE_LOCATION",
