@@ -40,7 +40,7 @@ export default () => {
         name="UpcomingEventScreen"
         component={UpcomingEventScreen}
         options={{
-          title: "Play",
+          title: "Upcoming Events",
           headerLeft: () => <LeftComponent />,
         }}
       />

@@ -78,7 +78,7 @@ const CustomDrawerContent = (props) => {
       icon: "timeline",
     },
     {
-      name: "Find",
+      name: "Play",
       icon: "games",
     },
     {

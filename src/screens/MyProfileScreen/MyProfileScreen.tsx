@@ -187,7 +187,7 @@ const MyProfileScreen: React.FC = () => {
           <ActivityIndicator size="small" />
         </LoadingContainer>
       );
-    } else {
+    } else if (user) {
       const connections = {
         teams: user?.teamsCount,
         followers: user?.followersCount,

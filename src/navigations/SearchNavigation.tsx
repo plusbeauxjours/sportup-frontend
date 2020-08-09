@@ -40,7 +40,7 @@ export default () => {
         name="SearchScreen"
         component={SearchScreen}
         options={{
-          title: "Play",
+          title: "Search",
           headerLeft: () => <LeftComponent />,
         }}
       />
