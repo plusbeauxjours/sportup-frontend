@@ -8,7 +8,6 @@ import { StackActions } from "@react-navigation/native";
 import { FACEBOOK_CONNECT } from "./FacebookApproachQueries";
 import FacebookApproachPresenter from "./FacebookApproachPresenter";
 import { FacebookConnect, FacebookConnectVariables } from "../../types/api";
-import MyProfileScreen from "../MyProfileScreen/MyProfileScreen";
 
 const FacebookApproachContainer = () => {
   const navigation = useNavigation();
