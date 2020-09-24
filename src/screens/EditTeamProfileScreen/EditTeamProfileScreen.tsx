@@ -87,10 +87,10 @@ const IconContainer = styled.TouchableOpacity`
   align-items: center;
 `;
 
-const EditTeamProfileScreen: React.FC = ({ route }) => {
+const EditTeamProfileScreen: React.FC = ({ route: { params } }) => {
   const isAndroid = utils.isAndroid();
   const navigation = useNavigation();
-  const { team } = route.params;
+  const { team } = params;
   const { me, loading: meLoading } = useMe();
   const [userLoading, setUserLoading] = useState<boolean>(false);
   const [membersList, setMembersList] = useState<any>(team.members);

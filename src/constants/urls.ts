@@ -1,5 +1,5 @@
-// export const MAIN_URL = 'http://localhost:8000/';
-export const MAIN_URL = 'https://sportup-server.herokuapp.com/'
+export const MAIN_URL = 'http://localhost:8000/';
+// export const MAIN_URL = 'https://sportup-server.herokuapp.com/'
 
 export const GRAPHQL_URL = `${MAIN_URL}graphql/`;
 

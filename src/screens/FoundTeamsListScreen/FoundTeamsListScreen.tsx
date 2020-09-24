@@ -14,8 +14,8 @@ const Container = styled.View`
   background-color: white;
 `;
 
-const FoundTeamsListScreen: React.FC = ({ route }) => {
-  const { selectedSportIds: sportIds } = route.params;
+const FoundTeamsListScreen: React.FC = ({ route: { params } }) => {
+  const { selectedSportIds: sportIds } = params;
   const [loading, setLoading] = useState<boolean>(false);
 
   const {

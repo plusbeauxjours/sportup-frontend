@@ -20,9 +20,13 @@ const WhiteSpace = styled.View`
   height: 50px;
 `;
 
-const RegisterForEventScreen: React.FC = ({ route }) => {
+const RegisterForEventScreen: React.FC = ({ route: { params } }) => {
   const navigation = useNavigation();
-  const { maximumMembers, minimumMembers } = route.params;
+  const {
+    eventId = null,
+    maximumMembers = null,
+    minimumMembers = null,
+  } = params;
   const [registerTeamFn, { loading: registerTeamLoading }] = useMutation<
     RegisterTeam,
     RegisterTeamVariables

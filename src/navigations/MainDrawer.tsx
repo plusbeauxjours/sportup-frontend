@@ -134,7 +134,7 @@ export default () => (
   >
     <Drawer.Screen name="Me" component={MyProfileNavigation} />
     <Drawer.Screen name="Feed" component={FeedNavigation} />
-    <Drawer.Screen name="Find" component={FindNavigation} />
+    <Drawer.Screen name="Play" component={FindNavigation} />
     <Drawer.Screen name="Chat" component={ChatNavigation} />
     <Drawer.Screen name="Events" component={EventNavigation} />
     <Drawer.Screen name="Search" component={SearchNavigation} />
