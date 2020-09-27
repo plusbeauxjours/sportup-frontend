@@ -1,7 +1,7 @@
 # SPORTUP-APP
 
 <p align="center" >
-  <img src="https://www.plusbeauxjours.com/static/media/SportUp_app_screenshot.8873d4e7.gif" >
+  <img src="https://www.plusbeauxjours.com/static/media/SportUp_app_screenshot.8873d4e7.gif "width="300" >
   <br>
 </p>
 
